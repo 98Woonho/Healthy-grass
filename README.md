@@ -48,12 +48,10 @@ API 요청에 대해 응답할 때는 항상 HTTP 상태 코드를 포함해야 
 | /users/{Id} | DELETE        | 특정 회원을 삭제합니다.  |
 | /products/{Id} | GET         | 특정 물건을 조회합니다.  |
 | /productReviews | POST | 상품 리뷰를 작성합니다. |
-| /productReviews/{Id} | GET | 특정 상품리뷰를 조회합니다. |
 | /productReviews/{Id} | PATCH | 특정 상품리뷰를 수정합니다. |
 | /productReviews/{Id} | DELETE | 특정 상품리뷰를 삭제합니다. |
 | /productInquirys | POST | 상품 문의 글을 작성합니다. |
 | /productInquirys | GET | 전체 상품 문의글을 조회합니다. |
-| /productInquirys/{Id} | GET | 특정 상품 문의글을 조회합니다. |
 | /productInquirys/{Id} | PATCH | 특정 상품 문의글을 수정합니다. |
 | /productInquirys/{Id} | DELETE | 특정 상품 문의글을 삭제합니다. |
 

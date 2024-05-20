@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <mxfile host="app.diagrams.net" modified="2024-05-20T12:04:15.506Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="oZFirWWViifNEYURTUX5" version="24.4.4" type="device">
+=======
+<mxfile host="app.diagrams.net" modified="2024-05-20T09:33:58.112Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="t0rvgo7TOBzC16BVqlo_" version="24.4.4" type="device">
+>>>>>>> ba7f8a2e9c738e12c9e6ed27e65a4dfcbce6af92
   <diagram name="페이지-1" id="xW1RERWMcevQg8SB2FdC">
     <mxGraphModel dx="1674" dy="796" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="0" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>

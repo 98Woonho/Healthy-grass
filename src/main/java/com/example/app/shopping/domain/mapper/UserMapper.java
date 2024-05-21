@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserMapper {
     UserDto getUserById(@Param("id") String id);
-    void insertUser(UserDto user);
-    void updateUser(UserDto user);
-    void deleteUserById(@Param("id") String id);
+    void insertUser(UserDto userDto);
+    int updateUser(UserDto user);
+    int deleteUserById(@Param("id") String id);
 }

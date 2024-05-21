@@ -16,13 +16,41 @@ repositories {
 }
 
 dependencies {
+	//DATABASE
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+	//SPRING WEB
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+	//Thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	//SpringSecurity
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	//SpringSecuirty+Thymeleaf
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+	//CONNECT
 	runtimeOnly 'com.mysql:mysql-connector-j'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//MyBatis
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+	//OAUTH2-Client
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+	//TEST
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	//DEVTOOLS
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	//LomBok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {

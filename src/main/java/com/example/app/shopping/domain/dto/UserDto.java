@@ -1,6 +1,13 @@
-package com.example.app.shopping.domain.user.dto;
+package com.example.app.shopping.domain.dto;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
     private String id;
     private String password;

@@ -2,24 +2,29 @@ package com.example.app.shopping.domain.service.user;
 
 import com.example.app.shopping.domain.dto.UserDto;
 import com.example.app.shopping.domain.mapper.UserMapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    private boolean isUserExists(String id){
+    private boolean isUserExists(String id) {
         UserDto selectUserById = userMapper.getUserById(id);
         //만약 유저를 조회해서 유저가 있다면 false 없다면 true 반환
         return selectUserById == null;
     }
 
-    public boolean userJoin(UserDto userDto){
-        if(!isUserExists(userDto.getId())){
-            return false;
+    public String userJoin(UserDto userDto) {
+        if (!isUserExists(userDto.getId())) {
+            return "FAILURE_DUPLICATED_USER_ID";
         }
         UserDto result = UserDto.builder()
                 .id(userDto.getId())
@@ -34,6 +39,14 @@ public class UserService {
                 .role("ROLE_USER")
                 .build();
         userMapper.insertUser(result);
-        return true;
+        return "SUCCESS";
+    }
+
+    public String confirmUserId(String id) {
+        UserDto UserId = userMapper.getUserById(id);
+            if (UserId != null && UserId.getId().equals(id)) {
+                return "FAILURE_DUPLICATED_USER_ID";
+            }
+        return "SUCCESS";
     }
 }

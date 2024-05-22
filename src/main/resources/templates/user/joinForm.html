@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+    <!-- daum 주소 찾기 cdn -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- js -->
     <script defer src="/js/user/joinForm.js"></script>
     <title>회원가입 폼</title>
@@ -14,14 +16,19 @@
 <body>
     <div class="container">
     <h2>회원가입</h2>
-    <form name="joinForm" method="post">
+    <form class="joinForm" name="joinForm" method="post">
         <div class="form-group">
             <label for="id">아이디</label>
             <input type="text" id="id" name="id" required>
+            <button type="button" name="confirmUserIdDuplicationBtn">중복
+                확인
+            </button>
+            <div class="idError"></div>
         </div>
         <div class="form-group">
             <label for="password">비밀번호</label>
             <input type="password" id="password" name="password" required>
+            <div class="passwordError"></div>
         </div>
         <div class="form-group">
             <label for="pwChkHint">비밀번호 확인 질문</label>
@@ -35,18 +42,26 @@
                 <option value="impressive_book">인상 깊게 읽었던 책 내용은?</option>
                 <option value="favorite_character">내가 좋아하는 캐릭터는?</option>
             </select>
+            <div class="pwChkHintError"></div>
         </div>
         <div class="form-group">
             <label for="pwChkAns">비밀번호 확인 답변</label>
             <input type="text" id="pwChkAns" name="pwChkAns" required>
+            <div class="pwChkAnsError"></div>
         </div>
         <div class="form-group">
             <label for="zipcode">우편번호</label>
-            <input type="text" id="zipcode" name="zipcode" required>
+            <input type="text" id="zipcode" name="zipcode" required disabled>
+            <button type="button" name="searchAddressBtn">
+                우편번호 찾기
+            </button>
+            <div class="zipcodeError"></div>
         </div>
+
         <div class="form-group">
             <label for="streetAdr">주소</label>
-            <input type="text" id="streetAdr" name="streetAdr" required>
+            <input type="text" id="streetAdr" name="streetAdr" required disabled>
+            <div class="streetAdrError"></div>
         </div>
         <div class="form-group">
             <label for="detailAdr">상세 주소</label>
@@ -55,10 +70,12 @@
         <div class="form-group">
             <label for="phone">전화번호</label>
             <input type="text" id="phone" name="phone" required>
+            <div class="phoneError"></div>
         </div>
         <div class="form-group">
             <label for="email">이메일</label>
             <input type="email" id="email" name="email" required>
+            <div class="email"></div>
         </div>
         <th:block>
             <input type="hidden" name="role">

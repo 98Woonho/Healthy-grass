@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `shopping` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `shopping`;
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: shopping
@@ -25,7 +23,7 @@ DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cart` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `Uid` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Cart_User_idx` (`Uid`),
@@ -50,7 +48,7 @@ DROP TABLE IF EXISTS `cartitems`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cartitems` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `Cart_Id` bigint NOT NULL,
   `Pid` bigint NOT NULL,
   `quantity` int DEFAULT NULL,
@@ -79,7 +77,7 @@ DROP TABLE IF EXISTS `customerinquiryboard`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customerinquiryboard` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `Uid` varchar(50) NOT NULL,
   `title` varchar(100) DEFAULT NULL,
   `content` text,
@@ -110,7 +108,7 @@ DROP TABLE IF EXISTS `customerinquirycomment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customerinquirycomment` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `C_Board_id` bigint NOT NULL,
   `title` varchar(100) DEFAULT NULL,
   `comment` text,
@@ -141,7 +139,7 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `Uid` varchar(50) NOT NULL,
   `total_amount` int DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL,
@@ -168,7 +166,7 @@ DROP TABLE IF EXISTS `orderitem`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orderitem` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `Oid` bigint NOT NULL,
   `Pid` bigint NOT NULL,
   `qunatity` int DEFAULT NULL,
@@ -198,7 +196,7 @@ DROP TABLE IF EXISTS `payment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `Oid` bigint DEFAULT NULL,
   `amount` int DEFAULT NULL,
   `payment_method` varchar(45) DEFAULT NULL,
@@ -254,7 +252,7 @@ DROP TABLE IF EXISTS `product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL,
   `price` int DEFAULT NULL,
   `amount` int DEFAULT NULL,
@@ -287,7 +285,7 @@ DROP TABLE IF EXISTS `productdetailboard`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `productdetailboard` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `Pid` bigint NOT NULL,
   `redDate` date DEFAULT NULL,
   `updateDate` date DEFAULT NULL,
@@ -317,7 +315,7 @@ DROP TABLE IF EXISTS `productinquiryboard`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `productinquiryboard` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `Pid` bigint NOT NULL,
   `Uid` varchar(50) NOT NULL,
   `title` varchar(100) DEFAULT NULL,
@@ -351,7 +349,7 @@ DROP TABLE IF EXISTS `productinquiryboardcomment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `productinquiryboardcomment` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `P_Board_Id` bigint NOT NULL,
   `title` varchar(100) DEFAULT NULL,
   `content` text,
@@ -380,7 +378,7 @@ DROP TABLE IF EXISTS `productreviewboard`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `productreviewboard` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `Pid` bigint NOT NULL,
   `Uid` varchar(50) NOT NULL,
   `title` varchar(100) DEFAULT NULL,
@@ -415,7 +413,7 @@ DROP TABLE IF EXISTS `shippingaddress`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `shippingaddress` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `Uid` varchar(50) NOT NULL,
   `recipient_name` varchar(50) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
@@ -478,7 +476,7 @@ DROP TABLE IF EXISTS `wishlist`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `wishlist` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `Pid` bigint NOT NULL,
   `Uid` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
@@ -497,14 +495,6 @@ LOCK TABLES `wishlist` WRITE;
 /*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
 /*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'shopping'
---
-
---
--- Dumping routines for database 'shopping'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -515,4 +505,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-21 17:37:37
+-- Dump completed on 2024-05-22  9:25:23

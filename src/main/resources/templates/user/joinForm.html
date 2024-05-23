@@ -19,16 +19,16 @@
     <form class="joinForm" name="joinForm" method="post">
         <div class="form-group">
             <label for="id">아이디</label>
-            <input type="text" id="id" name="id" required>
+            <input type="text" id="id" name="id" required placeholder="아이디는 소문자와 숫자로만 이루어진 6~16자여야 합니다.">
             <button type="button" name="confirmUserIdDuplicationBtn">중복
                 확인
             </button>
-            <div class="idError"></div>
+            <span class="idError"></span>
         </div>
         <div class="form-group">
             <label for="password">비밀번호</label>
-            <input type="password" id="password" name="password" required>
-            <div class="passwordError"></div>
+            <input type="password" id="password" name="password" required placeholder="비밀번호는 영문, 숫자, 특수문자가 1개 이상 포함된 8~15자여야 합니다.">
+            <span class="passwordError"></span>
         </div>
         <div class="form-group">
             <label for="pwChkHint">비밀번호 확인 질문</label>
@@ -42,12 +42,12 @@
                 <option value="impressive_book">인상 깊게 읽었던 책 내용은?</option>
                 <option value="favorite_character">내가 좋아하는 캐릭터는?</option>
             </select>
-            <div class="pwChkHintError"></div>
+            <span class="pwChkHintError"></span>
         </div>
         <div class="form-group">
             <label for="pwChkAns">비밀번호 확인 답변</label>
             <input type="text" id="pwChkAns" name="pwChkAns" required>
-            <div class="pwChkAnsError"></div>
+            <span class="pwChkAnsError"></span>
         </div>
         <div class="form-group">
             <label for="zipcode">우편번호</label>
@@ -55,13 +55,13 @@
             <button type="button" name="searchAddressBtn">
                 우편번호 찾기
             </button>
-            <div class="zipcodeError"></div>
+            <span class="zipcodeError"></span>
         </div>
 
         <div class="form-group">
             <label for="streetAdr">주소</label>
             <input type="text" id="streetAdr" name="streetAdr" required disabled>
-            <div class="streetAdrError"></div>
+            <span class="streetAdrError"></span>
         </div>
         <div class="form-group">
             <label for="detailAdr">상세 주소</label>
@@ -69,13 +69,13 @@
         </div>
         <div class="form-group">
             <label for="phone">전화번호</label>
-            <input type="text" id="phone" name="phone" required>
-            <div class="phoneError"></div>
+            <input type="text" id="phone" name="phone" oninput="PhoneRegex(this)" maxlength="13" required>
+            <span class="phoneError"></span>
         </div>
         <div class="form-group">
             <label for="email">이메일</label>
             <input type="email" id="email" name="email" required>
-            <div class="email"></div>
+            <span class="email"></span>
         </div>
         <th:block>
             <input type="hidden" name="role">

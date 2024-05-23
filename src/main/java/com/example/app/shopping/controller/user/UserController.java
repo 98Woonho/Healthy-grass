@@ -5,7 +5,9 @@ import com.example.app.shopping.domain.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,24 +25,39 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/user/loginForm")
+    public void getLoginForm(Authentication authentication){
+        System.out.println("authentication" + authentication );
+    }
+    @PostMapping("/user/login")
+    public String postLogin(){
+
+        return "redirect:/";
+    }
+
+    //회원가입 폼으로 이동
     @GetMapping("/user/joinForm")
     public void getJoinForm(){
 
     }
 
+    //회원가입
     @PostMapping("/users")
     @ResponseBody
-    public String join(@RequestBody UserDto userDto, BindingResult bindingResult){
-//        if(bindingResult.hasFieldErrors()) {
-//
-//            for(FieldError error  : bindingResult.getFieldErrors()) {
-//                log.info("ErrorField : " + error.getField() + " ErrorMsg : " + error.getDefaultMessage());
-////                return result.put(error.getField(), error.getDefaultMessage());
-//            }
-//        }
-        return userService.userJoin(userDto);
+    public ResponseEntity<String> join(@Valid @RequestBody UserDto userDto, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            // 유효성 검사 실패 시 오류 메시지 알려줌
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error ->
+                    errors.put(error.getField(), error.getDefaultMessage())
+            );
+
+            return new ResponseEntity<>("FAIL", HttpStatus.BAD_GATEWAY);
+        }
+        System.out.println(bindingResult.hasErrors());
+        return new ResponseEntity<>(userService.userJoin(userDto), HttpStatus.OK);
     }
-    // 호텔 등록 시 호텔 이름 중복 확인
+    // 유저 등록시 유저 중복확인
     @GetMapping(value = "/user/confirmUserId")
     @ResponseBody
     public String getConfirmHotelName(@RequestParam(value = "id") String id) {

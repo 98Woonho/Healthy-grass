@@ -27,6 +27,12 @@ joinForm.confirmUserIdDuplicationBtn.addEventListener('click', function () {
 })
 const UserPasswordRegex = new RegExp("^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$");
 const UserIdRegex = new RegExp("^[A-Za-z0-9]{6,16}$");
+const EmailRegex = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", "i");
+const PhoneRegex = (target) => {
+    target.value = target.value
+        .replace(/[^0-9]/g, '')
+        .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+}
 
 joinForm.searchAddressBtn.addEventListener('click', function () {
     new daum.Postcode({
@@ -59,6 +65,7 @@ function validateForm() {
     const zipcodeInput = joinForm.zipcode.value.trim();
     const streetAdrInput = joinForm.streetAdr.value.trim();
     const phoneInput = joinForm.phone.value.trim();
+    const emailInput = joinForm.email.value.trim();
 
     const idErrorMessage = document.querySelector('.idError');
     const passwordErrorMessage = document.querySelector('.passwordError');
@@ -67,105 +74,129 @@ function validateForm() {
     const zipcodeErrorMessage = document.querySelector('.zipcodeError');
     const streetAdrErrorMessage = document.querySelector('.streetAdrError');
     const phoneErrorMessage = document.querySelector('.phoneError');
+    const emailErrorMessage = document.querySelector('.email');
 
     // 아이디 유효성 검사
-    if (!joinForm.id.classList.contains("confirmed")) {
-        alert("유저 중복 확인을 진행해주세요.");
-    } else if (idInput === "") {
-        idErrorMessage.innerHTML = "아이디를 입력해주세요";
+
+    if (idInput === "") {
+        idErrorMessage.innerText = "아이디를 입력해주세요";
+        idErrorMessage.style.color = "red";
     } else if (!UserIdRegex.test(idInput)) {
-        idErrorMessage.innerHTML = "아이디는 소문자와 숫자로만 이루어진 6~16자여야 합니다.";
+        idErrorMessage.innerText = "아이디는 소문자와 숫자로만 이루어진 6~16자여야 합니다.";
+        idErrorMessage.style.color = "red";
     } else {
-        idErrorMessage.innerHTML = ""; // 오류 메시지를 지워줌
+        idErrorMessage.innerText = ""; // 오류 메시지를 지워줌
     }
 
-    // 비밀번호 유효성 검사
+// 비밀번호 유효성 검사
     if (passwordInput === "") {
-        passwordErrorMessage.innerHTML = "비밀번호를 입력해주세요";
+        passwordErrorMessage.innerText = "비밀번호를 입력해주세요";
+        passwordErrorMessage.style.color = "red";
     } else if (!UserPasswordRegex.test(passwordInput)) {
-        passwordErrorMessage.innerHTML = "비밀번호는 영문, 숫자, 특수문자가 1개 이상 포함된 8~15자여야 합니다.";
+        passwordErrorMessage.innerText = "비밀번호는 영문, 숫자, 특수문자가 1개 이상 포함된 8~15자여야 합니다.";
+        passwordErrorMessage.style.color = "red";
     } else {
-        passwordErrorMessage.innerHTML = ""; // 오류 메시지를 지워줌
+        passwordErrorMessage.innerText = ""; // 오류 메시지를 지워줌
     }
 
-    // 비밀번호 확인 질문 유효성 검사
+// 비밀번호 확인 질문 유효성 검사
     if (pwChkHintInput === "") {
-        pwChkHintErrorMessage.innerHTML = "비밀번호 확인 질문을 입력하세요";
+        pwChkHintErrorMessage.innerText = "비밀번호 확인 질문을 입력하세요";
+        pwChkHintErrorMessage.style.color = "red";
     } else {
-        pwChkHintErrorMessage.innerHTML = ""; // 오류 메시지를 지워줌
+        pwChkHintErrorMessage.innerText = ""; // 오류 메시지를 지워줌
     }
 
-    // 비밀번호 확인 답변 유효성 검사
+// 비밀번호 확인 답변 유효성 검사
     if (pwChkAnsInput === "") {
-        pwChkAnsErrorMessage.innerHTML = "비밀번호 확인 답변을 입력하세요";
+        pwChkAnsErrorMessage.innerText = "비밀번호 확인 답변을 입력하세요";
+        pwChkAnsErrorMessage.style.color = "red";
     } else {
-        pwChkAnsErrorMessage.innerHTML = ""; // 오류 메시지를 지워줌
+        pwChkAnsErrorMessage.innerText = ""; // 오류 메시지를 지워줌
     }
 
-    // 우편번호 유효성 검사
+// 우편번호 유효성 검사
     if (zipcodeInput === "") {
-        zipcodeErrorMessage.innerHTML = "우편번호를 입력하세요";
+        zipcodeErrorMessage.innerText = "우편번호를 입력하세요";
+        zipcodeErrorMessage.style.color = "red";
     } else {
-        zipcodeErrorMessage.innerHTML = ""; // 오류 메시지를 지워줌
+        zipcodeErrorMessage.innerText = ""; // 오류 메시지를 지워줌
     }
 
-    // 주소 유효성 검사
+// 주소 유효성 검사
     if (streetAdrInput === "") {
-        streetAdrErrorMessage.innerHTML = "주소를 입력하세요";
+        streetAdrErrorMessage.innerText = "주소를 입력하세요";
+        streetAdrErrorMessage.style.color = "red";
     } else {
-        streetAdrErrorMessage.innerHTML = ""; // 오류 메시지를 지워줌
+        streetAdrErrorMessage.innerText = ""; // 오류 메시지를 지워줌
     }
 
-    // 전화번호 유효성 검사
+// 전화번호 유효성 검사
     if (phoneInput === "") {
-        phoneErrorMessage.innerHTML = "전화번호를 입력하세요";
+        phoneErrorMessage.innerText = "전화번호를 입력하세요";
+        phoneErrorMessage.style.color = "red";
     } else {
-        phoneErrorMessage.innerHTML = ""; // 오류 메시지를 지워줌
+        phoneErrorMessage.innerText = ""; // 오류 메시지를 지워줌
     }
+
+    if (emailInput === "") {
+        emailErrorMessage.innerText = "이메일을 입력하세요";
+        emailErrorMessage.style.color = "red";
+    } else if (!EmailRegex.test(emailInput)) {
+        emailErrorMessage.innerText = "이메일 형식으로 입력해주세요 이메일형식은 email@naver.com 입니다.";
+        emailErrorMessage.style.color = "red";
+    } else {
+        emailErrorMessage.innerText = ""; // 오류 메시지를 지워줌
+    }
+
 
     // 모든 필드가 유효한 경우 수정요망!!!
-    if(idErrorMessage.value === "" &&
-        passwordErrorMessage.value === "" &&
-        pwChkHintErrorMessage.value === "" &&
-        pwChkAnsErrorMessage.value === "" &&
-        zipcodeErrorMessage.value === "" &&
-        streetAdrErrorMessage.value === "" &&
-        phoneErrorMessage.value === ""){
+    if (idErrorMessage.innerText === "" &&
+        passwordErrorMessage.innerText === "" &&
+        pwChkHintErrorMessage.innerText === "" &&
+        pwChkAnsErrorMessage.innerText === "" &&
+        zipcodeErrorMessage.innerText === "" &&
+        streetAdrErrorMessage.innerText === "" &&
+        phoneErrorMessage.innerText === "" &&
+        emailErrorMessage.innerText === "" ){
         return true
     } else {
         return false
     }
 }
+
 // 이벤트 리스너 등록
 const joinBtn = document.querySelector(".joinBtn");
 joinBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    console.log(validateForm());
+        e.preventDefault();
+        console.log(validateForm());
+        if (validateForm() === false && joinForm.id.classList.contains("confirmed")) {
+            alert('유효성 체크를 진행하세요')
+        } else if(!joinForm.id.classList.contains("confirmed")) {
+            alert("유저 중복 확인을 진행해주세요.");
+        } else {
+            const data = {
+                id: joinForm.id.value,
+                password: joinForm.password.value,
+                pwChkHint: joinForm.pwChkHint.value,
+                pwChkAns: joinForm.pwChkAns.value,
+                zipcode: joinForm.zipcode.value,
+                streetAdr: joinForm.streetAdr.value,
+                detailAdr: joinForm.detailAdr.value,
+                phone: joinForm.phone.value,
+                email: joinForm.email.value
+            };
 
-    if (validateForm()){
-        const data = {
-            id: joinForm.id.value,
-            password: joinForm.password.value,
-            pwChkHint: joinForm.pwChkHint.value,
-            pwChkAns: joinForm.pwChkAns.value,
-            zipcode: joinForm.zipcode.value,
-            streetAdr: joinForm.streetAdr.value,
-            detailAdr: joinForm.detailAdr.value,
-            phone: joinForm.phone.value,
-            email: joinForm.email.value
-        };
-
-
-        axios.post("/users", data, {headers: {"Content-Type": "application/json"}})
-            .then(resp => {
-                if (resp.data === "SUCCESS") {
-                    alert("성공적으로 회원가입이 완료되었습니다.")
-                    location.href = "/";
-                } else alert("알수없는 이유로 회원가입에 실패하였습니다.")
-            })
-            .catch(err => {
-                console.log();
-            })
-    }
+            axios.post("/users", data, {headers: {"Content-Type": "application/json"}})
+                .then(resp => {
+                    if (resp.data === "SUCCESS") {
+                        alert("성공적으로 회원가입이 완료되었습니다.")
+                        location.href = "/";
+                    } else alert("알수없는 이유로 회원가입에 실패하였습니다.")
+                })
+                .catch(err => {
+                    console.log();
+                })
+        }
     }
 )

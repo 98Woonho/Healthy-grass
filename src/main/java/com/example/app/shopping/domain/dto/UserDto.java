@@ -15,10 +15,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserDto {
     @NotBlank(message = "Id를 입력하세요")
-    @Pattern(regexp = "", message = "아이디는 소문자와 숫자로만 이루어진 6~16자여야 합니다.")
+    @Pattern(regexp = "^[A-Za-z0-9]{6,16}$")
     private String id;
 
     @NotBlank(message = "비밀번호를 입력하세요")
+    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$")
     private String password;
 
     @NotBlank(message = "비밀번호 확인 질문 입력하세요")
@@ -33,7 +34,7 @@ public class UserDto {
     @NotBlank(message = "주소를 입력하세요")
     private String streetAdr;
 
-    @NotBlank(message = "상세 주소를 입력하세요")
+    @NotBlank
     private String detailAdr;
 
     @NotBlank(message = "전화번호를 입력하세요")

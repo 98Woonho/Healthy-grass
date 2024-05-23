@@ -264,10 +264,12 @@ CREATE TABLE `product` (
   `middleCategory` varchar(50) DEFAULT NULL,
   `regDate` date DEFAULT NULL,
   `updateDate` date DEFAULT NULL,
-  `imgPath` varchar(200) DEFAULT NULL,
-  `imgName` varchar(100) DEFAULT NULL,
+  `mainImgPath` varchar(200) DEFAULT NULL,
+  `mainImgName` varchar(100) DEFAULT NULL,
+  `subImgPath` varchar(200) DEFAULT NULL,
+  `subImgName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -276,37 +278,8 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (1,'Sample Product',2000,10,5,10,'Electronics','Mobile','2024-05-22','2024-05-22','/images/sample.png','sample.png',NULL,NULL),(2,'Product 1',1000,50,10,0,'Electronics','Mobile','2024-05-22','2024-05-22','/images/product1.png','product1.png',NULL,NULL),(3,'Product 2',2000,30,5,5,'Electronics','Laptop','2024-05-23','2024-05-23','/images/product2.png','product2.png',NULL,NULL),(4,'Product 3',1500,40,8,10,'Clothing','T-Shirts','2024-05-24','2024-05-24','/images/product3.png','product3.png',NULL,NULL),(5,'Product 4',3000,20,3,15,'Electronics','Smartwatch','2024-05-25','2024-05-25','/images/product4.png','product4.png',NULL,NULL),(6,'Product 5',2500,35,6,8,'Clothing','Jeans','2024-05-26','2024-05-26','/images/product5.png','product5.png',NULL,NULL),(7,'Product 6',1800,45,7,12,'Electronics','Headphones','2024-05-27','2024-05-27','/images/product6.png','product6.png',NULL,NULL),(8,'Product 7',2200,25,4,6,'Clothing','Jackets','2024-05-28','2024-05-28','/images/product7.png','product7.png',NULL,NULL),(9,'Product 8',2800,15,2,18,'Electronics','Tablet','2024-05-29','2024-05-29','/images/product8.png','product8.png',NULL,NULL),(10,'Product 9',1900,55,9,9,'Clothing','Sweaters','2024-05-30','2024-05-30','/images/product9.png','product9.png',NULL,NULL),(11,'Product 10',3200,10,1,20,'Electronics','Camera','2024-05-31','2024-05-31','/images/product10.png','product10.png',NULL,NULL),(12,'Product 11',1100,60,12,5,'Electronics','Mobile','2024-06-01','2024-06-01','/images/product11.png','product11.png',NULL,NULL),(13,'Product 12',2100,70,14,8,'Electronics','Laptop','2024-06-02','2024-06-02','/images/product12.png','product12.png',NULL,NULL),(14,'Product 13',1600,80,16,10,'Clothing','T-Shirts','2024-06-03','2024-06-03','/images/product13.png','product13.png',NULL,NULL),(15,'Product 14',3100,90,18,15,'Electronics','Smartwatch','2024-06-04','2024-06-04','/images/product14.png','product14.png',NULL,NULL),(16,'Product 15',2600,100,20,12,'Clothing','Jeans','2024-06-05','2024-06-05','/images/product15.png','product15.png',NULL,NULL),(17,'Product 16',1900,110,22,18,'Electronics','Headphones','2024-06-06','2024-06-06','/images/product16.png','product16.png',NULL,NULL),(18,'Product 17',2300,120,24,14,'Clothing','Jackets','2024-06-07','2024-06-07','/images/product17.png','product17.png',NULL,NULL),(19,'Product 18',2900,130,26,20,'Electronics','Tablet','2024-06-08','2024-06-08','/images/product18.png','product18.png',NULL,NULL),(20,'Product 19',2000,140,28,15,'Clothing','Sweaters','2024-06-09','2024-06-09','/images/product19.png','product19.png',NULL,NULL),(21,'Product 20',3300,150,30,10,'Electronics','Camera','2024-06-10','2024-06-10','/images/product20.png','product20.png',NULL,NULL),(22,'Product 21',1200,160,32,8,'Electronics','Mobile','2024-06-11','2024-06-11','/images/product21.png','product21.png',NULL,NULL),(23,'Product 22',2200,170,34,10,'Electronics','Laptop','2024-06-12','2024-06-12','/images/product22.png','product22.png',NULL,NULL),(24,'Product 23',1700,180,36,12,'Clothing','T-Shirts','2024-06-13','2024-06-13','/images/product23.png','product23.png',NULL,NULL),(25,'Product 24',3200,190,38,18,'Electronics','Smartwatch','2024-06-14','2024-06-14','/images/product24.png','product24.png',NULL,NULL),(26,'Product 25',2700,200,40,16,'Clothing','Jeans','2024-06-15','2024-06-15','/images/product25.png','product25.png',NULL,NULL),(27,'Product 26',2000,210,42,20,'Electronics','Headphones','2024-06-16','2024-06-16','/images/product26.png','product26.png',NULL,NULL),(28,'Product 27',2400,220,44,14,'Clothing','Jackets','2024-06-17','2024-06-17','/images/product27.png','product27.png',NULL,NULL),(29,'Product 28',3000,230,46,22,'Electronics','Tablet','2024-06-18','2024-06-18','/images/product28.png','product28.png',NULL,NULL),(30,'Product 29',2100,240,48,12,'Clothing','Sweaters','2024-06-19','2024-06-19','/images/product29.png','product29.png',NULL,NULL),(31,'Product 30',3400,250,50,25,'Electronics','Camera','2024-06-20','2024-06-20','/images/product30.png','product30.png',NULL,NULL);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `productdetailboard`
---
-
-DROP TABLE IF EXISTS `productdetailboard`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `productdetailboard` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `Pid` bigint NOT NULL,
-  `redDate` date DEFAULT NULL,
-  `updateDate` date DEFAULT NULL,
-  `content` text,
-  `imgPath` varchar(200) DEFAULT NULL,
-  `imgName` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_ProductDetailBoard_Product_Pid_idx` (`Pid`),
-  CONSTRAINT `FK_ProductDetailBoard_Product_Pid` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `productdetailboard`
---
-
-LOCK TABLES `productdetailboard` WRITE;
-/*!40000 ALTER TABLE `productdetailboard` DISABLE KEYS */;
-/*!40000 ALTER TABLE `productdetailboard` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -515,4 +488,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-22  9:32:06
+-- Dump completed on 2024-05-22 17:53:48

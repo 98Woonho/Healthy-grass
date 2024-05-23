@@ -6,12 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductMapper productMapper;
 
     @Transactional
+    @Override
+    public ProductDto getProductById(Long id) {
+        return productMapper.getProductById(id);
+    }
+
+    @Transactional
+    @Override
+    public List<ProductDto> getProductsBySearch(String name, String majorCategory, String middleCategory, String orderBy, int page, int size) throws Exception {
+        int offset = (page - 1) * size;
+        return productMapper.getProductsBySearch(name, majorCategory, middleCategory, orderBy, offset, size);
+    }
+
+    @Transactional
+    @Override
     public boolean addProduct(ProductDto productDto) {
         try {
             productMapper.insertProduct(productDto);
@@ -23,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Transactional
+    @Override
     public boolean updateProduct(ProductDto productDto) {
         try {
             productMapper.updateProduct(productDto);

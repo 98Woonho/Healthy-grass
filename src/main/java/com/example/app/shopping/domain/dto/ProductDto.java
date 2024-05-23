@@ -20,6 +20,8 @@ public class ProductDto {
     private String middleCategory;
     private Date regDate;
     private Date updateDate;
-    private String imgPath;
-    private String imgName;
+    private String mainImgPath;
+    private String mainImgName;
+    private String subImgPath;
+    private String subImgName;
 }

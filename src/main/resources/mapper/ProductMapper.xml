@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.app.shopping.domain.mapper.ProductMapper">
+
+    <select id="getProductById" resultType="com.example.app.shopping.domain.dto.ProductDto" parameterType="java.lang.Long">
+        SELECT *
+        FROM product
+        WHERE id = #{id}
+    </select>
+
+    <select id="getProductCountBySearch" resultType="int" parameterType="map">
+        SELECT COUNT(*)
+        FROM product
+        <where>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="majorCategory != null and majorCategory != ''">
+                AND majorCategory = #{majorCategory}
+            </if>
+            <if test="middleCategory != null and middleCategory != ''">
+                AND middleCategory = #{middleCategory}
+            </if>
+        </where>
+    </select>
+
+    <select id="getProductsBySearch" resultType="com.example.app.shopping.domain.dto.ProductDto" parameterType="map">
+        SELECT *
+        FROM product
+        <where>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="majorCategory != null and majorCategory != ''">
+                AND majorCategory = #{majorCategory}
+            </if>
+            <if test="middleCategory != null and middleCategory != ''">
+                AND middleCategory = #{middleCategory}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy == 'price'">
+                ORDER BY price
+            </when>
+            <when test="orderBy == 'name'">
+                ORDER BY name
+            </when>
+            <otherwise>
+                ORDER BY id
+            </otherwise>
+        </choose>
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <insert id="insertProduct" parameterType="com.example.app.shopping.domain.dto.ProductDto" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO product (name, price, amount, saleAmount, discount, majorCategory, middleCategory, regDate, updateDate, mainImgPath, mainImgName, subImgPath, subImgName)
+        VALUES (#{name}, #{price}, #{amount}, #{saleAmount}, #{discount}, #{majorCategory}, #{middleCategory}, #{regDate}, #{updateDate}, #{mainImgPath}, #{mainImgName}, #{subImgPath}, #{subImgName})
+    </insert>
+
+    <update id="updateProduct" parameterType="com.example.app.shopping.domain.dto.ProductDto">
+        UPDATE product
+        SET name = #{name}, price = #{price}, amount = #{amount}, saleAmount = #{saleAmount}, discount = #{discount},
+        majorCategory = #{majorCategory}, middleCategory = #{middleCategory}, regDate = #{regDate}, updateDate = #{updateDate},
+        mainImgPath = #{mainImgPath}, mainImgName = #{mainImgName}, subImgPath = #{subImgPath}, subImgName = #{subImgName}
+        WHERE id = #{id}
+    </update>
+</mapper>

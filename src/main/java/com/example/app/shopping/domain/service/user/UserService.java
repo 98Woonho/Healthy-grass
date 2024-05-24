@@ -4,12 +4,14 @@ import com.example.app.shopping.domain.dto.UserDto;
 import com.example.app.shopping.domain.mapper.UserMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -30,6 +32,7 @@ public class UserService {
         } else {
             UserDto result = UserDto.builder()
                     .id(userDto.getId())
+                    .name(userDto.getName())
                     .phone(userDto.getPhone())
                     .email(userDto.getEmail())
                     .pwChkAns(userDto.getPwChkAns())

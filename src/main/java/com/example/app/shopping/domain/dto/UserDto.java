@@ -18,6 +18,9 @@ public class UserDto {
     @Pattern(regexp = "^[A-Za-z0-9]{6,16}$")
     private String id;
 
+    @NotBlank(message = "이름을 입력하세요")
+    private String name;
+
     @NotBlank(message = "비밀번호를 입력하세요")
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$")
     private String password;
@@ -34,7 +37,7 @@ public class UserDto {
     @NotBlank(message = "주소를 입력하세요")
     private String streetAdr;
 
-    @NotBlank
+
     private String detailAdr;
 
     @NotBlank(message = "전화번호를 입력하세요")

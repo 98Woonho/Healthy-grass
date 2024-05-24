@@ -1,4 +1,32 @@
 const joinForm = document.joinForm;
+const authBtn = document.querySelector('.auth_btn');
+
+IMP.init("imp40654467"); // IMPort 고객사 식별코드
+
+let success = false;
+
+authBtn.addEventListener('click', function (e){
+    e.preventDefault();
+
+    IMP.certification({
+        pg: "inicis_unified",
+        merchant_uid: "test_lwk1pvez",
+    }, function (resp){
+        const imp_uid = resp.imp_uid;
+        success = resp.success;
+
+        axios.get("/getAuthInfo/"+imp_uid)
+            .then(response =>{
+                const nameInput = joinForm.name;
+                const phoneInput = joinForm.phone;
+
+                nameInput.value = response.data.response.name;
+                phoneInput.value = response.data.response.phone;
+            })
+            .catch(error =>{console.log(error)})
+    });
+
+})
 
 joinForm.id.addEventListener('input', function () {
     if (joinForm.id.classList.contains("confirmed")) {
@@ -59,6 +87,7 @@ joinForm.searchAddressBtn.addEventListener('click', function () {
 // 유효성 검사 함수
 function validateForm() {
     const idInput = joinForm.id.value.trim();
+    const nameInput = joinForm.name.value.trim();
     const passwordInput = joinForm.password.value.trim();
     const pwChkHintInput = joinForm.pwChkHint.value.trim();
     const pwChkAnsInput = joinForm.pwChkAns.value.trim();
@@ -74,8 +103,8 @@ function validateForm() {
     const zipcodeErrorMessage = document.querySelector('.zipcodeError');
     const streetAdrErrorMessage = document.querySelector('.streetAdrError');
     const phoneErrorMessage = document.querySelector('.phoneError');
-    const emailErrorMessage = document.querySelector('.email');
-
+    const emailErrorMessage = document.querySelector('.emailError');
+    const nameErrorMessage = document.querySelector('.nameError');
     // 아이디 유효성 검사
 
     if (idInput === "") {
@@ -87,6 +116,14 @@ function validateForm() {
     } else {
         idErrorMessage.innerText = ""; // 오류 메시지를 지워줌
     }
+// 이름 유효성 검사
+    if (nameInput === "") {
+        nameErrorMessage.innerText = "이름을 입력하세요";
+        nameErrorMessage.style.color = "red";
+    } else {
+        nameErrorMessage.innerText = ""; // 오류 메시지를 지워줌
+    }
+
 
 // 비밀번호 유효성 검사
     if (passwordInput === "") {
@@ -174,9 +211,12 @@ joinBtn.addEventListener('click', function (e) {
             alert('유효성 체크를 진행하세요')
         } else if(!joinForm.id.classList.contains("confirmed")) {
             alert("유저 중복 확인을 진행해주세요.");
+        } else if(success === false){
+            alert("본인인증 확인을 진행해주세요.")
         } else {
             const data = {
                 id: joinForm.id.value,
+                name: joinForm.name.value,
                 password: joinForm.password.value,
                 pwChkHint: joinForm.pwChkHint.value,
                 pwChkAns: joinForm.pwChkAns.value,

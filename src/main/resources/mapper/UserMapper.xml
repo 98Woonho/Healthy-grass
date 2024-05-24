@@ -22,8 +22,8 @@
     </select>
 
     <insert id="insertUser" parameterType="com.example.app.shopping.domain.dto.UserDto">
-        INSERT INTO user (id, password, pwChkHint, pwChkAns, zipcode, streetAdr, detailAdr, phone, email, role, provider, providerId)
-        VALUES (#{id}, #{password}, #{pwChkHint}, #{pwChkAns}, #{zipcode}, #{streetAdr}, #{detailAdr}, #{phone}, #{email}, #{role}, #{provider}, #{providerId})
+        INSERT INTO user (id, name, password, pwChkHint, pwChkAns, zipcode, streetAdr, detailAdr, phone, email, role, provider, providerId)
+        VALUES (#{id}, #{name}, #{password}, #{pwChkHint}, #{pwChkAns}, #{zipcode}, #{streetAdr}, #{detailAdr}, #{phone}, #{email}, #{role}, #{provider}, #{providerId})
     </insert>
 
     <update id="updateUser" parameterType="com.example.app.shopping.domain.dto.UserDto">

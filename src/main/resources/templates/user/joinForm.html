@@ -9,12 +9,14 @@
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
     <!-- daum 주소 찾기 cdn -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <!-- js -->
     <script defer src="/js/user/joinForm.js"></script>
     <title>회원가입 폼</title>
 </head>
 <body>
-    <div class="container">
+<button class="auth_btn">인증요청</button>
+<div class="container">
     <h2>회원가입</h2>
     <form class="joinForm" name="joinForm" method="post">
         <div class="form-group">
@@ -26,8 +28,14 @@
             <span class="idError"></span>
         </div>
         <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" required disabled>
+            <span class="nameError"></span>
+        </div>
+        <div class="form-group">
             <label for="password">비밀번호</label>
-            <input type="password" id="password" name="password" required placeholder="비밀번호는 영문, 숫자, 특수문자가 1개 이상 포함된 8~15자여야 합니다.">
+            <input type="password" id="password" name="password" required
+                   placeholder="비밀번호는 영문, 숫자, 특수문자가 1개 이상 포함된 8~15자여야 합니다.">
             <span class="passwordError"></span>
         </div>
         <div class="form-group">
@@ -69,19 +77,19 @@
         </div>
         <div class="form-group">
             <label for="phone">전화번호</label>
-            <input type="text" id="phone" name="phone" oninput="PhoneRegex(this)" maxlength="13" required>
+            <input type="text" id="phone" name="phone" oninput="PhoneRegex(this)" maxlength="13" required disabled>
             <span class="phoneError"></span>
         </div>
         <div class="form-group">
             <label for="email">이메일</label>
             <input type="email" id="email" name="email" required>
-            <span class="email"></span>
+            <span class="emailError"></span>
         </div>
         <th:block>
             <input type="hidden" name="role">
         </th:block>
         <button class="joinBtn">가입하기</button>
     </form>
-    </div>
+</div>
 </body>
 </html>

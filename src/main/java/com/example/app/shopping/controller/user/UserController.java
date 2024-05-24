@@ -97,7 +97,7 @@ public class UserController {
         ResponseEntity<PortOneAuthInfoResponse> response = rt.exchange(url, HttpMethod.GET,entity,PortOneAuthInfoResponse.class);
         System.out.println(response.getBody());
 
-        security = "security";
+        security = "security"; // 회원가입 보안설정
 
         return response.getBody();
     }

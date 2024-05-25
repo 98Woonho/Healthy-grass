@@ -8,7 +8,7 @@ let success = false;
 authBtn.addEventListener('click', function (e){
     e.preventDefault();
 
-    IMP.certification({
+    IMP.certification({ //본인인증이 완료되면 resp에 success를 담아준다.
         pg: "inicis_unified",
         merchant_uid: "test_lwk1pvez",
     }, function (resp){
@@ -25,7 +25,6 @@ authBtn.addEventListener('click', function (e){
             })
             .catch(error =>{console.log(error)})
     });
-
 })
 
 joinForm.id.addEventListener('input', function () {

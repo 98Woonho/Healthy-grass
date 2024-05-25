@@ -16,11 +16,11 @@ public class PrincipalDetailsService implements UserDetailsService {
     @Autowired
     private UserMapper userMapper;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("principal DetailService : " + username);
-        UserDto userDto = userMapper.getUserById(username);
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        log.info("principal DetailService : " + id);
+        UserDto userDto = userMapper.getUserById(id);
         if (userDto == null){
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(id);
         }return new PrincipalDetails(userDto);
     }
 }

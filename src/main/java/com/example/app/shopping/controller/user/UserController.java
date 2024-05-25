@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
@@ -29,14 +30,15 @@ public class UserController {
     private String security;
 
     @GetMapping("/user/loginForm")
-    public void getLoginForm(Authentication authentication){
-        System.out.println("authentication" + authentication );
+    public String getLoginForm(@RequestParam(value = "exception", required = false) String exception,
+                             Authentication authentication, Model model) {
+        if (authentication != null) {
+            return "redirect:/";
+        }
+        model.addAttribute("exception", exception);
+        return "user/loginForm";
     }
-    @PostMapping("/user/login")
-    public String postLogin(){
 
-        return "redirect:/";
-    }
     //엑세스 토큰 받기
     @GetMapping("/user/getToken")
     public @ResponseBody void getAcessToken(){

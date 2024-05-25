@@ -1,23 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+    <script defer src="/js/user/loginForm.js"></script>
 </head>
 <body>
 <div class="login-container">
     <h2>Login</h2>
-    <form action="/user/login" method="post">
+    <form action="/user/login" class="loginForm" method="post">
         <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required> <!-- 시큐리티 설정시 name을 username으로 설정해준다 -->
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" required>
+            <!-- 시큐리티 설정시 기본 id가 username으로 설정이됨 Security config에서 변경가능 -->
         </div>
         <div>
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required> <!-- 시큐리티 설정시 password를 password로 설정해준다 -->
+            <input type="password" id="password" name="password" required>
+            <!-- 시큐리티 설정시 기본 password가 password로 설정됨 Security config에서 변경가능 -->
         </div>
         <div>
-            <button type="submit">Login</button>
+            <label for="checkedId">아이디 기억하기</label>
+            <input type="checkbox" name="checkedId" id="checkedId">
+        </div>
+        <div>
+            <label for="rememberMe">로그인 기능 유지</label>
+            <input type="checkbox" name="rememberMe" id="rememberMe">
+        </div>
+
+        <th:block th:if="${exception != null}">
+            <div class="exception-message" th:text="${exception}"></div>
+        </th:block>
+        <div>
+            <button class="loginBtn">로그인</button>
         </div>
     </form>
 </div>

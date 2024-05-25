@@ -3,8 +3,12 @@ package com.example.app.shopping.domain.service.user;
 import com.example.app.shopping.domain.dto.UserDto;
 import com.example.app.shopping.domain.mapper.UserMapper;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +24,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private boolean isUserExists(String id) {
+    public boolean isUserExists(String id) {
         UserDto selectUserById = userMapper.getUserById(id);
         //만약 유저를 조회해서 유저가 있다면 false 없다면 true 반환
         return selectUserById == null;

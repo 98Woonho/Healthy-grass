@@ -5,11 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
 public class Criteria {
-    private int pageno;	 			//현재 페이지
-    private int amount;	 			//표시할 게시물 양(10건)
-    private String type;			//	제목,작성자,게시물번호
-    private String keyword;			//	포함문자열
+    private Integer pageno;		// 현재 페이지
+    private Integer amount;	// 표시할 게시물 양(10건)
+    private String keyword;			// 포함문자열
+    private String sorting;         // 정렬 방식
+    private String majorCategory;   // 대분류
+    private String middleCategory;  // 중분류
 
     public Criteria() {
         pageno=1;
@@ -20,18 +23,16 @@ public class Criteria {
         pageno = no;
         amount =amt;
     }
-    public Criteria(String type, String keyword) {
+    public Criteria(String keyword) {
         pageno=1;
         amount=10;
 
-        this.type=type;
         this.keyword = keyword;
     }
-    public Criteria(int no,int amt,String type, String keyword) {
+    public Criteria(int no,int amt, String keyword) {
         pageno = no;
-        amount =amt;
+        amount = amt;
 
-        this.type=type;
         this.keyword = keyword;
     }
 }

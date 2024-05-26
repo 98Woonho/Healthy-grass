@@ -33,6 +33,7 @@ public class UserController {
     @GetMapping("/loginForm")
     public String getLoginForm(@RequestParam(value = "exception", required = false) String exception,
                              Authentication authentication, Model model) {
+        System.out.println("login");
         if (authentication != null) {
             return "redirect:/";
         }

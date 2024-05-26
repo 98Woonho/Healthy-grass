@@ -31,7 +31,7 @@ public class PageDto {
         totalpage =(int)Math.ceil((1.0*totalcount)/criteria.getAmount());
 
         //블럭계산
-        pagePerBlock=15;
+        pagePerBlock=5;
         totalBlock = (int)Math.ceil( (1.0*totalpage) / pagePerBlock );
         nowBlock =  (int)Math.ceil ((1.0*criteria.getPageno()) / pagePerBlock);
 

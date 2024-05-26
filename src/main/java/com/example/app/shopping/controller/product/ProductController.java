@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Controller
 public class ProductController {
-
+    
     @Autowired
     private ProductServiceImpl productService;
 
@@ -33,8 +33,8 @@ public class ProductController {
         try {
             Map<String, Object> serviceReturnVal = productService.getItems(criteria);
             model.addAttribute("success", true);
-            model.addAttribute("list", serviceReturnVal.get("list"));
-            model.addAttribute("pageDto", serviceReturnVal.get("pageDto"));
+            model.addAttribute("list", serviceReturnVal.get("list"));  // 상품 리스트 정보
+            model.addAttribute("pageDto", serviceReturnVal.get("pageDto"));  // 페이징 처리를 위한 정보
         } catch (Exception e) {
             model.addAttribute("success", false);
         }

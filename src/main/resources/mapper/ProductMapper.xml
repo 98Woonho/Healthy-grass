@@ -4,67 +4,70 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.app.shopping.domain.mapper.ProductMapper">
-
-    <select id="getProductById" resultType="com.example.app.shopping.domain.dto.ProductDto" parameterType="java.lang.Long">
-        SELECT *
-        FROM product
-        WHERE id = #{id}
-    </select>
-
-    <select id="getProductCountBySearch" resultType="int" parameterType="map">
+    <select id="selectItemsCount" parameterType="com.example.app.shopping.domain.dto.common.Criteria" resultType="int">
         SELECT COUNT(*)
-        FROM product
+        FROM product p
         <where>
-            <if test="name != null and name != ''">
-                AND name LIKE CONCAT('%', #{name}, '%')
-            </if>
-            <if test="majorCategory != null and majorCategory != ''">
-                AND majorCategory = #{majorCategory}
-            </if>
-            <if test="middleCategory != null and middleCategory != ''">
-                AND middleCategory = #{middleCategory}
+            <if test="criteria != null">
+                <if test="criteria.keyword != null and criteria.keyword != ''">
+                    AND (p.name LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                </if>
+                <if test="criteria.majorCategory != null and criteria.majorCategory != ''">
+                    AND p.majorCategory = #{criteria.majorCategory}
+                </if>
+                <if test="criteria.middleCategory != null and criteria.middleCategory != ''">
+                    AND p.middleCategory = #{criteria.middleCategory}
+                </if>
             </if>
         </where>
     </select>
 
-    <select id="getProductsBySearch" resultType="com.example.app.shopping.domain.dto.ProductDto" parameterType="map">
-        SELECT *
-        FROM product
+    <select id="selectItems" parameterType="map" resultType="map">
+        SELECT
+        p.id,
+        p.name,
+        p.price,
+        p.amount,
+        p.saleAmount,
+        p.discount,
+        p.majorCategory,
+        p.middleCategory,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        COUNT(r.id) AS reviewCount,
+        AVG(r.rating) AS averageRating
+        FROM
+        product p
+        LEFT JOIN
+        productreviewboard r ON p.id = r.Pid
         <where>
-            <if test="name != null and name != ''">
-                AND name LIKE CONCAT('%', #{name}, '%')
+            <if test="criteria.keyword != null and criteria.keyword != ''">
+                AND (p.name LIKE CONCAT('%', #{criteria.keyword}, '%'))
             </if>
-            <if test="majorCategory != null and majorCategory != ''">
-                AND majorCategory = #{majorCategory}
+            <if test="criteria.majorCategory != null and criteria.majorCategory != ''">
+                AND p.majorCategory = #{criteria.majorCategory}
             </if>
-            <if test="middleCategory != null and middleCategory != ''">
-                AND middleCategory = #{middleCategory}
+            <if test="criteria.middleCategory != null and criteria.middleCategory != ''">
+                AND p.middleCategory = #{criteria.middleCategory}
             </if>
         </where>
+        GROUP BY
+        p.id
+        ORDER BY
         <choose>
-            <when test="orderBy == 'price'">
-                ORDER BY price
+            <when test="criteria.sorting == '가격 내림차순'">
+                p.price DESC ,p.saleAmount DESC, averageRating DESC
             </when>
-            <when test="orderBy == 'name'">
-                ORDER BY name
+            <when test="criteria.sorting == '가격 오름차순'">
+                p.price ASC ,averageRating DESC, p.saleAmount DESC
             </when>
             <otherwise>
-                ORDER BY id
+                p.saleAmount DESC, averageRating DESC
             </otherwise>
         </choose>
-        LIMIT #{offset}, #{size}
+        LIMIT #{offset}, #{criteria.amount}
     </select>
 
-    <insert id="insertProduct" parameterType="com.example.app.shopping.domain.dto.ProductDto" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO product (name, price, amount, saleAmount, discount, majorCategory, middleCategory, regDate, updateDate, mainImgPath, mainImgName, subImgPath, subImgName)
-        VALUES (#{name}, #{price}, #{amount}, #{saleAmount}, #{discount}, #{majorCategory}, #{middleCategory}, #{regDate}, #{updateDate}, #{mainImgPath}, #{mainImgName}, #{subImgPath}, #{subImgName})
-    </insert>
-
-    <update id="updateProduct" parameterType="com.example.app.shopping.domain.dto.ProductDto">
-        UPDATE product
-        SET name = #{name}, price = #{price}, amount = #{amount}, saleAmount = #{saleAmount}, discount = #{discount},
-        majorCategory = #{majorCategory}, middleCategory = #{middleCategory}, regDate = #{regDate}, updateDate = #{updateDate},
-        mainImgPath = #{mainImgPath}, mainImgName = #{mainImgName}, subImgPath = #{subImgPath}, subImgName = #{subImgName}
-        WHERE id = #{id}
-    </update>
 </mapper>

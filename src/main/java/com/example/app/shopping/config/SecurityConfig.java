@@ -53,7 +53,7 @@ public class SecurityConfig {
                 logout ->{
                     logout.logoutUrl("/user/logout").permitAll(); // 로그아웃 url 지정
                     logout.addLogoutHandler(customLogoutHandler()); // 로그아웃시 customLogoutHandler 실행
-                    logout.logoutSuccessUrl("/"); // 로그아웃 성공시 이동할 url
+                    logout.logoutSuccessUrl("/user/loginForm"); // 로그아웃 성공시 이동할 url
                 }
         );
         http.rememberMe(
@@ -62,7 +62,7 @@ public class SecurityConfig {
                     rememberMe.rememberMeParameter("rememberMe"); // Remember Me 기능을 활성화하는 데 사용할 HTTP 파라미터의 이름을 지정합니다. 예를 들어, 로그인 폼에서 "Remember Me" 옵션을 선택할 때 해당 파라미터가 전송됩니다.
                     rememberMe.alwaysRemember(false); //기본적으로 로그인 유지가 항상 선택된 것처럼 동작합니다. false로 설정하면 사용자가 "Remember Me" 옵션을 선택하지 않으면 자동으로 로그인 유지를 하지 않습니다.
                     rememberMe.tokenValiditySeconds(60*60*24); // Remember Me 토큰의 유효 기간을 초 단위로 지정합니다.
-                    rememberMe.tokenRepository(tokenRepository());
+                    rememberMe.tokenRepository(tokenRepository()); //rememberMe를 테이블에 저장해서 관리합니다.
                 }
         );
         http.userDetailsService(principalDetailsService);

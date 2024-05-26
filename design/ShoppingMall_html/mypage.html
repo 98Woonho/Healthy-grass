@@ -20,7 +20,7 @@
 
         header {
             height: 200px;
-            background-color:aquamarine;
+            background-color: aquamarine;
         }
 
         main {
@@ -82,23 +82,31 @@
     </style>
 </head>
 <body>
-    <header>
-        <p class="text">헤더(메뉴, 로그인, 회원가입 등)</p>
-    </header>
-    <main>
-        <h1>마이페이지</h1>
+<header>
+    <p class="text">헤더(메뉴, 로그인, 회원가입 등)</p>
+</header>
+<main>
+    <h1>마이페이지</h1>
 
-        <div class="box1">
-            <div class="box w-300 h-1000">
-                <p class="text">마이페이지 메뉴</p>
+    <div class="box1">
+        <div class="box w-300 h-1000">
+            <p class="text">개인정보 메뉴</p>
+            <div>
+                <h2>회원정보</h2>
             </div>
-            <div class="box w-full h-1000">
-                <p class="text">메뉴 별 리스트/뷰</p>
+            <div>
+                <a href="myPage/user/searchForm">회원 정보 조회</a><br>
+                <a href="myPage/user/modifyForm">회원 정보 수정</a><br>
+                <a href="myPage/user/deleteForm">회원 정보 삭제</a><br>
             </div>
         </div>
-    </main>
-    <footer>
-        <p class="text">푸터(사이트 정보 등)</p>
-    </footer>
+        <div class="box w-full h-1000">
+            <p class="text">메뉴 별 리스트/뷰</p>
+        </div>
+    </div>
+</main>
+<footer>
+    <p class="text">푸터(사이트 정보 등)</p>
+</footer>
 </body>
 </html>

@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DataSourceConfig {
-
     @Bean
     public HikariDataSource dataSource() {
         HikariDataSource dataSource = new HikariDataSource();
@@ -17,6 +16,4 @@ public class DataSourceConfig {
         dataSource.setPassword("1234");
         return dataSource;
     }
-
-
 }

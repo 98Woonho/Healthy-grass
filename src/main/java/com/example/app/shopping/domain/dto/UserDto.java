@@ -1,6 +1,7 @@
 package com.example.app.shopping.domain.dto;
 
 
+import com.example.app.valid.PasswordMatches;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@PasswordMatches
 @Builder
 public class UserDto {
     @NotBlank(message = "Id를 입력하세요")
@@ -37,6 +39,7 @@ public class UserDto {
     @NotBlank(message = "주소를 입력하세요")
     private String streetAdr;
 
+    private String rePassword;
 
     private String detailAdr;
 

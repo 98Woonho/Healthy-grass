@@ -21,6 +21,7 @@ import java.util.Map;
 
 @Controller
 @Slf4j
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -29,7 +30,7 @@ public class UserController {
     private PortOneTokenResponse portOneTokenResponse;
     private String security;
 
-    @GetMapping("/user/loginForm")
+    @GetMapping("/loginForm")
     public String getLoginForm(@RequestParam(value = "exception", required = false) String exception,
                              Authentication authentication, Model model) {
         if (authentication != null) {
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     //엑세스 토큰 받기
-    @GetMapping("/user/getToken")
+    @GetMapping("/getToken")
     public @ResponseBody void getAcessToken(){
 
         String imp_key = "6257186181622002";
@@ -132,13 +133,13 @@ public class UserController {
     
 
     //회원가입 폼으로 이동
-    @GetMapping("/user/joinForm")
+    @GetMapping("/joinForm")
     public void getJoinForm(){
 
     }
 
     //회원가입
-    @PostMapping("/users")
+    @PostMapping("")
     @ResponseBody
     public ResponseEntity<String> join(@Valid @RequestBody UserDto userDto, BindingResult bindingResult){
         System.out.println(userDto);
@@ -154,8 +155,9 @@ public class UserController {
         System.out.println(bindingResult.hasErrors());
         return new ResponseEntity<>(userService.userJoin(userDto), HttpStatus.OK);
     }
+
     // 유저 등록시 유저 중복확인
-    @GetMapping(value = "/user/confirmUserId")
+    @GetMapping(value = "/confirmUserId")
     @ResponseBody
     public String getConfirmHotelName(@RequestParam(value = "id") String id) {
         return userService.confirmUserId(id);

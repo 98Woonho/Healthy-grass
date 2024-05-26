@@ -15,7 +15,7 @@ authBtn.addEventListener('click', function (e){
         const imp_uid = resp.imp_uid;
         success = resp.success;
 
-        axios.get("/getAuthInfo/"+imp_uid)
+        axios.get("/user/getAuthInfo/"+imp_uid)
             .then(response =>{
                 const nameInput = joinForm.name;
                 const phoneInput = joinForm.phone;
@@ -88,6 +88,7 @@ function validateForm() {
     const idInput = joinForm.id.value.trim();
     const nameInput = joinForm.name.value.trim();
     const passwordInput = joinForm.password.value.trim();
+    const rePasswordInput = joinForm.rePassword.value.trim();
     const pwChkHintInput = joinForm.pwChkHint.value.trim();
     const pwChkAnsInput = joinForm.pwChkAns.value.trim();
     const zipcodeInput = joinForm.zipcode.value.trim();
@@ -95,8 +96,10 @@ function validateForm() {
     const phoneInput = joinForm.phone.value.trim();
     const emailInput = joinForm.email.value.trim();
 
+
     const idErrorMessage = document.querySelector('.idError');
     const passwordErrorMessage = document.querySelector('.passwordError');
+    const rePasswordErrorMessage = document.querySelector('.rePasswordError');
     const pwChkHintErrorMessage = document.querySelector('.pwChkHintError');
     const pwChkAnsErrorMessage = document.querySelector('.pwChkAnsError');
     const zipcodeErrorMessage = document.querySelector('.zipcodeError');
@@ -104,6 +107,7 @@ function validateForm() {
     const phoneErrorMessage = document.querySelector('.phoneError');
     const emailErrorMessage = document.querySelector('.emailError');
     const nameErrorMessage = document.querySelector('.nameError');
+
     // 아이디 유효성 검사
 
     if (idInput === "") {
@@ -131,6 +135,9 @@ function validateForm() {
     } else if (!UserPasswordRegex.test(passwordInput)) {
         passwordErrorMessage.innerText = "비밀번호는 영문, 숫자, 특수문자가 1개 이상 포함된 8~15자여야 합니다.";
         passwordErrorMessage.style.color = "red";
+    } else if (passwordInput !== rePasswordInput){
+        rePasswordErrorMessage.innerText = "비밀번호가 일치하지 않습니다."
+        rePasswordErrorMessage.style.color = "red";
     } else {
         passwordErrorMessage.innerText = ""; // 오류 메시지를 지워줌
     }
@@ -186,7 +193,7 @@ function validateForm() {
     }
 
 
-    // 모든 필드가 유효한 경우 수정요망!!!
+    // 모든 필드가 유효한 경우
     if (idErrorMessage.innerText === "" &&
         passwordErrorMessage.innerText === "" &&
         pwChkHintErrorMessage.innerText === "" &&
@@ -194,7 +201,9 @@ function validateForm() {
         zipcodeErrorMessage.innerText === "" &&
         streetAdrErrorMessage.innerText === "" &&
         phoneErrorMessage.innerText === "" &&
-        emailErrorMessage.innerText === "" ){
+        emailErrorMessage.innerText === ""
+        && rePasswordErrorMessage.innerText === ""){
+
         return true
     } else {
         return false
@@ -210,9 +219,7 @@ joinBtn.addEventListener('click', function (e) {
             alert('유효성 체크를 진행하세요')
         } else if(!joinForm.id.classList.contains("confirmed")) {
             alert("유저 중복 확인을 진행해주세요.");
-        } else if(success === false){
-            alert("본인인증 확인을 진행해주세요.")
-        } else {
+        } {
             const data = {
                 id: joinForm.id.value,
                 name: joinForm.name.value,
@@ -223,14 +230,15 @@ joinBtn.addEventListener('click', function (e) {
                 streetAdr: joinForm.streetAdr.value,
                 detailAdr: joinForm.detailAdr.value,
                 phone: joinForm.phone.value,
-                email: joinForm.email.value
+                email: joinForm.email.value,
+                rePassword : joinForm.rePassword.value
             };
 
-            axios.post("/users", data, {headers: {"Content-Type": "application/json"}})
+            axios.post("/user", data, {headers: {"Content-Type": "application/json"}})
                 .then(resp => {
                     if (resp.data === "SUCCESS") {
                         alert("성공적으로 회원가입이 완료되었습니다.")
-                        location.href = "/";
+                        location.href = "/user/loginForm";
                     } else alert("알수없는 이유로 회원가입에 실패하였습니다.")
                 })
                 .catch(err => {

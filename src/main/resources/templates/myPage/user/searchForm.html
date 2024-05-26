@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>회원 정보조회</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <td th:text="${userDto.id}"></td>
+    </tr>
+    <tr>
+        <th>이름</th>
+        <td th:text="${userDto.name}"></td>
+    </tr>
+    <tr>
+        <th>우편번호</th>
+        <td th:text="${userDto.zipcode}"></td>
+    </tr>
+    <tr>
+        <th>주소</th>
+        <td th:text="${userDto.streetAdr}"></td>
+    </tr>
+    <tr>
+        <th>상세주소</th>
+        <td th:text="${userDto.detailAdr}"></td>
+    </tr>
+    <tr>
+        <th>연락처</th>
+        <td th:text="${userDto.phone}"></td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td th:text="${userDto.email}"></td>
+    </tr>
+</table>
+</body>
+</html>

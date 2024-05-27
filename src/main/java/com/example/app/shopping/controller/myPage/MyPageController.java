@@ -1,6 +1,6 @@
 package com.example.app.shopping.controller.myPage;
 
-import com.example.app.shopping.PrincipalDetails;
+import com.example.app.shopping.config.auth.PrincipalDetails;
 import com.example.app.shopping.domain.dto.UserDto;
 import com.example.app.shopping.domain.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;

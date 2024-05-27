@@ -86,6 +86,7 @@ public class MyPageController {
             // 삭제 시 세션과 인증 정보를 무효화하여 보안강화를 하기 위한 목적.
             SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
             logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+            return result;
         }
         return result;
     }

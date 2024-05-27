@@ -55,6 +55,10 @@ dependencies {
 	//VALIDATION
 	implementation 'org.hibernate.validator:hibernate-validator'
 	implementation 'jakarta.validation:jakarta.validation-api'
+
+	//MAIL SENDER
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 }
 
 tasks.named('test') {

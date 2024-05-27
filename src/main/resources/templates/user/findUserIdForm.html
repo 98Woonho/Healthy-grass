@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>아이디 찾기 폼</title>
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+    <!-- js -->
+    <script defer src="/js/user/findUserIdForm.js"></script>
+</head>
+<body>
+<h2>아이디 찾기</h2>
+<form class="findUserId" name="findUserIdForm" method="post">
+    <div>
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="email">이메일</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <button class="findUserIdBtn">아이디 찾기</button>
+</form>
+</body>
+</html>

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +28,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
 
     private PortOneTokenResponse portOneTokenResponse;
     private String security;
@@ -162,5 +165,20 @@ public class UserController {
     @ResponseBody
     public String getConfirmHotelName(@RequestParam(value = "id") String id) {
         return userService.confirmUserId(id);
+    }
+
+    // 유저 아이디 찾기폼으로 이동
+    @GetMapping("/findUserIdForm")
+    public void findUserIdForm(){
+        
+    }
+
+    @PostMapping("/findUserId")
+    @ResponseBody
+    public String findUserId(@RequestBody UserDto userDto){
+        System.out.println(userDto);
+        System.out.println(userDto.getName());
+        System.out.println(userDto.getEmail());
+        return userService.sendEmailUserId(userDto);
     }
 }

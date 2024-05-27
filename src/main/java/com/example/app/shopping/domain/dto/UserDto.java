@@ -1,7 +1,7 @@
 package com.example.app.shopping.domain.dto;
 
 
-import com.example.app.valid.PasswordMatches;
+import com.example.app.shopping.valid.PasswordMatches;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

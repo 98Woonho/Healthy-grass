@@ -38,4 +38,10 @@
         DELETE FROM user WHERE id = #{id}
     </delete>
 
+    <select id="findUserIdByEmailAndUserName" resultType="string">
+        SELECT id
+        FROM user
+        WHERE email = #{email}
+          AND name = #{name}
+    </select>
 </mapper>

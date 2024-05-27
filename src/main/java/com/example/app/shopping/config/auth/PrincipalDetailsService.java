@@ -1,6 +1,6 @@
-package com.example.app.shopping.domain.service.user;
+package com.example.app.shopping.config.auth;
 
-import com.example.app.shopping.PrincipalDetails;
+import com.example.app.shopping.config.auth.PrincipalDetails;
 import com.example.app.shopping.domain.dto.UserDto;
 import com.example.app.shopping.domain.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;

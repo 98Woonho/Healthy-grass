@@ -2,6 +2,29 @@ const findUserIdForm = document.querySelector('.findUserId');
 const findUserIdBtn = document.querySelector('.findUserIdBtn');
 const EmailRegex = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", "i");
 
+function check(element) {
+    const findByEmail = document.querySelector("#findByEmail");
+    const findByPhone = document.querySelector("#findByPhone");
+    const phoneDiv = document.querySelector("#phoneDiv");
+    const emailDiv = document.querySelector("#emailDiv");
+    const findId = document.getElementsByName("findId");
+
+    findId.forEach((e) =>{
+        e.checked = false;
+    })
+    element.checked = true;
+
+    if (findByEmail.checked){
+        emailDiv.classList.remove("hidden");
+        phoneDiv.classList.add("hidden");
+    } else {
+        emailDiv.classList.add("hidden");
+        phoneDiv.classList.remove("hidden")
+    }
+}
+
+
+
 
 findUserIdBtn.addEventListener('click', function (e){
     e.preventDefault();

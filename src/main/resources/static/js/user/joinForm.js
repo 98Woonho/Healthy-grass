@@ -217,8 +217,10 @@ joinBtn.addEventListener('click', function (e) {
         console.log(validateForm());
         if (validateForm() === false && joinForm.id.classList.contains("confirmed")) {
             alert('유효성 체크를 진행하세요')
+            return;
         } else if(!joinForm.id.classList.contains("confirmed")) {
             alert("유저 중복 확인을 진행해주세요.");
+            return;
         } {
             const data = {
                 id: joinForm.id.value,

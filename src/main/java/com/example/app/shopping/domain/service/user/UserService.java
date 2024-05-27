@@ -7,7 +7,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.List;
 
@@ -43,11 +42,8 @@ public class UserService {
                     .detailAdr(userDto.getDetailAdr())
                     .role("ROLE_USER")
                     .build();
-            if (userMapper.insertUser(result) > 0) {
                 userMapper.insertUser(result);
                 return "SUCCESS";
-            }
-            return "FAILURE_JOIN";
         }
     }
 
@@ -75,30 +71,25 @@ public class UserService {
                     .detailAdr(userDto.getDetailAdr())
                     .role("ROLE_USER")
                     .build();
-            if (userMapper.updateUser(result) > 0) {
                 userMapper.updateUser(result);
                 return "SUCCESS";
-            }
         }
         return "FAILURE_UPDATE";
     }
 
     public String deleteUser(String id) {
         if (id != null) {
-            if (userMapper.deleteUserById(id) > 0) { // delete가 성공했을 시
                 userMapper.deleteUserById(id);
                 return "SUCCESS";
-            }
         }
         return "FAILURE_DELETE_NOT_FIND_USER";
     }
 
     public String sendEmailUserId(UserDto userDto) {
-        if (userDto != null && userMapper.findUserIdByEmailAndUserName(userDto.getEmail(), userDto.getName()) == null) {
+        if (userDto == null || userMapper.findUserIdByEmailAndUserName(userDto.getEmail(), userDto.getName()).isEmpty()) {
             return "FAILURE_NOT_FOUND_USER_ID";
         } else {
             List<String> userIdByEmailAndUserName = userMapper.findUserIdByEmailAndUserName(userDto.getEmail(), userDto.getName());
-            System.out.println(userIdByEmailAndUserName);
 
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(userDto.getEmail());

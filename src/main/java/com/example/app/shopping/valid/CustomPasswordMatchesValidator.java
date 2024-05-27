@@ -1,4 +1,4 @@
-package com.example.app.valid;
+package com.example.app.shopping.valid;
 
 import com.example.app.shopping.domain.dto.UserDto;
 import jakarta.validation.ConstraintValidator;

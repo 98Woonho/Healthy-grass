@@ -1,6 +1,6 @@
 package com.example.app.shopping.config;
 
-import com.example.app.shopping.domain.service.user.PrincipalDetailsService;
+import com.example.app.shopping.config.auth.PrincipalDetailsService;
 import com.example.app.shopping.handler.CustomLoginFailureHandler;
 import com.example.app.shopping.handler.CustomLogoutHandler;
 import org.springframework.beans.factory.annotation.Autowired;

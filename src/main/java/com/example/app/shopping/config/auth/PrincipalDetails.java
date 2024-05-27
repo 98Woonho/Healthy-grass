@@ -1,4 +1,4 @@
-package com.example.app.shopping;
+package com.example.app.shopping.config.auth;
 
 import com.example.app.shopping.domain.dto.UserDto;
 import lombok.AllArgsConstructor;

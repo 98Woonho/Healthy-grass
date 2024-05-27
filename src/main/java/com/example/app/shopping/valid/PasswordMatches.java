@@ -1,4 +1,4 @@
-package com.example.app.valid;
+package com.example.app.shopping.valid;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

@@ -165,15 +165,32 @@ public class UserController {
         return userService.confirmUserId(id);
     }
 
-    // 유저 아이디 찾기폼으로 이동
+    // 유저 아이디 찾기 폼으로 이동
     @GetMapping("/findUserIdForm")
     public void findUserIdForm(){
         
     }
+    //유저 페스워드 찾기 폼으로 이동
+    @GetMapping("/findUserPasswordForm")
+    public void findUserPasswordForm(){
 
-    @PostMapping("/findUserId")
+    }
+    // 유저 이메일로 아이디 찾기
+    @PostMapping("/findUserIdByEmail")
     @ResponseBody
-    public String findUserId(@RequestBody UserDto userDto){
-        return userService.sendEmailUserId(userDto);
+    public String findUserIdByEmail(@RequestBody UserDto userDto){
+        return userService.findUserIdByEmailAndUserName(userDto);
+    }
+    // 유저 휴대폰번호로 아이디 찾기
+    @PostMapping("/findUserIdByPhone")
+    @ResponseBody
+    public String findUserIdByPhone(@RequestBody UserDto userDto){
+        return userService.findUserIdByPhoneAndUserName(userDto);
+    }
+    //유저 이메일로 랜덤값 전달해서 비밀번호 찾기
+    @PostMapping("/findUserPasswordByEmailAsRandomValue")
+    @ResponseBody
+    public String findUserPasswordByEmail(@RequestBody UserDto userDto){
+        return userService.findUserPasswordByEmailAndUserIdAsRandomValue(userDto);
     }
 }

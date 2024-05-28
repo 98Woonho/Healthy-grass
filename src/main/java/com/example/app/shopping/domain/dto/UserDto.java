@@ -27,19 +27,13 @@ public class UserDto {
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$")
     private String password;
 
-    @NotBlank(message = "비밀번호 확인 질문 입력하세요")
-    private String pwChkHint;
-
-    @NotBlank(message = "비밀번호 확인 답변을 입력하세요")
-    private String pwChkAns;
+    private String rePassword;
 
     @NotBlank(message = "우편번호를 입력하세요")
     private String zipcode;
 
     @NotBlank(message = "주소를 입력하세요")
     private String streetAdr;
-
-    private String rePassword;
 
     private String detailAdr;
 

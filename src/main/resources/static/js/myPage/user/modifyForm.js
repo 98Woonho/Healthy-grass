@@ -34,8 +34,6 @@ modifyForm.searchAddressBtn.addEventListener('click', function () {
 function validateForm() {
     const passwordInput = modifyForm.password.value.trim();
     const rePasswordInput = modifyForm.rePassword.value.trim();
-    const pwChkHintInput = modifyForm.pwChkHint.value.trim();
-    const pwChkAnsInput = modifyForm.pwChkAns.value.trim();
     const zipcodeInput = modifyForm.zipcode.value.trim();
     const streetAdrInput = modifyForm.streetAdr.value.trim();
     const emailInput = modifyForm.email.value.trim();
@@ -43,8 +41,6 @@ function validateForm() {
 
     const passwordErrorMessage = document.querySelector('.passwordError');
     const rePasswordErrorMessage = document.querySelector('.rePasswordError');
-    const pwChkHintErrorMessage = document.querySelector('.pwChkHintError');
-    const pwChkAnsErrorMessage = document.querySelector('.pwChkAnsError');
     const zipcodeErrorMessage = document.querySelector('.zipcodeError');
     const streetAdrErrorMessage = document.querySelector('.streetAdrError');
     const emailErrorMessage = document.querySelector('.emailError');
@@ -64,22 +60,6 @@ function validateForm() {
         rePasswordErrorMessage.innerText = ""; // 오류 메시지를 지워줌
     }
 
-// 비밀번호 확인 질문 유효성 검사
-    if (pwChkHintInput === "") {
-        pwChkHintErrorMessage.innerText = "비밀번호 확인 질문을 입력하세요";
-        pwChkHintErrorMessage.style.color = "red";
-    } else {
-        pwChkHintErrorMessage.innerText = ""; // 오류 메시지를 지워줌
-    }
-
-// 비밀번호 확인 답변 유효성 검사
-    if (pwChkAnsInput === "") {
-        pwChkAnsErrorMessage.innerText = "비밀번호 확인 답변을 입력하세요";
-        pwChkAnsErrorMessage.style.color = "red";
-    } else {
-        pwChkAnsErrorMessage.innerText = ""; // 오류 메시지를 지워줌
-    }
-
 // 우편번호 유효성 검사
     if (zipcodeInput === "") {
         zipcodeErrorMessage.innerText = "우편번호를 입력하세요";
@@ -96,6 +76,7 @@ function validateForm() {
         streetAdrErrorMessage.innerText = ""; // 오류 메시지를 지워줌
     }
 
+    //이메일 유효성 검사
     if (emailInput === "") {
         emailErrorMessage.innerText = "이메일을 입력하세요";
         emailErrorMessage.style.color = "red";
@@ -109,8 +90,6 @@ function validateForm() {
 
     // 모든 필드가 유효한 경우
     if (passwordErrorMessage.innerText === "" &&
-        pwChkHintErrorMessage.innerText === "" &&
-        pwChkAnsErrorMessage.innerText === "" &&
         zipcodeErrorMessage.innerText === "" &&
         streetAdrErrorMessage.innerText === "" &&
         emailErrorMessage.innerText === "" &&
@@ -133,14 +112,12 @@ modifyBtn.addEventListener('click', function (e) {
                 id: modifyForm.id.value,
                 name: modifyForm.name.value,
                 password: modifyForm.password.value,
-                pwChkHint: modifyForm.pwChkHint.value,
-                pwChkAns: modifyForm.pwChkAns.value,
+                rePassword : modifyForm.rePassword.value,
                 zipcode: modifyForm.zipcode.value,
                 streetAdr: modifyForm.streetAdr.value,
                 detailAdr: modifyForm.detailAdr.value,
                 phone: modifyForm.phone.value,
-                email: modifyForm.email.value,
-                rePassword : modifyForm.rePassword.value
+                email: modifyForm.email.value
             };
 
             axios.post("/myPage/user/modify", data, {headers: {"Content-Type": "application/json"}})

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class UserService {
@@ -19,10 +20,43 @@ public class UserService {
     @Autowired
     JavaMailSender javaMailSender;
 
+    /**
+     * 지정된 범위의 랜덤 숫자를 생성하여 반환하는 함수.
+     *
+     * @param length 생성할 랜덤 숫자의 자릿수
+     * @param min    최소값 (포함)
+     * @param max    최대값 (포함)
+     * @return 랜덤 숫자
+     */
+
+    private static String RandomNumber(int length, int min, int max) {
+        Random random = new Random();
+        StringBuilder randomNumberBuilder = new StringBuilder();
+
+        // 맨 앞에 0이 오지 않도록 처리
+        randomNumberBuilder.append(random.nextInt(max - min) + min + 1);
+
+        // 나머지 자리 생성
+        for (int i = 1; i < length; i++) {
+            randomNumberBuilder.append(random.nextInt(10));
+        }
+
+        return randomNumberBuilder.toString();
+    }
+
     public boolean isUserExists(String id) {
         UserDto selectUserById = userMapper.getUserById(id);
         //만약 유저를 조회해서 유저가 있다면 false 없다면 true 반환
         return selectUserById == null;
+    }
+
+    // 전화번호 형식을 변환하는 메서드
+    public String formatPhoneNumber(String phoneNumber) {
+        if (phoneNumber.length() == 11) { // 전화번호가 11자리인지 확인
+            return phoneNumber.replaceFirst("(\\d{3})(\\d{4})(\\d{4})", "$1-$2-$3");
+        }
+        // 유효한 전화번호가 아닐 경우 원래 값을 반환하거나 예외를 처리할 수 있음
+        return phoneNumber;
     }
 
     public String userJoin(UserDto userDto) {
@@ -32,18 +66,16 @@ public class UserService {
             UserDto result = UserDto.builder()
                     .id(userDto.getId())
                     .name(userDto.getName())
-                    .phone(userDto.getPhone())
+                    .phone(formatPhoneNumber(userDto.getPhone()))
                     .email(userDto.getEmail())
-                    .pwChkAns(userDto.getPwChkAns())
-                    .pwChkHint(userDto.getPwChkHint())
                     .password(passwordEncoder.encode(userDto.getPassword()))
                     .streetAdr(userDto.getStreetAdr())
                     .zipcode(userDto.getZipcode())
                     .detailAdr(userDto.getDetailAdr())
                     .role("ROLE_USER")
                     .build();
-                userMapper.insertUser(result);
-                return "SUCCESS";
+            userMapper.insertUser(result);
+            return "SUCCESS";
         }
     }
 
@@ -63,44 +95,74 @@ public class UserService {
                     .name(userDto.getName())
                     .phone(userDto.getPhone())
                     .email(userDto.getEmail())
-                    .pwChkAns(userDto.getPwChkAns())
-                    .pwChkHint(userDto.getPwChkHint())
                     .password(passwordEncoder.encode(userDto.getPassword()))
                     .streetAdr(userDto.getStreetAdr())
                     .zipcode(userDto.getZipcode())
                     .detailAdr(userDto.getDetailAdr())
                     .role("ROLE_USER")
                     .build();
-                userMapper.updateUser(result);
-                return "SUCCESS";
+            userMapper.updateUser(result);
+            return "SUCCESS";
         }
         return "FAILURE_UPDATE";
     }
 
+    String userid = null;
+
     public String deleteUser(String id) {
         if (id != null) {
-                userMapper.deleteUserById(id);
-                return "SUCCESS";
+            userMapper.deleteUserById(id);
+            return "SUCCESS";
         }
         return "FAILURE_DELETE_NOT_FIND_USER";
     }
 
-    public String sendEmailUserId(UserDto userDto) {
-        if (userDto == null || userMapper.findUserIdByEmailAndUserName(userDto.getEmail(), userDto.getName()).isEmpty()) {
+    public String findUserIdByEmailAndUserName(UserDto userDto) {
+        List<String> userIdByEmailAndUserName = userMapper.findUserIdByEmailAndUserName(userDto.getEmail(), userDto.getName());
+        if (userIdByEmailAndUserName.isEmpty()) {
             return "FAILURE_NOT_FOUND_USER_ID";
         } else {
-            List<String> userIdByEmailAndUserName = userMapper.findUserIdByEmailAndUserName(userDto.getEmail(), userDto.getName());
+            userIdByEmailAndUserName.forEach(user -> {
+                userid = user;
+            });
+        }
+        return userid;
+    }
 
+    public String findUserIdByPhoneAndUserName(UserDto userDto) {
+        List<String> userIdByPhoneAndUserName = userMapper.findUserIdByPhoneAndUserName(userDto.getPhone(), userDto.getName());
+        if (userIdByPhoneAndUserName.isEmpty()) {
+            return "FAILURE_NOT_FOUND_USER_ID";
+        } else {
+            userIdByPhoneAndUserName.forEach(user -> {
+                userid = user;
+            });
+        }
+        return userid;
+    }
+    String randomSixNumber = null;
+    public String findUserPasswordByEmailAndUserIdAsRandomValue(UserDto userDto) {
+        String userPasswordByEmailAndUserId = userMapper.findUserPasswordByEmailAndUserId(userDto.getEmail(), userDto.getId());
+        if (userPasswordByEmailAndUserId == null){
+            return "FAILURE_NOT_FOUND_USER_PASSWORD";
+        } else {
+            String randomNumber = RandomNumber(6, 1, 100);
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(userDto.getEmail());
             message.setSubject("[쇼핑몰]");
-            message.setText("아이디는 : " + userIdByEmailAndUserName + "입니다."); // 보낼 텍스트
+            message.setText(randomNumber); //랜덤 숫자 6개
 
             //메일발송
             javaMailSender.send(message);
+            randomSixNumber = randomNumber;
             return "SUCCESS";
         }
     }
-}
 
+//    public String 비교(String code) {
+//
+//
+//    }
+
+}
 

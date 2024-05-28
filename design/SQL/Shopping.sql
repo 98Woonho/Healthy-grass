@@ -492,3 +492,26 @@ UNLOCK TABLES;
 
 
 -- Dump completed on 2024-05-26 17:31:00
+
+
+
+
+CREATE TABLE `shopping`.`productMajorCategory` (
+	name VARCHAR(255) NOT NULL PRIMARY KEY
+);
+
+INSERT INTO `shopping`.`productMajorCategory`
+VALUES ('테스트1'),('테스트2'),('테스트3'),('테스트4'),('테스트5');
+
+
+
+
+
+CREATE TABLE `shopping`.`productMiddleCategory` (
+	name VARCHAR(255) NOT NULL PRIMARY KEY,
+    productMajorCategory_name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (productMajorCategory_name) REFERENCES productMajorCategory(name)
+);
+
+INSERT INTO `shopping`.`productMiddleCategory`
+VALUES ('테스트1-1','테스트1'),('테스트1-2','테스트1'),('테스트1-3','테스트1'),('테스트1-4','테스트1'),('테스트1-5','테스트1'),('테스트2-1','테스트2'),('테스트2-2','테스트2'),('테스트2-3','테스트2'),('테스트2-4','테스트2'),('테스트2-5','테스트2'),('테스트3-1','테스트3'),('테스트3-2','테스트3'),('테스트3-3','테스트3'),('테스트3-4','테스트3'),('테스트3-5','테스트3'),('테스트4-1','테스트4'),('테스트4-2','테스트4'),('테스트4-3','테스트4'),('테스트4-4','테스트4'),('테스트4-5','테스트4'),('테스트5-1','테스트5'),('테스트5-2','테스트5'),('테스트5-3','테스트5'),('테스트5-4','테스트5'),('테스트5-5','테스트5');

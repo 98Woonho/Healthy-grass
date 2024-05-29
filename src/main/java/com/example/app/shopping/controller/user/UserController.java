@@ -161,7 +161,7 @@ public class UserController {
     // 유저 등록시 유저 중복확인
     @GetMapping(value = "/confirmUserId")
     @ResponseBody
-    public String getConfirmHotelName(@RequestParam(value = "id") String id) {
+    public String getConfirmUserId(@RequestParam(value = "id") String id) {
         return userService.confirmUserId(id);
     }
 

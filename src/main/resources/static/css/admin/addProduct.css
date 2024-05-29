@@ -98,7 +98,11 @@ main {
 }
 
 .add-product-form-right label {
-    width: 100px;
+    width: 130px;
+}
+
+#majorCategory {
+    pointer-events: none; /* 요소가 마우스 이벤트에 반응하지 않음 */
 }
 
 footer {

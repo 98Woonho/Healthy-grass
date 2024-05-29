@@ -31,6 +31,11 @@
         role = #{role}, provider = #{provider}, providerId = #{providerId}
         WHERE id = #{id}
     </update>
+    <update id="updateUserPassword" parameterType="String">
+        UPDATE user
+        SET password = #{password}
+        WHERE id = #{id} <!-- userId가 어떤 필드인지 모르겠어서 가정한 것입니다 -->
+    </update>
 
     <delete id="deleteUserById">
         DELETE FROM user WHERE id = #{id}
@@ -54,6 +59,6 @@
         SELECT password
         FROM user
         WHERE email = #{email}
-          AND id = #{Id}
+          AND id = #{id}
     </select>
 </mapper>

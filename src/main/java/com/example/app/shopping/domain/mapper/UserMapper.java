@@ -16,6 +16,9 @@ public interface UserMapper {
 
     int updateUser(UserDto user);
 
+    int updateUserPassword(@Param("password") String password,
+                           @Param("id") String id);
+
     int deleteUserById(@Param("id") String id);
 
     List<String> findUserIdByEmailAndUserName(@Param("email") String id,

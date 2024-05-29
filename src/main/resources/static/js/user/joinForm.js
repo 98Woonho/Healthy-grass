@@ -15,8 +15,9 @@ authBtn.addEventListener('click', function (e){
         const imp_uid = resp.imp_uid;
         success = resp.success;
 
-        axios.get("/user/getAuthInfo/"+imp_uid)
+        axios.get("/user/AuthInfo/"+imp_uid)
             .then(response =>{
+
                 const nameInput = joinForm.name;
                 const phoneInput = joinForm.phone;
 

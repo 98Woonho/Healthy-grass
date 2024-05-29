@@ -34,7 +34,7 @@ public class UserController {
     @GetMapping("/loginForm")
     public String getLoginForm(@RequestParam(value = "exception", required = false) String exception,
                              Authentication authentication, Model model) {
-        System.out.println("login");
+        System.out.println("로그인!!!");
         if (authentication != null) {
             return "redirect:/";
         }
@@ -43,8 +43,8 @@ public class UserController {
     }
 
     //엑세스 토큰 받기
-    @GetMapping("/getToken")
-    public @ResponseBody void getAcessToken(){
+    @GetMapping("/token")
+    public @ResponseBody void AccessToken(){
 
         String imp_key = "6257186181622002";
         String imp_secret = "LFmdkrDK2syh8Z4YCr7XoiVvDs5IRSAMHYAS43i4Jdy7FVSMKxGKCYMcYf5C7OWpsYXkdQUUufqHWz33";
@@ -81,10 +81,10 @@ public class UserController {
         public TokenResponse response;
     }
     // 인증된 사용자 정보 가져오기
-    @GetMapping(value = "/getAuthInfo/{imp_uid}",produces = MediaType.APPLICATION_JSON_VALUE) //인증하면 imp_uid를 받아올 수 있음 받아온 값을 사용
-    public @ResponseBody PortOneAuthInfoResponse getAuthInfo(@PathVariable("imp_uid")String imp_uid){
-        getAcessToken();// 엑세스 토큰 가져오기
-        log.info("Get/portOne/getAuthInfo" + imp_uid);
+    @GetMapping(value = "/AuthInfo/{imp_uid}",produces = MediaType.APPLICATION_JSON_VALUE) //인증하면 imp_uid를 받아올 수 있음 받아온 값을 사용
+    public @ResponseBody PortOneAuthInfoResponse AuthInfo(@PathVariable("imp_uid")String imp_uid){
+        AccessToken();// 엑세스 토큰 가져오기
+        log.info("Get/portOne/AuthInfo" + imp_uid);
         String url = "https://api.iamport.kr/certifications/"+imp_uid;
         //header
         HttpHeaders headers = new HttpHeaders();
@@ -136,7 +136,7 @@ public class UserController {
 
     //회원가입 폼으로 이동
     @GetMapping("/joinForm")
-    public void getJoinForm(){
+    public void JoinForm(){
 
     }
 
@@ -187,10 +187,24 @@ public class UserController {
     public String findUserIdByPhone(@RequestBody UserDto userDto){
         return userService.findUserIdByPhoneAndUserName(userDto);
     }
-    //유저 이메일로 랜덤값 전달해서 비밀번호 찾기
+    //유저 이메일로 랜덤값 전달해서 비밀번호 전송받기
     @PostMapping("/findUserPasswordByEmailAsRandomValue")
     @ResponseBody
     public String findUserPasswordByEmail(@RequestBody UserDto userDto){
         return userService.findUserPasswordByEmailAndUserIdAsRandomValue(userDto);
     }
+    // 유저 이메일 랜덤값 전달받아서 인증된 유저에게 비밀번호 코드 전달
+    @PostMapping("/passwordAuthenticationCodeCheck")
+    public ResponseEntity<String> checkPasswordAuthenticationCode(@RequestBody Map<String, String> request) {
+        String passwordCheck = request.get("passwordCheck");
+
+        if (passwordCheck == null || passwordCheck.isEmpty()) {
+            return new ResponseEntity<>("패스워드 인증코드를 입력하세요", HttpStatus.BAD_REQUEST);
+        } else if (passwordCheck.length() != 6) {
+            return new ResponseEntity<>("패스워드 인증코드는 6자리 입니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(userService.checkPasswordAuthenticationCode(request), HttpStatus.OK);
+    }
+
 }

@@ -70,4 +70,8 @@
         LIMIT #{offset}, #{criteria.amount}
     </select>
 
+    <select id="selectDistinctMajorCategoryList" resultType="String">
+        SELECT DISTINCT majorCategory
+        FROM product
+    </select>
 </mapper>

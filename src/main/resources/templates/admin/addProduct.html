@@ -6,6 +6,7 @@
 
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
     <link rel="stylesheet" th:href="@{/css/admin/addProduct.css}">
+    <script defer th:src="@{/js/admin/addProduct.js}"></script>
 
     <title>제품 등록</title>
 </head>
@@ -42,11 +43,21 @@
                         <input type="text" name="discount" id="discount" placeholder="할인율 (% 제외)">
                     </div>
                     <div>
-                        <label for="majorCategory">
-                            <select name="" id="majorCategory">
-                                <option value=""></option>
+                        <label for="majorCategory">메인 카테고리</label>
+                            <input id="majorCategory" name="majorCategory" placeholder="메인 카테고리">
+                            <select id="categorySelect" onChange="changeCategorySelect()">
+                                <th:block th:each="productMajorCategory : ${productMajorCategoryList}">
+                                    <option th:value="${productMajorCategory}" th:text="${productMajorCategory}"></option>
+                                </th:block>
+                                <option value="direct-input">직접 입력</option>
                             </select>
-                        </label>
+                    </div>
+                    <div>
+                        <label for="middleCategory">서브 카테고리</label>
+                        <select name="middleCategory" id="middleCategory">
+
+                            <option ></option>
+                        </select>
                     </div>
                 </div>
             </form>

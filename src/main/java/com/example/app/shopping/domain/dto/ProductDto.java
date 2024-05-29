@@ -13,11 +13,12 @@ public class ProductDto {
     private Long id;
     private String name;
     private Integer price;
-    private Integer amount;
-    private Integer saleAmount;
+    private Integer discountedPrice;
     private Integer discount;
+    private Integer amount;
     private String majorCategory;
     private String middleCategory;
+    private String content;
     private Date regDate;
     private Date updateDate;
     private String mainImgPath;

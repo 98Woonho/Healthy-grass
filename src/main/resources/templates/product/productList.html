@@ -4,120 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
-    <style>
-        /* 기본 스타일링 */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        form {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            display: flex;
-            align-items: center;
-            margin-right: 10px;
-        }
-        label {
-            margin-right: 10px;
-        }
-        input[type="text"], select {
-            padding: 8px;
-            box-sizing: border-box;
-            margin-right: 10px;
-        }
-        button {
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        .pagination {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .pagination ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .pagination ul li {
-            display: inline;
-            margin: 0 5px;
-        }
-        .pagination ul li a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        .pagination ul li a:hover {
-            text-decoration: underline;
-        }
-        .pagination ul li.active a {
-            font-weight: bold;
-            color: #000;
-        }
-        .error-message {
-            color: red;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/productList/common.css">
+    <script src="/js/productList/searchFormOnchange.js"></script>
 </head>
 <body>
 <div class="container">
-    <h1>Product Search</h1>
+    <h1 th:if="${criteria.middleCategory == null or criteria.middleCategory == ''}">
+        <span th:if="${criteria.majorCategory != null and criteria.majorCategory != ''}" th:text="${criteria.majorCategory}"></span>
+        <span th:if="${criteria.majorCategory == null or criteria.majorCategory == ''}">통합 검색</span>
+    </h1>
+    <h1 th:if="${criteria.middleCategory != null and criteria.middleCategory != ''}" th:text="${criteria.middleCategory}"></h1>
 
     <!-- 검색 폼 -->
-    <form action="/productList" method="GET">
+    <form action="/productList" method="GET" id="searchForm">
         <div class="form-group">
-            <label for="sorting">Sort By:</label>
-            <select id="sorting" name="sorting">
+            <label for="sorting">정렬 방식:</label>
+            <select id="sorting" name="sorting" onchange="submitFormOnChange()">
                 <option value="기본정렬" th:selected="${criteria.sorting == '기본정렬'}">기본정렬</option>
                 <option value="가격 오름차순" th:selected="${criteria.sorting == '가격 오름차순'}">가격 오름차순</option>
                 <option value="가격 내림차순" th:selected="${criteria.sorting == '가격 내림차순'}">가격 내림차순</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="keyword">Keyword:</label>
+            <label for="keyword">검색: </label>
             <input type="text" id="keyword" name="keyword" th:attr="value=${criteria.keyword ?: ''}">
         </div>
-        <button type="submit">Search</button>
+        <div class="form-hidden" style="display: none;">
+            <input type="hidden" name="majorCategory" th:value="${criteria.majorCategory != null ? criteria.majorCategory : ''}">
+            <input type="hidden" name="middleCategory" th:value="${criteria.middleCategory != null ? criteria.middleCategory : ''}">
+        </div>
+        <button type="submit">검색</button>
     </form>
 
     <!-- 상품 목록 -->
     <div class="product-list">
-        <h2>Product List</h2>
+        <h2>상품 목록</h2>
         <table>
             <thead>
             <tr>
                 <th>상품명</th>
-                <th>할인률</th>
                 <th>가격</th>
+                <th>할인률</th>
+                <th>할인된 가격</th>
                 <th>대분류</th>
                 <th>소분류</th>
                 <th>리뷰 수</th>
@@ -127,13 +55,14 @@
             <tbody>
             <!-- 상품 목록을 동적으로 채웁니다. -->
             <tr th:each="product : ${list}">
-                <td th:text="${product.name}">-</td>
-                <td th:text="${product.saleAmount} + '%'">-</td>
-                <td th:text="${product.price}">-</td>
-                <td th:text="${product.majorCategory}">-</td>
-                <td th:text="${product.middleCategory}">-</td>
-                <td th:text="${product.reviewCount}">-</td>
-                <td th:text="${#numbers.formatDecimal(product.averageRating, 1, 1)}">-</td>
+                <td th:text="${product.get('name') != null ? product.name : ''}">-</td>
+                <td th:text="${product.get('price') != null ? product.price : ''}">-</td>
+                <td th:text="${product.get('discount') != null ? product.discount + '%' : ''}">-</td>
+                <td th:text="${product.get('discountedPrice') != null ? product.discountedPrice : ''}">-</td>
+                <td th:text="${product.get('majorCategory') != null ? product.majorCategory : ''}">-</td>
+                <td th:text="${product.get('middleCategory') != null ? product.middleCategory : ''}">-</td>
+                <td th:text="${product.get('reviewCount') != null ? product.reviewCount : ''}">-</td>
+                <td th:text="${product.get('averageRating') != null ? #numbers.formatDecimal(product.get('averageRating'), 1, 1) : '0'}">-</td>
             </tr>
             </tbody>
         </table>
@@ -145,31 +74,28 @@
             <!-- 이전 페이지로 이동하는 링크 -->
             <li th:if="${pageDto.prev}">
                 <a th:href="@{${'/productList?pageno=' + (criteria.pageno - 1) +
-                    '&amount=' + criteria.amount +
-                    '&keyword=' + (criteria.keyword != null ? criteria.keyword : '') +
-                    '&majorCategory=' + (criteria.majorCategory != null ? criteria.majorCategory : '') +
-                    '&middleCategory=' + (criteria.middleCategory != null ? criteria.middleCategory : '') +
-                    '&sorting=' + (criteria.sorting != null ? criteria.sorting : '')}}">Previous</a>
+                    (criteria.keyword != null ? '&keyword=' + criteria.keyword : '') +
+                    (criteria.majorCategory != null ? '&majorCategory=' + criteria.majorCategory : '') +
+                    (criteria.middleCategory != null ? '&middleCategory=' + criteria.middleCategory : '') +
+                    (criteria.sorting != null ? '&sorting=' + criteria.sorting : '')}}">Prev</a>
             </li>
 
             <!-- 페이지 번호를 표시하는 링크 -->
             <li th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}" th:classappend="${pageNumber == criteria.pageno} ? 'active'">
                 <a th:href="@{${'/productList?pageno=' + pageNumber +
-                    '&amount=' + criteria.amount +
-                    '&keyword=' + (criteria.keyword != null ? criteria.keyword : '') +
-                    '&majorCategory=' + (criteria.majorCategory != null ? criteria.majorCategory : '') +
-                    '&middleCategory=' + (criteria.middleCategory != null ? criteria.middleCategory : '') +
-                    '&sorting=' + (criteria.sorting != null ? criteria.sorting : '')}}">[[${pageNumber}]]</a>
+                    (criteria.keyword != null ? '&keyword=' + criteria.keyword : '') +
+                    (criteria.majorCategory != null ? '&majorCategory=' + criteria.majorCategory : '') +
+                    (criteria.middleCategory != null ? '&middleCategory=' + criteria.middleCategory : '') +
+                    (criteria.sorting != null ? '&sorting=' + criteria.sorting : '')}}">[[${pageNumber}]]</a>
             </li>
 
             <!-- 다음 페이지로 이동하는 링크 -->
             <li th:if="${pageDto.next}">
                 <a th:href="@{${'/productList?pageno=' + (criteria.pageno + 1) +
-                    '&amount=' + criteria.amount +
-                    '&keyword=' + (criteria.keyword != null ? criteria.keyword : '') +
-                    '&majorCategory=' + (criteria.majorCategory != null ? criteria.majorCategory : '') +
-                    '&middleCategory=' + (criteria.middleCategory != null ? criteria.middleCategory : '') +
-                    '&sorting=' + (criteria.sorting != null ? criteria.sorting : '')}}">Next</a>
+                    (criteria.keyword != null ? '&keyword=' + criteria.keyword : '') +
+                    (criteria.majorCategory != null ? '&majorCategory=' + criteria.majorCategory : '') +
+                    (criteria.middleCategory != null ? '&middleCategory=' + criteria.middleCategory : '') +
+                    (criteria.sorting != null ? '&sorting=' + criteria.sorting : '')}}">Next</a>
             </li>
         </ul>
     </div>

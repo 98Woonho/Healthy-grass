@@ -1,58 +1,84 @@
-CREATE DATABASE IF NOT EXISTS `shopping`;
+CREATE DATABASE  IF NOT EXISTS `shopping` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `shopping`;
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+--
+-- Host: localhost    Database: shopping
+-- ------------------------------------------------------
+-- Server version	8.0.36
 
-
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user`
+-- Table structure for table `cart`
 --
-
-DROP TABLE IF EXISTS `user`;
-
-CREATE TABLE `shopping`.`user` (
-  `id` varchar(50) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `password` varchar(150) DEFAULT NULL,
-  `zipcode` varchar(80) DEFAULT NULL,
-  `streetAdr` varchar(100) DEFAULT NULL,
-  `detailAdr` varchar(100) DEFAULT NULL,
-  `phone` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `role` varchar(20) DEFAULT NULL,
-  `provider` varchar(80) DEFAULT NULL,
-  `providerId` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-LOCK TABLES `user` WRITE;
-
-UNLOCK TABLES;
-
-
 
 DROP TABLE IF EXISTS `cart`;
-
-CREATE TABLE `shopping`.`cart` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cart` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `Uid` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Cart_User_idx` (`Uid`),
   CONSTRAINT `FK_Cart_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `cart`
+--
 
 LOCK TABLES `cart` WRITE;
+/*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `cartitems`
+--
 
+DROP TABLE IF EXISTS `cartitems`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cartitems` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `Cart_Id` bigint NOT NULL,
+  `Pid` bigint NOT NULL,
+  `quantity` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_Cart_CartItems_idx` (`Cart_Id`),
+  KEY `FK_CartItems_Product_idx` (`Pid`),
+  CONSTRAINT `FK_CartItems_Cart` FOREIGN KEY (`Cart_Id`) REFERENCES `cart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CartItems_Product` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `cartitems`
+--
 
+LOCK TABLES `cartitems` WRITE;
+/*!40000 ALTER TABLE `cartitems` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cartitems` ENABLE KEYS */;
+UNLOCK TABLES;
 
-
+--
+-- Table structure for table `customerinquiryboard`
+--
 
 DROP TABLE IF EXISTS `customerinquiryboard`;
-
-CREATE TABLE `shopping`.`customerinquiryboard` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `customerinquiryboard` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `Uid` varchar(50) NOT NULL,
   `title` varchar(100) DEFAULT NULL,
@@ -65,21 +91,25 @@ CREATE TABLE `shopping`.`customerinquiryboard` (
   KEY `FK_CustomerInquiryBoard_User_idx` (`Uid`),
   CONSTRAINT `FK_CustomerInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `customerinquiryboard`
+--
 
 LOCK TABLES `customerinquiryboard` WRITE;
+/*!40000 ALTER TABLE `customerinquiryboard` DISABLE KEYS */;
+/*!40000 ALTER TABLE `customerinquiryboard` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-
-
-
-
-
+--
+-- Table structure for table `customerinquirycomment`
+--
 
 DROP TABLE IF EXISTS `customerinquirycomment`;
-
-CREATE TABLE `shopping`.`customerinquirycomment` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `customerinquirycomment` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `C_Board_id` bigint NOT NULL,
   `title` varchar(100) DEFAULT NULL,
@@ -92,19 +122,25 @@ CREATE TABLE `shopping`.`customerinquirycomment` (
   KEY `FK_CustomerInquiryComment_CustomerInquiryBoard_idx` (`C_Board_id`),
   CONSTRAINT `FK_CustomerInquiryComment_CustomerInquiryBoard` FOREIGN KEY (`C_Board_id`) REFERENCES `customerinquiryboard` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customerinquirycomment`
+--
 
 LOCK TABLES `customerinquirycomment` WRITE;
+/*!40000 ALTER TABLE `customerinquirycomment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `customerinquirycomment` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-
-
-
-
+--
+-- Table structure for table `order`
+--
 
 DROP TABLE IF EXISTS `order`;
-
-CREATE TABLE `shopping`.`order` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `Uid` varchar(50) NOT NULL,
   `total_amount` int DEFAULT NULL,
@@ -112,28 +148,58 @@ CREATE TABLE `shopping`.`order` (
   PRIMARY KEY (`id`),
   KEY `FK_Order_User_Uid_idx` (`Uid`),
   CONSTRAINT `FK_Order_User_Uid` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order`
+--
 
 LOCK TABLES `order` WRITE;
-
+/*!40000 ALTER TABLE `order` DISABLE KEYS */;
+INSERT INTO `order` VALUES (21,'user1',15000,'Pending'),(22,'user2',20000,'Completed'),(23,'user3',18000,'Shipped'),(24,'user4',22000,'Cancelled'),(25,'user5',25000,'Pending'),(26,'user6',19000,'Completed'),(27,'user7',21000,'Shipped'),(28,'user8',23000,'Cancelled'),(29,'user9',17000,'Pending'),(30,'user10',24000,'Completed'),(31,'user11',26000,'Shipped'),(32,'user12',15000,'Cancelled'),(33,'user13',20000,'Pending'),(34,'user14',18000,'Completed'),(35,'user15',22000,'Shipped'),(36,'user16',25000,'Cancelled'),(37,'user17',19000,'Pending'),(38,'user18',21000,'Completed'),(39,'user19',23000,'Shipped'),(40,'user20',17000,'Cancelled');
+/*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `order_item`
+--
 
+DROP TABLE IF EXISTS `order_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_item` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `Oid` bigint NOT NULL,
+  `Pid` bigint NOT NULL,
+  `qunatity` int DEFAULT NULL,
+  `price` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_OrderItem_Order_Oid_idx` (`Oid`),
+  KEY `FK_OrderItem_Product_Pid_idx` (`Pid`),
+  CONSTRAINT `FK_OrderItem_Order_Oid` FOREIGN KEY (`Oid`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_OrderItem_Product_Pid` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=160 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `order_item`
+--
 
-
-
-
-
-
+LOCK TABLES `order_item` WRITE;
+/*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
+INSERT INTO `order_item` VALUES (60,21,217,2,3000),(61,21,62,1,5000),(62,21,48,3,2000),(63,21,230,4,1500),(64,21,137,5,1000),(65,22,171,1,4500),(66,22,203,2,3500),(67,22,49,3,2500),(68,22,236,4,1500),(69,22,160,5,1000),(70,23,62,2,3000),(71,23,219,1,5000),(72,23,38,3,2000),(73,23,132,4,1500),(74,23,92,5,1000),(75,24,34,1,4500),(76,24,72,2,3500),(77,24,225,3,2500),(78,24,38,4,1500),(79,24,115,5,1000),(80,25,219,2,3000),(81,25,87,1,5000),(82,25,165,3,2000),(83,25,116,4,1500),(84,25,51,5,1000),(85,26,85,1,4500),(86,26,32,2,3500),(87,26,84,3,2500),(88,26,80,4,1500),(89,26,118,5,1000),(90,27,107,2,3000),(91,27,151,1,5000),(92,27,191,3,2000),(93,27,53,4,1500),(94,27,81,5,1000),(95,28,211,1,4500),(96,28,154,2,3500),(97,28,105,3,2500),(98,28,240,4,1500),(99,28,223,5,1000),(100,29,153,2,3000),(101,29,65,1,5000),(102,29,44,3,2000),(103,29,205,4,1500),(104,29,232,5,1000),(105,30,94,1,4500),(106,30,160,2,3500),(107,30,69,3,2500),(108,30,42,4,1500),(109,30,184,5,1000),(110,31,129,2,3000),(111,31,63,1,5000),(112,31,108,3,2000),(113,31,109,4,1500),(114,31,190,5,1000),(115,32,170,1,4500),(116,32,40,2,3500),(117,32,78,3,2500),(118,32,238,4,1500),(119,32,84,5,1000),(120,33,97,2,3000),(121,33,200,1,5000),(122,33,49,3,2000),(123,33,241,4,1500),(124,33,189,5,1000),(125,34,190,1,4500),(126,34,142,2,3500),(127,34,107,3,2500),(128,34,80,4,1500),(129,34,45,5,1000),(130,35,163,2,3000),(131,35,230,1,5000),(132,35,209,3,2000),(133,35,112,4,1500),(134,35,111,5,1000),(135,36,188,1,4500),(136,36,156,2,3500),(137,36,183,3,2500),(138,36,207,4,1500),(139,36,35,5,1000),(140,37,152,2,3000),(141,37,202,1,5000),(142,37,105,3,2000),(143,37,96,4,1500),(144,37,134,5,1000),(145,38,140,1,4500),(146,38,57,2,3500),(147,38,45,3,2500),(148,38,232,4,1500),(149,38,155,5,1000),(150,39,45,2,3000),(151,39,151,1,5000),(152,39,166,3,2000),(153,39,138,4,1500),(154,39,159,5,1000),(155,40,140,1,4500),(156,40,190,2,3500),(157,40,79,3,2500),(158,40,214,4,1500),(159,40,171,5,1000);
+/*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `payment`
 --
 
 DROP TABLE IF EXISTS `payment`;
-
-CREATE TABLE `shopping`.`payment` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payment` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `Oid` bigint DEFAULT NULL,
   `amount` int DEFAULT NULL,
@@ -146,69 +212,56 @@ CREATE TABLE `shopping`.`payment` (
   KEY `FK_Payment_Order_Oid_idx` (`Oid`),
   CONSTRAINT `FK_Payment_Order_Oid` FOREIGN KEY (`Oid`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `payment`
 --
 
 LOCK TABLES `payment` WRITE;
-
+/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-
-
-
-
-
-
-
 
 --
 -- Table structure for table `persistent_logins`
 --
 
 DROP TABLE IF EXISTS `persistent_logins`;
-
-CREATE TABLE `shopping`.`persistent_logins` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `persistent_logins` (
   `username` varchar(64) NOT NULL,
   `series` varchar(64) NOT NULL,
   `token` varchar(64) NOT NULL,
   `last_used` timestamp NOT NULL,
   PRIMARY KEY (`series`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `persistent_logins`
 --
 
 LOCK TABLES `persistent_logins` WRITE;
-
+/*!40000 ALTER TABLE `persistent_logins` DISABLE KEYS */;
+/*!40000 ALTER TABLE `persistent_logins` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-
-
-
-
-
-
 
 --
 -- Table structure for table `product`
 --
 
 DROP TABLE IF EXISTS `product`;
-
-CREATE TABLE `shopping`.`product` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `product` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL,
   `price` int DEFAULT NULL,
-  `amount` int DEFAULT NULL,
-  `saleAmount` int DEFAULT NULL,
+  `discountedPrice` int DEFAULT NULL,
   `discount` int DEFAULT NULL,
+  `amount` int DEFAULT NULL,
   `majorCategory` varchar(50) DEFAULT NULL,
   `middleCategory` varchar(50) DEFAULT NULL,
   `content` text,
@@ -219,163 +272,76 @@ CREATE TABLE `shopping`.`product` (
   `subImgPath` varchar(200) DEFAULT NULL,
   `subImgName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `product`
 --
 
 LOCK TABLES `product` WRITE;
-
-INSERT INTO `shopping`.`product` VALUES (2,'Product 1',10000,50,10,10,'Electronics','Mobile',NULL,'2024-05-01','2024-05-10','/images/products/p1.jpg','p1.jpg',NULL,NULL),(3,'Product 2',20000,30,5,15,'Electronics','Laptop',NULL,'2024-05-02','2024-05-11','/images/products/p2.jpg','p2.jpg',NULL,NULL),(4,'Product 3',15000,40,20,5,'Home Appliances','Refrigerator',NULL,'2024-05-03','2024-05-12','/images/products/p3.jpg','p3.jpg',NULL,NULL),(5,'Product 4',5000,60,25,8,'Electronics','Headphones',NULL,'2024-05-04','2024-05-13','/images/products/p4.jpg','p4.jpg',NULL,NULL),(6,'Product 5',3000,80,30,12,'Books','Fiction',NULL,'2024-05-05','2024-05-14','/images/products/p5.jpg','p5.jpg',NULL,NULL),(7,'Product 6',25000,20,15,20,'Fashion','Shoes',NULL,'2024-05-06','2024-05-15','/images/products/p6.jpg','p6.jpg',NULL,NULL),(8,'Product 7',12000,70,35,10,'Fashion','Clothes',NULL,'2024-05-07','2024-05-16','/images/products/p7.jpg','p7.jpg',NULL,NULL),(9,'Product 8',9000,90,40,5,'Books','Non-Fiction',NULL,'2024-05-08','2024-05-17','/images/products/p8.jpg','p8.jpg',NULL,NULL),(10,'Product 9',4500,100,45,15,'Home Appliances','Microwave',NULL,'2024-05-09','2024-05-18','/images/products/p9.jpg','p9.jpg',NULL,NULL),(11,'Product 10',7500,50,10,10,'Toys','Action Figures',NULL,'2024-05-10','2024-05-19','/images/products/p10.jpg','p10.jpg',NULL,NULL),(12,'Product 11',30000,25,8,20,'Electronics','Tablet',NULL,'2024-05-11','2024-05-20','/images/products/p11.jpg','p11.jpg',NULL,NULL),(13,'Product 12',1000,150,50,5,'Books','Children',NULL,'2024-05-12','2024-05-21','/images/products/p12.jpg','p12.jpg',NULL,NULL),(14,'Product 13',2000,120,55,8,'Toys','Educational',NULL,'2024-05-13','2024-05-22','/images/products/p13.jpg','p13.jpg',NULL,NULL),(15,'Product 14',18000,35,12,10,'Fashion','Accessories',NULL,'2024-05-14','2024-05-23','/images/products/p14.jpg','p14.jpg',NULL,NULL),(16,'Product 15',6000,75,20,12,'Electronics','Wearables',NULL,'2024-05-15','2024-05-24','/images/products/p15.jpg','p15.jpg',NULL,NULL),(17,'Product 16',8500,85,25,15,'Home Appliances','Vacuum',NULL,'2024-05-16','2024-05-25','/images/products/p16.jpg','p16.jpg',NULL,NULL),(18,'Product 17',12500,55,30,10,'Fashion','Bags',NULL,'2024-05-17','2024-05-26','/images/products/p17.jpg','p17.jpg',NULL,NULL),(19,'Product 18',9500,65,35,5,'Books','Science',NULL,'2024-05-18','2024-05-27','/images/products/p18.jpg','p18.jpg',NULL,NULL),(20,'Product 19',10500,45,40,8,'Toys','Puzzles',NULL,'2024-05-19','2024-05-28','/images/products/p19.jpg','p19.jpg',NULL,NULL),(21,'Product 20',7000,95,20,12,'Electronics','Camera',NULL,'2024-05-20','2024-05-29','/images/products/p20.jpg','p20.jpg',NULL,NULL),(22,'Product 21',35000,15,10,20,'Home Appliances','Washing Machine',NULL,'2024-05-21','2024-05-30','/images/products/p21.jpg','p21.jpg',NULL,NULL),(23,'Product 22',4000,105,25,5,'Books','Fantasy',NULL,'2024-05-22','2024-05-31','/images/products/p22.jpg','p22.jpg',NULL,NULL),(24,'Product 23',8000,110,30,15,'Fashion','Jackets',NULL,'2024-05-23','2024-06-01','/images/products/p23.jpg','p23.jpg',NULL,NULL),(25,'Product 24',5500,60,35,10,'Electronics','Speakers',NULL,'2024-05-24','2024-06-02','/images/products/p24.jpg','p24.jpg',NULL,NULL),(26,'Product 25',20000,25,40,12,'Home Appliances','Oven',NULL,'2024-05-25','2024-06-03','/images/products/p25.jpg','p25.jpg',NULL,NULL),(27,'Product 26',17500,20,45,8,'Fashion','Hats',NULL,'2024-05-26','2024-06-04','/images/products/p26.jpg','p26.jpg',NULL,NULL),(28,'Product 27',6500,90,50,10,'Toys','Board Games',NULL,'2024-05-27','2024-06-05','/images/products/p27.jpg','p27.jpg',NULL,NULL),(29,'Product 28',14000,45,55,15,'Books','Comics',NULL,'2024-05-28','2024-06-06','/images/products/p28.jpg','p28.jpg',NULL,NULL),(30,'Product 29',22000,30,60,5,'Electronics','Smartwatch',NULL,'2024-05-29','2024-06-07','/images/products/p29.jpg','p29.jpg',NULL,NULL),(31,'Product 30',500,200,65,20,'Books','Poetry',NULL,'2024-05-30','2024-06-08','/images/products/p30.jpg','p30.jpg',NULL,NULL);
-
+/*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (32,'일반쌀 상품 1',10000,9000,10,100,'쌀/잡곡','일반쌀','일반쌀 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(33,'일반쌀 상품 2',20000,17000,15,200,'쌀/잡곡','일반쌀','일반쌀 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(34,'일반쌀 상품 3',15000,13200,12,150,'쌀/잡곡','일반쌀','일반쌀 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(35,'일반쌀 상품 4',18000,14400,20,180,'쌀/잡곡','일반쌀','일반쌀 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(36,'일반쌀 상품 5',13000,11960,8,130,'쌀/잡곡','일반쌀','일반쌀 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(37,'일반쌀 상품 6',22000,16500,25,220,'쌀/잡곡','일반쌀','일반쌀 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(38,'일반쌀 상품 7',17000,16150,5,170,'쌀/잡곡','일반쌀','일반쌀 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(39,'일반쌀 상품 8',25000,17500,30,250,'쌀/잡곡','일반쌀','일반쌀 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(40,'일반쌀 상품 9',19000,15580,18,190,'쌀/잡곡','일반쌀','일반쌀 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(41,'일반쌀 상품 10',14000,12600,10,140,'쌀/잡곡','일반쌀','일반쌀 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(42,'현미/찹쌀/잡곡 상품 1',15000,13500,10,150,'쌀/잡곡','현미/찹쌀/잡곡','현미/찹쌀/잡곡 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(43,'현미/찹쌀/잡곡 상품 2',16000,13600,15,160,'쌀/잡곡','현미/찹쌀/잡곡','현미/찹쌀/잡곡 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(44,'현미/찹쌀/잡곡 상품 3',14000,12320,12,140,'쌀/잡곡','현미/찹쌀/잡곡','현미/찹쌀/잡곡 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(45,'현미/찹쌀/잡곡 상품 4',13000,10400,20,130,'쌀/잡곡','현미/찹쌀/잡곡','현미/찹쌀/잡곡 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(46,'현미/찹쌀/잡곡 상품 5',17000,15640,8,170,'쌀/잡곡','현미/찹쌀/잡곡','현미/찹쌀/잡곡 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(47,'현미/찹쌀/잡곡 상품 6',18000,13500,25,180,'쌀/잡곡','현미/찹쌀/잡곡','현미/찹쌀/잡곡 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(48,'현미/찹쌀/잡곡 상품 7',20000,19000,5,200,'쌀/잡곡','현미/찹쌀/잡곡','현미/찹쌀/잡곡 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(49,'현미/찹쌀/잡곡 상품 8',19000,13300,30,190,'쌀/잡곡','현미/찹쌀/잡곡','현미/찹쌀/잡곡 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(50,'현미/찹쌀/잡곡 상품 9',22000,18040,18,220,'쌀/잡곡','현미/찹쌀/잡곡','현미/찹쌀/잡곡 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(51,'현미/찹쌀/잡곡 상품 10',21000,18900,10,210,'쌀/잡곡','현미/찹쌀/잡곡','현미/찹쌀/잡곡 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(52,'과일류 상품 1',12000,10800,10,120,'과일/채소','과일류','과일류 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(53,'과일류 상품 2',15000,12750,15,150,'과일/채소','과일류','과일류 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(54,'과일류 상품 3',14000,12320,12,140,'과일/채소','과일류','과일류 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(55,'과일류 상품 4',13000,10400,20,130,'과일/채소','과일류','과일류 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(56,'과일류 상품 5',17000,15640,8,170,'과일/채소','과일류','과일류 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(57,'과일류 상품 6',18000,13500,25,180,'과일/채소','과일류','과일류 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(58,'과일류 상품 7',20000,19000,5,200,'과일/채소','과일류','과일류 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(59,'과일류 상품 8',19000,13300,30,190,'과일/채소','과일류','과일류 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(60,'과일류 상품 9',16000,13120,18,160,'과일/채소','과일류','과일류 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(61,'과일류 상품 10',21000,18900,10,210,'과일/채소','과일류','과일류 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(62,'채소류 상품 1',10000,9000,10,100,'과일/채소','채소류','채소류 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(63,'채소류 상품 2',12000,10200,15,120,'과일/채소','채소류','채소류 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(64,'채소류 상품 3',9000,8550,5,90,'과일/채소','채소류','채소류 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(65,'채소류 상품 4',11000,8800,20,110,'과일/채소','채소류','채소류 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(66,'채소류 상품 5',8000,7360,8,80,'과일/채소','채소류','채소류 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(67,'채소류 상품 6',9500,8360,12,95,'과일/채소','채소류','채소류 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(68,'채소류 상품 7',13000,10660,18,130,'과일/채소','채소류','채소류 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(69,'채소류 상품 8',14000,10500,25,140,'과일/채소','채소류','채소류 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(70,'채소류 상품 9',11500,10350,10,115,'과일/채소','채소류','채소류 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(71,'채소류 상품 10',12500,9750,22,125,'과일/채소','채소류','채소류 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(72,'버섯류 상품 1',12000,10800,10,100,'과일/채소','버섯류','버섯류 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(73,'버섯류 상품 2',15000,12750,15,150,'과일/채소','버섯류','버섯류 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(74,'버섯류 상품 3',14000,12320,12,140,'과일/채소','버섯류','버섯류 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(75,'버섯류 상품 4',13000,10400,20,130,'과일/채소','버섯류','버섯류 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(76,'버섯류 상품 5',17000,15640,8,170,'과일/채소','버섯류','버섯류 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(77,'버섯류 상품 6',18000,13500,25,180,'과일/채소','버섯류','버섯류 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(78,'버섯류 상품 7',20000,19000,5,200,'과일/채소','버섯류','버섯류 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(79,'버섯류 상품 8',19000,13300,30,190,'과일/채소','버섯류','버섯류 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(80,'버섯류 상품 9',16000,13120,18,160,'과일/채소','버섯류','버섯류 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(81,'버섯류 상품 10',21000,18900,10,210,'과일/채소','버섯류','버섯류 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(82,'밤/견과류 상품 1',12000,10800,10,100,'과일/채소','밤/견과류','밤/견과류 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(83,'밤/견과류 상품 2',15000,12750,15,150,'과일/채소','밤/견과류','밤/견과류 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(84,'밤/견과류 상품 3',14000,12320,12,140,'과일/채소','밤/견과류','밤/견과류 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(85,'밤/견과류 상품 4',13000,10400,20,130,'과일/채소','밤/견과류','밤/견과류 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(86,'밤/견과류 상품 5',17000,15640,8,170,'과일/채소','밤/견과류','밤/견과류 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(87,'밤/견과류 상품 6',18000,13500,25,180,'과일/채소','밤/견과류','밤/견과류 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(88,'밤/견과류 상품 7',20000,19000,5,200,'과일/채소','밤/견과류','밤/견과류 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(89,'밤/견과류 상품 8',19000,13300,30,190,'과일/채소','밤/견과류','밤/견과류 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(90,'밤/견과류 상품 9',16000,13120,18,160,'과일/채소','밤/견과류','밤/견과류 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(91,'밤/견과류 상품 10',21000,18900,10,210,'과일/채소','밤/견과류','밤/견과류 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(92,'기타 채소 과일류 상품 1',12000,10800,10,100,'과일/채소','기타 채소 과일류','기타 채소 과일류 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(93,'기타 채소 과일류 상품 2',15000,12750,15,150,'과일/채소','기타 채소 과일류','기타 채소 과일류 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(94,'기타 채소 과일류 상품 3',14000,12320,12,140,'과일/채소','기타 채소 과일류','기타 채소 과일류 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(95,'기타 채소 과일류 상품 4',13000,10400,20,130,'과일/채소','기타 채소 과일류','기타 채소 과일류 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(96,'기타 채소 과일류 상품 5',17000,15640,8,170,'과일/채소','기타 채소 과일류','기타 채소 과일류 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(97,'기타 채소 과일류 상품 6',18000,13500,25,180,'과일/채소','기타 채소 과일류','기타 채소 과일류 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(98,'기타 채소 과일류 상품 7',20000,19000,5,200,'과일/채소','기타 채소 과일류','기타 채소 과일류 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(99,'기타 채소 과일류 상품 8',19000,13300,30,190,'과일/채소','기타 채소 과일류','기타 채소 과일류 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(100,'기타 채소 과일류 상품 9',16000,13120,18,160,'과일/채소','기타 채소 과일류','기타 채소 과일류 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(101,'기타 채소 과일류 상품 10',21000,18900,10,210,'과일/채소','기타 채소 과일류','기타 채소 과일류 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(102,'한우 상품 1',50000,45000,10,50,'축산물','한우','한우 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(103,'한우 상품 2',55000,46750,15,55,'축산물','한우','한우 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(104,'한우 상품 3',60000,52800,12,60,'축산물','한우','한우 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(105,'한우 상품 4',65000,52000,20,65,'축산물','한우','한우 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(106,'한우 상품 5',70000,64400,8,70,'축산물','한우','한우 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(107,'한우 상품 6',75000,56250,25,75,'축산물','한우','한우 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(108,'한우 상품 7',80000,76000,5,80,'축산물','한우','한우 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(109,'한우 상품 8',85000,59500,30,85,'축산물','한우','한우 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(110,'한우 상품 9',90000,73800,18,90,'축산물','한우','한우 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(111,'한우 상품 10',95000,85500,10,95,'축산물','한우','한우 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(112,'돼지고기 상품 1',20000,18000,10,200,'축산물','돼지고기','돼지고기 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(113,'돼지고기 상품 2',25000,21250,15,250,'축산물','돼지고기','돼지고기 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(114,'돼지고기 상품 3',30000,26400,12,300,'축산물','돼지고기','돼지고기 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(115,'돼지고기 상품 4',35000,28000,20,350,'축산물','돼지고기','돼지고기 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(116,'돼지고기 상품 5',22000,20240,8,220,'축산물','돼지고기','돼지고기 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(117,'돼지고기 상품 6',28000,21000,25,280,'축산물','돼지고기','돼지고기 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(118,'돼지고기 상품 7',24000,22800,5,240,'축산물','돼지고기','돼지고기 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(119,'돼지고기 상품 8',27000,18900,30,270,'축산물','돼지고기','돼지고기 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(120,'돼지고기 상품 9',26000,21320,18,260,'축산물','돼지고기','돼지고기 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(121,'돼지고기 상품 10',23000,20700,10,230,'축산물','돼지고기','돼지고기 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(122,'닭고기 상품 1',15000,13500,10,100,'축산물','닭고기/오리','닭고기 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(123,'오리고기 상품 2',18000,15300,15,150,'축산물','닭고기/오리','오리고기 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(124,'닭고기 상품 3',16000,14080,12,140,'축산물','닭고기/오리','닭고기 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(125,'오리고기 상품 4',17000,13600,20,130,'축산물','닭고기/오리','오리고기 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(126,'닭고기 상품 5',14000,12880,8,170,'축산물','닭고기/오리','닭고기 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(127,'오리고기 상품 6',19000,14250,25,180,'축산물','닭고기/오리','오리고기 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(128,'닭고기 상품 7',15500,14720,5,200,'축산물','닭고기/오리','닭고기 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(129,'오리고기 상품 8',16500,11550,30,190,'축산물','닭고기/오리','오리고기 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(130,'닭고기 상품 9',17500,14350,18,160,'축산물','닭고기/오리','닭고기 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(131,'오리고기 상품 10',18500,16650,10,210,'축산물','닭고기/오리','오리고기 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(132,'가공육 상품 1',15000,13500,10,100,'축산물','가공육','가공육 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(133,'가공육 상품 2',16000,13600,15,150,'축산물','가공육','가공육 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(134,'가공육 상품 3',17000,14960,12,140,'축산물','가공육','가공육 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(135,'가공육 상품 4',18000,14400,20,130,'축산물','가공육','가공육 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(136,'가공육 상품 5',19000,17480,8,170,'축산물','가공육','가공육 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(137,'가공육 상품 6',20000,15000,25,180,'축산물','가공육','가공육 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(138,'가공육 상품 7',21000,19950,5,200,'축산물','가공육','가공육 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(139,'가공육 상품 8',22000,15400,30,190,'축산물','가공육','가공육 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(140,'가공육 상품 9',23000,18860,18,160,'축산물','가공육','가공육 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(141,'가공육 상품 10',24000,21600,10,210,'축산물','가공육','가공육 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(142,'달걀 상품 1',5000,4500,10,100,'축산물','달걀','달걀 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(143,'달걀 상품 2',5500,4670,15,120,'축산물','달걀','달걀 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(144,'달걀 상품 3',6000,5280,12,140,'축산물','달걀','달걀 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(145,'달걀 상품 4',6500,5200,20,130,'축산물','달걀','달걀 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(146,'달걀 상품 5',7000,6440,8,150,'축산물','달걀','달걀 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(147,'달걀 상품 6',7500,5620,25,160,'축산물','달걀','달걀 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(148,'달걀 상품 7',8000,7600,5,180,'축산물','달걀','달걀 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(149,'달걀 상품 8',8500,5950,30,170,'축산물','달걀','달걀 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(150,'달걀 상품 9',9000,7380,18,190,'축산물','달걀','달걀 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(151,'달걀 상품 10',9500,8550,10,200,'축산물','달걀','달걀 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(152,'수삼 상품 1',30000,27000,10,50,'건강식품','수삼/인삼/백하수오','수삼 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(153,'인삼 상품 2',35000,29750,15,60,'건강식품','수삼/인삼/백하수오','인삼 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(154,'백하수오 상품 3',40000,35200,12,70,'건강식품','수삼/인삼/백하수오','백하수오 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(155,'수삼 상품 4',45000,36000,20,80,'건강식품','수삼/인삼/백하수오','수삼 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(156,'인삼 상품 5',50000,46000,8,90,'건강식품','수삼/인삼/백하수오','인삼 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(157,'백하수오 상품 6',55000,41250,25,100,'건강식품','수삼/인삼/백하수오','백하수오 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(158,'수삼 상품 7',60000,57000,5,110,'건강식품','수삼/인삼/백하수오','수삼 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(159,'인삼 상품 8',65000,45500,30,120,'건강식품','수삼/인삼/백하수오','인삼 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(160,'백하수오 상품 9',70000,57400,18,130,'건강식품','수삼/인삼/백하수오','백하수오 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(161,'수삼 상품 10',75000,67500,10,140,'건강식품','수삼/인삼/백하수오','수삼 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(162,'도라지 상품 1',30000,27000,10,50,'건강식품','도라지','도라지 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(163,'도라지 상품 2',35000,29750,15,60,'건강식품','도라지','도라지 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(164,'도라지 상품 3',40000,35200,12,70,'건강식품','도라지','도라지 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(165,'도라지 상품 4',45000,36000,20,80,'건강식품','도라지','도라지 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(166,'도라지 상품 5',50000,46000,8,90,'건강식품','도라지','도라지 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(167,'도라지 상품 6',55000,41250,25,100,'건강식품','도라지','도라지 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(168,'도라지 상품 7',60000,57000,5,110,'건강식품','도라지','도라지 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(169,'도라지 상품 8',65000,45500,30,120,'건강식품','도라지','도라지 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(170,'도라지 상품 9',70000,57400,18,130,'건강식품','도라지','도라지 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(171,'도라지 상품 10',75000,67500,10,140,'건강식품','도라지','도라지 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(172,'홍삼 상품 1',50000,45000,10,100,'건강식품','홍삼/절편','홍삼 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(173,'홍삼 상품 2',55000,46750,15,120,'건강식품','홍삼/절편','홍삼 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(174,'홍삼 상품 3',60000,52800,12,140,'건강식품','홍삼/절편','홍삼 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(175,'홍삼 상품 4',65000,52000,20,130,'건강식품','홍삼/절편','홍삼 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(176,'홍삼 상품 5',70000,64400,8,150,'건강식품','홍삼/절편','홍삼 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(177,'홍삼 상품 6',75000,56250,25,160,'건강식품','홍삼/절편','홍삼 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(178,'홍삼 상품 7',80000,76000,5,180,'건강식품','홍삼/절편','홍삼 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(179,'홍삼 상품 8',85000,59500,30,170,'건강식품','홍삼/절편','홍삼 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(180,'홍삼 상품 9',90000,73800,18,190,'건강식품','홍삼/절편','홍삼 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(181,'홍삼 상품 10',95000,85500,10,200,'건강식품','홍삼/절편','홍삼 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(182,'엑기스 상품 1',40000,36000,10,50,'건강식품','엑기스/분말/즙류','엑기스 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(183,'분말 상품 2',45000,38250,15,60,'건강식품','엑기스/분말/즙류','분말 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(184,'즙류 상품 3',50000,44000,12,70,'건강식품','엑기스/분말/즙류','즙류 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(185,'엑기스 상품 4',55000,44000,20,80,'건강식품','엑기스/분말/즙류','엑기스 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(186,'분말 상품 5',60000,55200,8,90,'건강식품','엑기스/분말/즙류','분말 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(187,'즙류 상품 6',65000,48750,25,100,'건강식품','엑기스/분말/즙류','즙류 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(188,'엑기스 상품 7',70000,66500,5,110,'건강식품','엑기스/분말/즙류','엑기스 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(189,'분말 상품 8',75000,52500,30,120,'건강식품','엑기스/분말/즙류','분말 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(190,'즙류 상품 9',80000,65600,18,130,'건강식품','엑기스/분말/즙류','즙류 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(191,'엑기스 상품 10',85000,76500,10,140,'건강식품','엑기스/분말/즙류','엑기스 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(192,'꿀 상품 1',25000,22500,10,100,'건강식품','꿀/조청','꿀 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(193,'조청 상품 2',30000,25500,15,120,'건강식품','꿀/조청','조청 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(194,'꿀 상품 3',35000,30800,12,140,'건강식품','꿀/조청','꿀 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(195,'조청 상품 4',40000,32000,20,130,'건강식품','꿀/조청','조청 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(196,'꿀 상품 5',45000,41400,8,150,'건강식품','꿀/조청','꿀 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(197,'조청 상품 6',50000,37500,25,160,'건강식품','꿀/조청','조청 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(198,'꿀 상품 7',55000,52250,5,180,'건강식품','꿀/조청','꿀 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(199,'조청 상품 8',60000,42000,30,170,'건강식품','꿀/조청','조청 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(200,'꿀 상품 9',65000,53300,18,190,'건강식품','꿀/조청','꿀 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(201,'조청 상품 10',70000,63000,10,200,'건강식품','꿀/조청','조청 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(202,'빵 상품 1',15000,13500,10,100,'가공식품','빵/떡/과자','빵 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(203,'떡 상품 2',20000,17000,15,120,'가공식품','빵/떡/과자','떡 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(204,'과자 상품 3',25000,22000,12,140,'가공식품','빵/떡/과자','과자 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(205,'빵 상품 4',30000,24000,20,130,'가공식품','빵/떡/과자','빵 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(206,'떡 상품 5',35000,32200,8,150,'가공식품','빵/떡/과자','떡 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(207,'과자 상품 6',40000,30000,25,160,'가공식품','빵/떡/과자','과자 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(208,'빵 상품 7',45000,42750,5,180,'가공식품','빵/떡/과자','빵 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(209,'떡 상품 8',50000,35000,30,170,'가공식품','빵/떡/과자','떡 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(210,'과자 상품 9',55000,45100,18,190,'가공식품','빵/떡/과자','과자 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(211,'빵 상품 10',60000,54000,10,200,'가공식품','빵/떡/과자','빵 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(212,'만두 상품 1',12000,10800,10,100,'가공식품','만두/탕/간편조리','만두 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(213,'탕 상품 2',14000,11900,15,120,'가공식품','만두/탕/간편조리','탕 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(214,'간편조리 상품 3',16000,14080,12,140,'가공식품','만두/탕/간편조리','간편조리 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(215,'만두 상품 4',18000,14400,20,130,'가공식품','만두/탕/간편조리','만두 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(216,'탕 상품 5',20000,18400,8,150,'가공식품','만두/탕/간편조리','탕 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(217,'간편조리 상품 6',22000,16500,25,160,'가공식품','만두/탕/간편조리','간편조리 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(218,'만두 상품 7',24000,22800,5,180,'가공식품','만두/탕/간편조리','만두 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(219,'탕 상품 8',26000,18200,30,170,'가공식품','만두/탕/간편조리','탕 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(220,'간편조리 상품 9',28000,22960,18,190,'가공식품','만두/탕/간편조리','간편조리 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(221,'만두 상품 10',30000,27000,10,200,'가공식품','만두/탕/간편조리','만두 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(222,'약과 상품 1',10000,9000,10,100,'가공식품','약과/한과/유과','약과 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(223,'한과 상품 2',12000,10200,15,120,'가공식품','약과/한과/유과','한과 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(224,'유과 상품 3',14000,12320,12,140,'가공식품','약과/한과/유과','유과 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(225,'약과 상품 4',16000,12800,20,130,'가공식품','약과/한과/유과','약과 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(226,'한과 상품 5',18000,16560,8,150,'가공식품','약과/한과/유과','한과 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(227,'유과 상품 6',20000,15000,25,160,'가공식품','약과/한과/유과','유과 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(228,'약과 상품 7',22000,20900,5,180,'가공식품','약과/한과/유과','약과 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(229,'한과 상품 8',24000,16800,30,170,'가공식품','약과/한과/유과','한과 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(230,'유과 상품 9',26000,21320,18,190,'가공식품','약과/한과/유과','유과 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(231,'약과 상품 10',28000,25200,10,200,'가공식품','약과/한과/유과','약과 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg'),(232,'두유 상품 1',10000,9000,10,100,'가공식품','두유/미숫가루','두유 상품 1 설명','2024-05-29','2024-05-29','/images/main1.jpg','main1.jpg','/images/sub1.jpg','sub1.jpg'),(233,'미숫가루 상품 2',12000,10200,15,120,'가공식품','두유/미숫가루','미숫가루 상품 2 설명','2024-05-29','2024-05-29','/images/main2.jpg','main2.jpg','/images/sub2.jpg','sub2.jpg'),(234,'두유 상품 3',14000,12320,12,140,'가공식품','두유/미숫가루','두유 상품 3 설명','2024-05-29','2024-05-29','/images/main3.jpg','main3.jpg','/images/sub3.jpg','sub3.jpg'),(235,'미숫가루 상품 4',16000,12800,20,130,'가공식품','두유/미숫가루','미숫가루 상품 4 설명','2024-05-29','2024-05-29','/images/main4.jpg','main4.jpg','/images/sub4.jpg','sub4.jpg'),(236,'두유 상품 5',18000,16560,8,150,'가공식품','두유/미숫가루','두유 상품 5 설명','2024-05-29','2024-05-29','/images/main5.jpg','main5.jpg','/images/sub5.jpg','sub5.jpg'),(237,'미숫가루 상품 6',20000,15000,25,160,'가공식품','두유/미숫가루','미숫가루 상품 6 설명','2024-05-29','2024-05-29','/images/main6.jpg','main6.jpg','/images/sub6.jpg','sub6.jpg'),(238,'두유 상품 7',22000,20900,5,180,'가공식품','두유/미숫가루','두유 상품 7 설명','2024-05-29','2024-05-29','/images/main7.jpg','main7.jpg','/images/sub7.jpg','sub7.jpg'),(239,'미숫가루 상품 8',24000,16800,30,170,'가공식품','두유/미숫가루','미숫가루 상품 8 설명','2024-05-29','2024-05-29','/images/main8.jpg','main8.jpg','/images/sub8.jpg','sub8.jpg'),(240,'두유 상품 9',26000,21320,18,190,'가공식품','두유/미숫가루','두유 상품 9 설명','2024-05-29','2024-05-29','/images/main9.jpg','main9.jpg','/images/sub9.jpg','sub9.jpg'),(241,'미숫가루 상품 10',28000,25200,10,200,'가공식품','두유/미숫가루','미숫가루 상품 10 설명','2024-05-29','2024-05-29','/images/main10.jpg','main10.jpg','/images/sub10.jpg','sub10.jpg');
+/*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `product_majorcategory`
+--
 
-
-
-
-
-
-
-
-
-
-
-DROP TABLE IF EXISTS `cartitems`;
-
-CREATE TABLE `shopping`.`cartitems` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `Cart_Id` bigint NOT NULL,
-  `Pid` bigint NOT NULL,
-  `quantity` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Cart_CartItems_idx` (`Cart_Id`),
-  KEY `FK_CartItems_Product_idx` (`Pid`),
-  CONSTRAINT `FK_CartItems_Cart` FOREIGN KEY (`Cart_Id`) REFERENCES `cart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CartItems_Product` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+DROP TABLE IF EXISTS `product_majorcategory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `product_majorcategory` (
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
-LOCK TABLES `cartitems` WRITE;
-UNLOCK TABLES;
-
-
-
-
-
-
-DROP TABLE IF EXISTS `orderitem`;
-
-CREATE TABLE `shopping`.`orderitem` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `Oid` bigint NOT NULL,
-  `Pid` bigint NOT NULL,
-  `qunatity` int DEFAULT NULL,
-  `price` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_OrderItem_Order_Oid_idx` (`Oid`),
-  KEY `FK_OrderItem_Product_Pid_idx` (`Pid`),
-  CONSTRAINT `FK_OrderItem_Order_Oid` FOREIGN KEY (`Oid`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_OrderItem_Product_Pid` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-LOCK TABLES `orderitem` WRITE;
-
-UNLOCK TABLES;
-
-
-
-
-
-
-
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `productinquiryboard`
+-- Dumping data for table `product_majorcategory`
 --
 
-DROP TABLE IF EXISTS `productinquiryboard`;
+LOCK TABLES `product_majorcategory` WRITE;
+/*!40000 ALTER TABLE `product_majorcategory` DISABLE KEYS */;
+INSERT INTO `product_majorcategory` VALUES ('가공식품'),('건강식품'),('과일/채소'),('쌀/잡곡'),('축산물');
+/*!40000 ALTER TABLE `product_majorcategory` ENABLE KEYS */;
+UNLOCK TABLES;
 
-CREATE TABLE `shopping`.`productinquiryboard` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `Pid` bigint NOT NULL,
-  `Uid` varchar(50) NOT NULL,
-  `title` varchar(100) DEFAULT NULL,
-  `content` text,
-  `regDate` date DEFAULT NULL,
-  `updateDate` date DEFAULT NULL,
-  `isLocked` varchar(10) DEFAULT NULL,
-  `password` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_ProductInquiryBoard_Proudct_idx` (`Pid`),
-  KEY `FK_ProductInquiryBoard_User_idx` (`Uid`),
-  CONSTRAINT `FK_ProductInquiryBoard_Proudct` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`),
-  CONSTRAINT `FK_ProductInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`)
+--
+-- Table structure for table `product_middlecategory`
+--
+
+DROP TABLE IF EXISTS `product_middlecategory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `product_middlecategory` (
+  `name` varchar(255) NOT NULL,
+  `productMajorCategory_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`name`),
+  KEY `productMajorCategory_name` (`productMajorCategory_name`),
+  CONSTRAINT `product_middlecategory_ibfk_1` FOREIGN KEY (`productMajorCategory_name`) REFERENCES `product_majorcategory` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `productinquiryboard`
+-- Dumping data for table `product_middlecategory`
 --
 
-LOCK TABLES `productinquiryboard` WRITE;
-
+LOCK TABLES `product_middlecategory` WRITE;
+/*!40000 ALTER TABLE `product_middlecategory` DISABLE KEYS */;
+INSERT INTO `product_middlecategory` VALUES ('두유/미숫가루','가공식품'),('만두/탕/간편조리','가공식품'),('빵/떡/과자','가공식품'),('약과/한과/유과','가공식품'),('꿀/조청','건강식품'),('도라지','건강식품'),('수삼/인삼/백하수오','건강식품'),('엑기스/분말/즙류','건강식품'),('홍삼/절편','건강식품'),('과일류','과일/채소'),('기타 채소 과일류','과일/채소'),('밤/견과류','과일/채소'),('버섯류','과일/채소'),('채소류','과일/채소'),('일반쌀','쌀/잡곡'),('현미/찹쌀/잡곡','쌀/잡곡'),('가공육','축산물'),('달걀','축산물'),('닭고기/오리','축산물'),('돼지고기','축산물'),('한우','축산물');
+/*!40000 ALTER TABLE `product_middlecategory` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-
-
-
-
-
-
-
-
-
-
-
 --
--- Table structure for table `productinquiryboardcomment`
+-- Table structure for table `product_review_board`
 --
 
-DROP TABLE IF EXISTS `productinquiryboardcomment`;
-
-CREATE TABLE `shopping`.`productinquiryboardcomment` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `P_Board_Id` bigint NOT NULL,
-  `title` varchar(100) DEFAULT NULL,
-  `content` text,
-  `regDate` date DEFAULT NULL,
-  `updateDate` date DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_ProductInquiryBoardComment_ProductInquiryBoard_idx` (`P_Board_Id`),
-  CONSTRAINT `FK_ProductInquiryBoardComment_ProductInquiryBoard` FOREIGN KEY (`P_Board_Id`) REFERENCES `productinquiryboard` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
---
--- Dumping data for table `productinquiryboardcomment`
---
-
-LOCK TABLES `productinquiryboardcomment` WRITE;
-
-UNLOCK TABLES;
-
-
-
-
-
-
-
---
--- Table structure for table `productreviewboard`
---
-
-DROP TABLE IF EXISTS `productreviewboard`;
-
-CREATE TABLE `shopping`.`productreviewboard` (
+DROP TABLE IF EXISTS `product_review_board`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `product_review_board` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `Pid` bigint NOT NULL,
   `Uid` varchar(50) NOT NULL,
@@ -391,33 +357,90 @@ CREATE TABLE `shopping`.`productreviewboard` (
   KEY `FK_ProductReviewBoard_User_idx` (`Uid`),
   CONSTRAINT `FK_ProductReviewBoard_Product` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`),
   CONSTRAINT `FK_ProductReviewBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `productreviewboard`
+-- Dumping data for table `product_review_board`
 --
 
-LOCK TABLES `productreviewboard` WRITE;
-
+LOCK TABLES `product_review_board` WRITE;
+/*!40000 ALTER TABLE `product_review_board` DISABLE KEYS */;
+INSERT INTO `product_review_board` VALUES (108,52,'user1','Solid choice','2024-05-29','2024-05-29','Pretty good product overall.','/images/review21.jpg','review21.jpg',4),(109,53,'user2','Disappointed','2024-05-29','2024-05-29','Did not meet my expectations.','/images/review22.jpg','review22.jpg',2),(110,54,'user3','Very satisfied','2024-05-29','2024-05-29','Great quality for the price.','/images/review23.jpg','review23.jpg',5),(111,55,'user4','Just okay','2024-05-29','2024-05-29','It works fine.','/images/review24.jpg','review24.jpg',3),(112,56,'user5','Excellent','2024-05-29','2024-05-29','Exceeds expectations.','/images/review25.jpg','review25.jpg',5),(113,57,'user6','Good value','2024-05-29','2024-05-29','Worth the money.','/images/review26.jpg','review26.jpg',4),(114,58,'user7','Not great','2024-05-29','2024-05-29','I was hoping for better.','/images/review27.jpg','review27.jpg',2),(115,59,'user8','Highly recommend','2024-05-29','2024-05-29','Excellent quality.','/images/review28.jpg','review28.jpg',5),(116,60,'user9','Fairly decent','2024-05-29','2024-05-29','Not bad at all.','/images/review29.jpg','review29.jpg',3),(117,61,'user10','Loved it!','2024-05-29','2024-05-29','Absolutely fantastic!','/images/review30.jpg','review30.jpg',5),(118,62,'user11','Just average','2024-05-29','2024-05-29','Nothing special.','/images/review31.jpg','review31.jpg',3),(119,63,'user12','Pretty good','2024-05-29','2024-05-29','I like it.','/images/review32.jpg','review32.jpg',4),(120,64,'user13','Excellent value','2024-05-29','2024-05-29','Great product for the price.','/images/review33.jpg','review33.jpg',5),(121,65,'user14','Not worth it','2024-05-29','2024-05-29','I would not buy this again.','/images/review34.jpg','review34.jpg',2),(122,66,'user15','Decent product','2024-05-29','2024-05-29','It is okay.','/images/review35.jpg','review35.jpg',3),(123,67,'user16','Highly recommend','2024-05-29','2024-05-29','Fantastic product.','/images/review36.jpg','review36.jpg',5),(124,68,'user17','Good but not great','2024-05-29','2024-05-29','It is fine for the price.','/images/review37.jpg','review37.jpg',4),(125,69,'user18','Very good','2024-05-29','2024-05-29','I am happy with it.','/images/review38.jpg','review38.jpg',4),(126,70,'user19','Excellent!','2024-05-29','2024-05-29','Really great product.','/images/review39.jpg','review39.jpg',5),(127,71,'user20','Not satisfied','2024-05-29','2024-05-29','Expected better.','/images/review40.jpg','review40.jpg',2),(128,72,'user1','Great purchase','2024-05-29','2024-05-29','Very happy with it.','/images/review41.jpg','review41.jpg',5),(129,73,'user2','Just okay','2024-05-29','2024-05-29','It is okay.','/images/review42.jpg','review42.jpg',3),(130,74,'user3','Very good','2024-05-29','2024-05-29','Good value for the price.','/images/review43.jpg','review43.jpg',4),(131,75,'user4','Not impressed','2024-05-29','2024-05-29','Could be better.','/images/review44.jpg','review44.jpg',2),(132,76,'user5','Loved it','2024-05-29','2024-05-29','Absolutely fantastic.','/images/review45.jpg','review45.jpg',5),(133,77,'user6','Good product','2024-05-29','2024-05-29','Works as expected.','/images/review46.jpg','review46.jpg',4),(134,78,'user7','Not bad','2024-05-29','2024-05-29','Fairly decent.','/images/review47.jpg','review47.jpg',3),(135,79,'user8','Highly recommend','2024-05-29','2024-05-29','Excellent quality.','/images/review48.jpg','review48.jpg',5),(136,80,'user9','Satisfactory','2024-05-29','2024-05-29','Meets expectations.','/images/review49.jpg','review49.jpg',4),(137,81,'user10','Average','2024-05-29','2024-05-29','Nothing special.','/images/review50.jpg','review50.jpg',3),(138,82,'user11','Pretty good','2024-05-29','2024-05-29','I like it.','/images/review51.jpg','review51.jpg',4),(139,83,'user12','Excellent!','2024-05-29','2024-05-29','Great product for the price.','/images/review52.jpg','review52.jpg',5),(140,84,'user13','Not worth it','2024-05-29','2024-05-29','I would not buy this again.','/images/review53.jpg','review53.jpg',2),(141,85,'user14','Just okay','2024-05-29','2024-05-29','It is okay.','/images/review54.jpg','review54.jpg',3),(142,86,'user15','Highly recommend','2024-05-29','2024-05-29','Fantastic product.','/images/review55.jpg','review55.jpg',5),(143,87,'user16','Good but not great','2024-05-29','2024-05-29','It is fine for the price.','/images/review56.jpg','review56.jpg',4),(144,88,'user17','Very good','2024-05-29','2024-05-29','I am happy with it.','/images/review57.jpg','review57.jpg',4),(145,89,'user18','Excellent!','2024-05-29','2024-05-29','Really great product.','/images/review58.jpg','review58.jpg',5),(146,90,'user19','Not satisfied','2024-05-29','2024-05-29','Expected better.','/images/review59.jpg','review59.jpg',2),(147,91,'user20','Great purchase','2024-05-29','2024-05-29','Very happy with it.','/images/review60.jpg','review60.jpg',5),(148,92,'user1','Just okay','2024-05-29','2024-05-29','It is okay.','/images/review61.jpg','review61.jpg',3),(149,93,'user2','Very good','2024-05-29','2024-05-29','Good value for the price.','/images/review62.jpg','review62.jpg',4),(150,94,'user3','Not impressed','2024-05-29','2024-05-29','Could be better.','/images/review63.jpg','review63.jpg',2),(151,95,'user4','Loved it','2024-05-29','2024-05-29','Absolutely fantastic.','/images/review64.jpg','review64.jpg',5),(152,96,'user5','Good product','2024-05-29','2024-05-29','Works as expected.','/images/review65.jpg','review65.jpg',4),(153,97,'user6','Not bad','2024-05-29','2024-05-29','Fairly decent.','/images/review66.jpg','review66.jpg',3),(154,98,'user7','Highly recommend','2024-05-29','2024-05-29','Excellent quality.','/images/review67.jpg','review67.jpg',5),(155,99,'user8','Satisfactory','2024-05-29','2024-05-29','Meets expectations.','/images/review68.jpg','review68.jpg',4),(156,100,'user9','Average','2024-05-29','2024-05-29','Nothing special.','/images/review69.jpg','review69.jpg',3),(157,101,'user10','Pretty good','2024-05-29','2024-05-29','I like it.','/images/review70.jpg','review70.jpg',4),(158,102,'user11','Excellent!','2024-05-29','2024-05-29','Great product for the price.','/images/review71.jpg','review71.jpg',5),(159,103,'user12','Not worth it','2024-05-29','2024-05-29','I would not buy this again.','/images/review72.jpg','review72.jpg',2),(160,104,'user13','Just okay','2024-05-29','2024-05-29','It is okay.','/images/review73.jpg','review73.jpg',3),(161,105,'user14','Highly recommend','2024-05-29','2024-05-29','Fantastic product.','/images/review74.jpg','review74.jpg',5),(162,106,'user15','Good but not great','2024-05-29','2024-05-29','It is fine for the price.','/images/review75.jpg','review75.jpg',4),(163,107,'user16','Very good','2024-05-29','2024-05-29','I am happy with it.','/images/review76.jpg','review76.jpg',4),(164,32,'user1','Excellent product!','2024-05-29','2024-05-29','This product exceeded my expectations.','/images/review1.jpg','review1.jpg',5),(165,33,'user2','Very good','2024-05-29','2024-05-29','I am very satisfied with this purchase.','/images/review2.jpg','review2.jpg',4),(166,34,'user3','Good quality','2024-05-29','2024-05-29','The quality is good for the price.','/images/review3.jpg','review3.jpg',4),(167,35,'user4','Not bad','2024-05-29','2024-05-29','It was okay, but could be better.','/images/review4.jpg','review4.jpg',3),(168,36,'user5','Amazing!','2024-05-29','2024-05-29','Absolutely loved it!','/images/review5.jpg','review5.jpg',5),(169,37,'user6','Pretty good','2024-05-29','2024-05-29','Worth the money.','/images/review6.jpg','review6.jpg',4),(170,38,'user7','Could be better','2024-05-29','2024-05-29','I expected more.','/images/review7.jpg','review7.jpg',3),(171,39,'user8','Highly recommend','2024-05-29','2024-05-29','Would recommend to others.','/images/review8.jpg','review8.jpg',5),(172,40,'user9','Satisfied','2024-05-29','2024-05-29','Meets my expectations.','/images/review9.jpg','review9.jpg',4),(173,41,'user10','Just okay','2024-05-29','2024-05-29','It was alright.','/images/review10.jpg','review10.jpg',3),(174,42,'user11','Fantastic!','2024-05-29','2024-05-29','Really great product.','/images/review11.jpg','review11.jpg',5),(175,43,'user12','Good value','2024-05-29','2024-05-29','Worth every penny.','/images/review12.jpg','review12.jpg',4),(176,44,'user13','Mediocre','2024-05-29','2024-05-29','Not the best.','/images/review13.jpg','review13.jpg',3),(177,45,'user14','Very happy','2024-05-29','2024-05-29','Exceeded expectations.','/images/review14.jpg','review14.jpg',5),(178,46,'user15','Not impressed','2024-05-29','2024-05-29','Expected better.','/images/review15.jpg','review15.jpg',2),(179,47,'user16','Great buy','2024-05-29','2024-05-29','Definitely worth it.','/images/review16.jpg','review16.jpg',4),(180,48,'user17','Okay product','2024-05-29','2024-05-29','It was okay.','/images/review17.jpg','review17.jpg',3),(181,49,'user18','Loved it','2024-05-29','2024-05-29','Really loved this product.','/images/review18.jpg','review18.jpg',5),(182,50,'user19','Decent','2024-05-29','2024-05-29','Not too bad.','/images/review19.jpg','review19.jpg',3),(183,51,'user20','Would buy again','2024-05-29','2024-05-29','Will definitely buy again.','/images/review20.jpg','review20.jpg',5);
+/*!40000 ALTER TABLE `product_review_board` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `productinquiryboard`
+--
 
+DROP TABLE IF EXISTS `productinquiryboard`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `productinquiryboard` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `Pid` bigint NOT NULL,
+  `Uid` varchar(50) NOT NULL,
+  `title` varchar(100) DEFAULT NULL,
+  `content` text,
+  `regDate` date DEFAULT NULL,
+  `updateDate` date DEFAULT NULL,
+  `isLocked` varchar(10) DEFAULT NULL,
+  `password` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_ProductInquiryBoard_Proudct_idx` (`Pid`),
+  KEY `FK_ProductInquiryBoard_User_idx` (`Uid`),
+  CONSTRAINT `FK_ProductInquiryBoard_Proudct` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`),
+  CONSTRAINT `FK_ProductInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `productinquiryboard`
+--
 
+LOCK TABLES `productinquiryboard` WRITE;
+/*!40000 ALTER TABLE `productinquiryboard` DISABLE KEYS */;
+/*!40000 ALTER TABLE `productinquiryboard` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `productinquiryboardcomment`
+--
 
+DROP TABLE IF EXISTS `productinquiryboardcomment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `productinquiryboardcomment` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `P_Board_Id` bigint NOT NULL,
+  `title` varchar(100) DEFAULT NULL,
+  `content` text,
+  `regDate` date DEFAULT NULL,
+  `updateDate` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_ProductInquiryBoardComment_ProductInquiryBoard_idx` (`P_Board_Id`),
+  CONSTRAINT `FK_ProductInquiryBoardComment_ProductInquiryBoard` FOREIGN KEY (`P_Board_Id`) REFERENCES `productinquiryboard` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `productinquiryboardcomment`
+--
 
-
+LOCK TABLES `productinquiryboardcomment` WRITE;
+/*!40000 ALTER TABLE `productinquiryboardcomment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `productinquiryboardcomment` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `shippingaddress`
 --
 
 DROP TABLE IF EXISTS `shippingaddress`;
-
-CREATE TABLE `shopping`.`shippingaddress` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shippingaddress` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `Uid` varchar(50) NOT NULL,
   `recipient_name` varchar(50) DEFAULT NULL,
@@ -429,30 +452,58 @@ CREATE TABLE `shopping`.`shippingaddress` (
   KEY `FK_ShippingAddress_User_idx` (`Uid`),
   CONSTRAINT `FK_ShippingAddress_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `shippingaddress`
 --
 
 LOCK TABLES `shippingaddress` WRITE;
-
+/*!40000 ALTER TABLE `shippingaddress` DISABLE KEYS */;
+/*!40000 ALTER TABLE `shippingaddress` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `user`
+--
 
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `id` varchar(50) NOT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `password` varchar(150) DEFAULT NULL,
+  `zipcode` varchar(80) DEFAULT NULL,
+  `streetAdr` varchar(100) DEFAULT NULL,
+  `detailAdr` varchar(100) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `role` varchar(20) DEFAULT NULL,
+  `provider` varchar(80) DEFAULT NULL,
+  `providerId` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `user`
+--
 
-
-
-
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES ('user1','Alice','password1','12345','123 Main St','Apt 1','010-1234-5678','alice@example.com','user','local','provider1'),('user10','Judy','password10','01234','707 Spruce St','Apt 10','010-0123-4567','judy@example.com','admin','google','provider10'),('user11','Karl','password11','11223','808 Willow St','Apt 11','010-1123-5678','karl@example.com','user','facebook','provider11'),('user12','Laura','password12','22334','909 Redwood St','Apt 12','010-2234-6789','laura@example.com','user','facebook','provider12'),('user13','Mallory','password13','33445','1010 Palm St','Apt 13','010-3345-7890','mallory@example.com','user','local','provider13'),('user14','Nathan','password14','44556','1111 Fir St','Apt 14','010-4456-8901','nathan@example.com','user','local','provider14'),('user15','Olivia','password15','55667','1212 Poplar St','Apt 15','010-5567-9012','olivia@example.com','admin','google','provider15'),('user16','Peggy','password16','66778','1313 Beech St','Apt 16','010-6678-0123','peggy@example.com','user','google','provider16'),('user17','Quentin','password17','77889','1414 Cedar St','Apt 17','010-7789-1234','quentin@example.com','user','facebook','provider17'),('user18','Rupert','password18','88990','1515 Holly St','Apt 18','010-8890-2345','rupert@example.com','user','facebook','provider18'),('user19','Sybil','password19','99001','1616 Alder St','Apt 19','010-9901-3456','sybil@example.com','user','local','provider19'),('user2','Bob','password2','23456','456 Oak St','Apt 2','010-2345-6789','bob@example.com','admin','local','provider2'),('user20','Trent','password20','10112','1717 Juniper St','Apt 20','010-1011-4567','trent@example.com','admin','local','provider20'),('user3','Charlie','password3','34567','789 Pine St','Apt 3','010-3456-7890','charlie@example.com','user','google','provider3'),('user4','David','password4','45678','101 Maple St','Apt 4','010-4567-8901','david@example.com','user','google','provider4'),('user5','Eve','password5','56789','202 Birch St','Apt 5','010-5678-9012','eve@example.com','admin','facebook','provider5'),('user6','Frank','password6','67890','303 Cedar St','Apt 6','010-6789-0123','frank@example.com','user','facebook','provider6'),('user7','Grace','password7','78901','404 Walnut St','Apt 7','010-7890-1234','grace@example.com','user','local','provider7'),('user8','Heidi','password8','89012','505 Ash St','Apt 8','010-8901-2345','heidi@example.com','user','local','provider8'),('user9','Ivan','password9','90123','606 Elm St','Apt 9','010-9012-3456','ivan@example.com','user','google','provider9');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `wishlist`
 --
 
 DROP TABLE IF EXISTS `wishlist`;
-
-CREATE TABLE `shopping`.`wishlist` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wishlist` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `Pid` bigint NOT NULL,
   `Uid` varchar(50) NOT NULL,
@@ -462,46 +513,24 @@ CREATE TABLE `shopping`.`wishlist` (
   CONSTRAINT `FK_WishList_Pid` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_WishList_Uid` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `wishlist`
 --
 
 LOCK TABLES `wishlist` WRITE;
-
+/*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Dumping events for database 'shopping'
---
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
---
--- Dumping routines for database 'shopping'
---
-
-
--- Dump completed on 2024-05-26 17:31:00
-
-
-
-
-CREATE TABLE `shopping`.`productMajorCategory` (
-	name VARCHAR(255) NOT NULL PRIMARY KEY
-);
-
-INSERT INTO `shopping`.`productMajorCategory`
-VALUES ('테스트1'),('테스트2'),('테스트3'),('테스트4'),('테스트5');
-
-
-
-
-
-CREATE TABLE `shopping`.`productMiddleCategory` (
-	name VARCHAR(255) NOT NULL PRIMARY KEY,
-    productMajorCategory_name VARCHAR(255) NOT NULL,
-    FOREIGN KEY (productMajorCategory_name) REFERENCES productMajorCategory(name)
-);
-
-INSERT INTO `shopping`.`productMiddleCategory`
-VALUES ('테스트1-1','테스트1'),('테스트1-2','테스트1'),('테스트1-3','테스트1'),('테스트1-4','테스트1'),('테스트1-5','테스트1'),('테스트2-1','테스트2'),('테스트2-2','테스트2'),('테스트2-3','테스트2'),('테스트2-4','테스트2'),('테스트2-5','테스트2'),('테스트3-1','테스트3'),('테스트3-2','테스트3'),('테스트3-3','테스트3'),('테스트3-4','테스트3'),('테스트3-5','테스트3'),('테스트4-1','테스트4'),('테스트4-2','테스트4'),('테스트4-3','테스트4'),('테스트4-4','테스트4'),('테스트4-5','테스트4'),('테스트5-1','테스트5'),('테스트5-2','테스트5'),('테스트5-3','테스트5'),('테스트5-4','테스트5'),('테스트5-5','테스트5');
+-- Dump completed on 2024-05-30  0:04:52

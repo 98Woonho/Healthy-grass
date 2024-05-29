@@ -27,9 +27,9 @@
         p.id,
         p.name,
         p.price,
-        p.amount,
-        p.saleAmount,
+        p.discountedPrice,
         p.discount,
+        p.amount,
         p.majorCategory,
         p.middleCategory,
         p.regDate,
@@ -41,7 +41,7 @@
         FROM
         product p
         LEFT JOIN
-        productreviewboard r ON p.id = r.Pid
+        product_review_board r ON p.id = r.Pid
         <where>
             <if test="criteria.keyword != null and criteria.keyword != ''">
                 AND (p.name LIKE CONCAT('%', #{criteria.keyword}, '%'))
@@ -58,13 +58,13 @@
         ORDER BY
         <choose>
             <when test="criteria.sorting == '가격 내림차순'">
-                p.price DESC ,p.saleAmount DESC, averageRating DESC
+                p.price DESC ,p.discount DESC, averageRating DESC
             </when>
             <when test="criteria.sorting == '가격 오름차순'">
-                p.price ASC ,averageRating DESC, p.saleAmount DESC
+                p.price ASC ,averageRating DESC, p.discount DESC
             </when>
             <otherwise>
-                p.saleAmount DESC, averageRating DESC
+                p.discount DESC, averageRating DESC
             </otherwise>
         </choose>
         LIMIT #{offset}, #{criteria.amount}

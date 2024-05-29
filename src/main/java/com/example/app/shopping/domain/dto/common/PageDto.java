@@ -30,6 +30,8 @@ public class PageDto {
         //전체페이지 계산
         totalpage =(int)Math.ceil((1.0*totalcount)/criteria.getAmount());
 
+        if (totalpage == 0) {totalpage=1;}
+
         //블럭계산
         pagePerBlock=5;
         totalBlock = (int)Math.ceil( (1.0*totalpage) / pagePerBlock );

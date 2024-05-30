@@ -34,6 +34,5 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
 
         super.onAuthenticationFailure(request, response, exception);
 
-
     }
 }

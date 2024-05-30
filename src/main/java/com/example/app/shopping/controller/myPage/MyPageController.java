@@ -90,4 +90,22 @@ public class MyPageController {
         }
         return result;
     }
+    //유저 패스워드 재확인 폼으로 이동
+    @GetMapping("/user/passwordCheckForm")
+    public String passwordCheckForm(Authentication authentication, Model model){
+        if (authentication != null){
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
+            UserDto userDto = principalDetails.getUserDto();
+            model.addAttribute("userDto", userDto);
+            return "/myPage/user/passwordCheckForm";
+        }
+        return "redirect:/user/loginForm";
+    }
+
+    @PostMapping("/user/passwordCheck")
+    public String checkPasswordIntoMyPage(){
+
+        return null;
+    }
 }

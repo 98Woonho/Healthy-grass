@@ -4,11 +4,13 @@ const findUserPasswordBtn = document.querySelector('.findUserPasswordBtn');
 const EmailRegex = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", "i");
 const findByEmail = document.querySelector("#findByEmail");
 const findByPhone = document.querySelector("#findByPhone");
-const phoneDiv = document.querySelector("#phoneDiv");
 const emailDiv = document.querySelector("#emailDiv");
 const findIdCheckBox = document.getElementsByName("findIdCheckBox");
 const idDiv = document.querySelector("#idDiv");
 const passwordCheck = document.querySelector("#passwordCheck");
+let phoneDiv = document.querySelector("#phoneDiv");
+let nameDiv = document.querySelector("#nameDiv");
+
 function check(element) {
 
     findIdCheckBox.forEach((e) => {
@@ -18,13 +20,15 @@ function check(element) {
 
     if (findByEmail.checked) {
         emailDiv.classList.remove("hidden");
-        idDiv.classList.remove("hidden")
+        idDiv.classList.remove("hidden");
         phoneDiv.classList.add("hidden");
+        findUserPasswordBtn.classList.remove("hidden");
     } else {
         emailDiv.classList.add("hidden");
         idDiv.classList.add("hidden");
-        phoneDiv.classList.remove("hidden")
+        phoneDiv.classList.remove("hidden");
         passwordCheck.classList.add("hidden");
+        findUserPasswordBtn.classList.add("hidden");
     }
 }
 
@@ -107,18 +111,37 @@ authBtn.addEventListener('click', function (e){
         merchant_uid: "test_lwk1pvez",
     }, function (resp){
         const imp_uid = resp.imp_uid;
-        success = resp.success;
-        if (success) {
             axios.get("/user/AuthInfo/" + imp_uid)
                 .then(response => {
-                    console.log(response);
-                })
+                    success = resp.success;
+                    if (success === true){
+                        const data = {
+                            name: response.data.response.name,
+                            phone: response.data.response.phone
+                        };
+                        axios.post("/user/findUserPasswordByAuthentication", data, {headers: {"Content-Type": "application/json"}})
+                            .then(resp =>{
+                                if (resp.data === "SUCCESS"){
+                                    alert("성공적으로 비밀번호를 변경하였습니다. 이메일로 임시 비밀번호가 발송되었습니다.")
+                                    location.href = "/user/loginForm";
+                                }else {
+                                    alert("회원가입이 되지 않은 유저입니다. 먼저 회원가입을 진행해주세요")
+                                    return false;
+                                }
+                            })
+                            .catch(err =>{
+                                console.log(err)
+                            })
+                    }
+                    })
                 .catch(err => {
                     console.log(err)
                 })
-        }
     });
 })
+
+
+
 
 
 

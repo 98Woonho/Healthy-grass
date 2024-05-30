@@ -21,12 +21,16 @@ public interface UserMapper {
 
     int deleteUserById(@Param("id") String id);
 
-    List<String> findUserIdByEmailAndUserName(@Param("email") String id,
+    String findUserIdByEmailAndUserName(@Param("email") String id,
                                               @Param("name") String name);
 
-    List<String> findUserIdByPhoneAndUserName(@Param("phone") String phone,
+    String findUserIdByPhoneAndUserName(@Param("phone") String phone,
                                               @Param("name") String name);
 
     String findUserPasswordByEmailAndUserId(@Param("email") String email,
                                             @Param("id") String id);
+
+    String findUserEmailByUsernameAndUserPhone(@Param("name") String name,
+                                             @Param("phone") String phone);
+
 }

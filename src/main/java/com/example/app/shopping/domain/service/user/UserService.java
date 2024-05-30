@@ -114,6 +114,16 @@ public class UserService {
         return "SUCCESS";
     }
 
+    public String duplicateUserCheck(String name, String phone) {
+        String userId = userMapper.findUserIdByPhoneAndUserName(formatPhoneNumber(phone), name);
+        System.out.println("duplicateUserCheck: " + userId);
+        if (userId != null) {
+            return "FAILURE_DUPLICATE_USER";
+        }else {
+            return "SUCCESS";
+        }
+    }
+
     public String userUpdate(UserDto userDto) {
         if (userDto != null) {
             System.out.println(userDto);
@@ -145,25 +155,21 @@ public class UserService {
     }
 
     public String findUserIdByEmailAndUserName(UserDto userDto) {
-        List<String> userIdByEmailAndUserName = userMapper.findUserIdByEmailAndUserName(userDto.getEmail(), userDto.getName());
+        String userIdByEmailAndUserName = userMapper.findUserIdByEmailAndUserName(userDto.getEmail(), userDto.getName());
         if (userIdByEmailAndUserName.isEmpty()) {
             return "FAILURE_NOT_FOUND_USER_ID";
         } else {
-            userIdByEmailAndUserName.forEach(user -> {
-                userid = user;
-            });
+            userid = userIdByEmailAndUserName;
         }
         return userid;
     }
 
     public String findUserIdByPhoneAndUserName(UserDto userDto) {
-        List<String> userIdByPhoneAndUserName = userMapper.findUserIdByPhoneAndUserName(userDto.getPhone(), userDto.getName());
+        String userIdByPhoneAndUserName = userMapper.findUserIdByPhoneAndUserName(userDto.getPhone(), userDto.getName());
         if (userIdByPhoneAndUserName.isEmpty()) {
             return "FAILURE_NOT_FOUND_USER_ID";
         } else {
-            userIdByPhoneAndUserName.forEach(user -> {
-                userid = user;
-            });
+            userid = userIdByPhoneAndUserName;
         }
         return userid;
     }
@@ -195,9 +201,9 @@ public class UserService {
 
     public String checkPasswordAuthenticationCode(Map<String, String> request) {
         String passwordCheck = request.get("passwordCheck");
-        if (passwordCheck == null){
+        if (passwordCheck == null) {
             return "FAILURE_NOT_FOUND_CODE";
-        } else if(!randomSixNumber.equals(request.get("passwordCheck"))) {
+        } else if (!randomSixNumber.equals(request.get("passwordCheck"))) {
             return "FAILURE_ANOTHER_CODE";
         }
         String randomString = RandomString(8);
@@ -212,6 +218,25 @@ public class UserService {
         userMapper.updateUserPassword(passwordEncoder.encode(randomString), userId);
 
         return "SUCCESS";
+    }
+
+    public String findUserPasswordByAuthentication(UserDto userDto) {
+        if (userDto != null) {
+            String email = userMapper.findUserEmailByUsernameAndUserPhone(userDto.getName(), formatPhoneNumber(userDto.getPhone()));
+            String id = userMapper.findUserIdByEmailAndUserName(email, userDto.getName());
+            String randomString = RandomString(8);
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(email);
+            message.setSubject("[쇼핑몰]");
+            message.setText(randomString); //랜덤 문자 8개
+
+            //메일발송
+            javaMailSender.send(message);
+            //비밀번호 재설정
+            userMapper.updateUserPassword(passwordEncoder.encode(randomString), id);
+            return "SUCCESS";
+        }
+        return "FAILURE_NOT_FOUND_USER";
     }
 }
 

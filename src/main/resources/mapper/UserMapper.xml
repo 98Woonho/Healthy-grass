@@ -34,7 +34,7 @@
     <update id="updateUserPassword" parameterType="String">
         UPDATE user
         SET password = #{password}
-        WHERE id = #{id} <!-- userId가 어떤 필드인지 모르겠어서 가정한 것입니다 -->
+        WHERE id = #{id}
     </update>
 
     <delete id="deleteUserById">
@@ -60,5 +60,11 @@
         FROM user
         WHERE email = #{email}
           AND id = #{id}
+    </select>
+    <select id="findUserEmailByUsernameAndUserPhone" resultType="String">
+        SELECT email
+        FROM user
+        WHERE name = #{name}
+          AND phone = #{phone}
     </select>
 </mapper>

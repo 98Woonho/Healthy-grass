@@ -157,6 +157,14 @@ public class UserController {
         System.out.println(bindingResult.hasErrors());
         return new ResponseEntity<>(userService.userJoin(userDto), HttpStatus.OK);
     }
+    //회원가입시 본인인증 후 중복된 회원인지 확인
+
+    @PostMapping("/duplicateUserCheck")
+    @ResponseBody
+    public String duplicateUserCheck(@RequestBody UserDto userDto){
+        return userService.duplicateUserCheck(userDto.getName(), userDto.getPhone());
+    }
+
 
     // 유저 등록시 유저 중복확인
     @GetMapping(value = "/confirmUserId")
@@ -205,6 +213,12 @@ public class UserController {
         }
 
         return new ResponseEntity<>(userService.checkPasswordAuthenticationCode(request), HttpStatus.OK);
+    }
+    //본인인증 통과한 유저에게 이메일로 랜덤값 보내기
+    @PostMapping("findUserPasswordByAuthentication")
+    @ResponseBody
+    public String findUserPasswordByAuthentication(@RequestBody UserDto userDto){
+        return userService.findUserPasswordByAuthentication(userDto);
     }
 
 }

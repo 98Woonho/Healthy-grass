@@ -13,11 +13,29 @@ authBtn.addEventListener('click', function (e){
         merchant_uid: "test_lwk1pvez",
     }, function (resp){
         const imp_uid = resp.imp_uid;
-        success = resp.success;
-
         axios.get("/user/AuthInfo/"+imp_uid)
             .then(response =>{
 
+                success = resp.success;
+
+                if (success === true){
+                    const data = {
+                        name: response.data.response.name,
+                        phone: response.data.response.phone
+                    };
+
+                    axios.post("/user/duplicateUserCheck", data, {headers: {"Content-Type": "application/json"}})
+                        .then(resp => {
+                            if (resp.data === "FAILURE_DUPLICATE_USER") {
+                                alert("이미 가입된 회원입니다.")
+                                location.href = "/user/loginForm";
+                                return false;
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                }
                 const nameInput = joinForm.name;
                 const phoneInput = joinForm.phone;
 
@@ -27,6 +45,7 @@ authBtn.addEventListener('click', function (e){
             .catch(error =>{console.log(error)})
     });
 })
+
 
 joinForm.id.addEventListener('input', function () {
     if (joinForm.id.classList.contains("confirmed")) {

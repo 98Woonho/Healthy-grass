@@ -36,4 +36,32 @@ public class ProductServiceImpl implements ProductService {
 
         return returnVal;
     }
+
+    // 상품 단건조회 (상품정보 상세조회를 위해 리뷰수, 평점 데이터도 같이 가져옵니다)
+    @Override
+    public Map<String, Object> getItemDetail(Integer id) throws Exception {
+         return productMapper.findProductById(id);
+    }
+
+    // 카테고리별 인기상품을 12건씩 보냅니다
+    @Override
+    public Map<String, Object> getPopularProductsByCategory() throws Exception {
+        Map<String, Object> result = new HashMap<>();
+
+        List<Map<String, Object>> riceProducts = productMapper.findByRiceProducts();
+        List<Map<String, Object>> fruitVegetableProducts = productMapper.findByFruitVegetableProducts();
+        List<Map<String, Object>> meatProducts = productMapper.findByMeatProducts();
+        List<Map<String, Object>> healthProducts = productMapper.findByHealthProducts();
+        List<Map<String, Object>> processedFoodProducts = productMapper.findByProcessedFoodProducts();
+
+        result.put("riceProducts", riceProducts);
+        result.put("fruitVegetableProducts", fruitVegetableProducts);
+        result.put("meatProducts", meatProducts);
+        result.put("healthProducts", healthProducts);
+        result.put("processedFoodProducts", processedFoodProducts);
+
+        return result;
+    }
+
+
 }

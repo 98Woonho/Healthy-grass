@@ -36,8 +36,8 @@
         p.updateDate,
         p.mainImgPath,
         p.mainImgName,
-        COUNT(r.id) AS reviewCount,
-        AVG(r.rating) AS averageRating
+        IFNULL(COUNT(r.id), 0) AS reviewCount,
+        IFNULL(AVG(r.rating), 0) AS averageRating
         FROM
         product p
         LEFT JOIN
@@ -58,10 +58,10 @@
         ORDER BY
         <choose>
             <when test="criteria.sorting == '가격 내림차순'">
-                p.price DESC ,p.discount DESC, averageRating DESC
+                p.discountedPrice DESC ,p.discount DESC, averageRating DESC
             </when>
             <when test="criteria.sorting == '가격 오름차순'">
-                p.price ASC ,averageRating DESC, p.discount DESC
+                p.discountedPrice ASC , p.discount DESC, averageRating DESC
             </when>
             <otherwise>
                 p.discount DESC, averageRating DESC
@@ -79,4 +79,206 @@
         SELECT DISTINCT middleCategory
         FROM product
     </select>
+
+    <select id="findProductById" parameterType="Integer" resultType="map" >
+        SELECT
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        IFNULL(COUNT(r.id), 0) AS reviewCount,
+        IFNULL(AVG(r.rating), 0) AS averageRating
+        FROM
+        product p
+        LEFT JOIN
+        product_review_board r ON p.id = r.Pid
+        WHERE
+        p.id = #{id}
+        GROUP BY
+        p.id
+    </select>
+
+    <select id="findByRiceProducts" resultType="map">
+        SELECT
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        IFNULL(COUNT(r.id), 0) AS reviewCount,
+        IFNULL(AVG(r.rating), 0) AS averageRating
+        FROM
+        product p
+        LEFT JOIN
+        product_review_board r ON p.id = r.Pid
+        LEFT JOIN
+        order_item oi ON p.id = oi.Pid
+        WHERE
+        p.majorCategory = '쌀/잡곡'
+        GROUP BY
+        p.id
+        ORDER BY
+        COUNT(oi.id) DESC, reviewCount DESC, averageRating DESC
+        LIMIT 12
+    </select>
+
+    <select id="findByFruitVegetableProducts" resultType="map">
+        SELECT
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        IFNULL(COUNT(r.id), 0) AS reviewCount,
+        IFNULL(AVG(r.rating), 0) AS averageRating
+        FROM
+        product p
+        LEFT JOIN
+        product_review_board r ON p.id = r.Pid
+        LEFT JOIN
+        order_item oi ON p.id = oi.Pid
+        WHERE
+        p.majorCategory = '과일/채소'
+        GROUP BY
+        p.id
+        ORDER BY
+        COUNT(oi.id) DESC, reviewCount DESC, averageRating DESC
+        LIMIT 12
+    </select>
+
+    <select id="findByMeatProducts" resultType="map">
+        SELECT
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        IFNULL(COUNT(r.id), 0) AS reviewCount,
+        IFNULL(AVG(r.rating), 0) AS averageRating
+        FROM
+        product p
+        LEFT JOIN
+        product_review_board r ON p.id = r.Pid
+        LEFT JOIN
+        order_item oi ON p.id = oi.Pid
+        WHERE
+        p.majorCategory = '축산물'
+        GROUP BY
+        p.id
+        ORDER BY
+        COUNT(oi.id) DESC, reviewCount DESC, averageRating DESC
+        LIMIT 12
+    </select>
+
+    <select id="findByHealthProducts" resultType="map">
+        SELECT
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        IFNULL(COUNT(r.id), 0) AS reviewCount,
+        IFNULL(AVG(r.rating), 0) AS averageRating
+        FROM
+        product p
+        LEFT JOIN
+        product_review_board r ON p.id = r.Pid
+        LEFT JOIN
+        order_item oi ON p.id = oi.Pid
+        WHERE
+        p.majorCategory = '건강식품'
+        GROUP BY
+        p.id
+        ORDER BY
+        COUNT(oi.id) DESC, reviewCount DESC, averageRating DESC
+        LIMIT 12
+    </select>
+
+    <select id="findByProcessedFoodProducts" resultType="map">
+        SELECT
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        IFNULL(COUNT(r.id), 0) AS reviewCount,
+        IFNULL(AVG(r.rating), 0) AS averageRating
+        FROM
+        product p
+        LEFT JOIN
+        product_review_board r ON p.id = r.Pid
+        LEFT JOIN
+        order_item oi ON p.id = oi.Pid
+        WHERE
+        p.majorCategory = '가공식품'
+        GROUP BY
+        p.id
+        ORDER BY
+        COUNT(oi.id) DESC, reviewCount DESC, averageRating DESC
+        LIMIT 12
+    </select>
+
+
+
 </mapper>

@@ -18,4 +18,21 @@ public interface ProductMapper {
     List<String> selectDistinctMajorCategoryList();
 
     List<String> selectDistinctMiddleCategoryList();
+
+    Map<String, Object> findProductById(@Param("id") Integer id) throws Exception;
+
+    // '쌀/잡곡' 카테고리의 상품들을 조회하는 메서드
+    List<Map<String, Object>> findByRiceProducts() throws Exception;
+
+    // '과일/채소' 카테고리의 상품들을 조회하는 메서드
+    List<Map<String, Object>> findByFruitVegetableProducts() throws Exception;
+
+    // '축산물' 카테고리의 상품들을 조회하는 메서드
+    List<Map<String, Object>> findByMeatProducts() throws Exception;
+
+    // '건강식품' 카테고리의 상품들을 조회하는 메서드
+    List<Map<String, Object>> findByHealthProducts() throws Exception;
+
+    // '가공식품' 카테고리의 상품들을 조회하는 메서드
+    List<Map<String, Object>> findByProcessedFoodProducts() throws Exception;
 }

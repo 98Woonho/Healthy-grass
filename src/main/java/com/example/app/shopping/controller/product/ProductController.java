@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -43,5 +45,27 @@ public class ProductController {
         }
 
         return "/product/productList";
+    }
+
+    @GetMapping("/product")
+    public String product(
+            @RequestParam(name = "id", defaultValue = "0", required = false) Integer id,
+            Model model)
+    {
+        System.out.println("GET: ProductController's product id: " + id);
+
+        Map<String, Object> response = null;
+
+        try {
+            response = productService.getItemDetail(id);
+            response.put("success", true);
+        } catch (Exception e) {
+            response = new HashMap<>();
+            response.put("success", false);
+        }
+
+        model.addAttribute("response", response);
+
+        return "/product/productDetail";
     }
 }

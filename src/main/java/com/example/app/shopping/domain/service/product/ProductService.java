@@ -8,4 +8,6 @@ import java.util.Map;
 
 public interface ProductService {
     public Map<String, Object> getItems(Criteria criteria) throws Exception;
+    public Map<String, Object> getItemDetail(Integer id) throws Exception;
+    Map<String, Object> getPopularProductsByCategory() throws Exception;
 }

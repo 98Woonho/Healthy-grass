@@ -74,4 +74,9 @@
         SELECT DISTINCT majorCategory
         FROM product
     </select>
+
+    <select id="selectDistinctMiddleCategoryList" resultType="String">
+        SELECT DISTINCT middleCategory
+        FROM product
+    </select>
 </mapper>

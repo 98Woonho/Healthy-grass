@@ -1,14 +1,13 @@
-const categorySelect = document.getElementById('categorySelect');
-const majorCategory = document.getElementById('majorCategory');
+const changeCategorySelect = (select) => {
+    const categoryInput = select.parentElement.querySelector('input');
 
-
-const changeCategorySelect = () => {
-    if (categorySelect.value === 'direct-input') {
-        majorCategory.value = '';
-        majorCategory.style.pointerEvents = 'auto'; // pointer-events: auto 로 변경
-        majorCategory.focus();
+    // 카테고리에서 직접 입력 select 시
+    if (select.value === 'direct-input') {
+        categoryInput.value = '';
+        categoryInput.style.pointerEvents = 'auto'; // pointer-events: auto 로 변경
+        categoryInput.focus();
     } else {
-        majorCategory.style.pointerEvents = 'none'; // pointer-events: none 로 변경
-        majorCategory.value = categorySelect.value;
+        categoryInput.style.pointerEvents = 'none'; // pointer-events: none 로 변경
+        categoryInput.value = select.value;
     }
 }

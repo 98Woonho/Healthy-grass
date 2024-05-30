@@ -17,6 +17,6 @@ public class AdminService {
     }
 
     public List<String> getProductMiddleCategoryList() {
-        return null;
+        return productMapper.selectDistinctMiddleCategoryList();
     }
 }

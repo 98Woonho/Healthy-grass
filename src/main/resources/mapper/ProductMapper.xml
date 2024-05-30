@@ -70,12 +70,12 @@
         LIMIT #{offset}, #{criteria.amount}
     </select>
 
-    <select id="selectDistinctMajorCategoryList" resultType="String">
+    <select id="findDistinctMajorCategoryList" resultType="String">
         SELECT DISTINCT majorCategory
         FROM product
     </select>
 
-    <select id="selectDistinctMiddleCategoryList" resultType="String">
+    <select id="findDistinctMiddleCategoryList" resultType="String">
         SELECT DISTINCT middleCategory
         FROM product
     </select>

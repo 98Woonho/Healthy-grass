@@ -13,10 +13,10 @@ public class AdminService {
     private ProductMapper productMapper;
 
     public List<String> getProductMajorCategoryList() {
-        return productMapper.selectDistinctMajorCategoryList();
+        return productMapper.findDistinctMajorCategoryList();
     }
 
     public List<String> getProductMiddleCategoryList() {
-        return productMapper.selectDistinctMiddleCategoryList();
+        return productMapper.findDistinctMiddleCategoryList();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.app.shopping.controller.admin;
+package com.example.app.shopping.controller;
 
 import com.example.app.shopping.domain.service.admin.AdminService;
 import lombok.extern.slf4j.Slf4j;

@@ -22,10 +22,27 @@
         </div>
         <div class="admin-container-right">
             <form id="addProductForm">
-                <div class="add-product-form-left">
-                    이미지 등록 박스
+                <div class="product-image">
+                    <div class="main-image">
+                        <p>메인 이미지 등록</p>
+                        <div class="upload-box">
+                            <div class="plus">+</div>
+                        </div>
+                        <div class="preview">
+
+                        </div>
+                    </div>
+                    <div class="sub-image">
+                        <p>서브 이미지 등록</p>
+                        <div class="upload-box">
+                            <div class="plus">+</div>
+                        </div>
+                        <div class="preview">
+
+                        </div>
+                    </div>
                 </div>
-                <div class="add-product-form-right">
+                <div class="product-info">
                     <div>
                         <label for="product">제품명</label>
                         <input type="text" name="product" id="product" placeholder="제품명">
@@ -44,7 +61,7 @@
                     </div>
                     <div>
                         <label for="majorCategory">메인 카테고리</label>
-                        <input id="majorCategory" name="majorCategory" placeholder="메인 카테고리">
+                        <input type="text" id="majorCategory" name="majorCategory" placeholder="메인 카테고리">
                         <select onChange="changeCategorySelect(this)">
                             <th:block th:each="productMajorCategory : ${productMajorCategoryList}">
                                 <option th:value="${productMajorCategory}" th:text="${productMajorCategory}"></option>
@@ -54,7 +71,7 @@
                     </div>
                     <div>
                         <label for="middleCategory">서브 카테고리</label>
-                        <input id="middleCategory" name="majorCategory" placeholder="메인 카테고리">
+                        <input type="text" id="middleCategory" name="majorCategory" placeholder="메인 카테고리">
                         <select onChange="changeCategorySelect(this)">
                             <th:block th:each="productMiddleCategory : ${productMiddleCategoryList}">
                                 <option th:value="${productMiddleCategory}" th:text="${productMiddleCategory}"></option>
@@ -62,7 +79,13 @@
                             <option value="direct-input">직접 입력</option>
                         </select>
                     </div>
+                    <div>
+                        <label for="content">제품 설명</label>
+                        <input type="text" id="content" name="content" placeholder="제품 설명">
+                    </div>
                 </div>
+
+                <button>등록</button>
             </form>
         </div>
     </div>

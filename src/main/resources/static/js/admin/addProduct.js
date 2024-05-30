@@ -1,3 +1,5 @@
+const addProductForm = document.getElementById('addProductForm');
+
 const changeCategorySelect = (select) => {
     const categoryInput = select.parentElement.querySelector('input');
 
@@ -10,4 +12,8 @@ const changeCategorySelect = (select) => {
         categoryInput.style.pointerEvents = 'none'; // pointer-events: none 로 변경
         categoryInput.value = select.value;
     }
+}
+
+addProductForm.onsubmit = (e) => {
+    e.preventDefault();
 }

@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
          return productMapper.findProductById(id);
     }
 
-    // 카테고리별 인기상품을 12건씩 보냅니다
+    // 카테고리별 인기상품을 12건씩 데이터를 담아 반환합니다.
     @Override
     public Map<String, Object> getPopularProductsByCategory() throws Exception {
         Map<String, Object> result = new HashMap<>();
@@ -53,14 +53,22 @@ public class ProductServiceImpl implements ProductService {
         List<Map<String, Object>> meatProducts = productMapper.findByMeatProducts();
         List<Map<String, Object>> healthProducts = productMapper.findByHealthProducts();
         List<Map<String, Object>> processedFoodProducts = productMapper.findByProcessedFoodProducts();
+        List<Map<String, Object>> allCategoryProducts = productMapper.findByAllCategoryProducts();
 
         result.put("riceProducts", riceProducts);
         result.put("fruitVegetableProducts", fruitVegetableProducts);
         result.put("meatProducts", meatProducts);
         result.put("healthProducts", healthProducts);
         result.put("processedFoodProducts", processedFoodProducts);
+        result.put("allCategoryProducts", allCategoryProducts);
 
         return result;
+    }
+
+    // 할인률이 높은 인기상품 12건을 담아 반환합니다.
+    @Override
+    public Map<String, Object> getHighDiscountProducts() throws Exception {
+        return Map.of();
     }
 
 

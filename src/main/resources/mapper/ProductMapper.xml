@@ -109,6 +109,38 @@
         p.id
     </select>
 
+    <select id="findByAllCategoryProducts" resultType="map">
+        SELECT
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        IFNULL(COUNT(r.id), 0) AS reviewCount,
+        IFNULL(AVG(r.rating), 0) AS averageRating
+        FROM
+        product p
+        LEFT JOIN
+        product_review_board r ON p.id = r.Pid
+        LEFT JOIN
+        order_item oi ON p.id = oi.Pid
+        GROUP BY
+        p.id
+        ORDER BY
+        COUNT(oi.id) DESC, reviewCount DESC, averageRating DESC
+        LIMIT 12
+    </select>
+
     <select id="findByRiceProducts" resultType="map">
         SELECT
         p.id,
@@ -279,6 +311,36 @@
         LIMIT 12
     </select>
 
-
+    <select id="findByHighDiscountProducts" resultType="map">
+        SELECT
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        IFNULL(COUNT(r.id), 0) AS reviewCount,
+        IFNULL(AVG(r.rating), 0) AS averageRating
+        FROM
+        product p
+        LEFT JOIN
+        product_review_board r ON p.id = r.Pid
+        LEFT JOIN
+        order_item oi ON p.id = oi.Pid
+        GROUP BY
+        p.id
+        ORDER BY
+        p.discount DESC, reviewCount DESC, averageRating DESC
+        LIMIT 12
+    </select>
 
 </mapper>

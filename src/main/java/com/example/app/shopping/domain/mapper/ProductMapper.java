@@ -21,6 +21,9 @@ public interface ProductMapper {
 
     Map<String, Object> findProductById(@Param("id") Integer id) throws Exception;
 
+    // 카테고리 전체에서 인기 상품들을 조회하는 메서드
+    List<Map<String, Object>> findByAllCategoryProducts() throws Exception;
+
     // '쌀/잡곡' 카테고리의 상품들을 조회하는 메서드
     List<Map<String, Object>> findByRiceProducts() throws Exception;
 
@@ -35,4 +38,7 @@ public interface ProductMapper {
 
     // '가공식품' 카테고리의 상품들을 조회하는 메서드
     List<Map<String, Object>> findByProcessedFoodProducts() throws Exception;
+
+    // 할인률이 높은 상품 12개 조회하는 메서드
+    List<Map<String, Object>> findByHighDiscountProducts() throws Exception;
 }

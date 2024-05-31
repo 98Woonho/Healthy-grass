@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>쇼핑몰</title>
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
+
+    <!-- index css -->
     <link rel="stylesheet" th:href="@{/css/index/common.css}">
+    <link rel="stylesheet" th:href="@{/css/index/popularProducts.css}">
+
+    <!-- fragments css -->
     <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
 </head>
@@ -25,6 +34,49 @@
                 </form>
             </div>
         </section>
+        <section class="second-section">
+            <div class="mainByPick wrapper">
+                <div class="mainPrdTab">
+                    <h5 class="on" id="tle_1"><a href="#tablist_1">전체</a></h5>
+                    <h5 id="tle_2"><a href="#tablist_2">쌀/잡곡</a></h5>
+                    <h5 id="tle_3"><a href="#tablist_3">과일/채소</a></h5>
+                    <h5 id="tle_4"><a href="#tablist_4">축산물</a></h5>
+                    <h5 id="tle_5"><a href="#tablist_5">건강식품</a></h5>
+                    <h5 id="tle_6"><a href="#tablist_6">가공식품</a></h5>
+                </div>
+                <div class="mainPrdLst first" id="tablist_1" style="display: block;">
+                    <div class="item-wrap">
+                        <!-- 전체 상품 리스트 아이템들 -->
+                    </div>
+                </div>
+                <div class="mainPrdLst" id="tablist_2">
+                    <div class="item-wrap">
+                        <!-- 쌀/잡곡 상품 리스트 아이템들 -->
+                    </div>
+                </div>
+                <div class="mainPrdLst" id="tablist_3">
+                    <div class="item-wrap">
+                        <!-- 과일/채소 상품 리스트 아이템들 -->
+                    </div>
+                </div>
+                <div class="mainPrdLst" id="tablist_4">
+                    <div class="item-wrap">
+                        <!-- 축산물 상품 리스트 아이템들 -->
+                    </div>
+                </div>
+                <div class="mainPrdLst" id="tablist_5">
+                    <div class="item-wrap">
+                        <!-- 건강식품 상품 리스트 아이템들 -->
+                    </div>
+                </div>
+                <div class="mainPrdLst" id="tablist_6">
+                    <div class="item-wrap">
+                        <!-- 가공식품 상품 리스트 아이템들 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script defer th:src="@{/js/index/popularProductsProcess.js}"></script>
     </div>
     <div class="footer">
 

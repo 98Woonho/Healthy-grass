@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,5 +68,20 @@ public class ProductController {
         model.addAttribute("response", response);
 
         return "/product/productDetail";
+    }
+
+    @GetMapping("/popularProducts")
+    public @ResponseBody Map<String, Object> popularProducts() {
+        Map<String, Object> response = null;
+
+        try {
+            response = productService.getPopularProductsByCategory();
+            response.put("success", true);
+        } catch (Exception e) {
+            response = new HashMap<>();
+            response.put("success", false);
+        }
+
+        return response;
     }
 }

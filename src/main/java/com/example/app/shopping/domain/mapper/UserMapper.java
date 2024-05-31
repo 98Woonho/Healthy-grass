@@ -33,4 +33,8 @@ public interface UserMapper {
     String findUserEmailByUsernameAndUserPhone(@Param("name") String name,
                                              @Param("phone") String phone);
 
+    UserDto findUserByIdAndPassword(@Param("id") String id,
+                                    @Param("password") String password);
+
+    String findUserPasswordByUserId(@Param("id") String id);
 }

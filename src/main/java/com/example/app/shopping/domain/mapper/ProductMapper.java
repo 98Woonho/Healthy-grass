@@ -15,9 +15,9 @@ public interface ProductMapper {
     int selectItemsCount(@Param("criteria") Criteria criteria) throws Exception;
     List<Map<String, Object>> selectItems(@Param("criteria") Criteria criteria, @Param("offset") int offset) throws Exception;
 
-    List<String> selectDistinctMajorCategoryList();
+    List<String> findDistinctMajorCategoryList();
 
-    List<String> selectDistinctMiddleCategoryList();
+    List<String> findDistinctMiddleCategoryList();
 
     Map<String, Object> findProductById(@Param("id") Integer id) throws Exception;
 

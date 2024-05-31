@@ -1,4 +1,4 @@
-package com.example.app.shopping.controller.admin;
+package com.example.app.shopping.controller;
 
 import com.example.app.shopping.domain.service.admin.AdminService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +26,7 @@ public class AdminController {
         // 제품 서브 카테고리 List 가져오기
         List<String> productMiddleCategoryList = adminService.getProductMiddleCategoryList();
 
+        // 테스트
         model.addAttribute("productMajorCategoryList", productMajorCategoryList);
         model.addAttribute("productMiddleCategoryList", productMiddleCategoryList);
     }

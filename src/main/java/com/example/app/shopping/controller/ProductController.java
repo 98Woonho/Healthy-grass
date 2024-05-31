@@ -1,4 +1,4 @@
-package com.example.app.shopping.controller.product;
+package com.example.app.shopping.controller;
 
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.service.product.ProductServiceImpl;

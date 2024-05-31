@@ -1,4 +1,4 @@
-package com.example.app.shopping.controller.myPage;
+package com.example.app.shopping.controller;
 
 import com.example.app.shopping.config.auth.PrincipalDetails;
 import com.example.app.shopping.domain.dto.UserDto;

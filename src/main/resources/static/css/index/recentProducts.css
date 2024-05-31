@@ -1,44 +1,23 @@
 .mainByPick.wrapper {
     margin: 20px;
 }
+
+.fourth-section,
+.second-section,
 .third-section {
     padding: 20px;
     margin: 0 auto;
     max-width: 1200px;
 }
-.mainPrdTab {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-.mainPrdTab h5 {
-    display: inline-block;
-    margin: 0 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: #f2f2f2;
-    border: 1px solid #ddd;
-    border-radius: 25px;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
-.mainPrdTab h5.on {
-    background-color: #ff6f61;
-    color: white;
-    border-color: #ff6f61;
-}
-.mainPrdTab h5 a {
-    text-decoration: none;
-    color: inherit;
-}
-.mainPrdLst {
-    display: none;
-}
+
+.recentPrdLst .item-wrap,
 .mainPrdLst .item-wrap {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
 }
+
 .item-list {
     flex: 1 0 21%; /* 21% 너비로 4개씩 배치 */
     margin: 10px;
@@ -49,29 +28,42 @@
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
 .item-list img {
     max-width: 100%;
     height: auto;
 }
+
 .item-list ul {
     padding: 10px;
     list-style: none;
     margin: 0;
 }
-.prd-brand, .prd-price, .prd-discount, .prd-category, .prd-review, .prd-rating {
+
+.prd-brand,
+.prd-price,
+.prd-discount,
+.prd-category,
+.prd-review,
+.prd-rating {
     margin: 5px 0;
 }
+
 .prd-brand {
     font-weight: bold;
 }
+
 .prd-preview {
     margin-top: 5px;
 }
+
 .prd-discount {
     color: red;
     font-weight: bold;
 }
-.prd-review, .prd-rating {
+
+.prd-review,
+.prd-rating {
     font-size: 0.9em;
     color: #777;
 }

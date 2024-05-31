@@ -1,41 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const categoryTabs = document.querySelectorAll('.mainPrdTab h5');
-    const productLists = document.querySelectorAll('.mainPrdLst');
-
-    // 탭 클릭 이벤트 설정
-    categoryTabs.forEach(tab => {
-        tab.addEventListener('click', function (event) {
-            event.preventDefault();
-            const targetId = this.querySelector('a').getAttribute('href').substring(1);
-
-            categoryTabs.forEach(t => t.classList.remove('on'));
-            productLists.forEach(list => list.style.display = 'none');
-
-            this.classList.add('on');
-            document.getElementById(targetId).style.display = 'block';
-        });
-    });
-
     // 초기 데이터 로드
-    loadAllProducts();
+    loadHighDiscountProducts();
 
-    function loadAllProducts() {
-        axios.get('/popularProducts')
+    function loadHighDiscountProducts() {
+        axios.get('/highDiscountProducts')
             .then(response => {
                 if (response.data.success) {
                     const data = response.data;
-                    updateProductList('tablist_1', data.allCategoryProducts);
-                    updateProductList('tablist_2', data.riceProducts);
-                    updateProductList('tablist_3', data.fruitVegetableProducts);
-                    updateProductList('tablist_4', data.meatProducts);
-                    updateProductList('tablist_5', data.healthProducts);
-                    updateProductList('tablist_6', data.processedFoodProducts);
+                    updateProductList('discount-product-list', data.products);
                 } else {
-                    alert("DB로 부터 데이터조회에 실패하였습니다.");
+                    alert("DB로부터 데이터 조회에 실패하였습니다.");
                 }
             })
             .catch(error => {
-                alert("서버로부터 상품 데이터를 가져오는데 실패하였습니다.")
+                alert("서버로부터 상품 데이터를 가져오는데 실패하였습니다.");
             });
     }
 

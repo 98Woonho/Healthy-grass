@@ -11,4 +11,5 @@ public interface ProductService {
     public Map<String, Object> getItemDetail(Integer id) throws Exception;
     Map<String, Object> getPopularProductsByCategory() throws Exception;
     Map<String, Object> getHighDiscountProducts() throws Exception;
+    Map<String, Object> getRecentProducts() throws Exception;
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.app.shopping.domain.mapper.ProductInquiryBoardMapper">
+    <select id="findProductInquiryBoardsCount" parameterType="com.example.app.shopping.domain.dto.common.Criteria" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM product_inquiry_board pib
+        <where>
+            <if test="criteria != null">
+                <if test="criteria.keyword != null and criteria.keyword != ''">
+                    AND (pib.title LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <select id="test">
+        SELECT
+        pib.Uid,
+        p.name AS productName,
+        pib.title,
+        pib.isLocked,
+        pib.regDate,
+        pib.updateDate,
+        COUNT(pibc.id) AS commentCount
+        FROM
+        product_inquiry_board pib
+        JOIN
+        product p ON pib.Pid = p.id
+        LEFT JOIN
+        product_inquiry_board_comment pibc ON pib.id = pibc.P_Board_Id
+        <where>
+            <if test="criteria.keyword != null and criteria.keyword != ''">
+                pib.title LIKE CONCAT('%', #{criteria.keyword}, '%')
+            </if>
+        </where>
+        GROUP BY
+        pib.id
+        <trim prefix="HAVING" prefixOverrides="AND">
+            <if test="criteria.commentChk != null and criteria.commentChk != ''">
+                commentCount > 0
+            </if>
+        </trim>
+        ORDER BY
+        pib.updateDate DESC,
+        pib.regDate DESC;
+    </select>
+</mapper>

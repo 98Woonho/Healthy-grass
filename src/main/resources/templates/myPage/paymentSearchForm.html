@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>결제완료</h2>
+상품명 : <div th:text="${name}" />
+결제 금액 : <div th:text="${amount}" />
+결제 수단 : <div th:text="${pay_method}" />
+거래 유형 : <div th:text="${pg_type}" />
+결제 상태 : <div th:text="${status}" />
+결제 시간 : <div th:text="${paid_At}" />
+</body>
+</html>

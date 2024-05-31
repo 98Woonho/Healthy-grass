@@ -28,13 +28,25 @@ public class MyPageController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("")
+    public String myPage(Authentication authentication){
+        if (authentication != null) {
+            return "/myPage/mypage";
+        }
+        return "redirect:/user/loginForm";
+    }
+    @GetMapping("/payment")
+    public String payment(){
+        return "/myPage/paymentForm";
+    }
+
     @GetMapping("/user/searchForm") //회원정보 조회
     public String userSearchForm(Authentication authentication, Model model) {
         if (authentication != null) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal(); // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
-            return "/myPage/user/searchForm";
+            return "/myPage/searchForm";
         } else {
             return "redirect:/user/loginForm";
         }
@@ -42,15 +54,21 @@ public class MyPageController {
 
     @GetMapping("/user/modifyForm") // 회원정보 수정 페이지로 가기
     public String userModifyForm(Authentication authentication, Model model) {
-        if (authentication != null) {
+        if (authentication != null && passwordCheck) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
-            return "/myPage/user/modifyForm";
-        } else {
-            return "redirect:/user/loginForm";
+            return "/myPage/modifyForm";
+        } else if (authentication != null){
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
+            UserDto userDto = principalDetails.getUserDto();
+            model.addAttribute("userDto", userDto);
+            model.addAttribute("tmp", "modify");
+            return "/myPage/passwordCheckForm";
         }
+        return "redirect:/user/loginForm";
     }
 
     @PostMapping("/user/modify") // 회원정보 수정
@@ -69,12 +87,19 @@ public class MyPageController {
 
     @GetMapping("/user/deleteForm") // 회원정보 삭제 페이지로 가기
     public String userDeleteForm(Authentication authentication, Model model) {
-        if (authentication != null) {
+        if (authentication != null && passwordCheck) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
-            return "/myPage/user/deleteForm";
+            return "/myPage/deleteForm";}
+        else if (authentication != null) {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
+            UserDto userDto = principalDetails.getUserDto();
+            model.addAttribute("userDto", userDto);
+            model.addAttribute("tmp", "delete");
+            return "/myPage/passwordCheckForm";
         }
         return "redirect:/user/loginForm";
     }
@@ -82,7 +107,7 @@ public class MyPageController {
     @DeleteMapping("/user/delete")
     public @ResponseBody String userDelete(@RequestParam String id, HttpServletRequest request, HttpServletResponse response) {
         String result = userService.deleteUser(id);
-        if (result.equals("SUCCESS")){
+        if (result.equals("SUCCESS")) {
             // 삭제 시 세션과 인증 정보를 무효화하여 보안강화를 하기 위한 목적.
             SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
             logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
@@ -90,22 +115,50 @@ public class MyPageController {
         }
         return result;
     }
+
     //유저 패스워드 재확인 폼으로 이동
     @GetMapping("/user/passwordCheckForm")
-    public String passwordCheckForm(Authentication authentication, Model model){
-        if (authentication != null){
+    public String passwordCheckForm(Authentication authentication, Model model) {
+        if (authentication != null) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
-            return "/myPage/user/passwordCheckForm";
+            return "/myPage/passwordCheckForm";
+        }
+        return "redirect:/user/loginForm";
+    }
+    boolean passwordCheck = false;
+    @PostMapping("/user/passwordCheck") // 회원정보 수정 페이지나, 삭제페이지 갈때 비밀번호 재확인 받는 코드
+    @ResponseBody
+    public String checkPasswordIntoMyPage(@RequestBody UserDto userDto, Authentication authentication) {
+        if (authentication != null) {
+            String key = userService.userIdAndPasswordCheck(userDto.getId(), userDto.getPassword());
+            System.out.println("key : " + key);
+            if (key.equals("SUCCESS")){
+                passwordCheck = true;
+            }
+            return key;
         }
         return "redirect:/user/loginForm";
     }
 
-    @PostMapping("/user/passwordCheck")
-    public String checkPasswordIntoMyPage(){
+    @GetMapping("/paymentSearchForm") //결재 정보 조회
+    public String paymentSearchForm(@RequestParam("name") String name,
+                                    @RequestParam("amount") String amount,
+                                    @RequestParam("pay_method") String pay_method,
+                                    @RequestParam("pg_type")String pg_type,
+                                    @RequestParam("status")String status,
+                                    @RequestParam("paid_At")String paid_At,
+                                    Model model) {
+        model.addAttribute("name", name);
+        model.addAttribute("amount", amount);
+        model.addAttribute("pay_method", pay_method);
+        model.addAttribute("pg_type", pg_type);
+        model.addAttribute("status", status);
+        model.addAttribute("paid_At", paid_At);
 
-        return null;
+        return "myPage/paymentSearchForm";
     }
+
 }

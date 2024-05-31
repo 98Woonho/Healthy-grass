@@ -67,4 +67,19 @@
         WHERE name = #{name}
           AND phone = #{phone}
     </select>
+    <select id="findUserByIdAndPassword" parameterType="String" resultMap="userResultMap">
+        SELECT
+            *
+        FROM user
+        WHERE id = #{id}
+        AND password = #{password}
+    </select>
+    <select id="findUserPasswordByUserId" parameterType="string" resultType="string">
+        SELECT
+            password
+        FROM
+            user
+        WHERE
+            id = #{id}
+    </select>
 </mapper>

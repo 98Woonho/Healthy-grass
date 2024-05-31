@@ -53,7 +53,7 @@ public class SecurityConfig {
                 logout ->{
                     logout.logoutUrl("/user/logout").permitAll(); // 로그아웃 url 지정
                     logout.addLogoutHandler(customLogoutHandler()); // 로그아웃시 customLogoutHandler 실행
-                    logout.logoutSuccessUrl("/user/loginForm"); // 로그아웃 성공시 이동할 url
+                    logout.logoutSuccessUrl("/"); // 로그아웃 성공시 이동할 url
                 }
         );
         http.rememberMe(

@@ -238,5 +238,19 @@ public class UserService {
         }
         return "FAILURE_NOT_FOUND_USER";
     }
+
+    public String userIdAndPasswordCheck(String id, String password) {
+        System.out.println(id);
+        System.out.println(password);
+
+        String userPassword = userMapper.findUserPasswordByUserId(id);
+        if (userPassword == null){
+            return "ERROR";
+        }
+        else if (passwordEncoder.matches(password, userPassword)){ // password인코더 결과값을 찾을때는 match 사용!!! equals 사용 불가
+            return "SUCCESS";
+        }
+        return "NOT_FOUND_USER";
+    }
 }
 

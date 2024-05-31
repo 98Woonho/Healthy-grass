@@ -132,6 +132,42 @@ public class UserController {
         public Object message;
         public AuthInfoResponse response;
     }
+
+    //결제 취소 요청
+    @GetMapping("/cancel/{imp_uid}")
+    public @ResponseBody void cancel(
+            @PathVariable String imp_uid,
+            @PathVariable String pay_id
+    ){
+
+        AccessToken();
+        log.info("GET /payment/cancel..");
+        // access-token 받기
+
+        //URL
+        String url = "https://api.iamport.kr/payments/cancel";
+
+        //Request Header
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization","Bearer "+portOneTokenResponse.getResponse().getAccess_token());
+        headers.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        //Request Body
+        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("imp_uid",imp_uid);
+
+        //Hader+Body
+        HttpEntity< MultiValueMap<String,String>> entity = new HttpEntity(params,headers);
+
+        //요청
+        RestTemplate restTemplate = new RestTemplate();
+
+        //반환값확인
+        ResponseEntity<String> resp =  restTemplate.exchange(url, HttpMethod.POST,entity,String.class);
+
+        System.out.println(resp);
+        System.out.println(resp.getBody());
+    }
     
 
     //회원가입 폼으로 이동

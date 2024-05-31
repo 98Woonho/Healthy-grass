@@ -50,10 +50,29 @@
                     </div>
                 </li>
             </ul>
+            <th:block sec:authorize="isAuthenticated()">
+                <ul>
+                    <li>
+                        <div>
+                            <a href="/myPage">마이페이지</a>
+                        </div>
+                    </li>
+                </ul>
+            </th:block>
 
-            <form action="/user/loginForm" method="get">
-                <button>로그인</button>
-            </form>
+
+            <!-- 인증되지 않은 사용자를 위한 폼 -->
+            <th:block sec:authorize="isAnonymous()">
+                <form action="/user/loginForm" method="get">
+                    <button>로그인</button>
+                </form>
+            </th:block>
+            <!-- 인증된 사용자를 위한 폼 -->
+            <th:block sec:authorize="isAuthenticated()">
+                <form action="/user/logout" method="get">
+                    <button>로그아웃</button>
+                </form>
+            </th:block>
         </div>
     </nav>
 </th:block>

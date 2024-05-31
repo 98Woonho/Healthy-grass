@@ -28,6 +28,14 @@ public class MyPageController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("")
+    public String myPage(Authentication authentication){
+        if (authentication != null) {
+            return "/myPage/mypage";
+        }
+        return "redirect:/user/loginForm";
+    }
+
     @GetMapping("/user/searchForm") //회원정보 조회
     public String userSearchForm(Authentication authentication, Model model) {
         if (authentication != null) {

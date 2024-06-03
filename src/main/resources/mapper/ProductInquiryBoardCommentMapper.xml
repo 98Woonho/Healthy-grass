@@ -6,5 +6,6 @@
         *
         FROM product_inquiry_board_comment pibc
         WHERE pibc.P_Board_Id = #{id}
+        ORDER BY pibc.updateDate DESC, pibc.regDate DESC
     </select>
 </mapper>

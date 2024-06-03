@@ -64,7 +64,11 @@
                             <tbody>
                             <!-- 상품 목록을 동적으로 채웁니다. -->
                             <tr th:each="product : ${list}">
-                                <td th:text="${product.get('name') != null ? product.name : ''}">-</td>
+                                <td>
+                                    <a th:href="@{${'/product?id=' + (product.id)}}">
+                                        <span th:text="${product.get('name') != null ? product.name : ''}">-</span>
+                                    </a>
+                                </td>
                                 <td th:text="${product.get('price') != null ? product.price : ''}">-</td>
                                 <td th:text="${product.get('discount') != null ? product.discount + '%' : ''}">-</td>
                                 <td th:text="${product.get('discountedPrice') != null ? product.discountedPrice : ''}">-</td>

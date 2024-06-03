@@ -13,6 +13,8 @@ public class Criteria {
     private String sorting;         // 정렬 방식
     private String majorCategory;   // 대분류
     private String middleCategory;  // 중분류
+    
+    private String commentChk;  // 댓글 없는 게시판을 조회하기 위한 체크값
 
     public Criteria() {
         pageno=1;

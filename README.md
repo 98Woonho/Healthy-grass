@@ -38,8 +38,10 @@ API 요청에 대해 응답할 때는 항상 HTTP 상태 코드를 포함해야 
 같은 식으로, 게시물들은 각자의 댓글들을 가지고 있기 때문에 댓글을 받아오는 엔드포인트는 https://mysite.com/posts/postId/comments 정도면 될 것 같습니다.
 
 그렇다고 3단계 이상을 중첩하면 가독성이 떨어지기 때문에 너무 많이 중첩하지 않는 것이 좋습니다.
+
 ERD
-![건강풀때기_ERD](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/7f1923f4-16d7-4dd2-9beb-59ad00ed4f89)
+![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/99e22502-cb16-409b-ba3e-84e7199fd934)
+
 
 
 

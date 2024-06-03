@@ -40,7 +40,8 @@ API 요청에 대해 응답할 때는 항상 HTTP 상태 코드를 포함해야 
 그렇다고 3단계 이상을 중첩하면 가독성이 떨어지기 때문에 너무 많이 중첩하지 않는 것이 좋습니다.
 
 ERD
-![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/99e22502-cb16-409b-ba3e-84e7199fd934)
+![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/2ee7465b-0b5b-476f-8096-ac8169a02274)
+
 
 
 

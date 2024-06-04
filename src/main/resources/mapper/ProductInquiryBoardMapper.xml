@@ -54,6 +54,7 @@
         pib.id,
         pib.Uid,
         pib.Pid,
+        pib.password,
         p.name AS productName,
         pib.title,
         pib.isLocked,

@@ -1,7 +1,7 @@
 package com.example.app.shopping.controller;
 
 import com.example.app.shopping.domain.dto.common.Criteria;
-import com.example.app.shopping.domain.service.productInquiryBoard.productInquiryBoardServiceImpl;
+import com.example.app.shopping.domain.service.customerInquiryBoard.CustomerInquiryBoardServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,15 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class productInquiryBoardController {
+public class CustomerInquiryBoardController {
+
     @Autowired
-    private productInquiryBoardServiceImpl productInquiryBoardService;
+    private CustomerInquiryBoardServiceImpl service;
 
-    Integer unlockId;  // 게시글 번호 비밀번호 체크 상태변수
-
-    @GetMapping("/productInquiryBoardList")
-    public String productInquiryBoardList(@ModelAttribute Criteria criteria, Model model) {
-        System.out.println("productInquiryBoardController's productInquiryBoardList criteria: " + criteria + " model: " + model);
+    @GetMapping("/customerInquiryBoardList")
+    public String CustomerInquiryBoardList(@ModelAttribute Criteria criteria, Model model) {
+        System.out.println("CustomerInquiryBoardController's customerInquiryBoardList");
 
         if (criteria.getPageno() == null) {
             criteria.setPageno(1);
@@ -32,7 +31,7 @@ public class productInquiryBoardController {
         }
 
         try {
-            Map<String, Object> serviceReturnVal = productInquiryBoardService.getproductInquiryBoards(criteria);
+            Map<String, Object> serviceReturnVal = service.getCustomerInquiryBoards(criteria);
             model.addAttribute("success", true);
             model.addAttribute("list", serviceReturnVal.get("list"));  // 상품 리스트 정보
             model.addAttribute("pageDto", serviceReturnVal.get("pageDto"));  // 페이징 처리를 위한 정보
@@ -43,19 +42,19 @@ public class productInquiryBoardController {
             model.addAttribute("success", false);
         }
 
-        return "/productInquiryBoard/boardList";
+        return "CustomerInquiryBoard/boardList";
     }
 
-    @GetMapping("productInquiryBoard")
-    public String productInquiryBoard(
+    @GetMapping("/customerInquiryBoard")
+    public String customerInquiryBoardList(
             @RequestParam(name = "id", defaultValue = "0", required = false) Integer id,
             Model model) {
-        System.out.println("productInquiryBoardController's productInquiryBoard id: " + id + " model: " + model);
+        System.out.println("CustomerInquiryBoardController's customerInquiryBoardList id: " + id + " model: " + model);
 
-        Map<String, Object> response = null;
+        Map<String, Object> response = null;  // 반환할 데이터를 담을 변수
 
         try {
-            response = productInquiryBoardService.getproductInquiryBoardDetail(id);
+            response = service.getCustomerInquiryBoardDetail(id);
             response.put("success", true);
         } catch (Exception e) {
             response = new HashMap<>();
@@ -64,6 +63,6 @@ public class productInquiryBoardController {
 
         model.addAttribute("response", response);
 
-        return "/productInquiryBoard/boardDetail";
+        return "/customerInquiryBoard/boardDetail";
     }
 }

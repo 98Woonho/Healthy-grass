@@ -1,6 +1,6 @@
 package com.example.app.shopping.controller;
 
-import com.example.app.shopping.domain.service.productInquiryBoardComment.ProductInquiryBoardCommentServiceImpl;
+import com.example.app.shopping.domain.service.customerInquiryBoardComment.CustomerInquiryBoardCommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +11,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class ProductInquiryBoardCommentController {
+public class CustomerInquiryBoardCommentController {
     @Autowired
-    private ProductInquiryBoardCommentServiceImpl service;
+    private CustomerInquiryBoardCommentServiceImpl service;
 
-    @GetMapping("/ProductInquiryBoardComment")
-    public @ResponseBody Map<String, Object> ProductInquiryBoardComment(@RequestParam(name = "id") Integer id) {
-        System.out.println("ProductInquiryBoardCommentController's ProductInquiryBoardComment id: " + id);
+    @GetMapping("/customerInquiryBoardComment")
+    public @ResponseBody Map<String, Object> CustomerInquiryBoardComment(@RequestParam(name = "id") Integer id) {
+        System.out.println("CustomerInquiryBoardCommentController's CustomerInquiryBoardComment id: " + id);
 
         Map<String, Object> response = new HashMap<>();
 

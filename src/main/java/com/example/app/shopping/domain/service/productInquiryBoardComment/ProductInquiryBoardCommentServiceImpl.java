@@ -1,4 +1,4 @@
-package com.example.app.shopping.domain.service.ProductInquiryBoardComment;
+package com.example.app.shopping.domain.service.productInquiryBoardComment;
 
 import com.example.app.shopping.domain.mapper.ProductInquiryBoardCommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;

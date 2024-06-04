@@ -1,4 +1,4 @@
-package com.example.app.shopping.domain.service.ProductInquiryBoardComment;
+package com.example.app.shopping.domain.service.productInquiryBoardComment;
 
 import java.util.List;
 import java.util.Map;

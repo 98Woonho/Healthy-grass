@@ -1,6 +1,64 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-</beans>
+<mapper namespace="com.example.app.shopping.domain.mapper.PaymentMapper">
+    <insert id="save" parameterType="map">
+        INSERT INTO payment (buyer_addr,
+                             buyer_email,
+                             buyer_name,
+                             buyer_postcode,
+                             buyer_tel,
+                             card_name,
+                             imp_uid,
+                             merchant_uid,
+                             name,
+                             paid_amount,
+                             paid_at,
+                             pg_type,
+                             pay_method,
+                             status,
+                             regDate,
+                             updateDate,
+                             userid)
+        VALUES (#{paymentDto.buyer_addr},
+                #{paymentDto.buyer_email},
+                #{paymentDto.buyer_name},
+                #{paymentDto.buyer_postcode},
+                #{paymentDto.buyer_tel},
+                #{paymentDto.card_name},
+                #{paymentDto.imp_uid},
+                #{paymentDto.merchant_uid},
+                #{paymentDto.name},
+                #{paymentDto.paid_amount},
+                #{paymentDto.paid_at},
+                #{paymentDto.pg_type},
+                #{paymentDto.pay_method},
+                #{paymentDto.status},
+                #{paymentDto.regDate},
+                #{paymentDto.updateDate},
+                #{id})
+    </insert>
+    <select id="searchPayment" resultType="com.example.app.shopping.domain.dto.PaymentDto" parameterType="com.example.app.shopping.domain.dto.PaymentDto">
+        SELECT id,
+               buyer_addr,
+               buyer_email,
+               buyer_name,
+               buyer_postcode,
+               buyer_tel,
+               card_name,
+               imp_uid,
+               merchant_uid,
+               name,
+               paid_amount,
+               paid_at,
+               pg_type,
+               pay_method,
+               status,
+               regDate,
+               updateDate
+        FROM payment
+        WHERE userid = #{id}
+    </select>
+</mapper>

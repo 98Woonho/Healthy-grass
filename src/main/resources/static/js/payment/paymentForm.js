@@ -24,10 +24,15 @@ pay_btn.addEventListener('click', function (e) {
             msg += '결제 금액 : ' + rsp.paid_amount;
             msg += '카드 승인번호 : ' + rsp.apply_num;
 
-            pay_info(rsp);
+            console.log(rsp);
 
-            axios.post("")
-
+            axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
+                .then(resp => {
+                    console.log(resp)
+                })
+                .catch(err => {
+                    console.log(err);
+                })
 
         } else {
             var msg = '결제에 실패하였습니다.';
@@ -47,12 +52,6 @@ pay_cancel.addEventListener('click', function (e) {
     const data = {
         imp_uid: 'imp_437900593100',
         merchant_uid: 'merchant_1717471901031',
-        amount: 0,
-        checksum: 0,
-        reason: '돈이 없습니다',
-        refund_holder: '황보성현',
-        refund_bank: 'BK11',
-        refund_account: '3510027422763'
     };
 
     axios.post("https://api.iamport.kr/payments/cancel", data, {headers: {"Content-Type": "application/json"}})
@@ -65,81 +64,6 @@ pay_cancel.addEventListener('click', function (e) {
 })
 
 
-function pay_info(rsp) {
-    var form = document.createElement('form');
-    var objs;
 
-    objs = document.createElement('input');
-    objs.setAttribute('type', 'hidden');
-    objs.setAttribute('name', 'buyer_name');
-    objs.setAttribute('value', rsp.buyer_name);
-    form.appendChild(objs);
-
-    objs = document.createElement('input');
-    objs.setAttribute('type', 'hidden');
-    objs.setAttribute('name', 'buyer_phone');
-    objs.setAttribute('value', rsp.buyer_tel);
-    form.appendChild(objs);
-
-    objs = document.createElement('input');
-    objs.setAttribute('type', 'hidden');
-    objs.setAttribute('name', 'member_email');
-    objs.setAttribute('value', rsp.buyer_email);
-    form.appendChild(objs);
-
-    objs = document.createElement('input');
-    objs.setAttribute('type', 'hidden');
-    objs.setAttribute('name', 'buy_addr');
-    objs.setAttribute('value', rsp.buyer_addr);
-    form.appendChild(objs);
-
-    objs = document.createElement('input');
-    objs.setAttribute('type', 'hidden');
-    objs.setAttribute('name', 'buy_product_name');
-    objs.setAttribute('value', rsp.name);
-    form.appendChild(objs);
-
-    objs = document.createElement('input');
-    objs.setAttribute('type', 'hidden');
-    objs.setAttribute('name', 'buyer_buyid');
-    objs.setAttribute('value', rsp.imp_uid);
-    form.appendChild(objs);
-
-    objs = document.createElement('input');
-    objs.setAttribute('type', 'hidden');
-    objs.setAttribute('name', 'buyer_merid');
-    objs.setAttribute('value', rsp.merchant_uid);
-    form.appendChild(objs);
-
-    objs = document.createElement('input');
-    objs.setAttribute('type', 'hidden');
-    objs.setAttribute('name', 'amount');
-    objs.setAttribute('value', rsp.paid_amount);
-    form.appendChild(objs);
-
-    objs = document.createElement('input');
-    objs.setAttribute('type', 'hidden');
-    objs.setAttribute('name', 'buyer_card_num');
-    objs.setAttribute('value', rsp.apply_num);
-    form.appendChild(objs);
-
-    objs = document.createElement('input');
-    objs.setAttribute('type', 'hidden');
-    objs.setAttribute('name', 'buyer_pay_ok');
-    objs.setAttribute('value', rsp.success);
-    form.appendChild(objs);
-
-    objs = document.createElement('input');
-    objs.setAttribute('type', 'hidden');
-    objs.setAttribute('name', 'buyer_postcode');
-    objs.setAttribute('value', rsp.buyer_postcode);
-    form.appendChild(objs);
-
-
-    form.setAttribute('method', 'post');
-    form.setAttribute('action', "paymentForm");
-    document.body.appendChild(form);
-    form.submit();
-}
 
 

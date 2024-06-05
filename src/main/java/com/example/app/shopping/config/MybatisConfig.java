@@ -24,7 +24,7 @@ public class MybatisConfig {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
 
-        //MemoMapper xml 파일 위치 지정
+        //Mapper xml 파일 위치 지정
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resolver.getResources("classpath*:mapper/*.xml");
         sessionFactory.setMapperLocations(resources);

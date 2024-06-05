@@ -6,18 +6,43 @@
 </head>
 <body>
 <h1>Payment Information</h1>
-<p><strong>Buyer Name:</strong> <span th:text="${payment.buyer_name}"></span></p>
-<p><strong>Buyer Phone:</strong> <span th:text="${payment.buyer_phone}"></span></p>
-<p><strong>Member Email:</strong> <span th:text="${payment.member_email}"></span></p>
-<p><strong>Buy Address:</strong> <span th:text="${payment.buy_addr}"></span></p>
-<p><strong>Buy Product Name:</strong> <span th:text="${payment.buy_product_name}"></span></p>
-<p><strong>Buyer Buy ID:</strong> <span th:text="${payment.buyer_buyid}"></span></p>
-<p><strong>Buyer Mer ID:</strong> <span th:text="${payment.buyer_merid}"></span></p>
-<p><strong>Amount:</strong> <span th:text="${payment.amount}"></span></p>
-<p><strong>Buyer Card Num:</strong> <span th:text="${payment.buyer_card_num}"></span></p>
-<p><strong>Buyer Pay OK:</strong> <span th:text="${payment.buyer_pay_ok}"></span></p>
-<p><strong>Buyer Postcode:</strong> <span th:text="${payment.buyer_postcode}"></span></p>
-<p><strong>Registration Date:</strong> <span th:text="${payment.regDate}"></span></p>
-<p><strong>Update Date:</strong> <span th:text="${payment.updateDate}"></span></p>
+<table border="1">
+    <thead>
+    <tr>
+        <th>구매자 주소</th>
+        <th>구매자 이메일</th>
+        <th>구매자 이름</th>
+        <th>구매자 우편번호</th>
+        <th>구매자 연락처</th>
+        <th>사용 카드</th>
+        <th>결제 상품 이름</th>
+        <th>결제금액</th>
+        <th>결제 날짜</th>
+        <th>결제 타입</th>
+        <th>결제 방법</th>
+        <th>상태</th>
+        <th>등록 날짜</th>
+        <th>업데이트 날짜</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="payment : ${payment}">
+        <td th:text="${payment.buyer_addr}"></td>
+        <td th:text="${payment.buyer_email}"></td>
+        <td th:text="${payment.buyer_name}"></td>
+        <td th:text="${payment.buyer_postcode}"></td>
+        <td th:text="${payment.buyer_tel}"></td>
+        <td th:text="${payment.card_name}"></td>
+        <td th:text="${payment.name}"></td>
+        <td th:text="${payment.paid_amount}"></td>
+        <td th:text="${payment.paid_at}"></td>
+        <td th:text="${payment.pg_type}"></td>
+        <td th:text="${payment.pay_method}"></td>
+        <td th:text="${payment.status}"></td>
+        <td th:text="${payment.regDate}"></td>
+        <td th:text="${payment.updateDate}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

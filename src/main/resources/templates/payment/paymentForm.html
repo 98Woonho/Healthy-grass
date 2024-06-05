@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+    <!-- js -->
+    <script defer src="/js/payment/paymentForm.js"></script>
+    <!-- 포트원 -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+</head>
+<body>
+
+<button class="pay_btn">결제하기</button>
+<button class="pay_cancel">결제 취소하기</button>
+</body>
+</html>

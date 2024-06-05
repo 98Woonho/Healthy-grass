@@ -1,7 +1,9 @@
 package com.example.app.shopping.controller;
 
 import com.example.app.shopping.config.auth.PrincipalDetails;
+import com.example.app.shopping.domain.dto.PaymentDto;
 import com.example.app.shopping.domain.dto.UserDto;
+import com.example.app.shopping.domain.service.PaymentService;
 import com.example.app.shopping.domain.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +30,7 @@ public class MyPageController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("")
     public String myPage(Authentication authentication){
         if (authentication != null) {
@@ -35,10 +38,7 @@ public class MyPageController {
         }
         return "redirect:/user/loginForm";
     }
-    @GetMapping("/payment")
-    public String payment(){
-        return "/myPage/paymentForm";
-    }
+
 
     @GetMapping("/user/searchForm") //회원정보 조회
     public String userSearchForm(Authentication authentication, Model model) {
@@ -141,24 +141,6 @@ public class MyPageController {
             return key;
         }
         return "redirect:/user/loginForm";
-    }
-
-    @GetMapping("/paymentSearchForm") //결재 정보 조회
-    public String paymentSearchForm(@RequestParam("name") String name,
-                                    @RequestParam("amount") String amount,
-                                    @RequestParam("pay_method") String pay_method,
-                                    @RequestParam("pg_type")String pg_type,
-                                    @RequestParam("status")String status,
-                                    @RequestParam("paid_At")String paid_At,
-                                    Model model) {
-        model.addAttribute("name", name);
-        model.addAttribute("amount", amount);
-        model.addAttribute("pay_method", pay_method);
-        model.addAttribute("pg_type", pg_type);
-        model.addAttribute("status", status);
-        model.addAttribute("paid_At", paid_At);
-
-        return "myPage/paymentSearchForm";
     }
 
 }

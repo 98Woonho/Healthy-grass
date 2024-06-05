@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결제 정보 결과 조회</title>
+</head>
+<body>
+<h1>Payment Information</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>구매자 주소</th>
+        <th>구매자 이메일</th>
+        <th>구매자 이름</th>
+        <th>구매자 우편번호</th>
+        <th>구매자 연락처</th>
+        <th>사용 카드</th>
+        <th>결제 상품 이름</th>
+        <th>결제금액</th>
+        <th>결제 날짜</th>
+        <th>결제 타입</th>
+        <th>결제 방법</th>
+        <th>상태</th>
+        <th>등록 날짜</th>
+        <th>업데이트 날짜</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="payment : ${payment}">
+        <td th:text="${payment.buyer_addr}"></td>
+        <td th:text="${payment.buyer_email}"></td>
+        <td th:text="${payment.buyer_name}"></td>
+        <td th:text="${payment.buyer_postcode}"></td>
+        <td th:text="${payment.buyer_tel}"></td>
+        <td th:text="${payment.card_name}"></td>
+        <td th:text="${payment.name}"></td>
+        <td th:text="${payment.paid_amount}"></td>
+        <td th:text="${payment.paid_at}"></td>
+        <td th:text="${payment.pg_type}"></td>
+        <td th:text="${payment.pay_method}"></td>
+        <td th:text="${payment.status}"></td>
+        <td th:text="${payment.regDate}"></td>
+        <td th:text="${payment.updateDate}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

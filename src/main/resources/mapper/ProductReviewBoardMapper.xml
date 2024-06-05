@@ -38,14 +38,23 @@
         product p ON prb.Pid = p.id
         <where>
             <if test="criteria != null">
-                <if test="criteria.keyword != null and criteria.keyword != ''">
-                    AND (prb.title LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                <if test="criteria.type != null and criteria.type != ''">
+                    <if test="criteria.type != null and criteria.type == 'title'">
+                        AND (prb.title LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                    </if>
+
+                    <if test="criteria.type != null and criteria.type == 'pId' and pId != null">
+                        AND prb.Pid = #{pId}
+                    </if>
+
+                    <if test="criteria.type != null and criteria.type == 'productName' and productName != null">
+                        AND prb.Pid IN (SELECT p.id FROM Product p WHERE p.name LIKE CONCAT('%', #{productName}, '%'))
+                    </if>
                 </if>
-                <if test="pId != null and pId != ''">
-                    AND prb.Pid = #{pId}
-                </if>
-                <if test="productName != null and productName != ''">
-                    AND prb.Pid IN (SELECT p.id FROM Product p WHERE p.name LIKE CONCAT('%', #{productName}, '%'))
+                <if test="criteria.type == null or criteria.type == ''">
+                    <if test="pId != null and pId != ''">
+                        AND prb.Pid = #{pId}
+                    </if>
                 </if>
             </if>
         </where>

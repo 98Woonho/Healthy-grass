@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 public class Criteria {
     private Integer pageno;		// 현재 페이지
     private Integer amount;	// 표시할 게시물 양(10건)
+    private String type;  // 검색 옵션을 추가할 시 필요한 타입
     private String keyword;			// 포함문자열
-    private String sorting;         // 정렬 방식
+    private String sorting ;         // 정렬 방식
     private String majorCategory;   // 대분류
     private String middleCategory;  // 중분류
     

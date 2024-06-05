@@ -65,17 +65,49 @@ function updatePagination(pageDto) {
     const pagination = document.getElementById('pagination');
     pagination.innerHTML = '';
 
+    const ul = document.createElement('ul');
+
     if (pageDto.prev) {
-        const prevButton = document.createElement('button');
-        prevButton.textContent = 'Prev';
-        prevButton.onclick = () => loadReviews(currentPage - 1);
-        pagination.appendChild(prevButton);
+        const prevLi = document.createElement('li');
+        const prevLink = document.createElement('a');
+        prevLink.href = '#';
+        prevLink.textContent = 'Prev';
+        prevLink.onclick = (e) => {
+            e.preventDefault();
+            loadReviews(currentPage - 1);
+        };
+        prevLi.appendChild(prevLink);
+        ul.appendChild(prevLi);
+    }
+
+    for (let pageNumber = pageDto.startPage; pageNumber <= pageDto.endPage; pageNumber++) {
+        const pageLi = document.createElement('li');
+        const pageLink = document.createElement('a');
+        pageLink.href = '#';
+        pageLink.textContent = pageNumber;
+        if (pageNumber === currentPage) {
+            pageLi.classList.add('active');
+        }
+        pageLink.onclick = (e) => {
+            e.preventDefault();
+            loadReviews(pageNumber);
+        };
+        pageLi.appendChild(pageLink);
+        ul.appendChild(pageLi);
     }
 
     if (pageDto.next) {
-        const nextButton = document.createElement('button');
-        nextButton.textContent = 'Next';
-        nextButton.onclick = () => loadReviews(currentPage + 1);
-        pagination.appendChild(nextButton);
+        const nextLi = document.createElement('li');
+        const nextLink = document.createElement('a');
+        nextLink.href = '#';
+        nextLink.textContent = 'Next';
+        nextLink.onclick = (e) => {
+            e.preventDefault();
+            loadReviews(currentPage + 1);
+        };
+        nextLi.appendChild(nextLink);
+        ul.appendChild(nextLi);
     }
+
+    pagination.appendChild(ul);
 }

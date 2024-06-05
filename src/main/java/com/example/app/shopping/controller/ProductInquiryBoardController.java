@@ -34,9 +34,6 @@ public class ProductInquiryBoardController {
             model.addAttribute("success", true);
             model.addAttribute("list", serviceReturnVal.get("list"));  // 상품 리스트 정보
             model.addAttribute("pageDto", serviceReturnVal.get("pageDto"));  // 페이징 처리를 위한 정보
-
-            System.out.println(serviceReturnVal.get("pageDto"));
-
         } catch (Exception e) {
             model.addAttribute("success", false);
         }

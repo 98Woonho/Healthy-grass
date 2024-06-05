@@ -6,10 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +48,38 @@ public class ProductReviewBoardController {
         }
 
         return returnVal;
+    }
+
+    // 악의적인 리뷰 혹은 광고 등을 검열하기 위한 개발자 뷰를 위한 메서드입니다. (일반 유저는 볼 이유가 없어 접근 제한 필요할 듯 합니다)
+    @GetMapping("/productReviewBoardList")
+    public String t(
+            @ModelAttribute Criteria criteria,
+            @RequestParam(value = "pId", required = false) Integer pId,
+            @RequestParam(value = "productName", required = false) String productName,
+            Model model
+    ) {
+        System.out.println("ProductReviewBoardController's productReviewBoardList " +
+                "pId: " + pId + " productName: " + productName +
+                "criteria: " + criteria + " model: " + model);
+
+        if (criteria.getPageno() == null) {
+            criteria.setPageno(1);
+        }
+
+        if (criteria.getAmount() == null) {
+            criteria.setAmount(10);
+        }
+
+        try {
+            Map<String, Object> serviceReturnVal = service.getproductReviewBoards(criteria, pId, productName);
+            model.addAttribute("success", true);
+            model.addAttribute("list", serviceReturnVal.get("list"));  // 상품 리스트 정보
+            model.addAttribute("pageDto", serviceReturnVal.get("pageDto"));  // 페이징 처리를 위한 정보
+        } catch (Exception e) {
+            model.addAttribute("success", false);
+        }
+
+        return "/productReviewBoard/boardList";
     }
 
     @Data

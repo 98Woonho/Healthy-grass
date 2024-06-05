@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.app.shopping.domain.mapper.CustomerInquiryBoardMapper">
+    <select id="findCustomerInquiryBoardsCount" parameterType="com.example.app.shopping.domain.dto.common.Criteria" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM customer_inquiry_board cib
+        <where>
+            <if test="criteria != null">
+                <if test="criteria.keyword != null and criteria.keyword != ''">
+                    AND (cib.title LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                </if>
+                <if test="criteria.commentChk != null and criteria.commentChk != ''">
+                    AND (SELECT COUNT(*) FROM customer_inquiry_comment cibc WHERE cib.id = cibc.C_Board_Id) = 0
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <select id="findCustomerInquiryBoards" parameterType="map" resultType="map">
+        SELECT
+        cib.id,
+        cib.Uid,
+        cib.title,
+        cib.regDate,
+        cib.updateDate,
+        COUNT(cibc.id) AS commentCount
+        FROM
+        customer_inquiry_board cib
+        LEFT JOIN
+        customer_inquiry_comment cibc ON cib.id = cibc.C_Board_id
+        <where>
+            <if test="criteria.keyword != null and criteria.keyword != ''">
+                AND cib.title LIKE CONCAT('%', #{criteria.keyword}, '%')
+            </if>
+        </where>
+        GROUP BY
+        cib.id, cib.Uid, cib.title, cib.regDate, cib.updateDate
+        <if test="criteria.commentChk != null and criteria.commentChk != ''">
+            HAVING commentCount &lt; 1
+        </if>
+        ORDER BY
+        cib.updateDate DESC,
+        cib.regDate DESC
+        LIMIT #{offset}, #{criteria.amount}
+    </select>
+
+    <select id="findCustomerInquiryBoardById" parameterType="Integer" resultType="map">
+        SELECT
+        cib.id,
+        cib.Uid,
+        cib.title,
+        cib.content,
+        cib.imgPath,
+        cib.imgName,
+        cib.regDate,
+        cib.updateDate,
+        COUNT(cibc.id) AS commentCount
+        FROM
+        customer_inquiry_board cib
+        LEFT JOIN
+        customer_inquiry_comment cibc ON cib.id = cibc.C_Board_id
+        WHERE cib.id = #{id}
+        GROUP BY
+        cib.id
+    </select>
+</mapper>

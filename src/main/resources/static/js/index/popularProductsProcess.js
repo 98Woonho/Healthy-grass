@@ -22,13 +22,17 @@ document.addEventListener("DOMContentLoaded", function () {
     function loadAllProducts() {
         axios.get('/popularProducts')
             .then(response => {
-                const data = response.data;
-                updateProductList('tablist_1', data.allCategoryProducts);
-                updateProductList('tablist_2', data.riceProducts);
-                updateProductList('tablist_3', data.fruitVegetableProducts);
-                updateProductList('tablist_4', data.meatProducts);
-                updateProductList('tablist_5', data.healthProducts);
-                updateProductList('tablist_6', data.processedFoodProducts);
+                if (response.data.success) {
+                    const data = response.data;
+                    updateProductList('tablist_1', data.allCategoryProducts);
+                    updateProductList('tablist_2', data.riceProducts);
+                    updateProductList('tablist_3', data.fruitVegetableProducts);
+                    updateProductList('tablist_4', data.meatProducts);
+                    updateProductList('tablist_5', data.healthProducts);
+                    updateProductList('tablist_6', data.processedFoodProducts);
+                } else {
+                    alert("DB로 부터 데이터조회에 실패하였습니다.");
+                }
             })
             .catch(error => {
                 alert("서버로부터 상품 데이터를 가져오는데 실패하였습니다.")

@@ -84,4 +84,34 @@ public class ProductController {
 
         return response;
     }
+
+    @GetMapping("/highDiscountProducts")
+    public @ResponseBody Map<String, Object> highDiscountProducts() {
+        Map<String, Object> response = null;
+
+        try {
+            response = productService.getHighDiscountProducts();
+            response.put("success", true);
+        } catch (Exception e) {
+            response = new HashMap<>();
+            response.put("success", false);
+        }
+
+        return response;
+    }
+
+    @GetMapping("/recentProducts")
+    public @ResponseBody Map<String, Object> recentProducts() {
+        Map<String, Object> response = null;
+
+        try {
+            response = productService.getRecentProducts();
+            response.put("success", true);
+        } catch (Exception e) {
+            response = new HashMap<>();
+            response.put("success", false);
+        }
+
+        return response;
+    }
 }

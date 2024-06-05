@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+    <link rel="stylesheet" th:href="@{/css/customerInquiryBoardDetail/customerInquiryBoardDetail.css}">
+    <title>고객문의 게시판 상세조회</title>
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+        <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+    </div>
+    <div class="main">
+        <section class="first-section">
+            <div th:if="${response != null}">
+                <div th:if="${response.success}">
+                    <div th:with="customerInquiryBoardDetail=${response}">
+                        <p>게시글 번호: <span id="boardId" th:text="${customerInquiryBoardDetail.id}"></span></p>
+                        <p>작성자: <span th:text="${customerInquiryBoardDetail.Uid}"></span></p>
+                        <p>제목: <span th:text="${customerInquiryBoardDetail.title}"></span></p>
+                        <p>글 내용: <span th:text="${customerInquiryBoardDetail.content}"></span></p>
+                        <p>업로드 사진: <span th:text="${customerInquiryBoardDetail.imgPath + '/' + customerInquiryBoardDetail.imgName}"></span></p>  <!-- 테스트 데이터가 잘못된거고 실제 path + imgName 으로 경로가 삽입되어야 하는게 맞습니다. -->
+                        <p>작성일: <span th:text="${customerInquiryBoardDetail.regDate}"></span></p>
+                        <p>수정일: <span th:text="${customerInquiryBoardDetail.updateDate}"></span></p>
+                        <p>댓글 수: <span th:text="${customerInquiryBoardDetail.commentCount}"></span></p>
+                    </div>
+                </div>
+                <div th:if="${!response.success}">
+                    <p>게시글 정보를 불러오는 데 실패했습니다. 다시 시도해 주세요.</p>
+                </div>
+            </div>
+            <div th:if="${response == null}">
+                <p>서버로의 요청에 실패했습니다.</p>
+            </div>
+        </section>
+        <section class="second-section" id="comments-section">
+            <!-- 댓글이 들어가는 곳 -->
+        </section>
+        <script defer th:src="@{/js/customerInquiryBoardDetail/customerInquiryBoardDetailCommentProcess.js}"></script>
+    </div>
+    <div class="footer">
+        <!-- Footer content -->
+    </div>
+</div>
+</body>
+</html>

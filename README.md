@@ -39,10 +39,18 @@ API 요청에 대해 응답할 때는 항상 HTTP 상태 코드를 포함해야 
 
 그렇다고 3단계 이상을 중첩하면 가독성이 떨어지기 때문에 너무 많이 중첩하지 않는 것이 좋습니다.
 
+ERD
+![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/2ee7465b-0b5b-476f-8096-ac8169a02274)
+
+
+
+
+
 비회원 기능
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|
 | /productDetail | GET         | 물건상세 폼으로 갑니다. 상세폼에는 상품상세게시판/상품문의게시판/상품후기게시판/장바구니버튼/구매버튼 등이 보여져야합니다. |
+
 
 회원 기능
 | URI           | REQUEST METHOD | DESCRIPTION            |

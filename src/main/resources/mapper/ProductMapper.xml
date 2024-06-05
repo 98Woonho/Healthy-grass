@@ -36,12 +36,20 @@
         p.updateDate,
         p.mainImgPath,
         p.mainImgName,
-        IFNULL(COUNT(r.id), 0) AS reviewCount,
-        IFNULL(AVG(r.rating), 0) AS averageRating
+        IFNULL(prb.reviewCount, 0) AS reviewCount,
+        IFNULL(prb.averageRating, 0) AS averageRating
         FROM
         product p
-        LEFT JOIN
-        product_review_board r ON p.id = r.Pid
+        LEFT JOIN (
+        SELECT
+        r.Pid,
+        COUNT(r.id) AS reviewCount,
+        AVG(r.rating) AS averageRating
+        FROM
+        product_review_board r
+        GROUP BY
+        r.Pid
+        ) prb ON p.id = prb.Pid
         <where>
             <if test="criteria.keyword != null and criteria.keyword != ''">
                 AND (p.name LIKE CONCAT('%', #{criteria.keyword}, '%'))
@@ -97,12 +105,20 @@
         p.mainImgName,
         p.subImgPath,
         p.subImgName,
-        IFNULL(COUNT(r.id), 0) AS reviewCount,
-        IFNULL(AVG(r.rating), 0) AS averageRating
+        IFNULL(prb.reviewCount, 0) AS reviewCount,
+        IFNULL(prb.averageRating, 0) AS averageRating
         FROM
         product p
-        LEFT JOIN
-        product_review_board r ON p.id = r.Pid
+        LEFT JOIN (
+        SELECT
+        r.Pid,
+        COUNT(r.id) AS reviewCount,
+        AVG(r.rating) AS averageRating
+        FROM
+        product_review_board r
+        GROUP BY
+        r.Pid
+        ) prb ON p.id = prb.Pid
         WHERE
         p.id = #{id}
         GROUP BY
@@ -126,19 +142,36 @@
         p.mainImgName,
         p.subImgPath,
         p.subImgName,
-        IFNULL(COUNT(r.id), 0) AS reviewCount,
-        IFNULL(AVG(r.rating), 0) AS averageRating
+        IFNULL(prb.reviewCount, 0) AS reviewCount,
+        IFNULL(prb.averageRating, 0) AS averageRating
         FROM
         product p
-        LEFT JOIN
-        product_review_board r ON p.id = r.Pid
-        LEFT JOIN
-        order_item oi ON p.id = oi.Pid
+        LEFT JOIN (
+        SELECT
+        r.Pid,
+        COUNT(r.id) AS reviewCount,
+        AVG(r.rating) AS averageRating
+        FROM
+        product_review_board r
+        GROUP BY
+        r.Pid
+        ) prb ON p.id = prb.Pid
+        LEFT JOIN (
+        SELECT
+        oi.Pid,
+        COUNT(oi.id) AS orderCount
+        FROM
+        order_item oi
+        GROUP BY
+        oi.Pid
+        ) oic ON p.id = oic.Pid
         GROUP BY
         p.id
         ORDER BY
-        COUNT(oi.id) DESC, reviewCount DESC, averageRating DESC
-        LIMIT 12
+        oic.orderCount DESC,
+        reviewCount DESC,
+        averageRating DESC
+        LIMIT 12;
     </select>
 
     <select id="findByRiceProducts" resultType="map">
@@ -158,20 +191,37 @@
         p.mainImgName,
         p.subImgPath,
         p.subImgName,
-        IFNULL(COUNT(r.id), 0) AS reviewCount,
-        IFNULL(AVG(r.rating), 0) AS averageRating
+        IFNULL(prb.reviewCount, 0) AS reviewCount,
+        IFNULL(prb.averageRating, 0) AS averageRating
         FROM
         product p
-        LEFT JOIN
-        product_review_board r ON p.id = r.Pid
-        LEFT JOIN
-        order_item oi ON p.id = oi.Pid
+        LEFT JOIN (
+        SELECT
+        r.Pid,
+        COUNT(r.id) AS reviewCount,
+        AVG(r.rating) AS averageRating
+        FROM
+        product_review_board r
+        GROUP BY
+        r.Pid
+        ) prb ON p.id = prb.Pid
+        LEFT JOIN (
+        SELECT
+        oi.Pid,
+        COUNT(oi.id) AS orderCount
+        FROM
+        order_item oi
+        GROUP BY
+        oi.Pid
+        ) oic ON p.id = oic.Pid
         WHERE
         p.majorCategory = '쌀/잡곡'
         GROUP BY
         p.id
         ORDER BY
-        COUNT(oi.id) DESC, reviewCount DESC, averageRating DESC
+        oic.orderCount DESC,
+        reviewCount DESC,
+        averageRating DESC
         LIMIT 12
     </select>
 
@@ -192,21 +242,38 @@
         p.mainImgName,
         p.subImgPath,
         p.subImgName,
-        IFNULL(COUNT(r.id), 0) AS reviewCount,
-        IFNULL(AVG(r.rating), 0) AS averageRating
+        IFNULL(prb.reviewCount, 0) AS reviewCount,
+        IFNULL(prb.averageRating, 0) AS averageRating
         FROM
         product p
-        LEFT JOIN
-        product_review_board r ON p.id = r.Pid
-        LEFT JOIN
-        order_item oi ON p.id = oi.Pid
+        LEFT JOIN (
+        SELECT
+        r.Pid,
+        COUNT(r.id) AS reviewCount,
+        AVG(r.rating) AS averageRating
+        FROM
+        product_review_board r
+        GROUP BY
+        r.Pid
+        ) prb ON p.id = prb.Pid
+        LEFT JOIN (
+        SELECT
+        oi.Pid,
+        COUNT(oi.id) AS orderCount
+        FROM
+        order_item oi
+        GROUP BY
+        oi.Pid
+        ) oic ON p.id = oic.Pid
         WHERE
         p.majorCategory = '과일/채소'
         GROUP BY
         p.id
         ORDER BY
-        COUNT(oi.id) DESC, reviewCount DESC, averageRating DESC
-        LIMIT 12
+        oic.orderCount DESC,
+        reviewCount DESC,
+        averageRating DESC
+        LIMIT 12;
     </select>
 
     <select id="findByMeatProducts" resultType="map">
@@ -226,20 +293,37 @@
         p.mainImgName,
         p.subImgPath,
         p.subImgName,
-        IFNULL(COUNT(r.id), 0) AS reviewCount,
-        IFNULL(AVG(r.rating), 0) AS averageRating
+        IFNULL(prb.reviewCount, 0) AS reviewCount,
+        IFNULL(prb.averageRating, 0) AS averageRating
         FROM
         product p
-        LEFT JOIN
-        product_review_board r ON p.id = r.Pid
-        LEFT JOIN
-        order_item oi ON p.id = oi.Pid
+        LEFT JOIN (
+        SELECT
+        r.Pid,
+        COUNT(r.id) AS reviewCount,
+        AVG(r.rating) AS averageRating
+        FROM
+        product_review_board r
+        GROUP BY
+        r.Pid
+        ) prb ON p.id = prb.Pid
+        LEFT JOIN (
+        SELECT
+        oi.Pid,
+        COUNT(oi.id) AS orderCount
+        FROM
+        order_item oi
+        GROUP BY
+        oi.Pid
+        ) oic ON p.id = oic.Pid
         WHERE
         p.majorCategory = '축산물'
         GROUP BY
         p.id
         ORDER BY
-        COUNT(oi.id) DESC, reviewCount DESC, averageRating DESC
+        oic.orderCount DESC,
+        reviewCount DESC,
+        averageRating DESC
         LIMIT 12
     </select>
 
@@ -260,21 +344,38 @@
         p.mainImgName,
         p.subImgPath,
         p.subImgName,
-        IFNULL(COUNT(r.id), 0) AS reviewCount,
-        IFNULL(AVG(r.rating), 0) AS averageRating
+        IFNULL(prb.reviewCount, 0) AS reviewCount,
+        IFNULL(prb.averageRating, 0) AS averageRating
         FROM
         product p
-        LEFT JOIN
-        product_review_board r ON p.id = r.Pid
-        LEFT JOIN
-        order_item oi ON p.id = oi.Pid
+        LEFT JOIN (
+        SELECT
+        r.Pid,
+        COUNT(r.id) AS reviewCount,
+        AVG(r.rating) AS averageRating
+        FROM
+        product_review_board r
+        GROUP BY
+        r.Pid
+        ) prb ON p.id = prb.Pid
+        LEFT JOIN (
+        SELECT
+        oi.Pid,
+        COUNT(oi.id) AS orderCount
+        FROM
+        order_item oi
+        GROUP BY
+        oi.Pid
+        ) oic ON p.id = oic.Pid
         WHERE
         p.majorCategory = '건강식품'
         GROUP BY
         p.id
         ORDER BY
-        COUNT(oi.id) DESC, reviewCount DESC, averageRating DESC
-        LIMIT 12
+        oic.orderCount DESC,
+        reviewCount DESC,
+        averageRating DESC
+        LIMIT 12;
     </select>
 
     <select id="findByProcessedFoodProducts" resultType="map">
@@ -294,21 +395,39 @@
         p.mainImgName,
         p.subImgPath,
         p.subImgName,
-        IFNULL(COUNT(r.id), 0) AS reviewCount,
-        IFNULL(AVG(r.rating), 0) AS averageRating
+        IFNULL(prb.reviewCount, 0) AS reviewCount,
+        IFNULL(prb.averageRating, 0) AS averageRating
         FROM
         product p
-        LEFT JOIN
-        product_review_board r ON p.id = r.Pid
-        LEFT JOIN
-        order_item oi ON p.id = oi.Pid
+        LEFT JOIN (
+        SELECT
+        r.Pid,
+        COUNT(r.id) AS reviewCount,
+        AVG(r.rating) AS averageRating
+        FROM
+        product_review_board r
+        GROUP BY
+        r.Pid
+        ) prb ON p.id = prb.Pid
+        LEFT JOIN (
+        SELECT
+        oi.Pid,
+        COUNT(oi.id) AS orderCount
+        FROM
+        order_item oi
+        GROUP BY
+        oi.Pid
+        ) oic ON p.id = oic.Pid
         WHERE
         p.majorCategory = '가공식품'
         GROUP BY
         p.id
         ORDER BY
-        COUNT(oi.id) DESC, reviewCount DESC, averageRating DESC
-        LIMIT 12
+        oic.orderCount DESC,
+        reviewCount DESC,
+        averageRating DESC
+        LIMIT 12;
+
     </select>
 
     <select id="findByHighDiscountProducts" resultType="map">
@@ -328,18 +447,80 @@
         p.mainImgName,
         p.subImgPath,
         p.subImgName,
-        IFNULL(COUNT(r.id), 0) AS reviewCount,
-        IFNULL(AVG(r.rating), 0) AS averageRating
+        IFNULL(prb.reviewCount, 0) AS reviewCount,
+        IFNULL(prb.averageRating, 0) AS averageRating
         FROM
         product p
-        LEFT JOIN
-        product_review_board r ON p.id = r.Pid
-        LEFT JOIN
-        order_item oi ON p.id = oi.Pid
+        LEFT JOIN (
+        SELECT
+        r.Pid,
+        COUNT(r.id) AS reviewCount,
+        AVG(r.rating) AS averageRating
+        FROM
+        product_review_board r
+        GROUP BY
+        r.Pid
+        ) prb ON p.id = prb.Pid
+        LEFT JOIN (
+        SELECT
+        oi.Pid,
+        COUNT(oi.id) AS orderCount
+        FROM
+        order_item oi
+        GROUP BY
+        oi.Pid
+        ) oic ON p.id = oic.Pid
         GROUP BY
         p.id
         ORDER BY
         p.discount DESC, reviewCount DESC, averageRating DESC
+        LIMIT 12
+    </select>
+
+    <select id="findByRecentProducts" resultType="map">
+        SELECT
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        IFNULL(prb.reviewCount, 0) AS reviewCount,
+        IFNULL(prb.averageRating, 0) AS averageRating
+        FROM
+        product p
+        LEFT JOIN (
+        SELECT
+        r.Pid,
+        COUNT(r.id) AS reviewCount,
+        AVG(r.rating) AS averageRating
+        FROM
+        product_review_board r
+        GROUP BY
+        r.Pid
+        ) prb ON p.id = prb.Pid
+        LEFT JOIN (
+        SELECT
+        oi.Pid,
+        COUNT(oi.id) AS orderCount
+        FROM
+        order_item oi
+        GROUP BY
+        oi.Pid
+        ) oic ON p.id = oic.Pid
+        GROUP BY
+        p.id
+        ORDER BY
+        p.updateDate DESC, p.regDate DESC, reviewCount DESC, averageRating DESC, p.discount DESC
         LIMIT 12
     </select>
 

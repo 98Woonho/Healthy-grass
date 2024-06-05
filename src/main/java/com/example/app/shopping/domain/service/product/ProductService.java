@@ -1,9 +1,7 @@
 package com.example.app.shopping.domain.service.product;
 
-import com.example.app.shopping.domain.dto.ProductDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
 
-import java.util.List;
 import java.util.Map;
 
 public interface ProductService {
@@ -11,4 +9,5 @@ public interface ProductService {
     public Map<String, Object> getItemDetail(Integer id) throws Exception;
     Map<String, Object> getPopularProductsByCategory() throws Exception;
     Map<String, Object> getHighDiscountProducts() throws Exception;
+    Map<String, Object> getRecentProducts() throws Exception;
 }

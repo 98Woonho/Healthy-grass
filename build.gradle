@@ -16,51 +16,50 @@ repositories {
 }
 
 dependencies {
-	//DATABASE
+	// DATABASE
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
-	//SPRING WEB
+	// SPRING WEB
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	//Thymeleaf
+	// Thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
-	//SpringSecurity
+	// Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	//SpringSecuirty+Thymeleaf
+	// Spring Security + Thymeleaf
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
-	//CONNECT
+	// MySQL Connector
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
-	//MyBatis
+	// MyBatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 
-	//OAUTH2-Client
+	// OAuth2 Client
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
-	//TEST
+	// TEST
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	//DEVTOOLS
+	// DEVTOOLS
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	//LomBok
+	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-	//VALIDATION
+	// VALIDATION
 	implementation 'org.hibernate.validator:hibernate-validator'
 	implementation 'jakarta.validation:jakarta.validation-api'
 
-	//MAIL SENDER
+	// MAIL SENDER
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-
-//	//PORT-ONE 결제취소
-//	implementation 'com.github.iamport:iamport-rest-client-java:0.2.21'
 
 }
 

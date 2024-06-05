@@ -5,9 +5,14 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
     <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
     <link rel="stylesheet" th:href="@{/css/product/productDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/product/productReviewBoard.css}">
     <title>상품상세조회</title>
 </head>
 <body>
@@ -21,6 +26,7 @@
             <div th:if="${response != null}">
                 <div th:if="${response.success}">
                     <div th:with="product=${response}">
+                        <input type="hidden" th:value="${product.id}" id="productId">
                         <h1 th:text="${product.name}">상품명</h1>
                         <img th:src="@{${product.mainImgPath}}" th:alt="${product.mainImgName}" class="product-image">
                         <p>원가격: <span th:text="${product.price}">가격</span> 원</p>
@@ -41,6 +47,32 @@
                 <p>서버로의 요청에 실패했습니다.</p>
             </div>
         </section>
+        <section class="second-section">
+            <div class="review-list">
+                <h2>리뷰 목록</h2>
+                <table class="review-table">
+                    <thead>
+                    <tr>
+                        <th>작성자</th>
+                        <th>제목</th>
+                        <th>별점</th>
+                        <th>작성일</th>
+                        <th>수정일</th>
+                    </tr>
+                    </thead>
+                    <tbody id="review-list">
+                    <!-- 리뷰 목록을 동적으로 채웁니다. -->
+                    </tbody>
+                </table>
+                <!-- 페이징 -->
+                <div class="pagination" id="pagination">
+<!--                    <button onclick="loadReviews(currentPage - 1)">Prev</button>-->
+<!--                    <button onclick="loadReviews(currentPage + 1)">Next</button>-->
+                </div>
+            </div>
+        </section>
+        <script defer th:src="@{/js/productDetail/productReviewProcess.js}"></script>
+        <script defer th:src="@{/js/productDetail/toggleReviewContentProcess.js}"></script>
     </div>
     <div class="footer">
         <!-- Footer content -->

@@ -1,112 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
-    <style>
-        * {
-            margin: 1rem;
-            padding: 0;
 
-            border-radius: 10px;
-        }
+    <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
+    <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
 
-        .text {
-            position: relative;
-            top: 45%;
-            text-align: center;
-        }
-
-        header {
-            height: 200px;
-            background-color: aquamarine;
-        }
-
-        main {
-            display: flex;
-            flex-direction: column;
-            background-color: blueviolet;
-        }
-
-        .box {
-            background-color: gainsboro;
-            border: 1px solid black;
-        }
-
-        .h-400 {
-            height: 400px;
-        }
-
-        .h-300 {
-            height: 300px;
-        }
-
-        .h-200 {
-            height: 200px;
-        }
-
-        .h-100 {
-            height: 100px;
-        }
-
-        .h-1000 {
-            height: 1000px;
-        }
-
-        .w-300 {
-            width: 300px;
-        }
-
-        .w-full {
-            width: 100%;
-        }
-
-        .product-list {
-            background-color: burlywood;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-        }
-
-        .box1 {
-            background-color: darkgrey;
-
-            display: flex;
-            flex-direction: row;
-        }
-
-        footer {
-            height: 100px;
-            background-color: beige;
-        }
-    </style>
+    <!-- fragments css -->
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
 </head>
 <body>
-<header>
-    <p class="text">헤더(메뉴, 로그인, 회원가입 등)</p>
-</header>
-<main>
-    <h1>마이페이지</h1>
+<div class="header">
+    <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+    <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+</div>
+<div class="main">
+    <section class="first-seciton">
+        <h1>마이페이지</h1>
+    </section>
+    <section class="second-section box1">
+        <div class="main-mene box w-300 h-700">
 
-    <div class="box1">
-        <div class="box w-300 h-1000">
-            <p class="text">개인정보 메뉴</p>
-            <div>
-                <h2>회원정보</h2>
+            <div class="user-info menu-section">
+                <ul class="no-dot user-ul">
+                    <h2>회원정보</h2>
+                    <li><a href="myPage/user/searchForm" class="no-text-line">회원 정보 조회</a></li>
+                    <li><a href="myPage/user/modifyForm" class="no-text-line">회원 정보 수정</a></li>
+                    <li><a href="myPage/user/deleteForm" class="no-text-line">회원 정보 삭제</a></li>
+                </ul>
             </div>
-            <div>
-                <a href="myPage/user/searchForm">회원 정보 조회</a><br>
-                <a href="myPage/user/modifyForm">회원 정보 수정</a><br>
-                <a href="myPage/user/deleteForm">회원 정보 삭제</a><br>
+
+            <div class="product-info menu-section">
+                <ul class="no-dot product-ul">
+                    <h2>상품 서비스</h2>
+                    <li><a href="#" class="no-text-line">장바구니 조회</a></li>
+                    <li><a href="#" class="no-text-line">찜리스트 조회</a></li>
+                    <li><a href="#" class="no-text-line">주문정보 조회</a></li>
+                </ul>
+            </div>
+
+            <div class="board-info menu-section">
+                <ul class="no-dot board-ul">
+                    <h2>게시물 관리</h2>
+                    <li><a href="#" class="no-text-line">고객문의 조회</a></li>
+                    <li><a href="#" class="no-text-line">상품문의 조회</a></li>
+                    <li><a href="#" class="no-text-line">리뷰 조회</a></li>
+                </ul>
+            </div>
+
+            <div class="board-info menu-section">
+                <ul class="no-dot board-ul">
+                    <h2>배송지 관리</h2>
+                    <li><a href="#" class="no-text-line">배송지 수정</a></li>
+                </ul>
             </div>
         </div>
-        <div class="box w-full h-1000">
-            <p class="text">메뉴 별 리스트/뷰</p>
+
+        <div class="box w-full h-700">
+            <div class="shopping-title">
+                <span sec:authentication="name"></span>
+                <span>님 환영합니다.</span>
+            </div>
+            <div class="my-shopping container">
+                <div class="section-shop order">
+                    <p>주문건수</p>
+                    <p>미구현</p>
+                </div>
+                <div class="section-shop delivery">
+                    <p>배송중</p>
+                    <p>미구현</p>
+                </div>
+                <div class="section-shop delivery-done">
+                    <p>배송완료</p>
+                    <p>미구현</p>
+                </div>
+            </div>
         </div>
-    </div>
-</main>
-<footer>
+    </section>
+</div>
+<div class="footer">
     <p class="text">푸터(사이트 정보 등)</p>
-</footer>
+</div>
 </body>
 </html>

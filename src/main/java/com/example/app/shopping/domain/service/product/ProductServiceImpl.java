@@ -39,12 +39,14 @@ public class ProductServiceImpl implements ProductService {
 
     // 상품 단건조회 (상품정보 상세조회를 위해 리뷰수, 평점 데이터도 같이 가져옵니다)
     @Override
+    @Transactional
     public Map<String, Object> getItemDetail(Integer id) throws Exception {
          return productMapper.findProductById(id);
     }
 
     // 카테고리별 인기상품을 12건씩 데이터를 담아 반환합니다.
     @Override
+    @Transactional
     public Map<String, Object> getPopularProductsByCategory() throws Exception {
         Map<String, Object> result = new HashMap<>();
 
@@ -67,9 +69,27 @@ public class ProductServiceImpl implements ProductService {
 
     // 할인률이 높은 인기상품 12건을 담아 반환합니다.
     @Override
+    @Transactional
     public Map<String, Object> getHighDiscountProducts() throws Exception {
-        return Map.of();
+        Map<String, Object> result = new HashMap<>();
+
+        List<Map<String, Object>> products = productMapper.findByHighDiscountProducts();
+
+        result.put("products", products);
+
+        return result;
     }
 
+    // 최신 상품 12건을 담아 반환합니다.
+    @Override
+    @Transactional
+    public Map<String, Object> getRecentProducts() throws Exception {
+        Map<String, Object> result = new HashMap<>();
 
+        List<Map<String, Object>> products = productMapper.findByRecentProducts();
+
+        result.put("products", products);
+
+        return result;
+    }
 }

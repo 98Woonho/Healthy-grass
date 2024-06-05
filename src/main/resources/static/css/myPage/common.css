@@ -1,0 +1,94 @@
+.header {
+    background-color: #20c997;
+    padding: 20px;
+    color: white;
+}
+
+.header .top-header a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown a {
+    color: #fff;
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {
+    background-color: #555;
+}
+
+.main {
+    padding: 20px;
+    background-color: #f8f9fa;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.box1 {
+    display: flex;
+    margin-top: 20px;
+}
+
+.box {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.w-300 {
+    width: 300px;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.h-1000 {
+    height: 1000px;
+}
+
+.h-700 {
+    height: 700px;
+}
+
+h1 {
+    text-align: center;
+    color: #343a40;
+}
+
+h2 {
+    color: #343a40;
+}
+
+.footer {
+    height: 100px;
+    background-color: #343a40;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+}
+
+.text {
+    font-size: 16px;
+}

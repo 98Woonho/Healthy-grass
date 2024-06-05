@@ -1,0 +1,33 @@
+/* main-detail */
+.no-dot {
+    list-style-type: none;
+}
+
+.menu-section {
+    margin-bottom: 3rem;
+}
+
+.no-text-line {
+    text-decoration-line: none;
+}
+.my-shopping {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.shopping-title,
+.section-shop {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+}
+
+.shopping-title {
+    width: 95%;
+    text-align: left;
+}

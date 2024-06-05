@@ -17,15 +17,15 @@ public class ProductReviewBoardServiceImpl implements ProductReviewBoardService 
     private ProductReviewBoardMapper mapper;
 
     @Override
-    public Map<String, Object> getproductReviewBoards(Criteria criteria, Integer pId, String productName) throws Exception {
+    public Map<String, Object> getproductReviewBoards(Criteria criteria, Integer pId) throws Exception {
         // 검색 결과로 나오는 게시글 수 확인
-        int count = mapper.findProductReviewBoardsCount(criteria, pId, productName);
+        int count = mapper.findProductReviewBoardsCount(criteria, pId);
         PageDto pageDto = new PageDto(count, criteria);
 
         // 시작 게시물 번호 구하기
         int offset = (criteria.getPageno() - 1) * criteria.getAmount();
 
-        List<Map<String, Object>> list = mapper.findProductReviewBoards(criteria, offset, pId, productName);
+        List<Map<String, Object>> list = mapper.findProductReviewBoards(criteria, offset, pId);
 
         Map<String, Object> returnVal = new HashMap<>();
 

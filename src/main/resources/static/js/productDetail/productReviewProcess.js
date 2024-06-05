@@ -14,8 +14,7 @@ function loadReviews(page) {
             pageno: page,
             amount: 10
         },
-        pId: pId,
-        productName: ''
+        pId: pId
     })
     .then(function(response) {
         if (response.data.success) {

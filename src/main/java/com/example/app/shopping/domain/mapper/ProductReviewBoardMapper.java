@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Mapper
 public interface ProductReviewBoardMapper {
-    int findProductReviewBoardsCount(@Param("criteria") Criteria criteria, @Param("pId") Integer pId, @Param("productName") String productName) throws Exception;
-    List<Map<String, Object>> findProductReviewBoards(@Param("criteria") Criteria criteria, @Param("offset") int offset, @Param("pId") Integer pId, @Param("productName") String productName) throws Exception;
+    int findProductReviewBoardsCount(@Param("criteria") Criteria criteria, @Param("pId") Integer pId) throws Exception;
+    List<Map<String, Object>> findProductReviewBoards(@Param("criteria") Criteria criteria, @Param("offset") int offset, @Param("pId") Integer pId) throws Exception;
     Map<String, Object> findProductReviewBoardById(@Param("id") Integer id) throws Exception;
 }

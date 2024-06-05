@@ -25,7 +25,6 @@ public class ProductReviewBoardController {
         Criteria criteria = request.getCriteria();
 
         Integer pId = request.getPId();
-        String productName = request.getProductName();
 
         if (criteria.getPageno() == null) {
             criteria.setPageno(1);
@@ -41,7 +40,7 @@ public class ProductReviewBoardController {
         Map<String, Object> returnVal = new HashMap<>();
         
         try {
-            returnVal = service.getproductReviewBoards(criteria, pId, productName);
+            returnVal = service.getproductReviewBoards(criteria, pId);
             returnVal.put("success", true);
         } catch (Exception e) {
             returnVal.put("success", false);
@@ -54,12 +53,9 @@ public class ProductReviewBoardController {
     @GetMapping("/productReviewBoardList")
     public String t(
             @ModelAttribute Criteria criteria,
-            @RequestParam(value = "pId", required = false) Integer pId,
-            @RequestParam(value = "productName", required = false) String productName,
             Model model
     ) {
         System.out.println("ProductReviewBoardController's productReviewBoardList " +
-                "pId: " + pId + " productName: " + productName +
                 "criteria: " + criteria + " model: " + model);
 
         if (criteria.getPageno() == null) {
@@ -71,7 +67,7 @@ public class ProductReviewBoardController {
         }
 
         try {
-            Map<String, Object> serviceReturnVal = service.getproductReviewBoards(criteria, pId, productName);
+            Map<String, Object> serviceReturnVal = service.getproductReviewBoards(criteria, null);  // pId 는 criteria 의 keyword 로 대체
             model.addAttribute("success", true);
             model.addAttribute("list", serviceReturnVal.get("list"));  // 상품 리스트 정보
             model.addAttribute("pageDto", serviceReturnVal.get("pageDto"));  // 페이징 처리를 위한 정보
@@ -88,7 +84,5 @@ public class ProductReviewBoardController {
         Criteria criteria;
         @JsonProperty("pId")
         Integer pId;  // 상품 ID
-        @JsonProperty("productName")
-        String productName;  // 상품명
     }
 }

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결제 정보 결과 조회</title>
+</head>
+<body>
+<h1>Payment Information</h1>
+<p><strong>Buyer Name:</strong> <span th:text="${payment.buyer_name}"></span></p>
+<p><strong>Buyer Phone:</strong> <span th:text="${payment.buyer_phone}"></span></p>
+<p><strong>Member Email:</strong> <span th:text="${payment.member_email}"></span></p>
+<p><strong>Buy Address:</strong> <span th:text="${payment.buy_addr}"></span></p>
+<p><strong>Buy Product Name:</strong> <span th:text="${payment.buy_product_name}"></span></p>
+<p><strong>Buyer Buy ID:</strong> <span th:text="${payment.buyer_buyid}"></span></p>
+<p><strong>Buyer Mer ID:</strong> <span th:text="${payment.buyer_merid}"></span></p>
+<p><strong>Amount:</strong> <span th:text="${payment.amount}"></span></p>
+<p><strong>Buyer Card Num:</strong> <span th:text="${payment.buyer_card_num}"></span></p>
+<p><strong>Buyer Pay OK:</strong> <span th:text="${payment.buyer_pay_ok}"></span></p>
+<p><strong>Buyer Postcode:</strong> <span th:text="${payment.buyer_postcode}"></span></p>
+<p><strong>Registration Date:</strong> <span th:text="${payment.regDate}"></span></p>
+<p><strong>Update Date:</strong> <span th:text="${payment.updateDate}"></span></p>
+</body>
+</html>

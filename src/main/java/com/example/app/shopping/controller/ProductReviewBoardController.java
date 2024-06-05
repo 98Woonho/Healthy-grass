@@ -1,10 +1,12 @@
 package com.example.app.shopping.controller;
 
+import com.example.app.shopping.config.auth.PrincipalDetails;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.service.productReviewBoard.ProductReviewBoardServiceImpl;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +53,7 @@ public class ProductReviewBoardController {
 
     // 악의적인 리뷰 혹은 광고 등을 검열하기 위한 개발자 뷰를 위한 메서드입니다. (일반 유저는 볼 이유가 없어 접근 제한 필요할 듯 합니다)
     @GetMapping("/productReviewBoardList")
-    public String t(
+    public String productReviewBoardList(
             @ModelAttribute Criteria criteria,
             Model model
     ) {
@@ -98,6 +100,46 @@ public class ProductReviewBoardController {
         response = null;
 
         return "/productReviewBoard/boardDetail";
+    }
+
+    // 내 작성 리뷰 뿌리기
+
+    @GetMapping("/myProductReviewBoardList")
+    public String myProductReviewBoardList(
+            @ModelAttribute Criteria criteria,
+            Model model,
+            Authentication authentication
+    ) {
+        System.out.println("ProductReviewBoardController's myProductReviewBoardList " +
+                "criteria: " + criteria + " model: " + model);
+
+        if (criteria.getPageno() == null) {
+            criteria.setPageno(1);
+        }
+
+        if (criteria.getAmount() == null) {
+            criteria.setAmount(10);
+        }
+
+        if (authentication == null) {
+            String error = "로그인 정보가 없습니다.";
+            model.addAttribute("error", error);
+
+            return "/error/error";
+        }
+
+        String uId = ((PrincipalDetails) authentication.getPrincipal()).getUsername();
+
+        try {
+            Map<String, Object> serviceReturnVal = service.getMyProductReviewBoards(criteria, uId);
+            model.addAttribute("success", true);
+            model.addAttribute("list", serviceReturnVal.get("list"));  // 상품 리스트 정보
+            model.addAttribute("pageDto", serviceReturnVal.get("pageDto"));  // 페이징 처리를 위한 정보
+        } catch (Exception e) {
+            model.addAttribute("success", false);
+        }
+
+        return "/myPage/myReviewPage";
     }
 
     @Data

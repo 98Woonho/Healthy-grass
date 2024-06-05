@@ -21,10 +21,13 @@ class ProductReviewBoardMapperTest {
         criteria.setAmount(10);
         criteria.setPageno(1);
 
+        criteria.setType("title");
+        criteria.setKeyword("Excellent");
+
         int offset = 0;
 
         try {
-            System.out.println(mapper.findProductReviewBoardById(163));
+            mapper.findMyProductReviewBoards(criteria, offset, "user12").forEach(System.out::println);
         } catch (Exception e) {
             e.printStackTrace();
         }

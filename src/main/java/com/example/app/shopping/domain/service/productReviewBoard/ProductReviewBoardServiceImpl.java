@@ -39,4 +39,23 @@ public class ProductReviewBoardServiceImpl implements ProductReviewBoardService 
     public Map<String, Object> getproductReviewBoardDetail(Integer id) throws Exception {
         return mapper.findProductReviewBoardById(id);
     }
+
+    @Override
+    public Map<String, Object> getMyProductReviewBoards(Criteria criteria, String uId) throws Exception {
+        // 검색 결과로 나오는 게시글 수 확인
+        int count = mapper.findMyProductReviewBoardsCount(criteria, uId);
+        PageDto pageDto = new PageDto(count, criteria);
+
+        // 시작 게시물 번호 구하기
+        int offset = (criteria.getPageno() - 1) * criteria.getAmount();
+
+        List<Map<String, Object>> list = mapper.findMyProductReviewBoards(criteria, offset, uId);
+
+        Map<String, Object> returnVal = new HashMap<>();
+
+        returnVal.put("list", list);
+        returnVal.put("pageDto", pageDto);
+
+        return returnVal;
+    }
 }

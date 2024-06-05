@@ -101,4 +101,82 @@
         GROUP BY
         prb.id
     </select>
+
+
+    <!-- 내 리뷰 게시판 조회 -->
+    <select id="findMyProductReviewBoardsCount" parameterType="map" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM product_review_board prb
+        <where>
+            prb.Uid = #{uId}
+            <if test="criteria != null">
+                <if test="criteria.type != null and criteria.type != ''">
+                    <if test="criteria.type != null and criteria.type == 'title' and criteria.keyword != null">
+                        AND (prb.title LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                    </if>
+
+                    <if test="criteria.type != null and criteria.type == 'pId' and criteria.keyword != null">
+                        AND prb.Pid = #{criteria.keyword}
+                    </if>
+
+                    <if test="criteria.type != null and criteria.type == 'productName' and criteria.keyword != null">
+                        AND prb.Pid IN (SELECT p.id FROM Product p WHERE p.name LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                    </if>
+                </if>
+                <if test="criteria.type == null or criteria.type == ''">
+                    <if test="criteria.keyword != null and criteria.keyword != ''">
+                        AND (prb.title LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                    </if>
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <select id="findMyProductReviewBoards" parameterType="map" resultType="map">
+        SELECT
+        prb.id,
+        prb.Uid,
+        prb.Pid,
+        p.name AS productName,
+        prb.title,
+        prb.content,
+        prb.imgPath,
+        prb.imgName,
+        prb.regDate,
+        prb.updateDate,
+        prb.rating
+        FROM product_review_board prb
+        JOIN
+        product p ON prb.Pid = p.id
+        <where>
+            prb.Uid = #{uId}
+            <if test="criteria != null">
+                <if test="criteria.type != null and criteria.type != ''">
+                    <if test="criteria.type != null and criteria.type == 'title' and criteria.keyword != null">
+                        AND (prb.title LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                    </if>
+
+                    <if test="criteria.type != null and criteria.type == 'pId' and criteria.keyword != null">
+                        AND prb.Pid = #{criteria.keyword}
+                    </if>
+
+                    <if test="criteria.type != null and criteria.type == 'productName' and criteria.keyword != null">
+                        AND prb.Pid IN (SELECT p.id FROM Product p WHERE p.name LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                    </if>
+                </if>
+                <if test="criteria.type == null or criteria.type == ''">
+                    <if test="criteria.keyword != null and criteria.keyword != ''">
+                        AND (prb.title LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                    </if>
+                </if>
+            </if>
+        </where>
+        GROUP BY
+        prb.id
+        ORDER BY
+        prb.updateDate DESC,
+        prb.regDate DESC
+        LIMIT #{offset}, #{criteria.amount}
+    </select>
 </mapper>

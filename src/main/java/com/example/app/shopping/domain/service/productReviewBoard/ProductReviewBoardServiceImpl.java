@@ -37,6 +37,6 @@ public class ProductReviewBoardServiceImpl implements ProductReviewBoardService 
 
     @Override
     public Map<String, Object> getproductReviewBoardDetail(Integer id) throws Exception {
-        return Map.of();
+        return mapper.findProductReviewBoardById(id);
     }
 }

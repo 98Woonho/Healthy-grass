@@ -78,6 +78,28 @@ public class ProductReviewBoardController {
         return "/productReviewBoard/boardList";
     }
 
+    @GetMapping("/productReviewBoard")
+    public String productReviewBoard (
+            @RequestParam(name = "id", defaultValue = "0", required = false) Integer id,
+            Model model) {
+        System.out.println("ProductReviewBoardController's productReviewBoard id: " + id + " model: " + model);
+
+        Map<String, Object> response = null;  // 반환할 데이터를 담을 변수
+
+        try {
+            response = service.getproductReviewBoardDetail(id);
+            response.put("success", true);
+        } catch (Exception e) {
+            response = new HashMap<>();
+            response.put("success", false);
+        }
+
+        model.addAttribute("response", response);
+        response = null;
+
+        return "/productReviewBoard/boardDetail";
+    }
+
     @Data
     private static class ProductReviewBoardAPI {
         @JsonProperty("criteria")

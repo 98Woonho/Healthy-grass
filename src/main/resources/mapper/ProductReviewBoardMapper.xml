@@ -24,6 +24,9 @@
                     <if test="pId != null and pId != ''">
                         AND prb.Pid = #{pId}
                     </if>
+                    <if test="criteria.keyword != null and criteria.keyword != ''">
+                        AND (prb.title LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                    </if>
                 </if>
             </if>
         </where>
@@ -63,6 +66,9 @@
                 <if test="criteria.type == null or criteria.type == ''">
                     <if test="pId != null and pId != ''">
                         AND prb.Pid = #{pId}
+                    </if>
+                    <if test="criteria.keyword != null and criteria.keyword != ''">
+                        AND (prb.title LIKE CONCAT('%', #{criteria.keyword}, '%'))
                     </if>
                 </if>
             </if>

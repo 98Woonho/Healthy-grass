@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+    <link rel="stylesheet" th:href="@{/css/productReviewBoardDetail/productReviewBoardDetail.css}">
+    <title>상품리뷰 게시판 상세조회</title>
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+        <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+    </div>
+    <div class="main">
+        <section class="first-section">
+            <div th:if="${response != null}">
+                <div th:if="${response.success}">
+                    <div th:with="productReviewBoardDetail=${response}">
+                        <p>
+                            리뷰 상품명:
+                            <a th:href="@{${'/product?id=' + (productReviewBoardDetail.Pid)}}">
+                                <span th:text="${productReviewBoardDetail.productName}"></span>
+                            </a>
+                        </p>
+                        <p>게시글 번호: <span id="boardId" th:text="${productReviewBoardDetail.id}"></span></p>
+                        <p>작성자: <span th:text="${productReviewBoardDetail.Uid}"></span></p>
+                        <p>제목: <span th:text="${productReviewBoardDetail.title}"></span></p>
+                        <p>이미지: <span th:text="${productReviewBoardDetail.imgPath + '/' + productReviewBoardDetail.imgName}"></span></p>
+                        <p>글내용: <span th:text="${productReviewBoardDetail.content}"></span></p>
+                        <p>평점: <span th:text="${productReviewBoardDetail.rating}"></span></p>
+                        <p>작성일: <span th:text="${productReviewBoardDetail.regDate}"></span></p>
+                        <p>수정일: <span th:text="${productReviewBoardDetail.updateDate}"></span></p>
+                    </div>
+                </div>
+                <div th:if="${!response.success}">
+                    <p>게시글 정보를 불러오는 데 실패했습니다. 다시 시도해 주세요.</p>
+                </div>
+            </div>
+            <div th:if="${response == null}">
+                <p>서버로의 요청에 실패했습니다.</p>
+            </div>
+        </section>
+    </div>
+    <div class="footer">
+        <!-- Footer content -->
+    </div>
+</div>
+</body>
+</html>

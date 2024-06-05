@@ -1,4 +1,4 @@
-<th:block th:fragment="nav_fragment">
+<th:block th:fragment="nav_fragment" xmlns:sec="http://www.w3.org/1999/xhtml">
     <nav>
         <div class="nav-container">
             <div>쇼핑몰</div>
@@ -54,6 +54,7 @@
                     <div class="dropdown">
                         <a href="/productInquiryBoardList">상품문의게시판</a>
                         <a href="/customerInquiryBoardList">고객문의게시판</a>
+                        <a href="/productReviewBoardList" sec:authorize="hasRole('ROLE_ADMIN')">상품리뷰게시판</a>
                     </div>
                 </li>
             </ul>

@@ -44,25 +44,6 @@ pay_btn.addEventListener('click', function (e) {
         }
     })
 });
-const pay_cancel = document.querySelector('.pay_cancel');
-
-pay_cancel.addEventListener('click', function (e) {
-    e.preventDefault();
-
-    const data = {
-        imp_uid: 'imp_437900593100',
-        merchant_uid: 'merchant_1717471901031',
-    };
-
-    axios.post("https://api.iamport.kr/payments/cancel", data, {headers: {"Content-Type": "application/json"}})
-        .then(resp => {
-            console.log(resp.data);
-        })
-        .catch(err => {
-            console.log(err);
-        })
-})
-
 
 
 

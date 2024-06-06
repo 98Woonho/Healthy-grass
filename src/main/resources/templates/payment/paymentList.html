@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Payment Information</h1>
-<table border="1">
+<table>
     <thead>
     <tr>
         <th>구매자 주소</th>
@@ -41,8 +41,16 @@
         <td th:text="${payment.status}"></td>
         <td th:text="${payment.regDate}"></td>
         <td th:text="${payment.updateDate}"></td>
+        <form method="post" action="/payment/cancel">
+        <td>
+            <input type="hidden" th:value="${payment.imp_uid}" name="imp_uid"/>
+            <input type="hidden" th:value="${payment.merchant_uid}" name="merchant_uid"/>
+            <button class="paymentCancelBtn" type="submit">결제 취소</button>
+        </td>
+        </form>
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>

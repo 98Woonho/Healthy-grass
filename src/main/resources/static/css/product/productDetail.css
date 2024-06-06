@@ -46,3 +46,110 @@
     font-size: 1.2em;
     margin-top: 20px;
 }
+
+/*물건 구매 수량 css*/
+.product-container {
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: solid black 1px;
+}
+
+.product-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.product-container li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.product-container li:last-child {
+    border-bottom: none;
+}
+
+.product-container span,
+.product-container strong {
+    display: block;
+}
+
+.product-container div {
+    display: flex;
+    align-items: center;
+}
+
+.product-container a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 10px;
+}
+
+.product-container img {
+    width: 20px;
+    height: 20px;
+}
+
+.product-container input[type="text"] {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+#totalPrice {
+    font-size: 18px;
+    color: #ff5722;
+    font-weight: bold;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.button-container button {
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-container button:hover {
+    background-color: #e64a19;
+}
+
+.button-container .wishBtn {
+    background-color: #ff9800;
+}
+
+.button-container .wishBtn:hover {
+    background-color: #f57c00;
+}
+
+.button-container .cartBtn {
+    background-color: #8bc34a;
+}
+
+.button-container .cartBtn:hover {
+    background-color: #7cb342;
+}
+
+.button-container .buyNowBtn {
+    background-color: #03a9f4;
+}
+
+.button-container .buyNowBtn:hover {
+    background-color: #0288d1;
+}

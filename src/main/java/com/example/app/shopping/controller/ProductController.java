@@ -5,10 +5,7 @@ import com.example.app.shopping.domain.service.product.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -113,5 +110,12 @@ public class ProductController {
         }
 
         return response;
+    }
+
+    //실시간으로 상품금액의 크기를 변경시키는 로직
+    @PostMapping("/productPrice")
+    public @ResponseBody Integer totalProductAmountChange(@RequestBody Map<String, Integer> request){
+        System.out.println("totalProductAmount : " +request.get("totalProductAmount"));
+        return request.get("totalProductAmount");
     }
 }

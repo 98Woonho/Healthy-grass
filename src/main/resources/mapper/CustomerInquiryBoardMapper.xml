@@ -64,4 +64,50 @@
         GROUP BY
         cib.id
     </select>
+
+    <!-- 내 고객문의 -->
+    <select id="findMyCustomerInquiryBoardsCount" parameterType="map" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM customer_inquiry_board cib
+        <where>
+            cib.Uid = #{uId}
+            <if test="criteria != null">
+                <if test="criteria.keyword != null and criteria.keyword != ''">
+                    AND (cib.title LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                </if>
+                <if test="criteria.commentChk != null and criteria.commentChk != ''">
+                    AND (SELECT COUNT(*) FROM customer_inquiry_comment cibc WHERE cib.id = cibc.C_Board_Id) = 0
+                </if>
+            </if>
+        </where>
+    </select>
+    <select id="findMyCustomerInquiryBoards" parameterType="map" resultType="map">
+        SELECT
+        cib.id,
+        cib.Uid,
+        cib.title,
+        cib.regDate,
+        cib.updateDate,
+        COUNT(cibc.id) AS commentCount
+        FROM
+        customer_inquiry_board cib
+        LEFT JOIN
+        customer_inquiry_comment cibc ON cib.id = cibc.C_Board_id
+        <where>
+            cib.Uid = #{uId}
+            <if test="criteria.keyword != null and criteria.keyword != ''">
+                AND cib.title LIKE CONCAT('%', #{criteria.keyword}, '%')
+            </if>
+        </where>
+        GROUP BY
+        cib.id, cib.Uid, cib.title, cib.regDate, cib.updateDate
+        <if test="criteria.commentChk != null and criteria.commentChk != ''">
+            HAVING commentCount &lt; 1
+        </if>
+        ORDER BY
+        cib.updateDate DESC,
+        cib.regDate DESC
+        LIMIT #{offset}, #{criteria.amount}
+    </select>
 </mapper>

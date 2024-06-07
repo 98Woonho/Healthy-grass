@@ -1,0 +1,92 @@
+/* 리뷰 목록 섹션 스타일 */
+.third-section {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #e0e0e0;
+}
+
+.productInquiry-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.productInquiry-list h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.productInquiry-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.productInquiry-table th, .productInquiry-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.productInquiry-table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+    text-align: center;
+    color: #555;
+}
+
+.productInquiry-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.productInquiry-table td {
+    color: #666;
+    text-align: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.pagination li {
+    margin: 0;
+}
+
+.pagination a {
+    padding: 8px 16px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 4px;
+    display: block;
+    text-align: center;
+}
+
+.pagination a:hover {
+    background-color: #0056b3;
+}
+
+.pagination a:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.pagination .active a {
+    background-color: #0056b3;
+    cursor: default;
+}

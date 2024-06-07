@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마이리뷰페이지</title>
+    <title>내고객문의페이지</title>
 
-    <link rel="stylesheet" th:href="@{/css/productReviewBoardList/common.css}">
+    <link rel="stylesheet" th:href="@{/css/myPage/myCustomerInquiryPage.css}">
+    <script defer th:src="@{/js/myPage/searchFormOnchange.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
     <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
@@ -21,26 +22,21 @@
 </div>
 <div class="main">
     <section class="first-seciton">
-        <h1>마이리뷰페이지</h1>
+        <h1>내 문의 페이지</h1>
     </section>
     <section class="second-section box1">
         <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
 
         <div class="box w-full h-800">
-
             <div class="container">
 
-                <h1>나의 리뷰</h1>
+                <h1>고객문의게시판</h1>
 
                 <!-- 검색 폼 -->
-                <form action="/myProductReviewBoardList" method="GET" id="searchForm">
+                <form action="/myCustomerInquiryBoardList" method="GET" id="searchForm">
                     <div class="form-group">
-                        <label for="searchType">태그:</label>
-                        <select id="searchType" name="type">
-                            <option value="title" th:selected="${criteria.type == null || criteria.type == '' || criteria.type == 'keyword'}">제목</option>
-                            <option value="pId" th:selected="${criteria.type == 'pId'}">상품 ID</option>
-                            <option value="productName" th:selected="${criteria.type == 'productName'}">상품명</option>
-                        </select>
+                        <label for="commentChk">미답변 게시글 조회</label>
+                        <input type="checkbox" name="commentChk" id="commentChk" value="true" th:checked="${criteria.commentChk != null and criteria.commentChk != ''}" onchange="submitFormOnChange()">
                     </div>
                     <div class="form-group">
                         <label for="keyword">게시글 검색: </label>
@@ -49,34 +45,33 @@
                     <button type="submit">검색</button>
                 </form>
 
-                <!-- 상품리뷰 게시글 목록 -->
-                <div class="myProductReviewBoard-list">
-                    <h2>상품리뷰 게시글 목록</h2>
+                <!-- 유저문의 게시글 목록 -->
+                <div class="customerInquiryBoard-list">
+                    <h2>고객문의 게시글 목록</h2>
                     <table class="table-container">
                         <thead>
                         <tr>
                             <th>번호</th>
-                            <th>작성자</th>
                             <th>제목</th>
+                            <th>작성자</th>
                             <th>등록일</th>
                             <th>수정일</th>
-                            <th>평점</th>
+                            <th>댓글 수</th>
                         </tr>
                         </thead>
                         <tbody>
                         <!-- 게시글 목록을 동적으로 채웁니다. -->
                         <tr th:each="board : ${list}">
                             <td th:text="${board.get('id') != null ? board.id : ''}">-</td>
-                            <td th:text="${board.get('Uid') != null ? board.Uid : ''}">-</td>
                             <td>
-                                <a th:href="@{${'/productReviewBoard?id=' + (board.id)}}">
-                                    <span class="product-name" th:text="${board.get('productName') != null ? board.productName : ''}">-</span>
+                                <a th:href="@{${'/customerInquiryBoard?id=' + (board.id)}}">
                                     <span class="post-title" th:text="${board.get('title') != null ? board.title : ''}">-</span>
                                 </a>
                             </td>
+                            <td th:text="${board.get('Uid') != null ? board.Uid : ''}">-</td>
                             <td th:text="${board.get('regDate') != null ? board.regDate : ''}">-</td>
                             <td th:text="${board.get('updateDate') != null ? board.updateDate : ''}">-</td>
-                            <td th:text="${board.get('rating') != null ? board.rating : ''}">-</td>
+                            <td th:text="${board.get('commentCount') != null ? board.commentCount : ''}">-</td>
                         </tr>
                         </tbody>
                     </table>
@@ -87,36 +82,35 @@
                     <ul>
                         <!-- 이전 페이지로 이동하는 링크 -->
                         <li th:if="${pageDto.prev}">
-                            <a th:href="@{${'/myProductReviewBoardList?pageno=' + (criteria.pageno - 1) +
+                            <a th:href="@{${'/myCustomerInquiryBoardList?pageno=' + (criteria.pageno - 1) +
                     (criteria.amount != null ? '&amount=' + criteria.amount : '') +
                     (criteria.keyword != null ? '&keyword=' + criteria.keyword : '') +
-                    (criteria.type != null ? '&type=' + criteria.type : '')}}">Prev</a>
+                    (criteria.commentChk != null ? '&commentChk=' + criteria.commentChk : '')}}">Prev</a>
                         </li>
 
                         <!-- 페이지 번호를 표시하는 링크 -->
                         <li th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}" th:classappend="${pageNumber == criteria.pageno} ? 'active'">
-                            <a th:href="@{${'/myProductReviewBoardList?pageno=' + pageNumber +
+                            <a th:href="@{${'/myCustomerInquiryBoardList?pageno=' + pageNumber +
                     (criteria.amount != null ? '&amount=' + criteria.amount : '') +
                     (criteria.keyword != null ? '&keyword=' + criteria.keyword : '') +
-                    (criteria.type != null ? '&type=' + criteria.type : '')}}">[[${pageNumber}]]</a>
+                    (criteria.commentChk != null ? '&commentChk=' + criteria.commentChk : '')}}">[[${pageNumber}]]</a>
                         </li>
 
                         <!-- 다음 페이지로 이동하는 링크 -->
                         <li th:if="${pageDto.next}">
-                            <a th:href="@{${'/myProductReviewBoardList?pageno=' + (criteria.pageno + 1) +
+                            <a th:href="@{${'/myCustomerInquiryBoardList?pageno=' + (criteria.pageno + 1) +
                     (criteria.amount != null ? '&amount=' + criteria.amount : '') +
                     (criteria.keyword != null ? '&keyword=' + criteria.keyword : '') +
-                    (criteria.type != null ? '&type=' + criteria.type : '')}}">Next</a>
+                    (criteria.commentChk != null ? '&commentChk=' + criteria.commentChk : '')}}">Next</a>
                         </li>
                     </ul>
                 </div>
 
                 <!-- 에러 메시지 -->
                 <div th:if="${!success}" class="error-message">
-                    <p>상품리뷰 게시글 조회에 실패하였습니다.</p>
+                    <p>고객문의 게시글 조회에 실패하였습니다.</p>
                 </div>
             </div>
-
         </div>
     </section>
 </div>

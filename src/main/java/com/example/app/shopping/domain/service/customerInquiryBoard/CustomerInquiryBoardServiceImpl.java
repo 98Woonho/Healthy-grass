@@ -42,4 +42,23 @@ public class CustomerInquiryBoardServiceImpl implements CustomerInquiryBoardServ
     public Map<String, Object> getCustomerInquiryBoardDetail(Integer id) throws Exception {
         return mapper.findCustomerInquiryBoardById(id);
     }
+
+    @Override
+    @Transactional
+    public Map<String, Object> getMyCustomerInquiryBoards(Criteria criteria, String uId) throws Exception {
+        // 검색 결과로 나오는 게시글 수 확인
+        int count = mapper.findMyCustomerInquiryBoardsCount(criteria, uId);
+        PageDto pageDto = new PageDto(count, criteria);
+
+        // 시작 게시물 번호 구하기
+        int offset = (criteria.getPageno() - 1) * criteria.getAmount();
+
+        List<Map<String, Object>> list = mapper.findMyCustomerInquiryBoards(criteria, offset, uId);
+
+        Map<String, Object> returnVal = new HashMap<>();
+        returnVal.put("list", list);
+        returnVal.put("pageDto", pageDto);
+
+        return returnVal;
+    }
 }

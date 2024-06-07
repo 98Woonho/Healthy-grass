@@ -49,6 +49,13 @@
         LIMIT #{offset}, #{criteria.amount}
     </select>
 
+    <select id="findProductInquiryBoardByPidCount" parameterType="Integer" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM product_inquiry_board pib
+        WHERE pib.Pid = #{pId}
+    </select>
+
     <select id="findProductInquiryBoardById" parameterType="Integer" resultType="map">
         SELECT
         pib.id,
@@ -71,5 +78,82 @@
         WHERE pib.id = #{id}
         GROUP BY
         pib.id
+    </select>
+
+    <select id="findProductInquiryBoardByPid" parameterType="map" resultType="map">
+        SELECT
+        pib.id,
+        pib.Uid,
+        p.name AS productName,
+        pib.title,
+        pib.content,
+        pib.isLocked,
+        pib.regDate,
+        pib.updateDate,
+        COUNT(pibc.id) AS commentCount
+        FROM
+        product_inquiry_board pib
+        JOIN
+        product p ON pib.Pid = p.id
+        LEFT JOIN
+        product_inquiry_board_comment pibc ON pib.id = pibc.P_Board_Id
+        WHERE pib.Pid = #{pId}
+        GROUP BY
+        pib.id
+        ORDER BY
+        pib.updateDate DESC,
+        pib.regDate DESC
+        LIMIT #{offset}, #{criteria.amount}
+    </select>
+
+    <!-- 내 상품문의 조회 -->
+    <select id="findMyProductInquiryBoardsCount" parameterType="map" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM product_inquiry_board pib
+        <where>
+            pib.Uid = #{uId}
+            <if test="criteria != null">
+                <if test="criteria.keyword != null and criteria.keyword != ''">
+                    AND (pib.title LIKE CONCAT('%', #{criteria.keyword}, '%'))
+                </if>
+                <if test="criteria.commentChk != null and criteria.commentChk != ''">
+                    AND (SELECT COUNT(*) FROM product_inquiry_board_comment pibc WHERE pib.id = pibc.P_Board_Id) = 0
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <select id="findMyProductInquiryBoards" parameterType="map" resultType="map">
+        SELECT
+        pib.id,
+        pib.Uid,
+        p.name AS productName,
+        pib.title,
+        pib.isLocked,
+        pib.regDate,
+        pib.updateDate,
+        COUNT(pibc.id) AS commentCount
+        FROM
+        product_inquiry_board pib
+        JOIN
+        product p ON pib.Pid = p.id
+        LEFT JOIN
+        product_inquiry_board_comment pibc ON pib.id = pibc.P_Board_Id
+        <where>
+            pib.Uid = #{uId}
+            <if test="criteria.keyword != null and criteria.keyword != ''">
+                AND pib.title LIKE CONCAT('%', #{criteria.keyword}, '%')
+            </if>
+        </where>
+        GROUP BY
+        pib.id
+        <if test="criteria.commentChk != null and criteria.commentChk != ''">
+            HAVING commentCount &lt; 1
+        </if>
+        ORDER BY
+        pib.updateDate DESC,
+        pib.regDate DESC
+        LIMIT #{offset}, #{criteria.amount}
     </select>
 </mapper>

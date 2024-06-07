@@ -7,4 +7,5 @@ import java.util.Map;
 public interface CustomerInquiryBoardService {
     public Map<String, Object> getCustomerInquiryBoards(Criteria criteria) throws Exception;
     public Map<String, Object> getCustomerInquiryBoardDetail(Integer id) throws Exception;
+    public Map<String, Object> getMyCustomerInquiryBoards(Criteria criteria, String uId) throws Exception;
 }

@@ -42,4 +42,41 @@ public class productInquiryBoardServiceImpl implements productInquiryBoardServic
     public Map<String, Object> getproductInquiryBoardDetail(Integer id) throws Exception {
         return productInquiryBoardMapper.findProductInquiryBoardById(id);
     }
+
+    @Override
+    @Transactional
+    public Map<String, Object> getMyProductInquiryBoards(Criteria criteria, String uId) throws Exception {
+        // 검색 결과로 나오는 게시글 수 확인
+        int count = productInquiryBoardMapper.findMyProductInquiryBoardsCount(criteria, uId);
+        PageDto pageDto = new PageDto(count, criteria);
+
+        // 시작 게시물 번호 구하기
+        int offset = (criteria.getPageno() - 1) * criteria.getAmount();
+
+        List<Map<String, Object>> list = productInquiryBoardMapper.findMyProductInquiryBoards(criteria, offset, uId);
+
+        Map<String, Object> returnVal = new HashMap<>();
+        returnVal.put("list", list);
+        returnVal.put("pageDto", pageDto);
+
+        return returnVal;
+    }
+
+    @Override
+    public Map<String, Object> getProductInquiryBoardsByPid(Criteria criteria, Integer pId) throws Exception {
+        // 검색 결과로 나오는 게시글 수 확인
+        int count = productInquiryBoardMapper.findProductInquiryBoardByPidCount(pId);
+        PageDto pageDto = new PageDto(count, criteria);
+
+        // 시작 게시물 번호 구하기
+        int offset = (criteria.getPageno() - 1) * criteria.getAmount();
+
+        List<Map<String, Object>> list = productInquiryBoardMapper.findProductInquiryBoardByPid(criteria, offset, pId);
+
+        Map<String, Object> returnVal = new HashMap<>();
+        returnVal.put("list", list);
+        returnVal.put("pageDto", pageDto);
+
+        return returnVal;
+    }
 }

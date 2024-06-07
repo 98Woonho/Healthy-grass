@@ -117,9 +117,7 @@ public class ProductReviewBoardController {
             criteria.setPageno(1);
         }
 
-        if (criteria.getAmount() == null) {
-            criteria.setAmount(10);
-        }
+        criteria.setAmount(6);
 
         if (authentication == null) {
             String error = "로그인 정보가 없습니다.";

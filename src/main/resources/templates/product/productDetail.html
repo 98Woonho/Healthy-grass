@@ -8,11 +8,15 @@
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
     <script defer src="/js/productDetail/productDetail.js"></script>
+
     <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+
     <link rel="stylesheet" th:href="@{/css/product/productDetail.css}">
     <link rel="stylesheet" th:href="@{/css/product/productReviewBoard.css}">
+    <link rel="stylesheet" th:href="@{/css/product/productInquiryBoard.css}">
     <title>상품상세조회</title>
 </head>
 <body>
@@ -119,6 +123,33 @@
         </section>
         <script defer th:src="@{/js/productDetail/productReviewProcess.js}"></script>
         <script defer th:src="@{/js/productDetail/toggleReviewContentProcess.js}"></script>
+
+        <section class="third-section">
+            <div class="productInquiry-list">
+                <h2>상품문의 목록</h2>
+                <table class="productInquiry-table">
+                    <thead>
+                    <tr>
+                        <th>작성자</th>
+                        <th>잠금</th>
+                        <th>제목</th>
+                        <th>작성일</th>
+                        <th>수정일</th>
+                    </tr>
+                    </thead>
+                    <tbody id="productInquiry-list">
+                    <!-- 상품문의 목록을 동적으로 채웁니다. -->
+                    </tbody>
+                </table>
+                <!-- 페이징 -->
+                <div class="pagination" id="pagination2">
+                    <!--                    <button onclick="loadReviews(currentPage - 1)">Prev</button>-->
+                    <!--                    <button onclick="loadReviews(currentPage + 1)">Next</button>-->
+                </div>
+            </div>
+        </section>
+        <script defer th:src="@{/js/productDetail/productInquiryProcess.js}"></script>
+        <script defer th:src="@{/js/productDetail/toggleInquiryContentProcess.js}"></script>
     </div>
     <div class="footer">
         <!-- Footer content -->

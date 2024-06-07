@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const boardId = document.querySelector("#boardId").textContent;
+    console.log(boardId);
     fetchComments(boardId);
 });
 

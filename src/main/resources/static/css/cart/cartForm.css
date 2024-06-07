@@ -1,0 +1,118 @@
+/* 기본 테이블 스타일링 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    min-width: 600px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+/* 스타일링 체크박스 */
+input[type="checkbox"] {
+    transform: scale(1.5);
+}
+
+/* 스타일링 버튼 */
+.btns a {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #009879;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.btns a:hover {
+    background-color: #007b5e;
+}
+
+/* 스타일링 링크 */
+a {
+    color: #009879;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 옵션 변경 버튼 */
+.btn-opt-spin-num {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #ffcc00;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.btn-opt-spin-num:hover {
+    background-color: #e6b800;
+}
+
+/* 스타일링 하단 정보 */
+tfoot td {
+    padding: 10px 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+tfoot div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 이미지 스타일링 */
+img {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* 추가적인 텍스트 정렬 */
+.tb-center {
+    text-align: center;
+}
+
+.tb-opt {
+    text-align: left;
+}
+
+.MK-product-icons img {
+    display: inline;
+    margin-left: 5px;
+}

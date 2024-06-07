@@ -15,6 +15,7 @@ function getProductPrice() {
             console.log(err);
         });
 }
+
 quantityInput.addEventListener('input', function() {
     if (quantityInput.value < 1){
         quantityInput.value = 1;
@@ -52,4 +53,23 @@ amountDown.addEventListener('click', function (e){
     getProductPrice();
 })
 
+const productId = document.querySelector("#productId");
 
+data = {
+    "productId" : productId.value,
+    "quantity" : quantityInput.value
+}
+
+
+const cartBtn = document.querySelector('.cartBtn');
+cartBtn.addEventListener("click", function (e){
+    e.preventDefault();
+    axios.post('/cart', data)
+        .then(res =>{
+
+        })
+        .catch(err=> {
+            console.log(err);
+        });
+
+})

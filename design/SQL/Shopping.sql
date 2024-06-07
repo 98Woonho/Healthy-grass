@@ -90,7 +90,7 @@ CREATE TABLE `customer_inquiry_board` (
   PRIMARY KEY (`id`),
   KEY `FK_CustomerInquiryBoard_User_idx` (`Uid`),
   CONSTRAINT `FK_CustomerInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,6 +99,7 @@ CREATE TABLE `customer_inquiry_board` (
 
 LOCK TABLES `customer_inquiry_board` WRITE;
 /*!40000 ALTER TABLE `customer_inquiry_board` DISABLE KEYS */;
+INSERT INTO `customer_inquiry_board` VALUES (1,'user1','Title 1','Content 1','/images/img1.jpg','img1.jpg','2023-01-01','2023-01-02'),(2,'user2','Title 2','Content 2','/images/img2.jpg','img2.jpg','2023-01-02','2023-01-03'),(3,'user3','Title 3','Content 3','/images/img3.jpg','img3.jpg','2023-01-03','2023-01-04'),(4,'user4','Title 4','Content 4','/images/img4.jpg','img4.jpg','2023-01-04','2023-01-05'),(5,'user5','Title 5','Content 5','/images/img5.jpg','img5.jpg','2023-01-05','2023-01-06'),(6,'user6','Title 6','Content 6','/images/img6.jpg','img6.jpg','2023-01-06','2023-01-07'),(7,'user7','Title 7','Content 7','/images/img7.jpg','img7.jpg','2023-01-07','2023-01-08'),(8,'user8','Title 8','Content 8','/images/img8.jpg','img8.jpg','2023-01-08','2023-01-09'),(9,'user9','Title 9','Content 9','/images/img9.jpg','img9.jpg','2023-01-09','2023-01-10'),(10,'user10','Title 10','Content 10','/images/img10.jpg','img10.jpg','2023-01-10','2023-01-11'),(11,'user11','Title 11','Content 11','/images/img11.jpg','img11.jpg','2023-01-11','2023-01-12'),(12,'user12','Title 12','Content 12','/images/img12.jpg','img12.jpg','2023-01-12','2023-01-13'),(13,'user13','Title 13','Content 13','/images/img13.jpg','img13.jpg','2023-01-13','2023-01-14'),(14,'user14','Title 14','Content 14','/images/img14.jpg','img14.jpg','2023-01-14','2023-01-15'),(15,'user15','Title 15','Content 15','/images/img15.jpg','img15.jpg','2023-01-15','2023-01-16'),(16,'user16','Title 16','Content 16','/images/img16.jpg','img16.jpg','2023-01-16','2023-01-17'),(17,'user17','Title 17','Content 17','/images/img17.jpg','img17.jpg','2023-01-17','2023-01-18'),(18,'user18','Title 18','Content 18','/images/img18.jpg','img18.jpg','2023-01-18','2023-01-19'),(19,'user19','Title 19','Content 19','/images/img19.jpg','img19.jpg','2023-01-19','2023-01-20'),(20,'user20','Title 20','Content 20','/images/img20.jpg','img20.jpg','2023-01-20','2023-01-21');
 /*!40000 ALTER TABLE `customer_inquiry_board` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,7 +122,7 @@ CREATE TABLE `customer_inquiry_comment` (
   PRIMARY KEY (`id`),
   KEY `FK_CustomerInquiryComment_CustomerInquiryBoard_idx` (`C_Board_id`),
   CONSTRAINT `FK_CustomerInquiryComment_CustomerInquiryBoard` FOREIGN KEY (`C_Board_id`) REFERENCES `customer_inquiry_board` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,6 +131,7 @@ CREATE TABLE `customer_inquiry_comment` (
 
 LOCK TABLES `customer_inquiry_comment` WRITE;
 /*!40000 ALTER TABLE `customer_inquiry_comment` DISABLE KEYS */;
+INSERT INTO `customer_inquiry_comment` VALUES (1,1,'Comment Title 1','Comment 1','/images/comment_img1.jpg','comment_img1.jpg','2023-01-01','2023-01-02'),(2,2,'Comment Title 2','Comment 2','/images/comment_img2.jpg','comment_img2.jpg','2023-01-02','2023-01-03'),(3,3,'Comment Title 3','Comment 3','/images/comment_img3.jpg','comment_img3.jpg','2023-01-03','2023-01-04'),(4,4,'Comment Title 4','Comment 4','/images/comment_img4.jpg','comment_img4.jpg','2023-01-04','2023-01-05'),(5,5,'Comment Title 5','Comment 5','/images/comment_img5.jpg','comment_img5.jpg','2023-01-05','2023-01-06'),(6,6,'Comment Title 6','Comment 6','/images/comment_img6.jpg','comment_img6.jpg','2023-01-06','2023-01-07'),(7,7,'Comment Title 7','Comment 7','/images/comment_img7.jpg','comment_img7.jpg','2023-01-07','2023-01-08'),(8,8,'Comment Title 8','Comment 8','/images/comment_img8.jpg','comment_img8.jpg','2023-01-08','2023-01-09'),(9,9,'Comment Title 9','Comment 9','/images/comment_img9.jpg','comment_img9.jpg','2023-01-09','2023-01-10'),(10,10,'Comment Title 10','Comment 10','/images/comment_img10.jpg','comment_img10.jpg','2023-01-10','2023-01-11'),(11,11,'Comment Title 11','Comment 11','/images/comment_img11.jpg','comment_img11.jpg','2023-01-11','2023-01-12'),(12,12,'Comment Title 12','Comment 12','/images/comment_img12.jpg','comment_img12.jpg','2023-01-12','2023-01-13');
 /*!40000 ALTER TABLE `customer_inquiry_comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,7 +258,6 @@ CREATE TABLE `persistent_logins` (
 
 LOCK TABLES `persistent_logins` WRITE;
 /*!40000 ALTER TABLE `persistent_logins` DISABLE KEYS */;
-INSERT INTO `persistent_logins` VALUES ('hbsh2330','60SLVpS5k+FhvDNqXxDbqA==','0RLYGMtoBSZnE1NuLTr0eg==','2024-06-05 08:34:19');
 /*!40000 ALTER TABLE `persistent_logins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,7 +320,7 @@ CREATE TABLE `product_inquiry_board` (
   KEY `FK_ProductInquiryBoard_User_idx` (`Uid`),
   CONSTRAINT `FK_ProductInquiryBoard_Proudct` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`),
   CONSTRAINT `FK_ProductInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -328,6 +329,7 @@ CREATE TABLE `product_inquiry_board` (
 
 LOCK TABLES `product_inquiry_board` WRITE;
 /*!40000 ALTER TABLE `product_inquiry_board` DISABLE KEYS */;
+INSERT INTO `product_inquiry_board` VALUES (1,32,'user1','문의 제목 1','문의 내용 1','2024-05-01','2024-05-02','N','password1'),(2,33,'user2','문의 제목 2','문의 내용 2','2024-05-03','2024-05-04','Y','password2'),(3,34,'user3','문의 제목 3','문의 내용 3','2024-05-05','2024-05-06','N','password3'),(4,35,'user4','문의 제목 4','문의 내용 4','2024-05-07','2024-05-08','Y','password4'),(5,36,'user5','문의 제목 5','문의 내용 5','2024-05-09','2024-05-10','N','password5'),(6,37,'user6','문의 제목 6','문의 내용 6','2024-05-11','2024-05-12','Y','password6'),(7,38,'user7','문의 제목 7','문의 내용 7','2024-05-13','2024-05-14','N','password7'),(8,39,'user8','문의 제목 8','문의 내용 8','2024-05-15','2024-05-16','Y','password8'),(9,40,'user9','문의 제목 9','문의 내용 9','2024-05-17','2024-05-18','N','password9'),(10,41,'user10','문의 제목 10','문의 내용 10','2024-05-19','2024-05-20','Y','password10'),(11,42,'user11','문의 제목 11','문의 내용 11','2024-05-21','2024-05-22','N','password11'),(12,43,'user12','문의 제목 12','문의 내용 12','2024-05-23','2024-05-24','Y','password12'),(13,44,'user13','문의 제목 13','문의 내용 13','2024-05-25','2024-05-26','N','password13'),(14,45,'user14','문의 제목 14','문의 내용 14','2024-05-27','2024-05-28','Y','password14'),(15,46,'user15','문의 제목 15','문의 내용 15','2024-05-29','2024-05-30','N','password15'),(16,47,'user16','문의 제목 16','문의 내용 16','2024-05-31','2024-06-01','Y','password16'),(17,48,'user17','문의 제목 17','문의 내용 17','2024-06-02','2024-06-03','N','password17'),(18,49,'user18','문의 제목 18','문의 내용 18','2024-06-04','2024-06-05','Y','password18'),(19,50,'user19','문의 제목 19','문의 내용 19','2024-06-06','2024-06-07','N','password19'),(20,51,'user20','문의 제목 20','문의 내용 20','2024-06-08','2024-06-09','Y','password20');
 /*!40000 ALTER TABLE `product_inquiry_board` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,7 +350,7 @@ CREATE TABLE `product_inquiry_board_comment` (
   PRIMARY KEY (`id`),
   KEY `FK_ProductInquiryBoardComment_ProductInquiryBoard_idx` (`P_Board_Id`),
   CONSTRAINT `FK_ProductInquiryBoardComment_ProductInquiryBoard` FOREIGN KEY (`P_Board_Id`) REFERENCES `product_inquiry_board` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -357,6 +359,7 @@ CREATE TABLE `product_inquiry_board_comment` (
 
 LOCK TABLES `product_inquiry_board_comment` WRITE;
 /*!40000 ALTER TABLE `product_inquiry_board_comment` DISABLE KEYS */;
+INSERT INTO `product_inquiry_board_comment` VALUES (41,1,'댓글 제목 1','댓글 내용 1','2024-05-02','2024-05-02'),(42,2,'댓글 제목 2','댓글 내용 2','2024-05-04','2024-05-04'),(43,3,'댓글 제목 3','댓글 내용 3','2024-05-06','2024-05-06'),(44,4,'댓글 제목 4','댓글 내용 4','2024-05-08','2024-05-08'),(45,5,'댓글 제목 5','댓글 내용 5','2024-05-10','2024-05-10'),(46,6,'댓글 제목 6','댓글 내용 6','2024-05-12','2024-05-12'),(47,7,'댓글 제목 7','댓글 내용 7','2024-05-14','2024-05-14'),(48,8,'댓글 제목 8','댓글 내용 8','2024-05-16','2024-05-16'),(49,9,'댓글 제목 9','댓글 내용 9','2024-05-18','2024-05-18'),(50,10,'댓글 제목 10','댓글 내용 10','2024-05-20','2024-05-20'),(51,1,'댓글 제목 1','댓글 내용 1','2024-05-02','2024-05-02'),(52,2,'댓글 제목 2','댓글 내용 2','2024-05-04','2024-05-04'),(53,3,'댓글 제목 3','댓글 내용 3','2024-05-06','2024-05-06');
 /*!40000 ALTER TABLE `product_inquiry_board_comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -455,7 +458,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('hbsh2330','황보성현','$2a$10$221jc4pEnlb91HVm8IFCY.pfY1UP4RIlWDvskc0BF2L1X9loV3Br6','42938','대구 달성군 가창면 가창동로 3','','010-4216-2330','hbsh2330@naver.com','ROLE_USER',NULL,NULL),('user1','Alice','password1','12345','123 Main St','Apt 1','010-1234-5678','alice@example.com','user','local','provider1'),('user10','Judy','password10','01234','707 Spruce St','Apt 10','010-0123-4567','judy@example.com','admin','google','provider10'),('user11','Karl','password11','11223','808 Willow St','Apt 11','010-1123-5678','karl@example.com','user','facebook','provider11'),('user12','Laura','password12','22334','909 Redwood St','Apt 12','010-2234-6789','laura@example.com','user','facebook','provider12'),('user13','Mallory','password13','33445','1010 Palm St','Apt 13','010-3345-7890','mallory@example.com','user','local','provider13'),('user14','Nathan','password14','44556','1111 Fir St','Apt 14','010-4456-8901','nathan@example.com','user','local','provider14'),('user15','Olivia','password15','55667','1212 Poplar St','Apt 15','010-5567-9012','olivia@example.com','admin','google','provider15'),('user16','Peggy','password16','66778','1313 Beech St','Apt 16','010-6678-0123','peggy@example.com','user','google','provider16'),('user17','Quentin','password17','77889','1414 Cedar St','Apt 17','010-7789-1234','quentin@example.com','user','facebook','provider17'),('user18','Rupert','password18','88990','1515 Holly St','Apt 18','010-8890-2345','rupert@example.com','user','facebook','provider18'),('user19','Sybil','password19','99001','1616 Alder St','Apt 19','010-9901-3456','sybil@example.com','user','local','provider19'),('user2','Bob','password2','23456','456 Oak St','Apt 2','010-2345-6789','bob@example.com','admin','local','provider2'),('user20','Trent','password20','10112','1717 Juniper St','Apt 20','010-1011-4567','trent@example.com','admin','local','provider20'),('user3','Charlie','password3','34567','789 Pine St','Apt 3','010-3456-7890','charlie@example.com','user','google','provider3'),('user4','David','password4','45678','101 Maple St','Apt 4','010-4567-8901','david@example.com','user','google','provider4'),('user5','Eve','password5','56789','202 Birch St','Apt 5','010-5678-9012','eve@example.com','admin','facebook','provider5'),('user6','Frank','password6','67890','303 Cedar St','Apt 6','010-6789-0123','frank@example.com','user','facebook','provider6'),('user7','Grace','password7','78901','404 Walnut St','Apt 7','010-7890-1234','grace@example.com','user','local','provider7'),('user8','Heidi','password8','89012','505 Ash St','Apt 8','010-8901-2345','heidi@example.com','user','local','provider8'),('user9','Ivan','password9','90123','606 Elm St','Apt 9','010-9012-3456','ivan@example.com','user','google','provider9');
+INSERT INTO `user` VALUES ('hbsh2330','황보성현','$2a$10$221jc4pEnlb91HVm8IFCY.pfY1UP4RIlWDvskc0BF2L1X9loV3Br6','42938','대구 달성군 가창면 가창동로 3','','010-4216-2330','hbsh2330@naver.com','ROLE_USER',NULL,NULL),('pakms980319','박민석','$2a$10$cUr/kxN21FkE5xj.fpLaMuOFtlVHTWoxAZiEH4GnAL8wKEU4Z9vNm','43109','대구 군위군 군위읍 개봉길 23-72','길거리 바닥','010-5282-4082','pakms980319@gmail.com','ROLE_ADMIN',NULL,NULL),('user1','Alice','password1','12345','123 Main St','Apt 1','010-1234-5678','alice@example.com','user','local','provider1'),('user10','Judy','password10','01234','707 Spruce St','Apt 10','010-0123-4567','judy@example.com','admin','google','provider10'),('user11','Karl','password11','11223','808 Willow St','Apt 11','010-1123-5678','karl@example.com','user','facebook','provider11'),('user12','Laura','password12','22334','909 Redwood St','Apt 12','010-2234-6789','laura@example.com','user','facebook','provider12'),('user13','Mallory','password13','33445','1010 Palm St','Apt 13','010-3345-7890','mallory@example.com','user','local','provider13'),('user14','Nathan','password14','44556','1111 Fir St','Apt 14','010-4456-8901','nathan@example.com','user','local','provider14'),('user15','Olivia','password15','55667','1212 Poplar St','Apt 15','010-5567-9012','olivia@example.com','admin','google','provider15'),('user16','Peggy','password16','66778','1313 Beech St','Apt 16','010-6678-0123','peggy@example.com','user','google','provider16'),('user17','Quentin','password17','77889','1414 Cedar St','Apt 17','010-7789-1234','quentin@example.com','user','facebook','provider17'),('user18','Rupert','password18','88990','1515 Holly St','Apt 18','010-8890-2345','rupert@example.com','user','facebook','provider18'),('user19','Sybil','password19','99001','1616 Alder St','Apt 19','010-9901-3456','sybil@example.com','user','local','provider19'),('user2','Bob','password2','23456','456 Oak St','Apt 2','010-2345-6789','bob@example.com','admin','local','provider2'),('user20','Trent','password20','10112','1717 Juniper St','Apt 20','010-1011-4567','trent@example.com','admin','local','provider20'),('user3','Charlie','password3','34567','789 Pine St','Apt 3','010-3456-7890','charlie@example.com','user','google','provider3'),('user4','David','password4','45678','101 Maple St','Apt 4','010-4567-8901','david@example.com','user','google','provider4'),('user5','Eve','password5','56789','202 Birch St','Apt 5','010-5678-9012','eve@example.com','admin','facebook','provider5'),('user6','Frank','password6','67890','303 Cedar St','Apt 6','010-6789-0123','frank@example.com','user','facebook','provider6'),('user7','Grace','password7','78901','404 Walnut St','Apt 7','010-7890-1234','grace@example.com','user','local','provider7'),('user8','Heidi','password8','89012','505 Ash St','Apt 8','010-8901-2345','heidi@example.com','user','local','provider8'),('user9','Ivan','password9','90123','606 Elm St','Apt 9','010-9012-3456','ivan@example.com','user','google','provider9');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -496,4 +499,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-05 17:40:17
+-- Dump completed on 2024-06-07 12:22:21

@@ -116,34 +116,34 @@
                         <div class="tb-center">
                             <div class="thumb">
                                 <!-- 상품 위치 상품 상세 이미지 출력 alt엔 상품 이름-->
-                                <a href=""><img th:src="@{${order.mainImgPath}}" th:alt="${order.mainImgName}" width="65"></a>
+                                <a href=""><img src="#" alt="#" width="65"></a>
                             </div>
                         </div>
                     </td>
                     <td>
                         <div class="tb-left tb-name">
                             <!-- href엔 상품 위치 상품 상세 이미지 출력 상품 이름-->
-                            <a th:href="@{${order.productUrl}}" th:text="${order.name}">
+                            <a href="#">
                             </a>
                         </div>
                     </td>
                     <td>
                         <!--                        상품 수량-->
-                        <div class="tb-center" th:text="${order.amount}">구매한 상품 수량</div>
+                        <div class="tb-center">구매한 상품 수량</div>
                     </td>
                     <td>
                         <div class="tb-center tb-coupon">
                             <!-- 상품 할인 가격 -->
-                            <div class="block-prd-sale"><span class="fc-red txt-bold" th:text="'-'+${order.discount}">-4,460원</span></div>
+                            <div class="block-prd-sale"><span class="fc-red txt-bold">-4,460원</span></div>
                         </div>
                     </td>
                     <td>
                         <div class="tb-right tb-bold" style="padding-right:15px">
                             <!--  상품 가격-->
-                            <del th:text="${order.price}">44,600원</del>
+                            <del>44,600원</del>
 <!--                            할인 적용 후 가격-->
                             <br>
-                            <th:block th:text="${order.discountedPrice}"></th:block>
+<!--                            <th:block th:text="${order.discountedPrice}"></th:block>-->
                         </div>
                     </td>
                 </tr>
@@ -151,7 +151,7 @@
                     <td colspan="6">
                         <div class="tb-right">
                             <!--                            장바구니에서 주문 한 모든 금액 -->
-                            주문 금액 <strong th:text="${order.price * order.amount}">208,200원</strong>
+                            주문 금액 <strong>208,200원</strong>
                             <span id="pvd-total-discount-block-etc-0" class="fc-red">- <strong>상품 할인
                                 <!--                                상품 할인 가격-->
                                 <span id="pvd-total-discount-etc-0">4,460</span>원</strong></span>

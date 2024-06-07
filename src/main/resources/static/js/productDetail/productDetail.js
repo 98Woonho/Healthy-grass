@@ -52,34 +52,4 @@ amountDown.addEventListener('click', function (e){
     getProductPrice();
 })
 
-const buyNowBtn = document.querySelector('.buyNowBtn');
-
-buyNowBtn.addEventListener('click', function (e){
-    e.preventDefault();
-
-    const productName = document.getElementById('productName').textContent.trim();
-    const productImage = document.getElementById('productImage');
-    const productPrice = parseInt(document.getElementById('productPrice').textContent.trim());
-    const discountedPrice = parseInt(document.getElementById('discountedPrice').textContent.trim());
-    const discount = productPrice - discountedPrice;
-    const amount = parseInt(document.getElementById('quantity').value);
-    const totalPrice = document.getElementById('totalPrice').textContent.trim();
-    const productUrl = window.location.pathname + window.location.search;
-
-    const form = document.getElementById('productForm');
-
-    // value 값을 설정
-    form.querySelector('input[name="name"]').value = productName;
-    form.querySelector('input[name="mainImgPath"]').value = productImage.getAttribute('src');
-    form.querySelector('input[name="mainImgName"]').value = productImage.getAttribute('alt');
-    form.querySelector('input[name="price"]').value = productPrice;
-    form.querySelector('input[name="discountedPrice"]').value = discountedPrice;
-    form.querySelector('input[name="discount"]').value = discount;
-    form.querySelector('input[name="amount"]').value = amount;
-    form.querySelector('input[name="totalPrice"]').value = totalPrice;
-    form.querySelector('input[name="productUrl"]').value = productUrl;
-
-    form.submit();
-});
-
 

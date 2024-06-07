@@ -16,16 +16,4 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/order")
 public class OrderController {
 
-    @PostMapping("")
-    public String orderForm(OrderDto orderDto, Authentication authentication, Model model){
-        if (authentication != null) {
-            PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-            UserDto userDto = principal.getUserDto();
-            model.addAttribute("order", orderDto);
-            model.addAttribute("user", userDto);
-            return "order/orderForm";
-        }
-        return "redirect:/user/loginForm";
-    }
-
 }

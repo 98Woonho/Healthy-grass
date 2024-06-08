@@ -51,8 +51,8 @@
                 </div>
                 <div class="product-info">
                     <div>
-                        <label for="product">제품명</label>
-                        <input type="text" name="product" id="product" placeholder="제품명">
+                        <label for="name">제품명</label>
+                        <input type="text" name="name" id="name" placeholder="제품명">
                     </div>
                     <div>
                         <label for="price">가격</label>
@@ -78,7 +78,7 @@
                     </div>
                     <div>
                         <label for="middleCategory">서브 카테고리</label>
-                        <input type="text" id="middleCategory" name="majorCategory" placeholder="메인 카테고리">
+                        <input type="text" id="middleCategory" name="middleCategory" placeholder="서브 카테고리">
                         <select onChange="changeCategorySelect(this)">
                             <th:block th:each="productMiddleCategory : ${productMiddleCategoryList}">
                                 <option th:value="${productMiddleCategory}" th:text="${productMiddleCategory}"></option>
@@ -88,7 +88,7 @@
                     </div>
                     <div>
                         <label for="content">제품 설명</label>
-                        <input type="text" id="content" name="content" placeholder="제품 설명">
+                        <textarea rows="10" cols="75" id="content" name="content" placeholder="제품 설명 (이미지 주소를 개행으로 구분하여 입력)"></textarea>
                     </div>
                 </div>
 

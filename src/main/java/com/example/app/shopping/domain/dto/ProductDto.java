@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -19,8 +20,8 @@ public class ProductDto {
     private String majorCategory;
     private String middleCategory;
     private String content;
-    private Date regDate;
-    private Date updateDate;
+    private LocalDate regDate;
+    private LocalDate updateDate;
     private String mainImgPath;
     private String mainImgName;
     private String subImgPath;

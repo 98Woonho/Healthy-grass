@@ -32,15 +32,15 @@ public class CartController {
         String str_quantity = (String) result.get("quantity");
         Integer productId = Integer.parseInt(str_productId);
         Integer quantity = Integer.parseInt(str_quantity);
+        System.out.println("quantity : " + quantity);
+        //로그인 안한 유저가 장바구니에 물건을 담을 때
         if (authentication == null) {
-            System.out.println("cartService!!!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-
-
+            System.out.println("cartAddNotUserLogin!!!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             cartService.cartAddNotUserLogin(productId, quantity);
         } else {
             PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-            UserDto userDto = principal.getUserDto();
-            cartService.addCart(productId, quantity, userDto);
+            String userId = principal.getUserDto().getId();
+            cartService.cartAddLoignedUser(productId, quantity, userId);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.app.shopping.domain.mapper;
 
 import com.example.app.shopping.domain.dto.CartDto;
+import com.example.app.shopping.domain.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,8 +10,7 @@ public interface CartMapper {
 
     void insertCart();
 
-    void insertCart(CartDto cartDto);
+    void insertCartByUserId(@Param("userId") String userId);
 
-    void insertCartItem(@Param("cartId") Integer cartId, @Param("productId") Integer productId, @Param("quantity") Integer quantity);
-
+    Integer findCartIdByUserId(@Param("userId") String userId);
 }

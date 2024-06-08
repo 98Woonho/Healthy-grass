@@ -6,4 +6,15 @@
         INSERT INTO cart()
         VALUES ()
     </insert>
+
+    <insert id="insertCartByUserId">
+        INSERT INTO cart(id, Uid)
+        VALUES (null, #{userId})
+    </insert>
+
+    <select id="findCartIdByUserId" parameterType="string" resultType="integer">
+        SELECT id
+        FROM cart
+        WHERE Uid = #{userId}
+    </select>
 </mapper>

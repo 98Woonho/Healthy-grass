@@ -529,7 +529,7 @@
             useGeneratedKeys="true"
             keyColumn="id"
             keyProperty="id">
-            INSERT INTO `product` (`name`, `price`, `discount`, `amount`, `majorCategory`, `middleCategory`, `content`, `regDate`, `updateDate`, `mainImgPath`, `subImgPath`)
-            VALUES (#{name}, #{price}, #{discount}, #{amount}, #{majorCategory}, #{middleCategory}, #{content}, #{regDate}, #{updateDate}, #{mainImgPath}, #{subImgPath})
+            INSERT INTO `product` (`name`, `price`, `discount`, `discountedPrice`, `amount`, `majorCategory`, `middleCategory`, `content`, `regDate`, `updateDate`, `mainImgPath`, `subImgPath`)
+            VALUES (#{name}, #{price}, #{discount}, #{discountedPrice}, #{amount}, #{majorCategory}, #{middleCategory}, #{content}, #{regDate}, #{updateDate}, #{mainImgPath}, #{subImgPath})
     </insert>
 </mapper>

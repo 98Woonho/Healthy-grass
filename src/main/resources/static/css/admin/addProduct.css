@@ -4,11 +4,6 @@
     text-align: center;
 }
 
-header {
-    height: 200px;
-    background-color:aquamarine;
-}
-
 main {
     display: flex;
     flex-direction: column;

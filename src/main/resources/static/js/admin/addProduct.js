@@ -1,6 +1,13 @@
 const addProductForm = document.getElementById('addProductForm');
 const mainUploadBox = document.getElementById('mainUploadBox');
 const subUploadBox = document.getElementById('subUploadBox');
+const majorCategorySelect = document.getElementById('majorCategorySelect');
+const middleCategorySelect = document.getElementById('middleCategorySelect');
+const majorCategory = document.getElementById('majorCategory');
+const middleCategory = document.getElementById('middleCategory');
+
+majorCategory.value = majorCategorySelect.value;
+middleCategory.value = middleCategorySelect.value;
 
 // 카테고리 선택 function
 const changeCategorySelect = (select) => {

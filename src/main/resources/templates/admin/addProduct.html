@@ -69,7 +69,7 @@
                     <div>
                         <label for="majorCategory">메인 카테고리</label>
                         <input type="text" id="majorCategory" name="majorCategory" placeholder="메인 카테고리">
-                        <select onChange="changeCategorySelect(this)">
+                        <select id="majorCategorySelect" onChange="changeCategorySelect(this)">
                             <th:block th:each="productMajorCategory : ${productMajorCategoryList}">
                                 <option th:value="${productMajorCategory}" th:text="${productMajorCategory}"></option>
                             </th:block>
@@ -79,7 +79,7 @@
                     <div>
                         <label for="middleCategory">서브 카테고리</label>
                         <input type="text" id="middleCategory" name="middleCategory" placeholder="서브 카테고리">
-                        <select onChange="changeCategorySelect(this)">
+                        <select id="middleCategorySelect" onChange="changeCategorySelect(this)">
                             <th:block th:each="productMiddleCategory : ${productMiddleCategoryList}">
                                 <option th:value="${productMiddleCategory}" th:text="${productMiddleCategory}"></option>
                             </th:block>

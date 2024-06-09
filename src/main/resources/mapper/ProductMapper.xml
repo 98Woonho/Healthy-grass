@@ -524,4 +524,12 @@
         LIMIT 12
     </select>
 
+    <insert id="insertProduct"
+            parameterType="com.example.app.shopping.domain.dto.ProductDto"
+            useGeneratedKeys="true"
+            keyColumn="id"
+            keyProperty="id">
+            INSERT INTO `product` (`name`, `price`, `discount`, `discountedPrice`, `amount`, `majorCategory`, `middleCategory`, `content`, `regDate`, `updateDate`, `mainImgPath`, `subImgPath`)
+            VALUES (#{name}, #{price}, #{discount}, #{discountedPrice}, #{amount}, #{majorCategory}, #{middleCategory}, #{content}, #{regDate}, #{updateDate}, #{mainImgPath}, #{subImgPath})
+    </insert>
 </mapper>

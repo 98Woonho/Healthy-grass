@@ -44,4 +44,5 @@ public interface ProductMapper {
 
     // 최신 상품 12개 조회하는 메서드
     List<Map<String, Object>> findByRecentProducts() throws Exception;
+
 }

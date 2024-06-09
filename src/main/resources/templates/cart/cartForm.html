@@ -46,20 +46,15 @@
             <tr>
                 <td colspan="8">
                     <div>
-                        <div>
-                            <img src="/images/common/provider_order/icon_header.gif">
-                        </div>
-                        총 구매금액 :
-                        11,760원
-                        = <strong>11,760원</strong>
-                        (적립금 0원)
+                        총 구매금액
+<!--                        = <strong th:text="${carts.price}">11,760원</strong>-->
                     </div>
                     <!--공급사여부-->
                 </td>
             </tr>
             </tfoot>
             <tbody>
-            <tr>
+            <tr th:each="cart : ${carts}">
                 <td>
                     <div>
                         <input type="checkbox">
@@ -68,39 +63,35 @@
                 <td>
                     <div>
                         <div class="thumb">
-                            <a href="/shop/shopdetail.html?branduid=1357921&amp;search=&amp;xcode=129&amp;mcode=001&amp;scode=&amp;GfDT=amd3UQ%3D%3D"><img
-                                    src="/shopimages/cepa5678/1290010000803.jpg?1716863307" alt="상품 섬네일" title="상품 섬네일"></a>
+                            <a th:href="@{/product(id=${cart.id})}"><img
+                                    th:src="${cart.mainImgPath}" alt="상품 섬네일" title="상품 섬네일"></a>
                         </div>
                     </div>
                 </td>
                 <td>
                     <div>
-                        <a href="/shop/shopdetail.html?branduid=1357921&amp;search=&amp;xcode=129&amp;mcode=001&amp;scode=&amp;GfDT=amd3UQ%3D%3D">맛풍당당
-                            제철농산물 6월<br> [예산] GAP 예가정성 대추방울 토마토 2kg</a>
-                        <span><!--/number/basket@product_price_sell/--></span>
-                        <span class="MK-product-icons"><img src="/shopimages/cepa5678/prod_icons/3660?1717377980"
-                                                            class="MK-product-icon-2"></span>
-                        <div class="tb-opt">[옵션] 상품선택 : GAP 예가정성 대추방울 토마토 2kg <span
-                                class="MK_option_amount1357921_1">1</span>개
-                        </div>
+                        <a th:href="@{/product(id=${cart.id})}"> <th:block th:text="${cart.name}"></th:block></a>
+<!--                        <div class="tb-opt">[옵션] 상품선택 : GAP 예가정성 대추방울 토마토 2kg <span-->
+<!--                                class="MK_option_amount1357921_1">1</span>개-->
+<!--                        </div>-->
                     </div>
                 </td>
                 <td>
                     <div>
                         <div>
                             <span class="btns"><a class="down" title="감소">-</a></span>
-                                <input type="text" name="amount" th:value="${1}" class="amount_value">
+                                <input type="text" name="amount" th:value="${cart.quantity}" class="amount_value">
                             <span class="btns"><a class="up" title="증가">+</a></span>
                         </div>
                     </div>
                 </td>
                 <td>
 <!--                    재고-->
-                    <div><span class="product_amount">200</span></div>
+                    <div><span class="product_amount" th:text="${cart.amount}">200</span></div>
                 </td>
                 <td>
 <!--                    할인 후 가격-->
-                    <div><span >11,760</span>원</div>
+                    <div><span th:text="${cart.discountedPrice}">상품 할인된 가격</span>원</div>
                 </td>
                 <td>
                     <div>
@@ -108,15 +99,15 @@
                             <span>
                                 <span>[기본배송]</span><span>무료</span>
                             </span>
-                            <div>
-                                <dl>
-                                    <dt>배송조건 : 기본배송(무료)</dt>
-                                    <dd>
-                                        주문금액에 상관없이 배송비가 <br><span>청구되지 않습니다.</span>
-                                    </dd>
-                                </dl>
-                                <span></span>
-                            </div>
+<!--                            <div>-->
+<!--                                <dl>-->
+<!--                                    <dt>배송조건 : 기본배송(무료)</dt>-->
+<!--                                    <dd>-->
+<!--                                        주문금액에 상관없이 배송비가 <br><span>청구되지 않습니다.</span>-->
+<!--                                    </dd>-->
+<!--                                </dl>-->
+<!--                                <span></span>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </td>
@@ -140,13 +131,6 @@
         <div><strong> 11,760원 = <b>11,760</b>원</strong></div>
     </div>
     <div>
-        <div>
-            <ul>
-                <li>장바구니의 상품별 할인가는 "미리 계산된 가격""입니다.</li>
-                <li>주문서의 쿠폰변경시 실제 가격은 달라질 수 있습니다.</li>
-                <li>상품 한개당 최대 구매가능 개수는 99개입니다.</li>
-            </ul>
-        </div>
         <div>
             <a href="/html/mainm.html">계속쇼핑하기</a>
             <a href="javascript:multi_order()" class="on">선택상품주문하기</a>

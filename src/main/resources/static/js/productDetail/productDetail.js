@@ -16,18 +16,6 @@ function getProductPrice() {
         })
 }
 
-// function upAmount(){
-// axios.post('/upAmount', {'value' : parseInt(quantityInput.value)})
-//     .then(resp=> {
-//         console.log(resp.data)
-//         quantityInput.value = resp.data;
-//         console.log(quantityInput.value);
-//     })
-//     .catch(err=> {
-//         // Handle error
-//         console.log(err);
-//     });
-// }
 quantityInput.addEventListener('change', function (e){
     e.preventDefault()
 
@@ -88,12 +76,20 @@ cartBtn.addEventListener("click", function (e){
         "productId" : productId.value,
         "quantity" : quantityInput.value
     })
-
         .then(res =>{
-
+            console.log(res.data);
+            if (res.data === "SUCCESS"){
+                const myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                myModal.show();
+            }
         })
         .catch(err=> {
             console.log(err);
         });
+
+    const viewCartBtn = document.getElementById('viewCartBtn');
+    viewCartBtn.addEventListener('click', function() {
+        location.href = '/cart';
+    });
 
 })

@@ -87,7 +87,8 @@ public class ProductInquiryBoardController {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            String boardPassword = (String) productInquiryBoardService.getproductInquiryBoardDetail(id).get("password");
+            Map<String, Object> result = productInquiryBoardService.getproductInquiryBoardDetail(id);
+            String boardPassword = (String) result.get("password");
 
             System.out.println("boardPassword: " + boardPassword + " password: " + password);
 
@@ -96,6 +97,7 @@ public class ProductInquiryBoardController {
             if (boardPassword.equals(password)) {
                 unlockId = id;
                 System.out.println(unlockId);
+                response.put("result", result);
                 response.put("success", true);
             } else {
                 response.put("success", false);
@@ -169,6 +171,7 @@ public class ProductInquiryBoardController {
 
         try {
             returnVal = productInquiryBoardService.getProductInquiryBoardsByPid(criteria, pId);
+
             returnVal.put("success", true);
         } catch (Exception e) {
             e.printStackTrace();

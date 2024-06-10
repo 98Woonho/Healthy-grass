@@ -40,6 +40,7 @@ function displayProductInquiries(productInquiries) {
         const productInquiryContentId = `productInquiry-content-${index}`;
 
         const row = document.createElement('tr');
+
         row.innerHTML = `
             <td>${productInquiry.Uid}</td>
             <td>${productInquiry.isLocked}</td>
@@ -49,12 +50,16 @@ function displayProductInquiries(productInquiries) {
         `;
         productInquiryList.appendChild(row);
 
+        const div1 = document.createElement('div');
         const row1 = document.createElement('tr');
+
+        // tr 요소에 id 속성 추가
+        row1.id = `inquiry-row-${index}`;
 
         if (productInquiry.isLocked === 'Y') {
             row1.innerHTML = `
-                <td colspan="5" class="productInquiry-content" id="${productInquiryContentId}" style="display: none;">
-                    <form id="password-form-${index}">
+                <td colspan="5" class="productInquiry-content ${productInquiryContentId}" id="${productInquiryContentId}" style="display: none;">
+                    <form id="password-form-${index}" data-index="${index}">
                         <input type="hidden" id="id-${index}" value="${productInquiry.id != null ? productInquiry.id : ''}">
                         <span>패스워드: <input type="password" name="password" id="password-${index}" class="input-password" autocomplete="new-password"></span>
                         <button type="submit">입력</button>
@@ -63,10 +68,35 @@ function displayProductInquiries(productInquiries) {
             `;
         } else {
             row1.innerHTML = `
-                <td colspan="5" class="productInquiry-content" id="${productInquiryContentId}" style="display: none;">
+                <td colspan="5" class="productInquiry-content ${productInquiryContentId}" id="${productInquiryContentId}" style="display: none;">
                     내용: ${productInquiry.content}
                 </td>
             `;
+            const boardId = `${productInquiry.id}`;
+            axios.get('/ProductInquiryBoardComment', {
+                params: {
+                    id: Number(boardId) // id를 숫자 타입으로 변환하여 전달
+                }
+            })
+            .then(function(response) {
+                response.data.list.forEach((comment) => {
+                    row1.insertAdjacentHTML('afterend',`
+                        <tr class="${productInquiryContentId}" style="display: none;">
+                            <td>관리자</td>
+                            <td>-</td>
+                            <td>
+                                <span>제목: ${comment.title}</span>
+                                <p>내용: ${comment.content}</p>
+                            </td>
+                            <td>${comment.regDate}</td>
+                            <td>${comment.updateDate}</td>
+                        </tr>
+                    `);
+                });
+            })
+            .catch(function(error) {
+                alert("댓글조회 실패");
+            });
         }
 
         productInquiryList.appendChild(row1);
@@ -95,7 +125,41 @@ function submitPassword(index) {
     })
     .then(function(response) {
         if (response.data.success) {
-            alert('성공!');
+            const content = document.getElementById(`inquiry-row-${index}`);
+            const productInquiryContentId = `productInquiry-content-${index}`;
+
+            content.innerHTML = `
+               <td colspan="5" class="productInquiry-content ${productInquiryContentId}" id="${productInquiryContentId}" style="display: '';">
+                    내용: ${response.data.result.content}
+               </td>
+            `;
+
+            const boardId = idInput;
+            console.log(boardId);
+            axios.get('/ProductInquiryBoardComment', {
+                params: {
+                    id: Number(boardId) // id를 숫자 타입으로 변환하여 전달
+                }
+            })
+            .then(function(response) {
+                response.data.list.forEach((comment) => {
+                    content.insertAdjacentHTML('afterend',`
+                        <tr class="${productInquiryContentId}" style="display: '';">
+                            <td>관리자</td>
+                            <td>-</td>
+                            <td>
+                                <span>제목: ${comment.title}</span>
+                                <p>내용: ${comment.content}</p>
+                            </td>
+                            <td>${comment.regDate}</td>
+                            <td>${comment.updateDate}</td>
+                        </tr>
+                    `);
+                });
+            })
+            .catch(function(error) {
+                alert("댓글조회 실패");
+            });
         } else {
             alert('비밀번호가 틀립니다.');
         }
@@ -155,4 +219,8 @@ function updatePagination2(pageDto) {
     }
 
     pagination.appendChild(ul);
+}
+
+function displayComments(comments) {
+
 }

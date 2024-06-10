@@ -46,20 +46,8 @@
                 </th>
             </tr>
             </thead>
-            <tfoot>
-            <tr>
-                <td colspan="8">
-                    <div>
-                        총 구매금액
-                        = <strong class="total_amount" th:text="${carts[0].total_amount}">총 구매금액</strong>
-                    </div>
-                    <!--공급사여부-->
-                </td>
-            </tr>
-            </tfoot>
             <tbody>
-            <tr th:each="cart : ${carts}">
-<!--                productId를 받아오기 위한 hidden-->
+            <tr th:each="cart : ${carts}" class="tr">
                 <td>
                     <div>
                         <input type="checkbox">
@@ -96,7 +84,7 @@
                 </td>
                 <td>
 <!--                    할인 후 가격-->
-                    <div><span th:text="${cart.discountedPrice}">상품 할인된 가격</span>원</div>
+                    <div><span th:text="${cart.discountedPrice}" class="cart_price">상품 할인된 가격</span>원</div>
                 </td>
                 <td>
                     <div>
@@ -124,6 +112,17 @@
                 </td>
             </tr>
             </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div>
+                        총 구매금액
+                        = <strong class="total_amount" th:text="${carts[0].total_amount}">총 구매금액</strong>
+                    </div>
+                    <!--공급사여부-->
+                </td>
+            </tr>
+            </tfoot>
             <!--공급사여부-->
         </table>
 

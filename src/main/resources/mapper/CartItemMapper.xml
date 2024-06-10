@@ -20,33 +20,50 @@
         FROM cart_items
         WHERE Pid = #{productId} AND Cart_id = #{cartId}
     </select>
-    <update id="updateCartItem" parameterType="map">
+    <update id="updateAddSumQuantityByCartItem" parameterType="map">
         UPDATE cart_items
         SET quantity = #{sumQuantity}
         WHERE id = #{cartItemId}
     </update>
-    <select id="findProductListById" parameterType="int" resultType="map">
+    <select id="findProductListById" parameterType="String" resultType="map">
         SELECT
-            p.id,
+            ci.quantity,
+            ci.Cart_Id,
             p.name,
             p.price,
             p.discountedPrice,
             p.discount,
-            p.amount,
+            (ci.quantity * IFNULL(p.discountedPrice, p.price)) AS total_price_per_item,
+            p.id,
             p.majorCategory,
             p.middleCategory,
             p.content,
             p.regDate,
+            p.amount,
             p.updateDate,
             p.mainImgPath,
             p.mainImgName,
             p.subImgPath,
             p.subImgName,
-            ci.id AS cart_item_id,
-            ci.cart_id,
-            ci.quantity
-        FROM product p
-                 JOIN cart_items ci ON p.id = ci.Pid
-        WHERE ci.Pid = #{productIdByCartId}
+            (
+                SELECT SUM(ci.quantity * IFNULL(p.discountedPrice, p.price))
+                FROM cart_items ci
+                         JOIN cart c ON ci.Cart_Id = c.id
+                         JOIN product p ON ci.Pid = p.id
+                WHERE c.Uid = #{userId}
+            ) AS total_amount
+        FROM
+            cart_items ci
+                JOIN
+            cart c ON ci.Cart_Id = c.id
+                JOIN
+            product p ON ci.Pid = p.id
+        WHERE
+            c.Uid = #{userId};
     </select>
+    <update id="updateQuantityByCartIdAndProductId" parameterType="map">
+        UPDATE cart_items
+        SET quantity = #{amountValue}
+        WHERE Cart_Id = #{cartId} AND Pid = #{productId}
+    </update>
 </mapper>

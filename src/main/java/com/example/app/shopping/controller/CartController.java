@@ -21,6 +21,7 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    //장바구니에 담은 물건을 보여주는 로직
     @GetMapping("")
     public String cartForm(Authentication authentication, Model model) throws Exception {
         if (authentication == null) {
@@ -34,7 +35,7 @@ public class CartController {
             return "cart/cartForm";
         }
     }
-
+    //장바구니 클릭하면 물건이 장바구니에 담기는 로직
     @PostMapping("")
     @ResponseBody
     public String cartAdd(@RequestBody Map<String, Object> result, Authentication authentication) {
@@ -52,5 +53,17 @@ public class CartController {
             String userId = principal.getUserDto().getId();
            return cartService.cartAddLoignedUser(productId, quantity, userId);
         }
+    }
+    //장바구니에서 수량을 변경하면 DB에 상품이 변경되는 로직
+    @PostMapping("/AddAmount")
+    @ResponseBody
+    public void addAmount(@RequestBody Map<String, Object> result){
+        int amountValue = Integer.parseInt((String) result.get("amountValue"));
+        int cartId = Integer.parseInt((String) result.get("cartId"));
+        int productId = Integer.parseInt((String) result.get("productId"));
+        System.out.println(amountValue);
+        System.out.println(cartId);
+        System.out.println(productId);
+        cartService.updateCartItemQuantity(amountValue, productId, cartId);
     }
 }

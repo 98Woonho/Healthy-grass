@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/cart/cartForm.css}">
-    <link rel="stylesheet" href="../../static/css/cart/cartForm.css">
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
     <script defer src="/js/cart/cartForm.js"></script>
     <title>Title</title>
 </head>
 <body>
+<!--cartId받아오기 위한 hidden-->
+<input class="cartId" hidden="hidden" th:value="${carts[0].Cart_Id}">
 <div>
     <div>
         <table>
@@ -47,7 +51,7 @@
                 <td colspan="8">
                     <div>
                         총 구매금액
-<!--                        = <strong th:text="${carts.price}">11,760원</strong>-->
+                        = <strong class="total_amount" th:text="${carts[0].total_amount}">총 구매금액</strong>
                     </div>
                     <!--공급사여부-->
                 </td>
@@ -55,6 +59,7 @@
             </tfoot>
             <tbody>
             <tr th:each="cart : ${carts}">
+<!--                productId를 받아오기 위한 hidden-->
                 <td>
                     <div>
                         <input type="checkbox">
@@ -79,9 +84,9 @@
                 <td>
                     <div>
                         <div>
-                            <span class="btns"><a class="down" title="감소">-</a></span>
-                                <input type="text" name="amount" th:value="${cart.quantity}" class="amount_value">
-                            <span class="btns"><a class="up" title="증가">+</a></span>
+                            <span class="btns"><a class="down" title="감소" style="cursor: pointer" th:attr="data-product-id=${cart.id}">-</a></span>
+                                <input type="text" name="amount" th:value="${cart.quantity}" class="amount_value" th:attr="data-product-id=${cart.id}">
+                            <span class="btns"><a class="up" title="증가" style="cursor: pointer" th:attr="data-product-id=${cart.id}">+</a></span>
                         </div>
                     </div>
                 </td>
@@ -125,11 +130,6 @@
     </div><!-- .table-fill-prd -->
     <!--공급사여부-->
 
-    <div>
-        <div><img src="/images/d3/modern_simple/basket_total_price.gif" alt="합계" title="합계">
-        </div>
-        <div><strong> 11,760원 = <b>11,760</b>원</strong></div>
-    </div>
     <div>
         <div>
             <a href="/html/mainm.html">계속쇼핑하기</a>

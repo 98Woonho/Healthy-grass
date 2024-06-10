@@ -47,7 +47,7 @@ public class CartService {
                     Integer quantityByProductId = cartItemMapper.findQuantityByProductId(productId); //수량을 확인하고
                     int sumQuantity = quantity + quantityByProductId; //수량을 더해준다음에
                     Integer CartItemId = cartItemMapper.findIdByProductIdAndCartId(productId, cartId);
-                    cartItemMapper.updateCartItem(CartItemId, sumQuantity);
+                    cartItemMapper.updateAddSumQuantityByCartItem(CartItemId, sumQuantity);
                 }
                 return "SUCCESS";
             }
@@ -59,12 +59,12 @@ public class CartService {
     }
 
     public List<Map<String, Object>> cartList(String userId) throws Exception {
-        Integer cartIdByUserId = cartMapper.findCartIdByUserId(userId);
-        List<Integer> productIdByCartId = cartItemMapper.findProductIdByCartId(cartIdByUserId);
-        List<Map<String, Object>> productList = new ArrayList<>();
-        productIdByCartId.forEach(productId -> {
-            productList.addAll(cartItemMapper.findProductListById(productId));
-        });
-        return productList;
+        return cartItemMapper.findProductListById(userId);
     }
+
+    public void updateCartItemQuantity(int amountValue, int productId, int cartId) {
+        System.out.println("서비스 들어감");
+        cartItemMapper.updateQuantityByCartIdAndProductId(cartId, productId, amountValue);
+    }
+
 }

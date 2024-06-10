@@ -17,8 +17,9 @@ public interface CartItemMapper {
 
     Integer findIdByProductIdAndCartId(@Param("productId") Integer productId, @Param("cartId") Integer cartId);
 
-    void updateCartItem(@Param("cartItemId") Integer cartItemId, @Param("sumQuantity") int sumQuantity);
+    void updateAddSumQuantityByCartItem(@Param("cartItemId") Integer cartItemId, @Param("sumQuantity") int sumQuantity);
 
-    List<Map<String, Object>> findProductListById(@Param("productIdByCartId") Integer productIdByCartId);
+    List<Map<String, Object>> findProductListById(@Param("userId") String userId);
 
+    void updateQuantityByCartIdAndProductId(@Param("cartId") int cartId, @Param("productId") int productId, @Param("amountValue") int amountValue);
 }

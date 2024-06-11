@@ -68,12 +68,12 @@ public class AdminController {
         model.addAttribute("product", product);
     }
 
-    // 제품 등록 Post
+    // 제품 수정 Put
     @PutMapping("product")
     public ResponseEntity<String> putAddProduct(@RequestPart(value = "mainImage", required = false) MultipartFile mainImage,
                                                  @RequestPart(value = "subImage", required = false) MultipartFile subImage,
                                                  ProductDto productDto) throws IOException {
-        // 제품 등록
+        // 제품 수정
         adminService.modifyProduct(mainImage, subImage, productDto);
         return ResponseEntity.ok("제품 수정이 완료 되었습니다.");
     }

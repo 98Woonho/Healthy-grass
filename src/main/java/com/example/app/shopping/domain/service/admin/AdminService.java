@@ -156,7 +156,7 @@ public class AdminService {
         productDto.setDiscountedPrice(productDto.getPrice() - discountedPrice);
 
 
-        // product table insert
+        // product table update
         productMapper.updateProduct(productDto);
     }
 }

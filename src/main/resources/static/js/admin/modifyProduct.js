@@ -258,6 +258,6 @@ modifyProductForm.onsubmit = function(e) {
             alert(res.data);
         })
         .catch(err => {
-            alert('알 수 없는 이유로 제품 등록에 실패 하였습니다. 잠시 후 다시 시도해 주세요.');
+            alert('알 수 없는 이유로 제품 수정에 실패 하였습니다. 잠시 후 다시 시도해 주세요.');
         })
 }

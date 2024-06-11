@@ -36,7 +36,10 @@
                 </th>
                 <th scope="col">
 <!--                    할인 적용 후 가격-->
-                    <div class="tb-center">결제예정가</div>
+                    <div class="tb-center">상품 가격</div>
+                </th>
+                <th scope="col">
+                    <div class="tb-center">구매 가격</div>
                 </th>
                 <th scope="col">
                     <div class="tb-center">배송</div>
@@ -55,7 +58,7 @@
                 </td>
                 <td>
                     <div>
-                        <div class="thumb">
+                        <div>
                             <a th:href="@{/product(id=${cart.id})}"><img
                                     th:src="${cart.mainImgPath}" alt="상품 섬네일" title="상품 섬네일"></a>
                         </div>
@@ -84,7 +87,17 @@
                 </td>
                 <td>
 <!--                    할인 후 가격-->
-                    <div><span th:text="${cart.discountedPrice}" class="cart_price">상품 할인된 가격</span>원</div>
+                    <div>
+                        <span th:if="${cart.discountedPrice != null}" th:text="${cart.discountedPrice}" class="cart_price">상품 할인된 가격</span>
+                        <span th:unless="${cart.discountedPrice != null}" th:text="${cart.price}" class="cart_price">상품 가격</span>
+                        원
+                    </div>
+                </td>
+                <td>
+                    <!--                    할인 후 가격-->
+                    <div>
+                        <span class="product_total_price">상품 구매 가격</span>
+                    </div>
                 </td>
                 <td>
                     <div>
@@ -107,7 +120,7 @@
                 <td>
                     <div>
                         <span><a href="#">찜하기</a></span>
-                        <span><a href="#">삭제</a></span>
+                        <span><a href="#" th:attr="data-product-id=${cart.id}" class="delete_cart_btn">삭제</a></span>
                     </div>
                 </td>
             </tr>
@@ -131,8 +144,8 @@
 
     <div>
         <div>
-            <a href="/html/mainm.html">계속쇼핑하기</a>
-            <a href="javascript:multi_order()" class="on">선택상품주문하기</a>
+            <a href="/">계속쇼핑하기</a>
+            <a class="order_select_product">선택상품주문하기</a>
         </div>
     </div>
 </div>

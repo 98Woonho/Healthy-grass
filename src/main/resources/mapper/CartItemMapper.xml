@@ -66,4 +66,9 @@
         SET quantity = #{amountValue}
         WHERE Cart_Id = #{cartId} AND Pid = #{productId}
     </update>
+
+    <delete id="deleteCartItemByCartIdAndProductId">
+        DELETE FROM cart_items
+        WHERE Cart_id = #{cartId} AND Pid = #{productId}
+    </delete>
 </mapper>

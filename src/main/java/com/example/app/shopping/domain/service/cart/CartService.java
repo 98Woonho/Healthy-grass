@@ -67,4 +67,8 @@ public class CartService {
         cartItemMapper.updateQuantityByCartIdAndProductId(cartId, productId, amountValue);
     }
 
+    public String deleteCartItem(int cartId, int productId) {
+        cartItemMapper.deleteCartItemByCartIdAndProductId(cartId, productId);
+        return "SUCCESS";
+    }
 }

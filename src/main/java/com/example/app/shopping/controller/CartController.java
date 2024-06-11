@@ -61,9 +61,16 @@ public class CartController {
         int amountValue = Integer.parseInt((String) result.get("amountValue"));
         int cartId = Integer.parseInt((String) result.get("cartId"));
         int productId = Integer.parseInt((String) result.get("productId"));
-        System.out.println(amountValue);
+        cartService.updateCartItemQuantity(amountValue, productId, cartId);
+    }
+    //장바구니에서 삭제 누르면 장바구니 아이템 삭제
+    @DeleteMapping("/delete")
+    @ResponseBody
+    public String deleteCartItem(@RequestBody Map<String, Object> result){
+        int cartId = Integer.parseInt((String) result.get("cartId"));
+        int productId = Integer.parseInt((String) result.get("productId"));
         System.out.println(cartId);
         System.out.println(productId);
-        cartService.updateCartItemQuantity(amountValue, productId, cartId);
+        return cartService.deleteCartItem(cartId, productId);
     }
 }

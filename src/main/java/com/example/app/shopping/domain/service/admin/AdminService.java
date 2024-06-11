@@ -69,7 +69,9 @@ public class AdminService {
 
         // 할인된 가격 set
         int discountedPrice = (int) (productDto.getPrice() * productDto.getDiscount() * 0.01);
-        productDto.setDiscountedPrice(productDto.getPrice() - discountedPrice);
+        productDto.setDiscountedPrice(
+                ( (int) ( (productDto.getPrice() - discountedPrice) / 10 ) * 10 )
+        );
 
 
         // product table insert

@@ -50,7 +50,7 @@
             <tr th:each="cart : ${carts}" class="tr">
                 <td>
                     <div>
-                        <input type="checkbox">
+                        <input type="checkbox" class="checkOne" onchange="totalPrice()">
                     </div>
                 </td>
                 <td>
@@ -117,7 +117,7 @@
                 <td colspan="8">
                     <div>
                         총 구매금액
-                        = <strong class="total_amount" th:text="${carts[0].total_amount}">총 구매금액</strong>
+                        = <strong class="total_amount">0</strong>
                     </div>
                     <!--공급사여부-->
                 </td>

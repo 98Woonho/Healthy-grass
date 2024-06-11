@@ -4,6 +4,7 @@ document.querySelector('.ALL_checked').addEventListener('change', function () {
     document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
         checkbox.checked = isChecked;
     });
+    totalPrice();
 });
 
 
@@ -12,27 +13,40 @@ document.querySelector('.ALL_checked').addEventListener('change', function () {
 function totalPrice() {
     //모든 가격 리스트로 나누는 코드
     let priceList = [];
-    const cart_price = document.querySelectorAll('.cart_price');
-    cart_price.forEach(function (input){
-        let price = parseInt(input.textContent);
-        priceList.push(price);
-    })
-    console.log("priceList" + priceList);
-    // 모든 수량 리스트로 나누는 코드
     let quantityList = [];
+    const cart_price = document.querySelectorAll('.cart_price');
     const amount_value = document.querySelectorAll('.amount_value');
-    amount_value.forEach(function (input) {
-        let quantity = parseInt(input.value);
-        quantityList.push(quantity);
-    })
+    const tr_array = document.querySelectorAll('.tr');
+    const checkbox_array = document.querySelectorAll('.checkOne');
+    const all_checked = document.querySelector('.ALL_checked');
+    let state_check = true;
+
+    tr_array.forEach(function (input, index){
+        if(checkbox_array[index].checked) {
+            let price = parseInt(cart_price[index].textContent);
+            let quantity = parseInt(amount_value[index].value);
+            priceList.push(price);
+            quantityList.push(quantity);
+        } else {
+            priceList.push(0);
+            quantityList.push(0);
+            all_checked.checked = false;
+            state_check = false;
+        }
+    });
+
     // 가격과 수량을 곱한 후 합계를 구하는 코드
     let total = 0;
     for (let i = 0; i < priceList.length; i++) {
         total += priceList[i] * quantityList[i];
     }
-    console.log(total);
+
     const total_amount = document.querySelectorAll('.total_amount');
     total_amount[0].innerText = total;
+
+    if (state_check) {
+        all_checked.checked = true;
+    }
 }
 
 
@@ -42,6 +56,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const BtnDown = document.querySelectorAll(".down");
     const amountValue = document.querySelectorAll(".amount_value");
     const cartId = document.querySelector('.cartId');
+
+    // 초기셋팅
+    const all_checked = document.querySelector('.ALL_checked');
+    all_checked.checked = true;
+    all_checked.dispatchEvent(new Event('change'));
 
     BtnUp.forEach(button => {
         button.addEventListener('click', function (e) {

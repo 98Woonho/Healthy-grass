@@ -23,7 +23,6 @@ public class ProductInquiryBoardCommentController {
 
         try {
             response.put("list", service.getComments(id));
-            System.out.println(response.get("list"));
             response.put("success", true);
         } catch (Exception e) {
             response.put("success", false);

@@ -1,13 +1,19 @@
-const addProductForm = document.getElementById('addProductForm');
+const modifyProductForm = document.getElementById('modifyProductForm');
 const mainUploadBox = document.getElementById('mainUploadBox');
 const subUploadBox = document.getElementById('subUploadBox');
-const majorCategorySelect = document.getElementById('majorCategorySelect');
-const middleCategorySelect = document.getElementById('middleCategorySelect');
 const majorCategory = document.getElementById('majorCategory');
 const middleCategory = document.getElementById('middleCategory');
+const mainPreview = document.getElementById('mainPreview');
+const subPreview = document.getElementById('subPreview');
+const items = document.querySelectorAll('.item');
 
-majorCategory.value = majorCategorySelect.value;
-middleCategory.value = middleCategorySelect.value;
+items.forEach(item => {
+    const deleteBtn = item.querySelector('.delete-btn');
+
+    deleteBtn.addEventListener('click', () => {
+        item.remove();
+    })
+})
 
 // 카테고리 선택 function
 const changeCategorySelect = (select) => {
@@ -168,69 +174,69 @@ subUploadBox.addEventListener('drop', (e) => {
 
 
 // 제품 등록 submit
-addProductForm.onsubmit = function(e) {
+modifyProductForm.onsubmit = function(e) {
     e.preventDefault();
 
     const priceRegex = new RegExp("^\\d+$");
     const disCountRegex = new RegExp("^\\d+$");
     const amountRegex = new RegExp("^\\d+$");
 
-    if (addProductForm['name'].value === '') {
+    if (modifyProductForm['name'].value === '') {
         alert('제품명을 입력해 주세요.');
         return;
     }
 
-    if (addProductForm['price'].value === '') {
+    if (modifyProductForm['price'].value === '') {
         alert('가격을 입력해 주세요.');
         return;
     }
 
-    if (!priceRegex.test(addProductForm['price'].value)) {
+    if (!priceRegex.test(modifyProductForm['price'].value)) {
         alert('올바른 가격을 입력해 주세요.');
         return;
     }
 
-    if (addProductForm['amount'].value === '') {
+    if (modifyProductForm['amount'].value === '') {
         alert('수량을 입력해 주세요.');
         return;
     }
 
-    if (!amountRegex.test(addProductForm['amount'].value)) {
+    if (!amountRegex.test(modifyProductForm['amount'].value)) {
         alert('올바른 수량을 입력해 주세요.');
         return;
     }
 
-    if (addProductForm['discount'].value === '') {
+    if (modifyProductForm['discount'].value === '') {
         alert('할인율을 입력해 주세요.');
         return;
     }
 
-    if (!disCountRegex.test(addProductForm['discount'].value)) {
+    if (!disCountRegex.test(modifyProductForm['discount'].value)) {
         alert('올바른 할인율을 입력해 주세요.');
         return;
     }
 
-    if (addProductForm['majorCategory'].value === '') {
+    if (modifyProductForm['majorCategory'].value === '') {
         alert('메인 카테고리를 선택 및 입력해 주세요.');
         return;
     }
 
-    if (addProductForm['middleCategory'].value === '') {
+    if (modifyProductForm['middleCategory'].value === '') {
         alert('서브 카테고리를 선택 및 입력해 주세요.');
         return;
     }
 
-    if (addProductForm['content'].value === '') {
+    if (modifyProductForm['content'].value === '') {
         alert('제품 설명을 입력해 주세요.');
         return;
     }
 
-    if (mainImage === undefined) {
+    if (mainPreview.querySelector('.item') === null) {
         alert('메인 이미지를 등록해 주세요.');
         return;
     }
 
-    if (subImage === undefined) {
+    if (mainPreview.querySelector('.item') === null) {
         alert('서브 이미지를 등록해 주세요.');
         return;
     }
@@ -240,7 +246,7 @@ addProductForm.onsubmit = function(e) {
     formData.append('subImage', subImage);
     formData.append('content', document.getElementById('content').value);
 
-    axios.post('/admin/product', formData, { header : { 'Content-Type': 'multipart/form-data' }})
+    axios.put('/admin/product', formData, { header : { 'Content-Type': 'multipart/form-data' }})
         .then(res => {
             console.log(res);
             alert(res.data);

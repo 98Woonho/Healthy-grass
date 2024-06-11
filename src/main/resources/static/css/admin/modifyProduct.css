@@ -68,13 +68,17 @@ main {
 }
 
 .admin-container-right {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+
     width: 85%;
     background-color: darkgray;
 }
 
 #modifyProductForm {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 2rem;
 
     margin: 2rem;

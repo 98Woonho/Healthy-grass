@@ -80,44 +80,74 @@ public class AdminService {
 
     @Transactional(rollbackFor = Exception.class)
     public void modifyProduct(MultipartFile mainImage, MultipartFile subImage, ProductDto productDto) throws IOException {
-        // 이미지 업로드 경로
-        String uploadPath = "c:\\" + File.separator + "shopping" + File.separator + productDto.getName();
+        // 수정 전 productDto
+        ProductDto prevProductDto = productMapper.findProductById1(productDto.getId());
 
-        // 업로드 경로 디렉터리 생성
-        File dir = new File(uploadPath);
-        if (!dir.exists())
-            dir.mkdirs();
+        // 이전 이미지 업로드 경로
+        String prevUploadPath = "c:\\" + File.separator + "shopping" + File.separator + prevProductDto.getName();
 
+        // 새로운 이미지 업로드 경로
+        String newUploadPath = "c:\\" + File.separator + "shopping" + File.separator + productDto.getName();
 
+        // 이전 업로드 경로 디렉터리 생성
+        File dir = new File(prevUploadPath);
+        // 새로운 업로드 경로 디렉터리 생성
+        File newDir = new File(newUploadPath);
+
+        // 디렉터리 이름 변경
+        dir.renameTo(newDir);
+
+        // 이미지 경로 set
+        productDto.setMainImgPath(File.separator + "shopping" + File.separator + productDto.getName() + File.separator);
+        productDto.setSubImgPath(File.separator + "shopping" + File.separator + productDto.getName() + File.separator);
+
+        // 메인 이미지가 수정 되었을 경우
         if (mainImage != null) {
+            // 이전 이미지 삭제
+            File prevMainImage = new File(newDir, prevProductDto.getMainImgName());
+            if (prevMainImage.exists()) {
+                prevMainImage.delete();
+            }
+
             // 이미지 오브젝트 생성
-            File mainImageObj = new File(dir, "main_" + mainImage.getOriginalFilename());
+            File mainImageObj = new File(newDir, "main_" + mainImage.getOriginalFilename());
 
             // 이미지 저장
             mainImage.transferTo(mainImageObj);
 
-            // 이미지 경로 set
-            productDto.setMainImgPath(File.separator + "shopping" + File.separator + productDto.getName() + File.separator);
-
             // 이미지 이름 set
             productDto.setMainImgName("main_" + mainImage.getOriginalFilename());
+
+        // 메인 이미지 수정 안 되었을 경우
+        } else {
+            // 기존 이미지 이름 set
+            productDto.setMainImgName(prevProductDto.getMainImgName());
         }
 
+        // 서브 이미지가 수정 되었을 경우
         if (subImage != null) {
+            // 이전 이미지 삭제
+            File prevSubImage = new File(newDir, prevProductDto.getSubImgName());
+            if (prevSubImage.exists()) {
+                prevSubImage.delete();
+            }
+
             // 이미지 오브젝트 생성
-            File subImageObj = new File(dir, "sub_" + subImage.getOriginalFilename());
+            File subImageObj = new File(newDir, "sub_" + subImage.getOriginalFilename());
 
             // 이미지 저장
             subImage.transferTo(subImageObj);
 
-            // 이미지 경로 set
-            productDto.setSubImgPath(File.separator + "shopping" + File.separator + productDto.getName() + File.separator);
-
             // 이미지 이름 set
             productDto.setSubImgName("sub_" + subImage.getOriginalFilename());
+
+        // 서브 이미지 수정 안 되었을 경우
+        } else {
+            // 기존 이미지 이름 set
+            productDto.setMainImgName(prevProductDto.getSubImgName());
         }
 
-        // 생성 시간 set
+        // 수정 시간 set
         LocalDate currentDate = LocalDate.now();
         productDto.setUpdateDate(currentDate);
 
@@ -127,6 +157,6 @@ public class AdminService {
 
 
         // product table insert
-        productMapper.insertProduct(productDto);
+        productMapper.updateProduct(productDto);
     }
 }

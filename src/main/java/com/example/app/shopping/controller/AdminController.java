@@ -31,7 +31,6 @@ public class AdminController {
         // 제품 서브 카테고리 List 가져오기
         List<String> productMiddleCategoryList = adminService.getProductMiddleCategoryList();
 
-        // 테스트
         model.addAttribute("productMajorCategoryList", productMajorCategoryList);
         model.addAttribute("productMiddleCategoryList", productMiddleCategoryList);
     }
@@ -59,7 +58,7 @@ public class AdminController {
         // 제품 List 가져오기
         List<String> productList = adminService.getProductList();
 
-        // 제품 정보 가져오기
+        // 제품이름으로 정보 가져오기
         ProductDto product = adminService.getProductByProductName(productName);
 
         model.addAttribute("productMajorCategoryList", productMajorCategoryList);
@@ -76,6 +75,6 @@ public class AdminController {
                                                  ProductDto productDto) throws IOException {
         // 제품 등록
         adminService.modifyProduct(mainImage, subImage, productDto);
-        return ResponseEntity.ok("제품 등록이 완료 되었습니다.");
+        return ResponseEntity.ok("제품 수정이 완료 되었습니다.");
     }
 }

@@ -23,6 +23,8 @@ public interface ProductMapper {
 
     ProductDto findProductByProductName(String productName);
 
+    ProductDto findProductById1(Long id);
+
     Map<String, Object> findProductById(@Param("id") Integer id) throws Exception;
 
     // 카테고리 전체에서 인기 상품들을 조회하는 메서드
@@ -50,4 +52,6 @@ public interface ProductMapper {
     List<Map<String, Object>> findByRecentProducts() throws Exception;
 
     void insertProduct(ProductDto productDto);
+
+    void updateProduct(ProductDto productDto);
 }

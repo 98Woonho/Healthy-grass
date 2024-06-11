@@ -36,6 +36,12 @@ mainUploadBox.addEventListener('dragover', (e) => {
 mainUploadBox.addEventListener('drop', (e) => {
     e.preventDefault();
 
+    // 이미지가 등록되어있는 상황에서 더 등록할 시, 경고문 출력
+    if (mainPreview.querySelectorAll('.item').length === 1) {
+        alert('대표 이미지는 한 개만 등록 가능합니다.');
+        return;
+    }
+
     const mainImages = e.dataTransfer.files;
     mainImage = e.dataTransfer.files[0];
 
@@ -60,18 +66,11 @@ mainUploadBox.addEventListener('drop', (e) => {
     // 메인 이미지와 동일한 이미지는 등록 불가
     if (subImage && mainImage.name === subImage.name) {
         alert('동일한 이미지는 등록할 수 없습니다.');
+        mainImage = undefined;
         return;
     }
 
     const reader = new FileReader(); // FileReader
-    const mainPreview = document.getElementById('mainPreview');
-
-    // 이미지가 등록되어있는 상황에서 더 등록할 시, 경고문 출력
-    if (mainPreview.querySelectorAll('.item').length === 1) {
-        alert('대표 이미지는 한 개만 등록 가능합니다.');
-        return;
-    }
-
     reader.readAsDataURL(mainImage); // reader에 image 정보 넣기.
     reader.onload = function (e) {
         const src = e.target.result;
@@ -108,6 +107,12 @@ subUploadBox.addEventListener('dragover', (e) => {
 subUploadBox.addEventListener('drop', (e) => {
     e.preventDefault();
 
+    // 이미지가 등록되어있는 상황에서 더 등록할 시, 경고문 출력
+    if (subPreview.querySelectorAll('.item').length === 1) {
+        alert('대표 이미지는 한 개만 등록 가능합니다.');
+        return;
+    }
+
     const subImages = e.dataTransfer.files;
     subImage = e.dataTransfer.files[0];
 
@@ -131,18 +136,11 @@ subUploadBox.addEventListener('drop', (e) => {
     // 메인 이미지와 동일한 이미지는 등록 불가
     if (mainImage && subImage.name === mainImage.name) {
         alert('동일한 이미지는 등록할 수 없습니다.');
+        subImage = undefined;
         return;
     }
 
     const reader = new FileReader(); // FileReader
-    const subPreview = document.getElementById('subPreview');
-
-    // 이미지가 등록되어있는 상황에서 더 등록할 시, 경고문 출력
-    if (subPreview.querySelectorAll('.item').length === 1) {
-        alert('대표 이미지는 한 개만 등록 가능합니다.');
-        return;
-    }
-
     reader.readAsDataURL(subImage); // reader에 image 정보 넣기.
     reader.onload = function (e) {
         const src = e.target.result;
@@ -225,12 +223,12 @@ addProductForm.onsubmit = function(e) {
         return;
     }
 
-    if (mainImage === undefined) {
+    if (mainPreview.querySelector('.item') === null) {
         alert('메인 이미지를 등록해 주세요.');
         return;
     }
 
-    if (subImage === undefined) {
+    if (subPreview.querySelector('.item') === null) {
         alert('서브 이미지를 등록해 주세요.');
         return;
     }
@@ -238,7 +236,6 @@ addProductForm.onsubmit = function(e) {
     const formData = new FormData(this);
     formData.append('mainImage', mainImage);
     formData.append('subImage', subImage);
-    formData.append('content', document.getElementById('content').value);
 
     axios.post('/admin/product', formData, { header : { 'Content-Type': 'multipart/form-data' }})
         .then(res => {

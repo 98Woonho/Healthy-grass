@@ -12,7 +12,7 @@
 
     <script defer th:src="@{/js/admin/modifyProduct.js}"></script>
 
-    <title>제품 등록</title>
+    <title>제품 수정</title>
 </head>
 <body>
 <header>
@@ -37,8 +37,9 @@
             </form>
 
             <form id="modifyProductForm" th:if="${productName != null}">
+                <input type="hidden" name="id" th:value="${product.id}">
                 <div class="product-image">
-                    <div class="main-image">
+                    <div>
                         <p>메인 이미지 등록</p>
                         <div class="upload-box" id="mainUploadBox">
                             <div class="plus">+</div>
@@ -46,12 +47,12 @@
                         <p>메인 이미지 프리뷰</p>
                         <div class="preview" id="mainPreview">
                             <li class="item">
-                                <img th:src="@{${product.mainImgPath} + ${product.mainImgName}}" alt="">
+                                <img id="mainImg" th:data-name="${product.mainImgName.split('_')[1]}" th:src="@{${product.mainImgPath} + ${product.mainImgName}}" alt="">
                                 <button type="button" class="delete-btn">삭제</button>
                             </li>
                         </div>
                     </div>
-                    <div class="sub-image">
+                    <div>
                         <p>서브 이미지 등록</p>
                         <div class="upload-box" id="subUploadBox">
                             <div class="plus">+</div>
@@ -59,7 +60,7 @@
                         <p>서브 이미지 프리뷰</p>
                         <div class="preview" id="subPreview">
                             <li class="item">
-                                <img th:src="@{${product.subImgPath} + ${product.subImgName}}" alt="">
+                                <img id="subImg" th:data-name="${product.subImgName.split('_')[1]}" th:src="@{${product.subImgPath} + ${product.subImgName}}" alt="">
                                 <button type="button" class="delete-btn">삭제</button>
                             </li>
                         </div>

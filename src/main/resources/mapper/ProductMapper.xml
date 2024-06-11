@@ -99,6 +99,12 @@
         WHERE name = #{productName};
     </select>
 
+    <select id="findProductById1" resultType="com.example.app.shopping.domain.dto.ProductDto">
+        SELECT *
+        FROM product
+        WHERE id = #{id};
+    </select>
+
     <select id="findProductById" parameterType="Integer" resultType="map" >
         SELECT
         p.id,
@@ -543,4 +549,24 @@
             INSERT INTO `product` (`name`, `price`, `discount`, `discountedPrice`, `amount`, `majorCategory`, `middleCategory`, `content`, `regDate`, `updateDate`, `mainImgPath`, `mainImgName`, `subImgPath`, `subImgName`)
             VALUES (#{name}, #{price}, #{discount}, #{discountedPrice}, #{amount}, #{majorCategory}, #{middleCategory}, #{content}, #{regDate}, #{updateDate}, #{mainImgPath}, #{mainImgName}, #{subImgPath}, #{subImgName})
     </insert>
+
+    <update id="updateProduct"
+            parameterType="com.example.app.shopping.domain.dto.ProductDto">
+        UPDATE `product`
+        SET `name` = #{name},
+            `price` = #{price},
+            `discount` = #{discount},
+            `discountedPrice` = #{discountedPrice},
+            `amount` = #{amount},
+            `majorCategory` = #{majorCategory},
+            `middleCategory` = #{middleCategory},
+            `content` = #{content},
+            `updateDate` = #{updateDate},
+            `mainImgPath` = #{mainImgPath},
+            `mainImgName` = #{mainImgName},
+            `subImgPath` = #{subImgPath},
+            `subImgName` = #{subImgName}
+        WHERE BINARY `id` = #{id}
+        LIMIT 1
+    </update>
 </mapper>

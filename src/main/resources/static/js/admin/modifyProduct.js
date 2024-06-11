@@ -6,12 +6,21 @@ const middleCategory = document.getElementById('middleCategory');
 const mainPreview = document.getElementById('mainPreview');
 const subPreview = document.getElementById('subPreview');
 const items = document.querySelectorAll('.item');
+const mainImg = document.getElementById('mainImg');
+const subImg = document.getElementById('subImg');
 
 items.forEach(item => {
     const deleteBtn = item.querySelector('.delete-btn');
+    const img = item.querySelector('img');
 
     deleteBtn.addEventListener('click', () => {
         item.remove();
+
+        if (img.id === 'mainImg') {
+            mainImg.dataset.name = '';
+        } else {
+            subImg.dataset.name = '';
+        }
     })
 })
 
@@ -42,6 +51,12 @@ mainUploadBox.addEventListener('dragover', (e) => {
 mainUploadBox.addEventListener('drop', (e) => {
     e.preventDefault();
 
+    // 이미지가 등록되어있는 상황에서 더 등록할 시, 경고문 출력
+    if (mainPreview.querySelectorAll('.item').length === 1) {
+        alert('대표 이미지는 한 개만 등록 가능합니다.');
+        return;
+    }
+
     const mainImages = e.dataTransfer.files;
     mainImage = e.dataTransfer.files[0];
 
@@ -63,28 +78,21 @@ mainUploadBox.addEventListener('drop', (e) => {
         return;
     }
 
-    // 메인 이미지와 동일한 이미지는 등록 불가
-    if (subImage && mainImage.name === subImage.name) {
+    // 서브 이미지와 동일한 이미지는 등록 불가
+    if (mainImage.name === subImg.dataset.name || (subImage && mainImage.name === subImage.name)) {
         alert('동일한 이미지는 등록할 수 없습니다.');
+        mainImage = undefined;
         return;
     }
 
     const reader = new FileReader(); // FileReader
-    const mainPreview = document.getElementById('mainPreview');
-
-    // 이미지가 등록되어있는 상황에서 더 등록할 시, 경고문 출력
-    if (mainPreview.querySelectorAll('.item').length === 1) {
-        alert('대표 이미지는 한 개만 등록 가능합니다.');
-        return;
-    }
-
     reader.readAsDataURL(mainImage); // reader에 image 정보 넣기.
     reader.onload = function (e) {
         const src = e.target.result;
 
         const item = new DOMParser().parseFromString(`
                 <li class="item">
-                    <img src="${src}" alt="">
+                    <img id="mainImg" src="${src}" alt="">
                     <button type="button" class="delete-btn">삭제</button>
                 </li>
             `, 'text/html').querySelector('.item');
@@ -114,6 +122,12 @@ subUploadBox.addEventListener('dragover', (e) => {
 subUploadBox.addEventListener('drop', (e) => {
     e.preventDefault();
 
+    // 이미지가 등록되어있는 상황에서 더 등록할 시, 경고문 출력
+    if (subPreview.querySelectorAll('.item').length === 1) {
+        alert('서브 이미지는 한 개만 등록 가능합니다.');
+        return;
+    }
+
     const subImages = e.dataTransfer.files;
     subImage = e.dataTransfer.files[0];
 
@@ -132,30 +146,24 @@ subUploadBox.addEventListener('drop', (e) => {
     // 이미지 파일 용량 제한
     if (subImage.size > (1024 * 1024 * 5)) {
         alert('파일 하나당 최대 사이즈는 5MB이하여야 합니다.');
+        return;
     }
 
     // 메인 이미지와 동일한 이미지는 등록 불가
-    if (mainImage && subImage.name === mainImage.name) {
+    if (subImage.name === mainImg.dataset.name || (mainImage && subImage.name === mainImage.name)) {
         alert('동일한 이미지는 등록할 수 없습니다.');
+        subImage = undefined;
         return;
     }
 
     const reader = new FileReader(); // FileReader
-    const subPreview = document.getElementById('subPreview');
-
-    // 이미지가 등록되어있는 상황에서 더 등록할 시, 경고문 출력
-    if (subPreview.querySelectorAll('.item').length === 1) {
-        alert('대표 이미지는 한 개만 등록 가능합니다.');
-        return;
-    }
-
     reader.readAsDataURL(subImage); // reader에 image 정보 넣기.
     reader.onload = function (e) {
         const src = e.target.result;
 
         const item = new DOMParser().parseFromString(`
                 <li class="item">
-                    <img src="${src}" alt="">
+                    <img id="subImg" src="${src}" alt="">
                     <button type="button" class="delete-btn">삭제</button>
                 </li>
             `, 'text/html').querySelector('.item');
@@ -236,7 +244,7 @@ modifyProductForm.onsubmit = function(e) {
         return;
     }
 
-    if (mainPreview.querySelector('.item') === null) {
+    if (subPreview.querySelector('.item') === null) {
         alert('서브 이미지를 등록해 주세요.');
         return;
     }
@@ -244,11 +252,9 @@ modifyProductForm.onsubmit = function(e) {
     const formData = new FormData(this);
     formData.append('mainImage', mainImage);
     formData.append('subImage', subImage);
-    formData.append('content', document.getElementById('content').value);
 
     axios.put('/admin/product', formData, { header : { 'Content-Type': 'multipart/form-data' }})
         .then(res => {
-            console.log(res);
             alert(res.data);
         })
         .catch(err => {

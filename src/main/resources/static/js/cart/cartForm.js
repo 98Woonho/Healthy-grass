@@ -1,3 +1,4 @@
+
 // 체크박스 입력했을 때 모두 체크되는 로직
 document.querySelector('.ALL_checked').addEventListener('change', function () {
     const isChecked = this.checked;
@@ -7,7 +8,17 @@ document.querySelector('.ALL_checked').addEventListener('change', function () {
     totalPrice();
 });
 
-
+// 수량적는 칸에 숫자만 들어갈 수 있도록 변경
+const amountInputs = document.querySelectorAll('.amount_value');
+amountInputs.forEach(input => {
+    input.addEventListener('input', function(e) {
+        // 입력값이 숫자 이외의 다른 문자를 포함하고 있다면
+        if (/[^\d]/.test(this.value)) { // this.value : 현재 이벤트가 발생한 입력 요소의 값
+            // 숫자 이외의 문자를 제거합니다.
+            this.value = this.value.replace(/[^\d]/g, '');
+        }
+    });
+});
 
 //수량변경시 총금액 변경 자바스크립트 코드
 function totalPrice() {
@@ -37,8 +48,11 @@ function totalPrice() {
 
     // 가격과 수량을 곱한 후 합계를 구하는 코드
     let total = 0;
+    const product_total_price = document.querySelectorAll('.product_total_price');
     for (let i = 0; i < priceList.length; i++) {
+        let productTotal = priceList[i] * quantityList[i];
         total += priceList[i] * quantityList[i];
+        product_total_price[i].innerText = productTotal;
     }
 
     const total_amount = document.querySelectorAll('.total_amount');
@@ -48,7 +62,6 @@ function totalPrice() {
         all_checked.checked = true;
     }
 }
-
 
 //장바구니 수량 변경시 db에 수량 변경내용 저장
 document.addEventListener('DOMContentLoaded', function () {
@@ -169,8 +182,67 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+//장바구니에 담긴 아이템 삭제
+const deleteCartBtn = document.querySelector('.delete_cart_btn');
+
+deleteCartBtn.addEventListener('click', function (e){
+    e.preventDefault();
+
+    if (confirm("삭제하겠습니까?")){
+    const cartId = document.querySelector('.cartId').value;
+    const productId = e.target.getAttribute('data-product-id');
+
+    axios.delete('/cart/delete', {
+        data: {
+            cartId: cartId,
+            productId: productId
+        }
+    })
+        .then(res => {
+            console.log(res.data);
+            if (res.data === "SUCCESS"){
+                alert("성공적으로 삭제가 되었습니다.")
+                location.href = "/cart";
+            }else {
+                alert("알수없는 이유로 삭제가 되지 않았습니다. 다시한번 시도해주세요")
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+});
+
+const orderSelectProduct = document.querySelector('.order_select_product');
 
 
+function getCheckedValues() {
+    const checkboxArray = document.querySelectorAll('.checkOne');
+    const checkedValues = [];
+
+    checkboxArray.forEach(checkbox => {
+        if (checkbox.checked) {
+            const row = checkbox.closest('tr');
+            const cartPrice = row.querySelector('.cart_price').textContent;
+            const amountValue = row.querySelector('.amount_value').value;
+            const productId = row.querySelector('.amount_value').getAttribute("data-product-id");
+            const totalAmount = document.querySelector('.total_amount').textContent;
+            checkedValues.push({
+                price: cartPrice,
+                quantity: amountValue,
+                total_amount : totalAmount,
+                Pid : productId
+            });
+        }
+    });
+
+    return checkedValues;
+}
+
+orderSelectProduct.addEventListener('click', function (e){
+    e.preventDefault();
+    console.log(getCheckedValues());
+})
 
 
 

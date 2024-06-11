@@ -22,4 +22,6 @@ public interface CartItemMapper {
     List<Map<String, Object>> findProductListById(@Param("userId") String userId);
 
     void updateQuantityByCartIdAndProductId(@Param("cartId") int cartId, @Param("productId") int productId, @Param("amountValue") int amountValue);
+
+    void deleteCartItemByCartIdAndProductId(@Param("cartId") int cartId, @Param("productId") int productId);
 }

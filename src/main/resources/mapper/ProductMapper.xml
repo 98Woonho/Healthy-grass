@@ -88,6 +88,17 @@
         FROM product
     </select>
 
+    <select id="findProductList" resultType="String">
+        SELECT name
+        FROM product
+    </select>
+
+    <select id="findProductByProductName" resultType="com.example.app.shopping.domain.dto.ProductDto">
+        SELECT *
+        FROM product
+        WHERE name = #{productName};
+    </select>
+
     <select id="findProductById" parameterType="Integer" resultType="map" >
         SELECT
         p.id,
@@ -529,7 +540,7 @@
             useGeneratedKeys="true"
             keyColumn="id"
             keyProperty="id">
-            INSERT INTO `product` (`name`, `price`, `discount`, `discountedPrice`, `amount`, `majorCategory`, `middleCategory`, `content`, `regDate`, `updateDate`, `mainImgPath`, `subImgPath`)
-            VALUES (#{name}, #{price}, #{discount}, #{discountedPrice}, #{amount}, #{majorCategory}, #{middleCategory}, #{content}, #{regDate}, #{updateDate}, #{mainImgPath}, #{subImgPath})
+            INSERT INTO `product` (`name`, `price`, `discount`, `discountedPrice`, `amount`, `majorCategory`, `middleCategory`, `content`, `regDate`, `updateDate`, `mainImgPath`, `mainImgName`, `subImgPath`, `subImgName`)
+            VALUES (#{name}, #{price}, #{discount}, #{discountedPrice}, #{amount}, #{majorCategory}, #{middleCategory}, #{content}, #{regDate}, #{updateDate}, #{mainImgPath}, #{mainImgName}, #{subImgPath}, #{subImgName})
     </insert>
 </mapper>

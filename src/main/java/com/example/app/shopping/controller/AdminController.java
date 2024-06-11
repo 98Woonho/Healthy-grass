@@ -37,12 +37,45 @@ public class AdminController {
     }
 
     // 제품 등록 Post
-    @PostMapping("addProduct")
+    @PostMapping("product")
     public ResponseEntity<String> postAddProduct(@RequestPart(value = "mainImage") MultipartFile mainImage,
                                                  @RequestPart(value = "subImage") MultipartFile subImage,
                                                  ProductDto productDto) throws IOException {
         // 제품 등록
         adminService.addProduct(mainImage, subImage, productDto);
+        return ResponseEntity.ok("제품 등록이 완료 되었습니다.");
+    }
+
+    // 제품 수정 Get
+    @GetMapping("modifyProduct")
+    public void getModifyProduct(@RequestParam(value = "productName", required = false) String productName,
+                                 Model model) {
+        // 제품 메인 카테고리 List 가져오기
+        List<String> productMajorCategoryList = adminService.getProductMajorCategoryList();
+
+        // 제품 서브 카테고리 List 가져오기
+        List<String> productMiddleCategoryList = adminService.getProductMiddleCategoryList();
+
+        // 제품 List 가져오기
+        List<String> productList = adminService.getProductList();
+
+        // 제품 정보 가져오기
+        ProductDto product = adminService.getProductByProductName(productName);
+
+        model.addAttribute("productMajorCategoryList", productMajorCategoryList);
+        model.addAttribute("productMiddleCategoryList", productMiddleCategoryList);
+        model.addAttribute("productList", productList);
+        model.addAttribute("productName", productName);
+        model.addAttribute("product", product);
+    }
+
+    // 제품 등록 Post
+    @PutMapping("product")
+    public ResponseEntity<String> putAddProduct(@RequestPart(value = "mainImage", required = false) MultipartFile mainImage,
+                                                 @RequestPart(value = "subImage", required = false) MultipartFile subImage,
+                                                 ProductDto productDto) throws IOException {
+        // 제품 등록
+        adminService.modifyProduct(mainImage, subImage, productDto);
         return ResponseEntity.ok("제품 등록이 완료 되었습니다.");
     }
 }

@@ -6,11 +6,11 @@
 
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <link rel="stylesheet" th:href="@{/css/admin/addProduct.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/modifyProduct.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
 
-    <script defer th:src="@{/js/admin/addProduct.js}"></script>
+    <script defer th:src="@{/js/admin/modifyProduct.js}"></script>
 
     <title>제품 등록</title>
 </head>
@@ -20,13 +20,23 @@
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
 </header>
 <main>
-    <h1>제품 등록</h1>
+    <h1>제품 수정</h1>
     <div class="admin-container">
         <div class="admin-container-left">
             메뉴
         </div>
         <div class="admin-container-right">
-            <form id="addProductForm">
+            <form action="/admin/modifyProduct" method="get" th:if="${productName == null}">
+                <label for="productSelect">제품을 선택해 주세요</label>
+                <select id="productSelect" name="productName">
+                    <th:block th:each="product : ${productList}">
+                        <option th:value="${product}" th:text="${product}"></option>
+                    </th:block>
+                </select>
+                <button>확인</button>
+            </form>
+
+            <form id="modifyProductForm" th:if="${productName != null}">
                 <div class="product-image">
                     <div class="main-image">
                         <p>메인 이미지 등록</p>
@@ -35,7 +45,10 @@
                         </div>
                         <p>메인 이미지 프리뷰</p>
                         <div class="preview" id="mainPreview">
-
+                            <li class="item">
+                                <img th:src="@{${product.mainImgPath} + ${product.mainImgName}}" alt="">
+                                <button type="button" class="delete-btn">삭제</button>
+                            </li>
                         </div>
                     </div>
                     <div class="sub-image">
@@ -45,50 +58,53 @@
                         </div>
                         <p>서브 이미지 프리뷰</p>
                         <div class="preview" id="subPreview">
-
+                            <li class="item">
+                                <img th:src="@{${product.subImgPath} + ${product.subImgName}}" alt="">
+                                <button type="button" class="delete-btn">삭제</button>
+                            </li>
                         </div>
                     </div>
                 </div>
                 <div class="product-info">
                     <div>
                         <label for="name">제품명</label>
-                        <input type="text" name="name" id="name" placeholder="제품명">
+                        <input type="text" name="name" id="name" th:value="${product.name}" placeholder="제품명">
                     </div>
                     <div>
                         <label for="price">가격</label>
-                        <input type="text" name="price" id="price" placeholder="가격">
+                        <input type="text" name="price" id="price" th:value="${product.price}" placeholder="가격">
                     </div>
                     <div>
                         <label for="amount">수량</label>
-                        <input type="text" name="amount" id="amount" placeholder="수량">
+                        <input type="text" name="amount" id="amount" th:value="${product.amount}" placeholder="수량">
                     </div>
                     <div>
                         <label for="discount">할인율</label>
-                        <input type="text" name="discount" id="discount" placeholder="할인율 (% 제외)">
+                        <input type="text" name="discount" id="discount" th:value="${product.discount}" placeholder="할인율 (% 제외)">
                     </div>
                     <div>
                         <label for="majorCategory">메인 카테고리</label>
-                        <input type="text" id="majorCategory" name="majorCategory" placeholder="메인 카테고리">
+                        <input type="text" id="majorCategory" name="majorCategory" th:value="${product.majorCategory}" placeholder="메인 카테고리">
                         <select id="majorCategorySelect" onChange="changeCategorySelect(this)">
                             <th:block th:each="productMajorCategory : ${productMajorCategoryList}">
-                                <option th:value="${productMajorCategory}" th:text="${productMajorCategory}"></option>
+                                <option th:selected="${product.majorCategory == productMajorCategory}" th:value="${productMajorCategory}" th:text="${productMajorCategory}"></option>
                             </th:block>
                             <option value="direct-input">직접 입력</option>
                         </select>
                     </div>
                     <div>
                         <label for="middleCategory">서브 카테고리</label>
-                        <input type="text" id="middleCategory" name="middleCategory" placeholder="서브 카테고리">
-                        <select id="middleCategorySelect" onChange="changeCategorySelect(this)">
+                        <input type="text" id="middleCategory" name="middleCategory" th:value="${product.middleCategory}" placeholder="서브 카테고리">
+                        <select th:value="${product.middleCategory}" id="middleCategorySelect" onChange="changeCategorySelect(this)">
                             <th:block th:each="productMiddleCategory : ${productMiddleCategoryList}">
-                                <option th:value="${productMiddleCategory}" th:text="${productMiddleCategory}"></option>
+                                <option th:selected="${product.middleCategory == productMiddleCategory}" th:value="${productMiddleCategory}" th:text="${productMiddleCategory}"></option>
                             </th:block>
                             <option value="direct-input">직접 입력</option>
                         </select>
                     </div>
                     <div>
                         <label for="content">제품 설명</label>
-                        <textarea rows="10" cols="75" id="content" name="content" placeholder="제품 설명"></textarea>
+                        <textarea th:text="${product.content}" rows="10" cols="75" id="content" name="content" placeholder="제품 설명"></textarea>
                     </div>
                 </div>
                 <button>등록</button>

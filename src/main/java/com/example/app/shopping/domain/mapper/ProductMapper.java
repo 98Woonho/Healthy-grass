@@ -19,6 +19,10 @@ public interface ProductMapper {
 
     List<String> findDistinctMiddleCategoryList();
 
+    List<String> findProductList();
+
+    ProductDto findProductByProductName(String productName);
+
     Map<String, Object> findProductById(@Param("id") Integer id) throws Exception;
 
     // 카테고리 전체에서 인기 상품들을 조회하는 메서드

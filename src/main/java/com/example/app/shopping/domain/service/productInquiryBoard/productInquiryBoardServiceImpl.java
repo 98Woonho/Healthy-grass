@@ -1,5 +1,6 @@
 package com.example.app.shopping.domain.service.productInquiryBoard;
 
+import com.example.app.shopping.domain.dto.ProductInquiryBoardDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.dto.common.PageDto;
 import com.example.app.shopping.domain.mapper.ProductInquiryBoardMapper;
@@ -78,5 +79,21 @@ public class productInquiryBoardServiceImpl implements productInquiryBoardServic
         returnVal.put("pageDto", pageDto);
 
         return returnVal;
+    }
+
+    @Override
+    public Map<String, Object> postProductInquiry(ProductInquiryBoardDto boardDto) throws Exception {
+        int result = productInquiryBoardMapper.insertProductInquiry(boardDto);
+
+        Map<String, Object> resp = new HashMap<>();
+
+        if (result > 0) {
+            resp.put("success", true);
+        } else {
+            resp.put("success", false);
+            resp.put("msg", "등록에 실패하였습니다.");
+        }
+
+        return resp;
     }
 }

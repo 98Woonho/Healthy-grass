@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>상품문의등록</title>
+
+    <!-- fragments css -->
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+            <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+        </div>
+    </div>
+    <div class="main">
+        <section class="first-section">
+            <form action="/productInquiry" method="post">
+                <input type="hidden" th:value="${pId != null ? pId : ''}" id="pId" name="Pid">
+                <p>문의 상품명: <a th:href="${pId != null ? 'product?id=' + pId : 'product'}"><span th:text="${productName != null ? productName : ''}"></span></a></p>
+                <span>제목: <input type="text" name="title" id="title"></span> <br />
+                <span>
+                    글잠금:
+                    <input type="checkbox" id="isLocked" name="isLocked" value="N">
+                    <input type="password" id="password" name="password" placeholder="패스워드">
+                </span> <br/>
+
+                <textarea id="content" name="content" rows="10" cols="50"></textarea> <br/>
+
+                <button>작성</button>
+            </form>
+
+        </section>
+    </div>
+    <div class="footer">
+
+    </div>
+</body>
+</html>

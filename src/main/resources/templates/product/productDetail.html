@@ -135,10 +135,13 @@
                     <!--                    <button onclick="loadReviews(currentPage - 1)">Prev</button>-->
                     <!--                    <button onclick="loadReviews(currentPage + 1)">Next</button>-->
                 </div>
+
+                <button onclick="createAndSubmitForm()">문의하기</button>
             </div>
         </section>
         <script defer th:src="@{/js/productDetail/productInquiryProcess.js}"></script>
         <script defer th:src="@{/js/productDetail/toggleInquiryContentProcess.js}"></script>
+        <script defer th:src="@{/js/productDetail/productInquiryAddBtn.js}"></script>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

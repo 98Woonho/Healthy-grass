@@ -1,16 +1,22 @@
 package com.example.app.shopping.controller;
 
 import com.example.app.shopping.config.auth.PrincipalDetails;
+import com.example.app.shopping.domain.dto.ProductInquiryBoardDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
+import com.example.app.shopping.domain.service.product.ProductServiceImpl;
 import com.example.app.shopping.domain.service.productInquiryBoard.productInquiryBoardServiceImpl;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +24,9 @@ import java.util.Map;
 public class ProductInquiryBoardController {
     @Autowired
     private productInquiryBoardServiceImpl productInquiryBoardService;
+
+    @Autowired
+    private ProductServiceImpl productService;
     
     Integer unlockId;  // 게시글 번호 비밀번호 체크 상태변수
 
@@ -187,5 +196,74 @@ public class ProductInquiryBoardController {
         Criteria criteria;
         @JsonProperty("pId")
         Integer pId;  // 상품 ID
+    }
+
+    @GetMapping("productInquiry")
+    public String addProductGet(@RequestParam("productId") Integer pId, Model model) {
+        System.out.println("ProductInquiryBoardController's addProductGet pId: " + pId);
+
+        try {
+            Map<String, Object> product = productService.getItemDetail(pId);
+            model.addAttribute("productName", product.get("name"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        model.addAttribute("pId", pId);
+
+        return "productInquiryBoard/addProductInquiry";
+    }
+
+    @PostMapping("productInquiry")
+    public @ResponseBody Map<String, Object> addProductPost(@ModelAttribute ProductInquiryBoardDto boardDto, Authentication authentication) {
+        System.out.println("ProductInquiryBoardController's addProductPost boardDto: " + boardDto);
+        String uId = null;
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        Map<String, Object> result = new HashMap<>();
+
+        if (authentication == null) {
+            // 계정 정보가 없을 시 필요한 로직 추가 필요
+            result.put("success", false);
+            result.put("msg", "회원만 작성할 수 있습니다.");
+            return result;
+        } else {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            uId = principalDetails.getUsername();
+
+            boardDto.setUid(uId);
+        }
+
+        /*
+        *  isLocked 가 check 되었다면 'Y', 아니라면 'N' 으로 변환 작업
+        *  패스워드 인코딩
+        */
+
+        if(boardDto.getIsLocked() != null) {
+            boardDto.setIsLocked("Y");
+
+            if(boardDto.getPassword() != null) {
+                boardDto.setPassword(encoder.encode(boardDto.getPassword()));
+            } else {
+                boardDto.setIsLocked("N");
+            }
+
+        } else {
+            boardDto.setIsLocked("N");
+        }
+
+        // 업로드 날짜 등록
+        boardDto.setRegDate(LocalDate.now());
+        boardDto.setUpdateDate(LocalDate.now());
+
+        // DB에 삽입 작업 + result 추가 작업
+        try {
+            result = productInquiryBoardService.postProductInquiry(boardDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("success", false);
+            result.put("msg", "데이터베이스 에러");
+        }
+
+        return result;
     }
 }

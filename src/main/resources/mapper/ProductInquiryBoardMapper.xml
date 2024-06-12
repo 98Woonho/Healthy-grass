@@ -156,4 +156,11 @@
         pib.regDate DESC
         LIMIT #{offset}, #{criteria.amount}
     </select>
+
+    <insert id="insertProductInquiry" parameterType="com.example.app.shopping.domain.dto.ProductInquiryBoardDto">
+        INSERT INTO product_inquiry_board
+        (Pid, Uid, title, content, regDate, updateDate, isLocked, password)
+        VALUES
+        (#{pid}, #{uid}, #{title}, #{content}, #{regDate}, #{updateDate}, #{isLocked}, #{password})
+    </insert>
 </mapper>

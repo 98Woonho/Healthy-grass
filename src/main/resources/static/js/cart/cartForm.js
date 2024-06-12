@@ -215,7 +215,7 @@ deleteCartBtn.addEventListener('click', function (e){
 
 const orderSelectProduct = document.querySelector('.order_select_product');
 
-
+//장바구니에 체크된 상품만 구매하는 로직
 function getCheckedValues() {
     const checkboxArray = document.querySelectorAll('.checkOne');
     const checkedValues = [];

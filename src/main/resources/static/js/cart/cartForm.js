@@ -241,7 +241,16 @@ function getCheckedValues() {
 
 orderSelectProduct.addEventListener('click', function (e){
     e.preventDefault();
-    console.log(getCheckedValues());
+    // console.log(getCheckedValues());
+    const data = getCheckedValues()
+    axios.post('/order', data)
+        .then(res => {
+            console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+
 })
 
 

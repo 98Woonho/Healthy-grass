@@ -60,7 +60,7 @@ CREATE TABLE `cart_items` (
   KEY `FK_CartItems_Product_idx` (`Pid`),
   CONSTRAINT `FK_CartItems_Cart` FOREIGN KEY (`Cart_Id`) REFERENCES `cart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_CartItems_Product` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `cart_items` (
 
 LOCK TABLES `cart_items` WRITE;
 /*!40000 ALTER TABLE `cart_items` DISABLE KEYS */;
-INSERT INTO `cart_items` VALUES (1,1,49,1),(2,1,59,5);
+INSERT INTO `cart_items` VALUES (1,1,49,1),(2,1,59,10),(3,1,39,90);
 /*!40000 ALTER TABLE `cart_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +152,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`id`),
   KEY `FK_Order_User_Uid_idx` (`Uid`),
   CONSTRAINT `FK_Order_User_Uid` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +161,6 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (21,'user1',15000,'Pending'),(22,'user2',20000,'Completed'),(23,'user3',18000,'Shipped'),(24,'user4',22000,'Cancelled'),(25,'user5',25000,'Pending'),(26,'user6',19000,'Completed'),(27,'user7',21000,'Shipped'),(28,'user8',23000,'Cancelled'),(29,'user9',17000,'Pending'),(30,'user10',24000,'Completed'),(31,'user11',26000,'Shipped'),(32,'user12',15000,'Cancelled'),(33,'user13',20000,'Pending'),(34,'user14',18000,'Completed'),(35,'user15',22000,'Shipped'),(36,'user16',25000,'Cancelled'),(37,'user17',19000,'Pending'),(38,'user18',21000,'Completed'),(39,'user19',23000,'Shipped'),(40,'user20',17000,'Cancelled');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,7 +191,6 @@ CREATE TABLE `order_item` (
 
 LOCK TABLES `order_item` WRITE;
 /*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
-INSERT INTO `order_item` VALUES (60,21,217,2,3000),(61,21,62,1,5000),(62,21,48,3,2000),(63,21,230,4,1500),(64,21,137,5,1000),(65,22,171,1,4500),(66,22,203,2,3500),(67,22,49,3,2500),(68,22,236,4,1500),(69,22,160,5,1000),(70,23,62,2,3000),(71,23,219,1,5000),(72,23,38,3,2000),(73,23,132,4,1500),(74,23,92,5,1000),(75,24,34,1,4500),(76,24,72,2,3500),(77,24,225,3,2500),(78,24,38,4,1500),(79,24,115,5,1000),(80,25,219,2,3000),(81,25,87,1,5000),(82,25,165,3,2000),(83,25,116,4,1500),(84,25,51,5,1000),(85,26,85,1,4500),(86,26,32,2,3500),(87,26,84,3,2500),(88,26,80,4,1500),(89,26,118,5,1000),(90,27,107,2,3000),(91,27,151,1,5000),(92,27,191,3,2000),(93,27,53,4,1500),(94,27,81,5,1000),(95,28,211,1,4500),(96,28,154,2,3500),(97,28,105,3,2500),(98,28,240,4,1500),(99,28,223,5,1000),(100,29,153,2,3000),(101,29,65,1,5000),(102,29,44,3,2000),(103,29,205,4,1500),(104,29,232,5,1000),(105,30,94,1,4500),(106,30,160,2,3500),(107,30,69,3,2500),(108,30,42,4,1500),(109,30,184,5,1000),(110,31,129,2,3000),(111,31,63,1,5000),(112,31,108,3,2000),(113,31,109,4,1500),(114,31,190,5,1000),(115,32,170,1,4500),(116,32,40,2,3500),(117,32,78,3,2500),(118,32,238,4,1500),(119,32,84,5,1000),(120,33,97,2,3000),(121,33,200,1,5000),(122,33,49,3,2000),(123,33,241,4,1500),(124,33,189,5,1000),(125,34,190,1,4500),(126,34,142,2,3500),(127,34,107,3,2500),(128,34,80,4,1500),(129,34,45,5,1000),(130,35,163,2,3000),(131,35,230,1,5000),(132,35,209,3,2000),(133,35,112,4,1500),(134,35,111,5,1000),(135,36,188,1,4500),(136,36,156,2,3500),(137,36,183,3,2500),(138,36,207,4,1500),(139,36,35,5,1000),(140,37,152,2,3000),(141,37,202,1,5000),(142,37,105,3,2000),(143,37,96,4,1500),(144,37,134,5,1000),(145,38,140,1,4500),(146,38,57,2,3500),(147,38,45,3,2500),(148,38,232,4,1500),(149,38,155,5,1000),(150,39,45,2,3000),(151,39,151,1,5000),(152,39,166,3,2000),(153,39,138,4,1500),(154,39,159,5,1000),(155,40,140,1,4500),(156,40,190,2,3500),(157,40,79,3,2500),(158,40,214,4,1500),(159,40,171,5,1000);
 /*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,9 +220,12 @@ CREATE TABLE `payment` (
   `regDate` datetime DEFAULT NULL,
   `updateDate` datetime DEFAULT NULL,
   `userid` varchar(100) DEFAULT NULL,
+  `Oid` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `userid` (`userid`),
-  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`id`)
+  KEY `payment_order_oId_idx` (`Oid`),
+  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`id`),
+  CONSTRAINT `payment_order_oId` FOREIGN KEY (`Oid`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -234,7 +235,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (1,'주소','hbsh@naver.com','구매자 이름','우편번호','연락처',NULL,'imp_034655651068','merchant_1717493655354','당근 10kg',100,1717493686,'payment','point','paid',NULL,NULL,'hbsh2330');
+INSERT INTO `payment` VALUES (1,'주소','hbsh@naver.com','구매자 이름','우편번호','연락처',NULL,'imp_034655651068','merchant_1717493655354','당근 10kg',100,1717493686,'payment','point','paid',NULL,NULL,'hbsh2330',NULL);
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +261,7 @@ CREATE TABLE `persistent_logins` (
 
 LOCK TABLES `persistent_logins` WRITE;
 /*!40000 ALTER TABLE `persistent_logins` DISABLE KEYS */;
-INSERT INTO `persistent_logins` VALUES ('hbsh2330','sLmON9S3eEtT9TlG49SR5A==','w4LuBwhDT3y21yjFHZ2Ohg==','2024-06-12 00:02:03');
+INSERT INTO `persistent_logins` VALUES ('hbsh2330','sLmON9S3eEtT9TlG49SR5A==','WMPwWcGoo0774XdRgrGiow==','2024-06-12 07:12:32');
 /*!40000 ALTER TABLE `persistent_logins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -502,4 +503,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-12 12:50:00
+-- Dump completed on 2024-06-12 16:32:29

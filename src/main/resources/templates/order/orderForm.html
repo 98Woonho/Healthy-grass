@@ -111,12 +111,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="nbg">
+                <tr th:each="product : ${productList}">
                     <td>
                         <div class="tb-center">
                             <div class="thumb">
-                                <!-- 상품 위치 상품 상세 이미지 출력 alt엔 상품 이름-->
-                                <a href=""><img src="#" alt="#" width="65"></a>
+                                 상품 위치 상품 상세 이미지 출력 alt엔 상품 이름
+                                <a th:href="@{/product(id=${product.id})}"><img src="#" alt="#" width="65"></a>
                             </div>
                         </div>
                     </td>

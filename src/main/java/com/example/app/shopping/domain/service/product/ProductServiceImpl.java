@@ -92,4 +92,9 @@ public class ProductServiceImpl implements ProductService {
 
         return result;
     }
+
+    @Override
+    public Map<String, Object> getProductList(int productId) throws Exception {
+        return productMapper.findProductById(productId);
+    }
 }

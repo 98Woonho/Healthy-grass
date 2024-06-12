@@ -245,7 +245,9 @@ orderSelectProduct.addEventListener('click', function (e){
     const data = getCheckedValues()
     axios.post('/order', data)
         .then(res => {
-            console.log(res.data);
+            if (res.data === "SUCCESS"){
+                location.href = "/order";
+            }
         })
         .catch(err => {
             console.log(err);

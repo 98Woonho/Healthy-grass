@@ -141,6 +141,42 @@
         GROUP BY
         p.id
     </select>
+    <select id="findProductByIdList" parameterType="Integer" resultType="map" >
+        SELECT
+            p.id,
+            p.name,
+            p.price,
+            p.discountedPrice,
+            p.discount,
+            p.amount,
+            p.majorCategory,
+            p.middleCategory,
+            p.content,
+            p.regDate,
+            p.updateDate,
+            p.mainImgPath,
+            p.mainImgName,
+            p.subImgPath,
+            p.subImgName,
+            IFNULL(prb.reviewCount, 0) AS reviewCount,
+            IFNULL(prb.averageRating, 0) AS averageRating
+        FROM
+            product p
+                LEFT JOIN (
+                SELECT
+                    r.Pid,
+                    COUNT(r.id) AS reviewCount,
+                    AVG(r.rating) AS averageRating
+                FROM
+                    product_review_board r
+                GROUP BY
+                    r.Pid
+            ) prb ON p.id = prb.Pid
+        WHERE
+            p.id = #{id}
+        GROUP BY
+            p.id
+    </select>
 
     <select id="findByAllCategoryProducts" resultType="map">
         SELECT

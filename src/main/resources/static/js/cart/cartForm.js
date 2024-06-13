@@ -25,43 +25,54 @@ function totalPrice() {
     //모든 가격 리스트로 나누는 코드
     let priceList = [];
     let quantityList = [];
+    let noSalePriceList = [];
     const cart_price = document.querySelectorAll('.cart_price');
     const amount_value = document.querySelectorAll('.amount_value');
     const tr_array = document.querySelectorAll('.tr');
     const checkbox_array = document.querySelectorAll('.checkOne');
     const all_checked = document.querySelector('.ALL_checked');
+    let noSaleCartPrices = document.querySelectorAll('.noSaleCartPrice');
     let state_check = true;
 
     tr_array.forEach(function (input, index){
         if(checkbox_array[index].checked) {
             let price = parseInt(cart_price[index].textContent);
             let quantity = parseInt(amount_value[index].value);
+            let noSalePrice = parseInt(noSaleCartPrices[index].value);
             priceList.push(price);
             quantityList.push(quantity);
+            noSalePriceList.push(noSalePrice);
         } else {
             priceList.push(0);
             quantityList.push(0);
+            noSalePriceList.push(0);
             all_checked.checked = false;
             state_check = false;
         }
     });
 
-    // 가격과 수량을 곱한 후 합계를 구하는 코드
+    // 가격과 수량을 곱한 후 합계를 구하는 코드 할인 적용 후 총 구매금액
     let total = 0;
+    let noSaleTotal = 0;
     const product_total_price = document.querySelectorAll('.product_total_price');
     for (let i = 0; i < priceList.length; i++) {
         let productTotal = priceList[i] * quantityList[i];
         total += priceList[i] * quantityList[i];
+        noSaleTotal += noSalePriceList[i] * quantityList[i];
         product_total_price[i].innerText = productTotal;
     }
 
+
     const total_amount = document.querySelectorAll('.total_amount');
     total_amount[0].innerText = total;
+    const noSaleCartTotalPrice = document.querySelectorAll('.noSaleCartTotalPrice');
+    noSaleCartTotalPrice[0].value = noSaleTotal;
 
     if (state_check) {
         all_checked.checked = true;
     }
 }
+
 
 //장바구니 수량 변경시 db에 수량 변경내용 저장
 document.addEventListener('DOMContentLoaded', function () {
@@ -183,35 +194,37 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 //장바구니에 담긴 아이템 삭제
-const deleteCartBtn = document.querySelector('.delete_cart_btn');
+const deleteCartBtn = document.querySelectorAll('.delete_cart_btn');
 
-deleteCartBtn.addEventListener('click', function (e){
-    e.preventDefault();
+deleteCartBtn.forEach(deleteBtn => {
+    deleteBtn.addEventListener('click', function (e){
+        e.preventDefault();
+        if (confirm("삭제하겠습니까?")){
+            const cartId = document.querySelector('.cartId').value;
+            const productId = e.target.getAttribute('data-product-id');
 
-    if (confirm("삭제하겠습니까?")){
-    const cartId = document.querySelector('.cartId').value;
-    const productId = e.target.getAttribute('data-product-id');
-
-    axios.delete('/cart/delete', {
-        data: {
-            cartId: cartId,
-            productId: productId
+            axios.delete('/cart/delete', {
+                data: {
+                    cartId: cartId,
+                    productId: productId
+                }
+            })
+                .then(res => {
+                    console.log(res.data);
+                    if (res.data === "SUCCESS"){
+                        alert("성공적으로 삭제가 되었습니다.")
+                        location.href = "/cart";
+                    }else {
+                        alert("알수없는 이유로 삭제가 되지 않았습니다. 다시한번 시도해주세요")
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
-    })
-        .then(res => {
-            console.log(res.data);
-            if (res.data === "SUCCESS"){
-                alert("성공적으로 삭제가 되었습니다.")
-                location.href = "/cart";
-            }else {
-                alert("알수없는 이유로 삭제가 되지 않았습니다. 다시한번 시도해주세요")
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
-    }
-});
+    });
+})
+
 
 const orderSelectProduct = document.querySelector('.order_select_product');
 
@@ -227,10 +240,12 @@ function getCheckedValues() {
             const amountValue = row.querySelector('.amount_value').value;
             const productId = row.querySelector('.amount_value').getAttribute("data-product-id");
             const totalAmount = document.querySelector('.total_amount').textContent;
+            const noSaleTotalPrice = document.querySelector('.noSaleCartTotalPrice').value;
             checkedValues.push({
                 price: cartPrice,
                 quantity: amountValue,
                 total_amount : totalAmount,
+                noSaleTotalPrice : noSaleTotalPrice,
                 Pid : productId
             });
         }
@@ -243,6 +258,7 @@ orderSelectProduct.addEventListener('click', function (e){
     e.preventDefault();
     // console.log(getCheckedValues());
     const data = getCheckedValues()
+
     axios.post('/order', data)
         .then(res => {
             if (res.data === "SUCCESS"){

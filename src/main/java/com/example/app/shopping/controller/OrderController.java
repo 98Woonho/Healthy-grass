@@ -33,12 +33,15 @@ public class OrderController {
     private Map<String, Object> tmp = new HashMap<>();
     private Map<String, Object> product = new HashMap<>();
     private List<Map<String, Object>> productList = new ArrayList<>();
+
     @PostMapping("")
     public @ResponseBody String orderForm(@RequestBody List<AddOrder> result, Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         UserDto userDto = principal.getUserDto();
         AddOrder addOrder = result.get(0);
         Integer totalAmount = addOrder.total_amount;
+        //상품이 계속해서 증가하는걸 방지하기 해서 비워주기
+        productList.clear();
 
         result.forEach(order ->{
             try {
@@ -66,6 +69,7 @@ public class OrderController {
             model.addAttribute("orderList", tmp.get("orderList"));
             model.addAttribute("userDto", tmp.get("userDto"));
             model.addAttribute("totalAmount", tmp.get("totalAmount"));
+
             return "order/orderForm";
         }
     }
@@ -75,6 +79,7 @@ public class OrderController {
         private Integer price;
         private Integer quantity;
         private Integer total_amount;
+        private Integer noSaleTotalPrice;
         @JsonProperty("Pid")
         private Integer Pid;
     }

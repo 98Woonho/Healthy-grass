@@ -18,4 +18,6 @@ public interface ProductInquiryBoardMapper {
     List<Map<String, Object>> findProductInquiryBoardByPid(@Param("criteria") Criteria criteria, @Param("offset") int offset, @Param("pId") Integer pId) throws Exception;
     int findProductInquiryBoardByPidCount(@Param("pId") Integer pId) throws Exception;
     int insertProductInquiry(ProductInquiryBoardDto boardDto) throws Exception;
+    int updateProductInquiryBoard(ProductInquiryBoardDto boardDto) throws Exception;
+    int deleteProductInquiryBoardById(Integer id) throws Exception;
 }

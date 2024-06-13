@@ -7,6 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>상품문의등록</title>
 
+    <link rel="stylesheet" th:href="@{/css/productInquiry/addProductInquiry.css}">
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
     <!-- fragments css -->
     <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
@@ -19,23 +24,25 @@
         </div>
     </div>
     <div class="main">
+        <h2>상품 문의 작성</h2>
         <section class="first-section">
-            <form action="/productInquiry" method="post">
+            <form>
                 <input type="hidden" th:value="${pId != null ? pId : ''}" id="pId" name="Pid">
                 <p>문의 상품명: <a th:href="${pId != null ? 'product?id=' + pId : 'product'}"><span th:text="${productName != null ? productName : ''}"></span></a></p>
                 <span>제목: <input type="text" name="title" id="title"></span> <br />
                 <span>
                     글잠금:
                     <input type="checkbox" id="isLocked" name="isLocked" value="N">
-                    <input type="password" id="password" name="password" placeholder="패스워드">
+                    <input type="password" id="password" name="password" placeholder="패스워드" disabled>
                 </span> <br/>
 
                 <textarea id="content" name="content" rows="10" cols="50"></textarea> <br/>
 
-                <button>작성</button>
+                <button id="submit">작성</button>
             </form>
-
         </section>
+        <script defer th:src="@{/js/productInquiry/pwChkProcess.js}"></script>
+        <script defer th:src="@{/js/productInquiry/formValidation.js}"></script>
     </div>
     <div class="footer">
 

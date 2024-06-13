@@ -96,4 +96,36 @@ public class productInquiryBoardServiceImpl implements productInquiryBoardServic
 
         return resp;
     }
+
+    @Override
+    public Map<String, Object> putProductInquiry(ProductInquiryBoardDto boardDto) throws Exception {
+        int result = productInquiryBoardMapper.updateProductInquiryBoard(boardDto);
+
+        Map<String, Object> resp = new HashMap<>();
+
+        if (result > 0) {
+            resp.put("success", true);
+        } else {
+            resp.put("success", false);
+            resp.put("msg", "수정에 실패하였습니다.");
+        }
+
+        return resp;
+    }
+
+    @Override
+    public Map<String, Object> deleteProductInquiry(Integer id) throws Exception {
+        int result = productInquiryBoardMapper.deleteProductInquiryBoardById(id);
+
+        Map<String, Object> resp = new HashMap<>();
+
+        if (result > 0) {
+            resp.put("success", true);
+        } else {
+            resp.put("success", false);
+            resp.put("msg", "삭제에 실패하였습니다.");
+        }
+
+        return resp;
+    }
 }

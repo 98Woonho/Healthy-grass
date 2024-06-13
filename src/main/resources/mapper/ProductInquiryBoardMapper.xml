@@ -163,4 +163,18 @@
         VALUES
         (#{pid}, #{uid}, #{title}, #{content}, #{regDate}, #{updateDate}, #{isLocked}, #{password})
     </insert>
+
+    <update id="updateProductInquiryBoard" parameterType="com.example.app.shopping.domain.dto.ProductInquiryBoardDto">
+        UPDATE product_inquiry_board
+        SET
+        title = #{title},
+        content = #{content},
+        updateDate = #{updateDate}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteProductInquiryBoardById" parameterType="Integer">
+        DELETE FROM product_inquiry_board
+        WHERE id = #{id}
+    </delete>
 </mapper>

@@ -1,0 +1,70 @@
+.main {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.first-section {
+    margin-bottom: 20px;
+}
+
+.first-section p, .first-section span, .first-section textarea, .first-section button {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.first-section p a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.first-section span {
+    margin-bottom: 10px;
+}
+
+.first-section input[type="text"], .first-section textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.first-section input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px; /* 버튼 간의 간격을 조정 */
+}
+
+.button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-container button:hover {
+    background-color: #0056b3;
+}
+
+.button-container button#cancel {
+    background-color: #dc3545;
+    color: white;
+}
+
+.button-container button#cancel:hover {
+    background-color: #c82333;
+}
+

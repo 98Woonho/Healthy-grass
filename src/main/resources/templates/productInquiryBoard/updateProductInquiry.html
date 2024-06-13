@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>상품문의등록</title>
+
+    <link rel="stylesheet" th:href="@{/css/productInquiry/updateProductInquiry.css}">
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
+    <!-- fragments css -->
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+        <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+    </div>
+</div>
+<div class="main">
+    <h2>상품 문의 작성</h2>
+    <section class="first-section">
+        <div th:if="${success != null}">
+            <div th:if="${success}">
+                <form>
+                    <input type="hidden" th:value="${board.id}" id="id" name="id">
+                    <p>문의 상품명: <a th:href="@{'/product?id=' + ${board.Pid}}"><span th:text="${board.productName}"></span></a></p>
+                    <span>제목: <input type="text" name="title" id="title" th:value="${board.title}"></span> <br />
+                    <textarea id="content" name="content" rows="10" cols="50" th:text="${board.content}"></textarea> <br/>
+                    <div class="button-container">
+                        <button id="submit">수정</button>
+                        <button id="cancel">취소</button>
+                    </div>
+                </form>
+            </div>
+            <div th:if="${!success}">
+                <p th:text="${msg}"></p>
+            </div>
+        </div>
+        <div th:if="${success == null}">
+            <p>서버로의 요청에 실패했습니다.</p>
+        </div>
+    </section>
+    <script defer th:src="@{/js/productInquiry/updateFormValidation.js}"></script>
+</div>
+<div class="footer">
+    <!-- Footer content -->
+</div>
+</body>
+</html>

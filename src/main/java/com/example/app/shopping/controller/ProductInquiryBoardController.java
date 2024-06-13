@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -215,7 +216,7 @@ public class ProductInquiryBoardController {
     }
 
     @PostMapping("productInquiry")
-    public @ResponseBody Map<String, Object> addProductPost(@ModelAttribute ProductInquiryBoardDto boardDto, Authentication authentication) {
+    public @ResponseBody Map<String, Object> addProductPost(@RequestBody ProductInquiryBoardDto boardDto, Authentication authentication) {
         System.out.println("ProductInquiryBoardController's addProductPost boardDto: " + boardDto);
         String uId = null;
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -241,9 +242,10 @@ public class ProductInquiryBoardController {
         if(boardDto.getIsLocked() != null) {
             boardDto.setIsLocked("Y");
 
-            if(boardDto.getPassword() != null) {
+            if(boardDto.getPassword() != null || !boardDto.getPassword().equals("")) {
                 boardDto.setPassword(encoder.encode(boardDto.getPassword()));
             } else {
+                // 잠금글 체크를 하고 비밀번호를 안치면 잠금글 해제
                 boardDto.setIsLocked("N");
             }
 
@@ -266,4 +268,98 @@ public class ProductInquiryBoardController {
 
         return result;
     }
+
+    // 수정 페이지로 이동  현재 경로 문제로 에러 발생중 경로 수정 바람, 스크립트에도 요청 방식 바꿨는데 요청해서 boardId 들어오는지 확인 필요함
+    @GetMapping("/updateProductInquiry")
+    public String updateProductInquiryPage (@RequestParam("boardId") Integer boardId, Model model, Authentication authentication) {
+        System.out.println("ProductInquiryBoardController's updateProductInquiry boardId: " + boardId);
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        String uId = principalDetails.getUsername();
+
+        try {
+            Map<String, Object> result = productInquiryBoardService.getproductInquiryBoardDetail(boardId);
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+            if(!uId.equals( (String) result.get("Uid") )) {
+                model.addAttribute("success", false);
+                model.addAttribute("boardId", boardId);
+                model.addAttribute("msg", "본인의 게시글만 수정할 수 있습니다.");
+            } else {
+                // 성공 로직 작성하기
+                model.addAttribute("success", true);
+                model.addAttribute("board", result);
+            }
+        } catch (NullPointerException e) {
+            model.addAttribute("success", false);
+            model.addAttribute("boardId", boardId);
+            model.addAttribute("msg", "해당 게시물을 찾을수 없습니다.");
+        } catch (Exception e) {
+            model.addAttribute("success", false);
+            model.addAttribute("boardId", boardId);
+            model.addAttribute("msg", "데이터베이스 연동에 실패하였습니다.");
+        }
+
+        return "productInquiryBoard/updateProductInquiry";
+    }
+
+    @PutMapping("productInquiry")
+    public @ResponseBody Map<String, Object> updateProductInquiry(@RequestBody ProductInquiryBoardDto boardDto) {
+        System.out.println("ProductInquiryBoardController's updateProductInquiry boardDto: " + boardDto);
+
+        Map<String, Object> result = new HashMap<>();
+
+        boardDto.setUpdateDate(LocalDate.now());
+
+        // 이전 수정 게시판 뷰에서 본인이 작성한 게시글인지에 대한 체크를 했으므로 생략합니다.
+
+        // 서비스 호출
+        try {
+            result = productInquiryBoardService.putProductInquiry(boardDto);
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("msg", "데이터 베이스 에러");
+        }
+
+        return result;
+    }
+
+    @DeleteMapping("productInquiry")
+    public @ResponseBody Map<String, Object> deleteProductInquiry(@RequestParam("boardId") Integer id, Authentication authentication) {
+        System.out.println("ProductInquiryBoardController's deleteProductInquiry id: " + id);
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (authentication == null) {
+            // 만약 비회원 상태라면
+            response.put("success", false);
+            response.put("msg", "작성한 회원만 삭제 요청을 할 수 있습니다.");
+
+            return response;
+        }
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        String userName = principalDetails.getUsername();
+
+        try {
+            Map<String, Object> boardInfo = productInquiryBoardService.getproductInquiryBoardDetail(id);
+
+            if (!userName.equals(boardInfo.get("Uid"))) {
+                response.put("success", false);
+                response.put("msg", "본인이 작성한 게시글만 삭제할 수 있습니다.");
+            } else {
+                // 제거 요청에 대한 서비스 호출
+                response = productInquiryBoardService.deleteProductInquiry(id);
+            }
+        } catch (NullPointerException e) {
+            response.put("success", false);
+            response.put("msg", "게시글 정보를 찾을 수 없습니다.");
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("msg", "데이터베이스 에러");
+        }
+
+        return response;
+    }
+
 }

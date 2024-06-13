@@ -5,6 +5,10 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
     <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
     <link rel="stylesheet" th:href="@{/css/productInquiryBoardDetail/productInquiryBoardDetail.css}">
@@ -27,13 +31,20 @@
                                 <span th:text="${productInquiryBoardDetail.productName}"></span>
                             </a>
                         </p>
-                        <p>게시글 번호: <span id="boardId" th:text="${productInquiryBoardDetail.id}"></span></p>
+                        <p>게시글 번호: <span id="boardId" th:text="${productInquiryBoardDetail.id != null ? productInquiryBoardDetail.id : ''}"></span></p>
                         <p>작성자: <span th:text="${productInquiryBoardDetail.Uid}"></span></p>
                         <p>제목: <span th:text="${productInquiryBoardDetail.title}"></span></p>
                         <p>글 내용: <span th:text="${productInquiryBoardDetail.content}"></span></p>
                         <p>작성일: <span th:text="${productInquiryBoardDetail.regDate}"></span></p>
                         <p>수정일: <span th:text="${productInquiryBoardDetail.updateDate}"></span></p>
                         <p>댓글 수: <span th:text="${productInquiryBoardDetail.commentCount}"></span></p>
+                        <div class="button-container">
+                            <form id="editForm" action="/updateProductInquiry" method="get">
+                                <input type="hidden" name="boardId" id="formBoardId" th:value="${productInquiryBoardDetail.id != null ? productInquiryBoardDetail.id : ''}">
+                                <button type="button" id="editBtn">수정</button>
+                            </form>
+                            <button id="deleteBtn">삭제</button>
+                        </div>
                     </div>
                 </div>
                 <div th:if="${!response.success}">
@@ -44,6 +55,7 @@
                 <p>서버로의 요청에 실패했습니다.</p>
             </div>
         </section>
+        <script th:src="@{/js/productInquiryBoardDetail/btnProcess.js}"></script>
         <section class="second-section" id="comments-section">
             <!-- 댓글이 들어가는 곳 -->
         </section>

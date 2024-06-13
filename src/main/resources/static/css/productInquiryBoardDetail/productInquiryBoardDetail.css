@@ -35,3 +35,35 @@
     color: red;
     font-weight: bold;
 }
+
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px; /* 버튼 간의 간격을 조정 */
+}
+
+.button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-container button#editBtn {
+    background-color: #007bff;
+    color: white;
+}
+
+.button-container button#editBtn:hover {
+    background-color: #0056b3;
+}
+
+.button-container button#deleteBtn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.button-container button#deleteBtn:hover {
+    background-color: #c82333;
+}

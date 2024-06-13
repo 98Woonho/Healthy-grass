@@ -11,4 +11,6 @@ public interface productInquiryBoardService {
     public Map<String, Object> getMyProductInquiryBoards(Criteria criteria, String uId) throws Exception;
     public Map<String, Object> getProductInquiryBoardsByPid(Criteria criteria, Integer pId) throws Exception;
     public Map<String, Object> postProductInquiry(ProductInquiryBoardDto boardDto) throws Exception;
+    public Map<String, Object> putProductInquiry(ProductInquiryBoardDto boardDto) throws Exception;
+    public Map<String, Object> deleteProductInquiry(Integer id) throws Exception;
 }

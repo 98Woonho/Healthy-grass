@@ -50,8 +50,9 @@ public class CartController {
             return cartService.cartAddNotUserLogin(productId, quantity);
         } else {
             PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-            String userId = principal.getUserDto().getId();
-            System.out.println("컨트롤러 else문 실행!!!!");
+
+            String userId = principal.getUsername();
+
            return cartService.cartAddLoignedUser(productId, quantity, userId);
         }
     }

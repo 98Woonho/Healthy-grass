@@ -1,3 +1,5 @@
+
+//상품 화면에 보여주는 코드
 const salePrices = document.querySelectorAll('.sale_price');
 
 let totalSalePrice = 0;
@@ -7,8 +9,19 @@ salePrices.forEach(function(sale) {
         totalSalePrice += SalePrice;
 });
 
-const proudctSalePrices = document.querySelectorAll('.proudct_sale_price');
+const productSalePrices = document.querySelectorAll('.product_sale_price');
 
-proudctSalePrices.forEach(proudctSalePrice =>{
-    proudctSalePrice.textContent = totalSalePrice;
+productSalePrices.forEach(productSalePrice =>{
+    productSalePrice.textContent = totalSalePrice;
 })
+
+const isSameOrderInformationChecked = document.querySelector('.is-same-orderInformation-chk');
+
+if (isSameOrderInformationChecked){
+    axios.get('/order/user')
+
+}else {
+
+}
+
+

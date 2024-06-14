@@ -10,17 +10,11 @@
         FROM cart_items
         WHERE Cart_Id = #{cartId}
     </select>
-<<<<<<< HEAD
-    <select id="findQuantityByProductId" parameterType="map" resultType="int">
-        SELECT quantity
-        FROM cart_items
-        WHERE Cart_id =#{cartId} AND Pid = #{productId}
-=======
+
     <select id="findQuantityByProductIdAndCardId" parameterType="map" resultType="Integer">
         SELECT quantity
         FROM cart_items
         WHERE Pid = #{productId} AND Cart_Id = #{cartId}
->>>>>>> 771c20ff75fbfc40b636ddc3e1521c4bd82e1077
     </select>
     <select id="findIdByProductIdAndCartId" parameterType="map" resultType="int">
         SELECT id

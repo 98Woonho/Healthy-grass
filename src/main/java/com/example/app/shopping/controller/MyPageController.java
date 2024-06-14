@@ -60,7 +60,7 @@ public class MyPageController {
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
             return "/myPage/modifyForm";
-        } else if (authentication != null){
+        } else if (authentication != null) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
@@ -68,6 +68,7 @@ public class MyPageController {
             model.addAttribute("tmp", "modify");
             return "/myPage/passwordCheckForm";
         }
+
         return "redirect:/user/loginForm";
     }
 
@@ -82,6 +83,7 @@ public class MyPageController {
             );
             return new ResponseEntity<>("FAIL", HttpStatus.BAD_GATEWAY);
         }
+
         return new ResponseEntity<>(userService.userUpdate(userDto), HttpStatus.OK);
     }
 

@@ -1,6 +1,7 @@
 package com.example.app.shopping.controller;
 
 import com.example.app.shopping.config.auth.PrincipalDetails;
+import com.example.app.shopping.config.auth.PrincipalDetailsService;
 import com.example.app.shopping.domain.dto.PaymentDto;
 import com.example.app.shopping.domain.dto.UserDto;
 import com.example.app.shopping.domain.service.PaymentService;
@@ -12,8 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +33,8 @@ import java.util.Map;
 public class MyPageController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
 
     @GetMapping("")
@@ -46,6 +52,7 @@ public class MyPageController {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal(); // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
+
             return "/myPage/searchForm";
         } else {
             return "redirect:/user/loginForm";
@@ -82,7 +89,19 @@ public class MyPageController {
             );
             return new ResponseEntity<>("FAIL", HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(userService.userUpdate(userDto), HttpStatus.OK);
+
+
+        String response = userService.userUpdate(userDto);
+        // 수정 시 세션도 수정된 값 전달
+        UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getId());
+
+        //Authentication 구현체
+        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+
+        // SecurityContext에 새로운 Authentication 객체 설정
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/user/deleteForm") // 회원정보 삭제 페이지로 가기

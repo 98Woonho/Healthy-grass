@@ -58,6 +58,7 @@ function validateForm() {
         rePasswordErrorMessage.style.color = "red";
     } else {
         rePasswordErrorMessage.innerText = ""; // 오류 메시지를 지워줌
+        passwordErrorMessage.innerText = "";
     }
 
 // 우편번호 유효성 검사

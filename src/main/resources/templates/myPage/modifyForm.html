@@ -39,7 +39,7 @@
         </div>
         <div class="form-group">
             <label for="zipcode">우편번호</label>
-            <input type="text" id="zipcode" name="zipcode" required disabled>
+            <input type="text" id="zipcode" name="zipcode" th:value="${userDto.zipcode}" required disabled>
             <button type="button" name="searchAddressBtn">
                 우편번호 찾기
             </button>
@@ -47,12 +47,12 @@
         </div>
         <div class="form-group">
             <label for="streetAdr">주소</label>
-            <input type="text" id="streetAdr" name="streetAdr" required disabled>
+            <input type="text" id="streetAdr" name="streetAdr" th:value="${userDto.streetAdr}" required disabled>
             <span class="streetAdrError"></span>
         </div>
         <div class="form-group">
             <label for="detailAdr">상세 주소</label>
-            <input type="text" id="detailAdr" name="detailAdr" required>
+            <input type="text" id="detailAdr" name="detailAdr" th:value="${userDto.detailAdr}" required>
         </div>
         <div class="form-group">
             <label for="phone">전화번호</label>

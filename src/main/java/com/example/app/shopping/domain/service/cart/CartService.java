@@ -34,17 +34,23 @@ public class CartService {
     public String cartAddLoignedUser(Integer productId, Integer quantity, String userId) {
         try {
             if (cartMapper.findCartIdByUserId(userId) == null){
+                System.out.println("1");
                 cartMapper.insertCartByUserId(userId); // 유저아이디 등록 // 카트에 유저 등록후
                 Integer cartId = cartMapper.findCartIdByUserId(userId);  // 유저아이디 로 카트 아이디 찾아서
                 cartItemMapper.insertCartItem(cartId, productId, quantity); //카트 아이디와, 제품아이디, 수량 장바구니에 등록
                 //리턴값을 다르게 주어 유저아이디가 없을 땐 그냥 장바구니에 담고 유저아이디가 있을 땐 장바구니로 이동하면 함께 주문된다고 알림주기 나중에 시간있을 때
             }
             else if (cartMapper.findCartIdByUserId(userId) > 0) {//유저가 장바구니에 한번이라도 물건을 담은적이 있으면
+                System.out.println("2");
                 Integer cartId = cartMapper.findCartIdByUserId(userId);
-                if (cartItemMapper.findQuantityByProductId(productId) == null){
+                // 내가 담은 물건이 없다면 물건을 insert
+                if (cartItemMapper.findQuantityByProductId(cartId, productId) == null){
+                    System.out.println("3");
                     cartItemMapper.insertCartItem(cartId, productId, quantity); //카트 아이디와, 제품아이디, 수량 장바구니에 등록
                 } else {
-                    Integer quantityByProductId = cartItemMapper.findQuantityByProductId(productId); //수량을 확인하고
+                    //내가 담은 물건이 있다면 Pid와 맞는 값들을 update
+                    System.out.println("4");
+                    Integer quantityByProductId = cartItemMapper.findQuantityByProductId(cartId, productId); //수량을 확인하고
                     int sumQuantity = quantity + quantityByProductId; //수량을 더해준다음에
                     Integer CartItemId = cartItemMapper.findIdByProductIdAndCartId(productId, cartId);
                     cartItemMapper.updateAddSumQuantityByCartItem(CartItemId, sumQuantity);
@@ -63,7 +69,6 @@ public class CartService {
     }
 
     public void updateCartItemQuantity(int amountValue, int productId, int cartId) {
-        System.out.println("서비스 들어감");
         cartItemMapper.updateQuantityByCartIdAndProductId(cartId, productId, amountValue);
     }
 

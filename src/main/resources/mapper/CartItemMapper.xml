@@ -10,10 +10,10 @@
         FROM cart_items
         WHERE Cart_Id = #{cartId}
     </select>
-    <select id="findQuantityByProductId" parameterType="int" resultType="int">
+    <select id="findQuantityByProductId" parameterType="map" resultType="int">
         SELECT quantity
         FROM cart_items
-        WHERE Pid = #{productId}
+        WHERE Cart_id =#{cartId} AND Pid = #{productId}
     </select>
     <select id="findIdByProductIdAndCartId" parameterType="map" resultType="int">
         SELECT id

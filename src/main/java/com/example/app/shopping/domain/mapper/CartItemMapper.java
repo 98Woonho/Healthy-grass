@@ -13,7 +13,7 @@ public interface CartItemMapper {
 
     List<Integer> findProductIdByCartId(@Param("cartId") Integer cartId);
 
-    Integer findQuantityByProductId(@Param("productId") Integer productId);
+    Integer findQuantityByProductIdAndCardId(@Param("productId") Integer productId, @Param("cartId") Integer cartId);
 
     Integer findIdByProductIdAndCartId(@Param("productId") Integer productId, @Param("cartId") Integer cartId);
 

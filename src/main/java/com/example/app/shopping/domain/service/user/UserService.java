@@ -1,6 +1,8 @@
 package com.example.app.shopping.domain.service.user;
 
+import com.example.app.shopping.domain.dto.ShippingAddressDto;
 import com.example.app.shopping.domain.dto.UserDto;
+import com.example.app.shopping.domain.mapper.ShippingAddressMapper;
 import com.example.app.shopping.domain.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -24,8 +26,6 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     JavaMailSender javaMailSender;
-    @Autowired
-    private UserDetailsService userDetailsService;
 
     /**
      * 지정된 범위의 랜덤 숫자를 생성하여 반환하는 함수.
@@ -69,7 +69,6 @@ public class UserService {
 
         return randomNumberBuilder.toString();
     }
-
 
     public boolean isUserExists(String id) {
         UserDto selectUserById = userMapper.getUserById(id);

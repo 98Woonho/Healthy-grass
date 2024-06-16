@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+    <!-- daum 주소 찾기 cdn -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
+    <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/myPage/editAddress.css}">
+
+    <script defer src="/js/myPage/editAddress.js"></script>
+
+    <!-- fragments css -->
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+
+    <title>마이리뷰페이지</title>
+
+</head>
+<body>
+<div class="header">
+    <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+    <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+</div>
+<div class="main">
+    <section>
+        <h1>배송지 등록/수정</h1>
+    </section>
+    <section class="box1">
+        <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
+
+        <div class="box w-full h-800">
+            <form id="editAddressForm">
+                <div>
+                    <label for="name">이름</label>
+                    <input type="text" id="name" name="name">
+                </div>
+                <div>
+                    <label for="zipcode">우편번호</label>
+                    <input type="text" id="zipcode" name="zipcode">
+                    <button type="button" id="searchAddressBtn">
+                        우편번호 찾기
+                    </button>
+                </div>
+
+                <div>
+                    <label for="streetAdr">주소</label>
+                    <input type="text" id="streetAdr" name="streetAdr">
+                    <span class="streetAdrError"></span>
+                </div>
+
+                <div>
+                    <label for="detailAdr">상세 주소</label>
+                    <input type="text" id="detailAdr" name="detailAdr">
+                </div>
+                
+                <div>
+                    <label for="phone">휴대폰 번호</label>
+                    <input type="text" id="phone" name="phone" placeholder="000-000-0000 또는 000-0000-0000">
+                </div>
+
+                <button>저장</button>
+            </form>
+        </div>
+    </section>
+</div>
+<div class="footer">
+    <p class="text">푸터(사이트 정보 등)</p>
+</div>
+</body>
+</html>

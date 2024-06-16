@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,11 +38,11 @@
             <form id="editAddressForm">
                 <div>
                     <label for="name">이름</label>
-                    <input type="text" id="name" name="name">
+                    <input type="text" id="name" name="name" th:value="${shippingAddress != null ? shippingAddress.name : ''}">
                 </div>
                 <div>
                     <label for="zipcode">우편번호</label>
-                    <input type="text" id="zipcode" name="zipcode">
+                    <input type="text" id="zipcode" name="zipcode" th:value="${shippingAddress != null ? shippingAddress.zipcode : ''}">
                     <button type="button" id="searchAddressBtn">
                         우편번호 찾기
                     </button>
@@ -50,18 +50,18 @@
 
                 <div>
                     <label for="streetAdr">주소</label>
-                    <input type="text" id="streetAdr" name="streetAdr">
+                    <input type="text" id="streetAdr" name="streetAdr" th:value="${shippingAddress != null ? shippingAddress.streetAdr : ''}">
                     <span class="streetAdrError"></span>
                 </div>
 
                 <div>
                     <label for="detailAdr">상세 주소</label>
-                    <input type="text" id="detailAdr" name="detailAdr">
+                    <input type="text" id="detailAdr" name="detailAdr" th:value="${shippingAddress != null ? shippingAddress.detailAdr : ''}">
                 </div>
                 
                 <div>
                     <label for="phone">휴대폰 번호</label>
-                    <input type="text" id="phone" name="phone" placeholder="000-000-0000 또는 000-0000-0000">
+                    <input type="text" id="phone" name="phone" placeholder="000-000-0000 또는 000-0000-0000" th:value="${shippingAddress != null ? shippingAddress.phone : ''}">
                 </div>
 
                 <button>저장</button>

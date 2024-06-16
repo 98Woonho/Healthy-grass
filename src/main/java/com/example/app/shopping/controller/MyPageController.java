@@ -50,8 +50,15 @@ public class MyPageController {
     }
 
     @GetMapping("editAddress")
-    public void getEditAddress(Model model) {
+    public void getEditAddress(Authentication authentication, Model model) {
+        // 현재 로그인 한 유저의 정보 가져오기
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        UserDto userDto = principalDetails.getUserDto();
 
+        // 배송지 db에서 현재 로그인 한 유저의 배송지 가져오기
+        ShippingAddressDto shippingAddressDto = myPageService.isExistShippingAddress(userDto.getId());
+
+        model.addAttribute("shippingAddress", shippingAddressDto);
     }
 
     @PostMapping("editAddress")

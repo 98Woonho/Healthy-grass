@@ -7,6 +7,10 @@
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
     <link rel="stylesheet" th:href="@{/css/order/order.css}">
+    <!-- daum 주소 찾기 cdn -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!--    import cdn-->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script defer src="/js/order/order.js"></script>
     <style>
         * {
@@ -187,7 +191,7 @@
                         </th>
                         <td>
                             <!--                            주문자 이름 정보-->
-                            <input type="text" th:value="${userDto.name}"></td>
+                            <input type="text" th:value="${userDto.name}" disabled></td>
                     </tr>
                     <tr>
                         <th scope="row">
@@ -196,7 +200,7 @@
                         </th>
                         <td>
                             <!--                            주문자 연락처 정보-->
-                            <input type="text" th:value="${userDto.phone}">
+                            <input type="text" th:value="${userDto.phone}" disabled>
                     </tr>
                     </tbody>
                 </table>
@@ -205,6 +209,7 @@
                 <h3>배송지 정보</h3>
 
                 <div class="tbl-order">
+                    <form>
                     <table>
                         <tbody>
                         <tr>
@@ -231,21 +236,18 @@
                                 <div>배송지 주소</div>
                             </th>
                             <td>
-<!--                                -->
-                                <form>
 <!--                                   배송지 우편번호-->
-                                <input class="zipcode" type="text">
+                                <input class="zipcode" type="text" disabled>
 <!--                                    배송지 주소-->
-                                <input class="streetAdr" type="text">
+                                <input class="streetAdr" type="text" disabled>
 <!--                                    다음 api 사용-->
-                                <a href="javascript:void(0)">우편번호 찾기</a>
+                                <a class="zipcode-search" href="javascript:void(0)">우편번호 찾기</a>
 <!--                                    상세 배송지 주소-->
                                 <div>
                                     <input class="detailAdr" type="text">
                                 </div>
-<!--                                    기본배송지로 설정 누르면 배송지가 있으면 수정 없으면 등록-->
-                                    <button type="submit">기본 배송지로 설정</button>
-                                </form>
+
+
                             </td>
                         </tr>
 
@@ -255,10 +257,13 @@
                             </th>
                             <td>
 <!--                                연락처 정보 -->
-                                <input class="phone" type="text">
+                                <input class="phone" type="text" oninput="PhoneRegex(this)">
+ <!--                                    기본배송지로 설정 누르면 배송지가 있으면 수정 없으면 등록-->
+                                <button type="submit">기본 배송지로 설정</button>
                             </td>
                         </tr>
                         <tr>
+
                             <th>
                                 <div>주문메시지<br></div>
                             </th>
@@ -281,8 +286,7 @@
                         </tr>
                         </tbody>
                     </table>
-
-
+                    </form>
                 </div><!-- .tbl-order -->
             <div>
                 <h3>결제 정보 선택</h3>
@@ -298,43 +302,22 @@
                         <td>
                             <ul>
                                 <li>
-                                    <label>
-                                        <em><span class="op-card-dc-price fc-red"></span></em> <em><span
-                                            class="op-c-dc-price fc-red"></span></em>
-                                        <input type="radio"
-                                                                                             class="chk-rdo"
-                                                                                             name="radio_paymethod"
-                                                                                             value="C"
-                                                                                             checked="checked"> <span>신용카드</span>
+                                    <label><input type="radio" class="chk-rdo" name="radio_paymethod" value="B">
+                                        <span>일반결제</span>
                                     </label>
                                 </li>
                                 <li>
-                                    <label data-pay-tab="RealAccount">
-                                        <em><span class="op-bank-dc-price fc-red"></span></em> <em><span
-                                            class="op-v-dc-price fc-red"></span></em> <input type="radio"
-                                                                                             class="chk-rdo"
-                                                                                             name="radio_paymethod"
-                                                                                             value="V">
+                                    <label> <input type="radio" class="chk-rdo" name="radio_paymethod" value="V">
                                         <span>실시간 계좌이체</span>
                                     </label>
                                 </li>
                                 <li>
-                                    <label data-pay-tab="vAccount">
-                                        <em><span class="op-bank-dc-price fc-red"></span></em> <em><span
-                                            class="op-b-dc-price fc-red"></span></em> <input type="radio"
-                                                                                             class="chk-rdo"
-                                                                                             name="radio_paymethod"
-                                                                                             value="B">
+                                    <label><input type="radio" class="chk-rdo" name="radio_paymethod" value="C">
                                         <span>가상계좌</span>
                                     </label>
                                 </li>
                                 <li>
-                                    <label data-pay-tab="escrow">
-                                        <em><span class="op-bank-dc-price fc-red"></span></em> <em><span
-                                            class="op-s-dc-price fc-red"></span></em> <input type="radio"
-                                                                                             class="chk-rdo"
-                                                                                             name="radio_paymethod"
-                                                                                             value="S">
+                                    <label><input type="radio" class="chk-rdo" name="radio_paymethod" value="S">
                                         <span>에스크로</span>
                                     </label>
                                 </li>
@@ -445,7 +428,7 @@
                 </label>
                 <div>
                     <a href="javascript:void(0)" >취소</a>
-                    <a href="javascript:void(0)">결제하기</a>
+                    <a class="pay-btn" href="javascript:void(0)">결제하기</a>
                 </div>
 
             </div>

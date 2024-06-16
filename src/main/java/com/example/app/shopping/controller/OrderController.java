@@ -2,7 +2,9 @@ package com.example.app.shopping.controller;
 
 import com.example.app.shopping.config.auth.PrincipalDetails;
 import com.example.app.shopping.domain.dto.OrderDto;
+import com.example.app.shopping.domain.dto.ShippingAddressDto;
 import com.example.app.shopping.domain.dto.UserDto;
+import com.example.app.shopping.domain.service.myPage.MyPageService;
 import com.example.app.shopping.domain.service.order.OrderService;
 import com.example.app.shopping.domain.service.product.ProductService;
 import com.example.app.shopping.domain.service.product.ProductServiceImpl;
@@ -33,6 +35,8 @@ public class OrderController {
     private ProductService productService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private MyPageService myPageService;
 
     private Map<String, Object> tmp = new HashMap<>();
     private Map<String, Object> product = new HashMap<>();
@@ -94,7 +98,15 @@ public class OrderController {
     public UserDto findUser(Authentication authentication){
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         String id = principal.getUserDto().getId();
-        System.out.println(userService.findUserByUserId(id));
         return userService.findUserByUserId(id);
+    }
+
+    //기본배송지 정보 가져오기
+    @GetMapping("/shipping")
+    @ResponseBody
+    public ShippingAddressDto findShipping(Authentication authentication){
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        String id = principal.getUserDto().getId();
+        return myPageService.isExistShippingAddress(id);
     }
 }

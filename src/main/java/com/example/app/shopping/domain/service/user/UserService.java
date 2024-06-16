@@ -1,5 +1,6 @@
 package com.example.app.shopping.domain.service.user;
 
+import com.example.app.shopping.domain.dto.OrderDto;
 import com.example.app.shopping.domain.dto.UserDto;
 import com.example.app.shopping.domain.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -251,6 +252,11 @@ public class UserService {
             return "SUCCESS";
         }
         return "NOT_FOUND_USER";
+    }
+
+    public UserDto findUserByUserId(String id) {
+        return userMapper.findUserByUserId(id);
+
     }
 }
 

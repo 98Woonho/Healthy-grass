@@ -5,10 +5,12 @@
         INSERT INTO cart_items (id, Cart_Id, Pid, quantity)
         VALUES (null, #{cartId}, #{productId}, #{quantity})
     </insert>
-    <select id="findProductIdByCartId" parameterType="int" resultType="int">
+    <select id="findProductIdByCartIdAndAmountAndProductId" parameterType="map" resultType="int">
         SELECT Pid
         FROM cart_items
-        WHERE Cart_Id = #{cartId}
+        WHERE Cart_id = #{cartId}
+          AND quantity = #{quantity}
+          AND Pid = #{productId}
     </select>
 
     <select id="findQuantityByProductIdAndCardId" parameterType="map" resultType="Integer">

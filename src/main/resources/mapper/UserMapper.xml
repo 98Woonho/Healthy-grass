@@ -82,4 +82,12 @@
         WHERE
             id = #{id}
     </select>
+    <select id="findUserByUserId" parameterType="string" resultMap="userResultMap">
+        SELECT
+            *
+        FROM
+            user
+        WHERE
+            id = #{id}
+    </select>
 </mapper>

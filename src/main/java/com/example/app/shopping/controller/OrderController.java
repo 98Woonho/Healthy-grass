@@ -1,10 +1,12 @@
 package com.example.app.shopping.controller;
 
 import com.example.app.shopping.config.auth.PrincipalDetails;
+import com.example.app.shopping.domain.dto.OrderDto;
 import com.example.app.shopping.domain.dto.UserDto;
 import com.example.app.shopping.domain.service.order.OrderService;
 import com.example.app.shopping.domain.service.product.ProductService;
 import com.example.app.shopping.domain.service.product.ProductServiceImpl;
+import com.example.app.shopping.domain.service.user.UserService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,8 @@ public class OrderController {
     private OrderService orderService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private UserService userService;
 
     private Map<String, Object> tmp = new HashMap<>();
     private Map<String, Object> product = new HashMap<>();
@@ -82,5 +86,15 @@ public class OrderController {
         private Integer noSaleTotalPrice;
         @JsonProperty("Pid")
         private Integer Pid;
+    }
+
+    // 주문자 정보와 동일함 클릭시 order화면에 주문자 정보 뿌려주기
+    @GetMapping("/user")
+    @ResponseBody
+    public UserDto findUser(Authentication authentication){
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        String id = principal.getUserDto().getId();
+        System.out.println(userService.findUserByUserId(id));
+        return userService.findUserByUserId(id);
     }
 }

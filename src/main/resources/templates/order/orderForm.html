@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>주문 페이지</title>
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
     <link rel="stylesheet" th:href="@{/css/order/order.css}">
     <script defer src="/js/order/order.js"></script>
     <style>
@@ -160,7 +162,7 @@
                         </strong>
                             <span style="color: red">- <strong>상품 할인
                                 <!--                                상품 할인 가격-->
-                                <span class="proudct_sale_price"></span>원</strong>
+                                <span class="product_sale_price"></span>원</strong>
                             </span>
                             <!--                            배송비 가격-->
                             </span> + 배송비 <strong><span id="pvd-total-delivery-0" price="0">0</span>원</strong>
@@ -210,11 +212,10 @@
                                 <div>배송지</div>
                             </th>
                             <td>
-                                <input type="radio" value="B">기본 배송지
-                                <input type="radio" value="R">최근 배송지
-<!--                                신규 배송지 입력시 다음 주소 api 나오게-->
-                                <input type="radio" value="N">신규 배송지
-                                &nbsp;<a href="javascript:void(0)">주소록</a>
+                                <label><input type="radio" name="addressType" value="B"> 기본 배송지</label>
+                                <label><input type="radio" name="addressType" value="R"> 최근 배송지</label>
+<!--                                신규 배송지 입력시 다음 주소 api 호출-->
+                                <label><input type="radio" name="addressType" value="N"> 신규 배송지</label>
                                 <label> <input class="is-same-orderInformation-chk" type="checkbox"> 주문자 정보와 동일함</label>
 
                             </td>
@@ -235,12 +236,12 @@
 <!--                                   배송지 우편번호-->
                                 <input class="zipcode" type="text">
 <!--                                    배송지 주소-->
-                                <input class="" type="text">
+                                <input class="streetAdr" type="text">
 <!--                                    다음 api 사용-->
                                 <a href="javascript:void(0)">우편번호 찾기</a>
 <!--                                    상세 배송지 주소-->
                                 <div>
-                                    <input type="text">
+                                    <input class="detailAdr" type="text">
                                 </div>
 <!--                                    기본배송지로 설정 누르면 배송지가 있으면 수정 없으면 등록-->
                                     <button type="submit">기본 배송지로 설정</button>
@@ -254,7 +255,7 @@
                             </th>
                             <td>
 <!--                                연락처 정보 -->
-                                <input type="text" value="">
+                                <input class="phone" type="text">
                             </td>
                         </tr>
                         <tr>

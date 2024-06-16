@@ -139,16 +139,19 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
     amountValue.forEach(input => {
         input.addEventListener('input', function (e) {
-            e.preventDefault();
+            //stock = 남은 재고
             const stock = parseInt(this.closest('tr').querySelector('.product_amount').textContent);
-            const input = this.closest('tr').querySelector('.amount_value');
-            let currentValue = parseInt(input.value);
+            //input = 수량작성 input
+            const amount_value = this.closest('tr').querySelector('.amount_value');
+            let currentValue = parseInt(amount_value.value);
             const productId = e.target.getAttribute('data-product-id');
+            e.preventDefault();
             totalPrice();
             axios.post('/cart/AddAmount', {
-                "amountValue": input.value,
+                "amountValue": amount_value.value,
                 "cartId": cartId.value,
                 "productId": productId
             })
@@ -160,10 +163,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             if (currentValue > stock) {
                 alert('재고보다 상품을 많이 담을수 없습니다.');
-                input.value = stock;
+                amount_value.value = stock;
                 totalPrice();
                 axios.post('/cart/AddAmount', {
-                    "amountValue": input.value,
+                    "amountValue": amount_value.value,
                     "cartId": cartId.value,
                     "productId": productId
                 })
@@ -176,10 +179,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
             } else if (currentValue < 1) {
                 alert('상품은 0개 이하로 담을수 없습니다.')
-                input.value = 1;
+                amount_value.value = 1;
                 totalPrice();
                 axios.post('/cart/AddAmount', {
-                    "amountValue": input.value,
+                    "amountValue": amount_value.value,
                     "cartId": cartId.value,
                     "productId": productId
                 })

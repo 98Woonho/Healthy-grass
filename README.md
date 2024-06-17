@@ -37,9 +37,6 @@ WEB PROJECT PLANING
 
 <br/>
 
-## ▶️ ERD
-![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/2ee7465b-0b5b-476f-8096-ac8169a02274)
-
 ## ▶️ 개발 환경
 <strong>
     <p>IDE : IntelliJ Ultimate</p>
@@ -91,6 +88,10 @@ WEB PROJECT PLANING
 ##### 관리자 페이지(예약 현황/취소, 호텔 등록/수정/삭제, 객실 등록/수정/삭제, 공지사항 작성/자주묻는 질문 작성/문의사항 답변, 매출 그래프)
 ##### 호텔 객실 예약/결제
 
+## ▶️ ERD
+![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/2ee7465b-0b5b-476f-8096-ac8169a02274)
+
+<br/>
 
 비회원 기능
 | URI           | REQUEST METHOD | DESCRIPTION            |

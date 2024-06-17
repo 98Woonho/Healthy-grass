@@ -108,25 +108,28 @@ WEB PROJECT PLANING
 ## ▶️ ERD
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/2ee7465b-0b5b-476f-8096-ac8169a02274)
 <br/>
-
+---
 
 ## ▶️ 유스케이스 다이어그램
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/19f868cd-d3e7-4498-9b67-ca2088b515e4)
 <br/>
-
+---
 
 ## ▶️ 시퀀스 다이어그램
 <strong><p>회원가입</p></strong>
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/c4db6478-c703-4933-940a-7f4816d3f1df)
 <br/>
+---
 
 <strong><p>상품구매</p></strong>
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/d520506a-c821-4d04-a4a6-2cb7fbe11d15)
 <br/>
+---
 
 <strong><p>비밀번호 찾기</p></strong>
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/c2ff37df-0393-4426-b95a-332c1fc759a1)
 <br/>
+---
 
 
 ## ▶️ 주요 END POINT DOC

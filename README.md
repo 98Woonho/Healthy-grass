@@ -38,18 +38,18 @@ WEB PROJECT PLANING
 <br/>
 
 ## ▶️ 개발 환경
-<strong>
-    <p>IDE : IntelliJ Idea</p>
-    <p>JDK 17</p>
-    <p>SpringBoot Version : 3.2.5</p>
-    <p>Build Tool : gradle</p>
-    <p>DBMS : Mysql</p>
-    <p>Connection Pool : HikariCP</p>
-    <p>Version Control : Git</p>
-    <p>Repository Hosting : GitHub</p>
-    <p>Testing Framework : JUnit5</p>
-    <p>Security : Spring Security</p>
-</strong>
+|개발 환경|-|
+|---------------|----------------|
+|IDE|IntelliJ Idea|
+|JDK|JDK 17|
+|SpringBoot Version|3.2.5|
+|Build Tool|gradle|
+|DBMS|Mysql|
+|Connection Pool|HikariCP|
+|Version Control|Git|
+|Repository Hosting|GitHub|
+|Testing Framework|JUnit5|
+|Security|Spring Security|
 <br/>
 
 ## ▶️ 사용 API
@@ -64,8 +64,7 @@ WEB PROJECT PLANING
 |이메일 인증|Google Gmail|[링크](https://console.cloud.google.com/)|
 <br/>
 
-## ▶️ 기술스택
-
+## ▶️ SKILLS
 #### BE
 ![JAVA](https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=white)
 ![SpringBoot](https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
@@ -129,7 +128,7 @@ WEB PROJECT PLANING
 <br/>
 
 
-## ▶️ 주요 END POINT
+## ▶️ 주요 END POINT DOC
 <strong>회원 서비스</strong>
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|

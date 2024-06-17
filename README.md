@@ -133,7 +133,7 @@ WEB PROJECT PLANING
 
 
 ## ▶️ 주요 END POINT DOC
-#### 회원 서비스
+### 회원 서비스
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|
 | /user         | POST               | 회원가입을 합니다. 회원가입은 포트원 본인인증 API를 사용해서 인증된 회원만 회원가입이 가능합니다. |
@@ -149,7 +149,7 @@ WEB PROJECT PLANING
 <br/>
 
 
-<strong>상품 서비스</strong>
+### 상품 서비스
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|
 | /productList | GET         | 상품 리스트를 조회합니다. | 
@@ -161,9 +161,10 @@ WEB PROJECT PLANING
 | /admin/product | POST        | 상품을 등록합니다.  |
 | /admin/modifyProduct | GET        | 상품 수정 폼 페이지를 조회합니다.  |
 | /admin/product | PUT        | 상품을 수정합니다.  |
+---
 <br/>
 
-<strong>게시판 서비스</strong>
+### 게시판 서비스
 | URI                | REQUEST METHOD | DESCRIPTION                  |
 |--------------------|----------------|------------------------------|
 | /customerInquiryBoardList       | GET                | 고객 문의 게시판을 조회합니다. |
@@ -185,20 +186,22 @@ WEB PROJECT PLANING
 | /productReviewBoardList      | GET                | 상품 리뷰 게시판을 조회합니다. |
 | /productReviewBoard      | GET                | 상품 리뷰 게시글을 조회합니다. |
 | /myProductReviewBoardList      | GET                | 나의 상품 리뷰 게시판을 조회합니다. |
+---
 <br/>
 
 
-<strong>장바구니 서비스</strong>
+### 장바구니 서비스
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|
 | /cart         | GET               | 장바구니에 담긴 물건들을 보여주는 서비스입니다.|
 | /cart         | POST              | 장바구니에 물건을 담는 서비스입니다. 비회원도 장바구니에 물건을 담을 수 있습니다. |
 | /cart/Amount   | POST             | 장바구니에서도 물건의 수량을 변경할 수 있는 서비스입니다. 수량을 변경하면 cart-items의 테이블에 담긴 수량이 변경됩니다. |
 | /cart/delete   | DELETE             | 장바구니에 담긴 물건을 삭제할 수 있는 서비스입니다. 물건을 삭제하면 CASCADE옵션으로 인해 cart의 하위 테이블도 함께 삭제됩니다. |
+---
 <br/>
 
 
-<strong>주문/결제 서비스</strong>
+### 주문/결제 서비스
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|
 | /order         | GET              | 주문한 물건들을 보여주는 서비스입니다. 물건 주문 시 주문할 물건만 보여줍니다.|
@@ -208,15 +211,17 @@ WEB PROJECT PLANING
 | /payment/paymentForm         | GET        | 결제한 정보를 조회할 수 있는 서비스입니다.|
 | /payment/save         | POST               | 결제한 정보를 저장하는 서비스입니다. 결제정보 저장 후 회원은 결제 정보 조회가 가능합니다.|
 | /payment/cancel         | POST               | 결제를 취소하는 서비스입니다. 결제 취소는 관리자가 승인 한 이후 환불처리가 이루어집니다.|
+---
 <br/>
 
-<strong>배송지 서비스</strong>
+### 배송지 서비스
 | URI                | REQUEST METHOD | DESCRIPTION                  |
 |--------------------|----------------|------------------------------|
 | /myPage/editAddress       | GET                | 배송지 작성/수정 페이지를 조회하는 서비스 입니다. |
 | /myPage/editAddress       | POST                | 배송지를 작성/수정 하는 서비스 입니다. |
 | /myPage/editAddress       | POST                | 배송지를 작성/수정 하는 서비스 입니다. |
 | /order/shipping       | GET                | 나의 배송지 정보를 반환하는 서비스 입니다. |
+---
 <br/>
 
 📃: File Tree

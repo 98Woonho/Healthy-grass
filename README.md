@@ -17,19 +17,14 @@ WEB PROJECT PLANING
 <br/>
 
 ## ▶️ 구성인원 
-##### 이운호(조장) : Git, UI, 예약 및 결제 CRUD, 관리자 CRUD
-##### 황보성현(조원1) : 게시판 CRUD, UI
-##### 함성모(조원2) : 고객 CRUD, UI
+##### 박민석(조장) : Git, UI, 예약 및 결제 CRUD, 관리자 CRUD
+##### 황보성현(조원1) : 
+##### 이운호(조원2) : 
 
 <br/>
 
 ## ▶️ ERD
-![ITHOTEL ERD](https://github.com/98Woonho/ITHotel/assets/145889732/e2fcbf21-d3f8-477e-a2b9-2ead065e483f)
-
-## ▶️ 시연 영상
-https://www.youtube.com/watch?v=4Y_hGYJT9Pc
-
-<br/>
+![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/2ee7465b-0b5b-476f-8096-ac8169a02274)
 
 ## ▶️ 개발 환경
 ##### IDE : IntelliJ Ultimate
@@ -72,14 +67,6 @@ https://www.youtube.com/watch?v=4Y_hGYJT9Pc
 ##### 사용자 마이페이지(회원 정보 수정/탈퇴, 예약 취소, 문의 사항 작성)
 ##### 관리자 페이지(예약 현황/취소, 호텔 등록/수정/삭제, 객실 등록/수정/삭제, 공지사항 작성/자주묻는 질문 작성/문의사항 답변, 매출 그래프)
 ##### 호텔 객실 예약/결제
-
-
-
-ERD
-![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/2ee7465b-0b5b-476f-8096-ac8169a02274)
-
-
-
 
 
 비회원 기능

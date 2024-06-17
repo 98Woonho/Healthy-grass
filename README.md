@@ -105,15 +105,15 @@ WEB PROJECT PLANING
 
 
 ## ▶️ 시퀀스 다이어그램
-<strong>회원가입</strong> <br/>
+<strong><p>회원가입</p></strong> <br/>
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/c4db6478-c703-4933-940a-7f4816d3f1df)
 <br/>
 
-<strong>상품구매</strong> <br/>
+<strong><p>상품구매</p></strong> <br/>
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/d520506a-c821-4d04-a4a6-2cb7fbe11d15)
 <br/>
 
-<strong>비밀번호 찾기</strong> <br/>
+<strong><p>비밀번호 찾기</p></strong> <br/>
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/c2ff37df-0393-4426-b95a-332c1fc759a1)
 <br/>
 

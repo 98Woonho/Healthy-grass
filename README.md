@@ -18,16 +18,22 @@ WEB PROJECT PLANING
 <br/>
 
 ## ▶️ 개발 일정
-#### 2024-01-15 ~ 2024-01-16(02Days) : 주제 선정 및 요구사항 분석, 기술스택 결정, 개발환경 구축
-#### 2024-01-17 ~ 2024-01-19(03Days) : 기본 프론트엔드 구조 기획 및 개발, DB 기획 및 개발
-#### 2024-01-20 ~ 2024-02-10(22Days) : 프론트엔드 및 백엔드 개발
+<strong>
+    <p>2024-05-20 ~ 2024-05-22(02Days) : 주제 선정 및 요구사항 분석, 기술스택 결정, 개발환경 구축</p>
+    <p>2024-05-23 ~ 2024-06-28(37Days) : 기본 구조 설계 및 백엔드 개발</p>
+    <p>2024-06-28 ~ 2024-07-12(15Days) : 프론트엔드 및 백엔드 개발</p>
+    <p>2024-07-13 ~ 2024-07-20</p>(8Days) : 테스트 및 유지보수</p>
+</strong>
 
 <br/>
 
-## ▶️ 구성인원 
-##### 박민석(조장) : Git, UI, 예약 및 결제 CRUD, 관리자 CRUD
-##### 황보성현(조원1) : 
-##### 이운호(조원2) : 
+## ▶️ 구성인원(역할) 
+<strong>
+    <p> 공통 : 요구사항분석 및 시스템 설계 </p>
+    <p> 박민석(조장, BE/FE) : 주요 개발: 상품 서비스, 게시판 서비스 / 보조 개발: 회원 서비스, 결제 서비스, 장바구니 서비스 </p>
+    <p> 황보성현(조원1, BE/FE) : 주요 개발: 회원 서비스, 결제 서비스, 장바구니 서비스 / 보조 개발: 배송 서비스 </p>
+    <p> 이운호(조원2, BE/FE) : 주요 개발: 상품 서비스, 배송 서비스 / 보조 개발: 결제 서비스 </p>
+</strong>
 
 <br/>
 
@@ -35,14 +41,16 @@ WEB PROJECT PLANING
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/2ee7465b-0b5b-476f-8096-ac8169a02274)
 
 ## ▶️ 개발 환경
-##### IDE : IntelliJ Ultimate
-##### OpenJDK 21
-##### Java21
-##### SpringBoot 3.1.7
-##### gradle
-##### Mysql Server
-##### Mysql Workbench
-##### Connection Pool : HikariCP
+<strong>
+    <p>IDE : IntelliJ Ultimate</p>
+    <p>OpenJDK 17</p>
+    <p>Java17</p>
+    <p>SpringBoot 3.2.5</p>
+    <p>gradle</p>
+    <p>Mysql Server</p>
+    <p>Mysql Workbench</p>
+    <p>Connection Pool : HikariCP</p>
+</strong>
 
 <br/>
 

@@ -52,11 +52,13 @@ WEB PROJECT PLANING
 <br/>
 
 ## ▶️ 사용 API
-##### 아임포트 결제시스템 API
-##### 아임포트 인증시스템 API
-##### 카카오 지도 API
-##### 다음 주소 API
-##### OAuth2 로그인 API
+<strong>
+    <p>아임포트 결제시스템 API</p>
+    <p>아임포트 인증시스템 API</p>
+    <p>카카오 지도 API</p>
+    <p>다음 주소 API</p>
+    <p>OAuth2 로그인 API</p>
+</strong>
 
 <br/>
 

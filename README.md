@@ -131,7 +131,7 @@ WEB PROJECT PLANING
 <br/>
 ---
 ## ▶️ 클래스 다이어그램
-[요구사항확인_쇼핑몰_종합_클래스다이어그램2024_06_17 (1)-05 클래스다이어그램.drawio (1).pdf](https://github.com/user-attachments/files/15871054/_._._.2024_06_17.1.-05.drawio.1.pdf)
+![image](https://github.com/user-attachments/files/15871101/_._._.2024_06_17.1.-05.drawio.1.pdf)
 <br/>
 ---
 

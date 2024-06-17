@@ -97,6 +97,9 @@ WEB PROJECT PLANING
 
 <br/>
 
+
+
+## ▶️ END POINT
 비회원 기능
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|
@@ -143,6 +146,7 @@ WEB PROJECT PLANING
 | /admin/productInquiryDetail/comments | PATCH | 관리자가 작성한 상품 문의댓글을 수정합니다. |
 | /admin/productInquiryDetail/comments | DELETE | 관리자가 작성한 상품 문의댓글을 삭제합니다. |
 
+<br/>
 
 📃: File Tree
 ---

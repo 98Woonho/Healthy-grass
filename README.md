@@ -52,7 +52,9 @@ ERD
 | /admin/productInquiryDetail/comments | DELETE | 관리자가 작성한 상품 문의댓글을 삭제합니다. |
 
 
-
+📃: File Tree
+---
+```
 C:.
 │  .gitignore
 │  build.gradle

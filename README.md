@@ -55,13 +55,13 @@ WEB PROJECT PLANING
 ## ▶️ 사용 API
 |용도|제공|API 문서|
 |---------------|----------------|------------------------|
-|결제|아임포트|링크|
-|인증|아임포트|링크|
-|주소 찾기|다음|링크|
-|OAuth2 로그인|카카오|링크|
-|OAuth2 로그인|구글|링크|
-|OAuth2 로그인|네이버|링크|
-|이메일 인증|Google Gmail|링크|
+|결제|아임포트|[링크](https://developers.portone.io/docs/ko/readme?v=v1)|
+|인증|아임포트|[링크](https://developers.portone.io/docs/ko/readme?v=v1)|
+|주소 찾기|다음|[링크](https://postcode.map.daum.net/guide)|
+|OAuth2 로그인|카카오|[링크](https://developers.kakao.com/docs/latest/ko/index)|
+|OAuth2 로그인|구글|[링크](https://console.cloud.google.com/)|
+|OAuth2 로그인|네이버|[링크](https://developers.naver.com/products/login/api/api.md)|
+|이메일 인증|Google Gmail|[링크](https://console.cloud.google.com/)|
 <br/>
 
 ## ▶️ 기술스택

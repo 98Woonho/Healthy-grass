@@ -106,8 +106,8 @@ WEB PROJECT PLANING
 
 
 ## ▶️ 시퀀스 다이어그램
-<strong>회원가입</strong>
-![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/f98cdc4f-6d20-4034-859e-986047a1ad94)
+<strong>회원가입</strong> <br/>
+![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/c4db6478-c703-4933-940a-7f4816d3f1df)
 <br/>
 
 

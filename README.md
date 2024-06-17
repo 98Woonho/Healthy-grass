@@ -55,7 +55,6 @@ WEB PROJECT PLANING
 <strong>
     <p>아임포트 결제시스템 API</p>
     <p>아임포트 인증시스템 API</p>
-    <p>카카오 지도 API</p>
     <p>다음 주소 API</p>
     <p>OAuth2 로그인 API</p>
     <p>Gmail API</p>
@@ -112,6 +111,10 @@ WEB PROJECT PLANING
 
 <strong>상품구매</strong> <br/>
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/d520506a-c821-4d04-a4a6-2cb7fbe11d15)
+<br/>
+
+<strong>비밀번호 찾기</strong> <br/>
+![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/c2ff37df-0393-4426-b95a-332c1fc759a1)
 <br/>
 
 

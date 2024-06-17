@@ -107,13 +107,13 @@ WEB PROJECT PLANING
 
 
 ## ▶️ END POINT
-비회원 기능
+회원 서비스
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|
 | /productDetail | GET         | 물건상세 폼으로 갑니다. 상세폼에는 상품상세게시판/상품문의게시판/상품후기게시판/장바구니버튼/구매버튼 등이 보여져야합니다. |
 
 
-회원 기능
+상품 서비스
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|
 | /joinForm | GET         | 회원가입 페이지로 이동합니다. | 
@@ -139,9 +139,7 @@ WEB PROJECT PLANING
 | CustomerInquiryDetail | DELETE | 고객문의글을 삭제합니다. 고객문의 삭제는 고객문의 상세페이지에서 가능합니다. |
 
 
-
-
-관리자 기능
+게시판 서비스
 | URI                | REQUEST METHOD | DESCRIPTION                  |
 |--------------------|----------------|------------------------------|
 | /admin/users       | GET                | 가입된 전체 회원을 조회합니다.|
@@ -152,6 +150,14 @@ WEB PROJECT PLANING
 | /admin/productInquiryDetail/comments | POST | 상품 문의댓글을 작성합니다. |
 | /admin/productInquiryDetail/comments | PATCH | 관리자가 작성한 상품 문의댓글을 수정합니다. |
 | /admin/productInquiryDetail/comments | DELETE | 관리자가 작성한 상품 문의댓글을 삭제합니다. |
+
+
+장바구니 서비스
+
+주문/결제 서비스
+
+배송지 서비스
+
 
 <br/>
 

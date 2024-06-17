@@ -7,14 +7,12 @@ WEB PROJECT PLANING
     <p>생산자들이 사이트 관리자를 통해 상품을 판매할 수 있는 플랫폼을 제공하여 이익을 극대화하고</p>
     <p>소비자들이 신선하고 질 좋은 농축산물을 합리적인 가격에 구매할 수 있도록 하기 위해 개발되었습니다.</p>
 </strong>
-
 <br/>
 
 ## ▶️ 개발 목표
 <strong>
     <p>농축산물 쇼핑몰 웹 서비스 구축 및 배포</p>
 </strong>
-
 <br/>
 
 ## ▶️ 개발 일정
@@ -24,7 +22,6 @@ WEB PROJECT PLANING
     <p>2024-06-28 ~ 2024-07-12(15Days) : 프론트엔드 및 백엔드 개발</p>
     <p>2024-07-13 ~ 2024-07-20(8Days) : 테스트 및 유지보수</p>
 </strong>
-
 <br/>
 
 ## ▶️ 구성인원(역할) 
@@ -34,7 +31,6 @@ WEB PROJECT PLANING
 |박민석(조장, BE/FE)|상품 서비스, 게시판 서비스|회원 서비스, 결제 서비스, 장바구니 서비스| 
 |황보성현(조원1, BE/FE)|회원 서비스, 주문/결제 서비스, 장바구니 서비스|배송 서비스| 
 |이운호(조원2, BE/FE)|상품 서비스, 배송 서비스|결제 서비스| 
-
 <br/>
 
 ## ▶️ 개발 환경
@@ -48,7 +44,6 @@ WEB PROJECT PLANING
     <p>Mysql Workbench</p>
     <p>Connection Pool : HikariCP</p>
 </strong>
-
 <br/>
 
 ## ▶️ 사용 API
@@ -59,7 +54,6 @@ WEB PROJECT PLANING
     <p>OAuth2 로그인 API</p>
     <p>Gmail API</p>
 </strong>
-
 <br/>
 
 ## ▶️ 기술스택
@@ -97,6 +91,7 @@ WEB PROJECT PLANING
     <p>사용자 마이페이지(회원정보 조회/수정/탈퇴, 작성글 조회/수정/삭제, 장바구니/찜 목록 조회/수정/삭제  , 주문/결제 내역 조회, 결제 취소 신청, 배송지 정보 관리)</p>
     <p>관리자 페이지(매출 현황 그래프, 문의글 관리, 댓글 작성/삭제, 상품 등록/수정/삭제, 주문/결제 관리)</p>
 </strong>
+<br/>
 
 ## ▶️ ERD
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/2ee7465b-0b5b-476f-8096-ac8169a02274)
@@ -135,7 +130,6 @@ WEB PROJECT PLANING
 | /myPage/user/modify     | PATCH               | 회원정보를 수정하는 서비스입니다. 회원정보 수정시 아이디, 비밀번호 체크를 한번더 통해서 인증된 회원만 수정이 가능합니다. |
 | /myPage/user/delete     | DELETE               | 회원정보를 삭제하는 서비스입니다. 회원정보 삭제시 아이디, 비밀번호 체크를 한번더 통해서 인증된 회원만 수정이 가능합니다. |
 | /myPage/user/searchForm     | GET               | 회원정보 조회를 합니다. 회원조회시 회원의 중요 정보(아이디, 비밀번호 등)을 제외한 개인정보(이름, 주소, 휴대폰 번호)등을 확인 할 수 있습니다.|
-
 <br/>
 
 <strong>상품 서비스</strong>
@@ -150,7 +144,6 @@ WEB PROJECT PLANING
 | /admin/product | POST        | 상품을 등록합니다.  |
 | /admin/modifyProduct | GET        | 상품 수정 폼 페이지를 조회합니다.  |
 | /admin/product | PUT        | 상품을 수정합니다.  |
-
 <br/>
 
 <strong>게시판 서비스</strong>
@@ -175,7 +168,6 @@ WEB PROJECT PLANING
 | /productReviewBoardList      | GET                | 상품 리뷰 게시판을 조회합니다. |
 | /productReviewBoard      | GET                | 상품 리뷰 게시글을 조회합니다. |
 | /myProductReviewBoardList      | GET                | 나의 상품 리뷰 게시판을 조회합니다. |
-
 <br/>
 
 
@@ -186,7 +178,6 @@ WEB PROJECT PLANING
 | /cart         | POST              | 장바구니에 물건을 담는 서비스입니다. 비회원도 장바구니에 물건을 담을 수 있습니다. |
 | /cart/Amount   | POST             | 장바구니에서도 물건의 수량을 변경할 수 있는 서비스입니다. 수량을 변경하면 cart-items의 테이블에 담긴 수량이 변경됩니다. |
 | /cart/delete   | DELETE             | 장바구니에 담긴 물건을 삭제할 수 있는 서비스입니다. 물건을 삭제하면 CASCADE옵션으로 인해 cart의 하위 테이블도 함께 삭제됩니다. |
-
 <br/>
 
 
@@ -200,7 +191,6 @@ WEB PROJECT PLANING
 | /payment/paymentForm         | GET        | 결제한 정보를 조회할 수 있는 서비스입니다.|
 | /payment/save         | POST               | 결제한 정보를 저장하는 서비스입니다. 결제정보 저장 후 회원은 결제 정보 조회가 가능합니다.|
 | /payment/cancel         | POST               | 결제를 취소하는 서비스입니다. 결제 취소는 관리자가 승인 한 이후 환불처리가 이루어집니다.|
-
 <br/>
 
 <strong>배송지 서비스</strong>
@@ -210,7 +200,6 @@ WEB PROJECT PLANING
 | /myPage/editAddress       | POST                | 배송지를 작성/수정 하는 서비스 입니다. |
 | /myPage/editAddress       | POST                | 배송지를 작성/수정 하는 서비스 입니다. |
 | /order/shipping       | GET                | 나의 배송지 정보를 반환하는 서비스 입니다. |
-
 <br/>
 
 📃: File Tree

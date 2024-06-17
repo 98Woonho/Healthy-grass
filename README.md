@@ -100,7 +100,11 @@ WEB PROJECT PLANING
 
 ## ▶️ ERD
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/2ee7465b-0b5b-476f-8096-ac8169a02274)
+<br/>
 
+
+## ▶️ 유스케이스 다이어그램
+![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/19f868cd-d3e7-4498-9b67-ca2088b515e4)
 <br/>
 
 

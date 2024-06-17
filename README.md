@@ -58,6 +58,7 @@ WEB PROJECT PLANING
     <p>카카오 지도 API</p>
     <p>다음 주소 API</p>
     <p>OAuth2 로그인 API</p>
+    <p>Gmail API</p>
 </strong>
 
 <br/>

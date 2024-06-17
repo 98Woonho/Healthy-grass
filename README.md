@@ -131,6 +131,7 @@ WEB PROJECT PLANING
 <br/>
 ---
 ## ▶️ 클래스 다이어그램
+![image](https://github.com/user-attachments/files/15871219/default.pdf)
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/cb640f9c-2ba7-4465-b549-318dac47a972)
 <br/>
 ---

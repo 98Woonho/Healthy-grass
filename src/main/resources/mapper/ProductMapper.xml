@@ -605,4 +605,9 @@
         WHERE BINARY `id` = #{id}
         LIMIT 1
     </update>
+    <select id="findAmountByProductId" parameterType="int" resultType="int">
+        SELECT amount
+        FROM product
+        WHERE id = #{productId}
+    </select>
 </mapper>

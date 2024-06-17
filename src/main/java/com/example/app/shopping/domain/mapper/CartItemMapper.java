@@ -11,7 +11,7 @@ public interface CartItemMapper {
 
     void insertCartItem(@Param("cartId") Integer cartId, @Param("productId") Integer productId, @Param("quantity") Integer quantity);
 
-    List<Integer> findProductIdByCartId(@Param("cartId") Integer cartId);
+    int findProductIdByCartIdAndAmountAndProductId(@Param("cartId") Integer cartId, @Param("quantity") Integer quantity, @Param("productId") Integer productId);
 
     Integer findQuantityByProductIdAndCardId(@Param("productId") Integer productId, @Param("cartId") Integer cartId);
 

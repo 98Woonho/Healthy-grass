@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.app.shopping.domain.mapper.ShippingAddressMapper">
+
+    <select id="findShippingAddressByUid" resultType="com.example.app.shopping.domain.dto.ShippingAddressDto">
+        SELECT *
+        FROM shipping_address
+        WHERE Uid = #{Uid};
+    </select>
+
+    <insert id="insertShippingAddress"
+            parameterType="com.example.app.shopping.domain.dto.ShippingAddressDto"
+            useGeneratedKeys="true"
+            keyColumn="id"
+            keyProperty="id">
+        INSERT INTO `shipping_address` (`Uid`, `name`, `phone`, `zipcode`, `streetAdr`, `detailAdr`)
+        VALUES (#{Uid}, #{name}, #{phone}, #{zipcode}, #{streetAdr}, #{detailAdr})
+    </insert>
+
+    <update id="updateShippingAddress"
+            parameterType="com.example.app.shopping.domain.dto.ShippingAddressDto">
+        UPDATE `shipping_address`
+        SET `Uid` = #{Uid},
+            `name` = #{name},
+            `phone` = #{phone},
+            `zipcode` = #{zipcode},
+            `streetAdr` = #{streetAdr},
+            `detailAdr` = #{detailAdr}
+        WHERE BINARY `id` = #{id}
+            LIMIT 1
+    </update>
+
+</mapper>

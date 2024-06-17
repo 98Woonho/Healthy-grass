@@ -37,4 +37,6 @@ public interface UserMapper {
                                     @Param("password") String password);
 
     String findUserPasswordByUserId(@Param("id") String id);
+
+    UserDto findUserByUserId(@Param("id") String id);
 }

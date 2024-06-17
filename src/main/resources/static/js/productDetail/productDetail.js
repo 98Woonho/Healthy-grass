@@ -81,6 +81,9 @@ cartBtn.addEventListener("click", function (e){
             if (res.data === "SUCCESS"){
                 const myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
                 myModal.show();
+            } else if (res.data === "AMOUNT_FULL"){
+                alert("장바구니에 담은 상품이 상품 재고보다 많아 추가 구매한 상품은 취소되었습니다.")
+                location.href = "/order";
             }
         })
         .catch(err=> {

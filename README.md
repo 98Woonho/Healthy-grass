@@ -110,6 +110,10 @@ WEB PROJECT PLANING
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/c4db6478-c703-4933-940a-7f4816d3f1df)
 <br/>
 
+<strong>상품구매</strong> <br/>
+![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/d520506a-c821-4d04-a4a6-2cb7fbe11d15)
+<br/>
+
 
 ## ▶️ 주요 END POINT
 <strong>회원 서비스</strong>

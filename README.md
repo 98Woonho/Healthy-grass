@@ -133,7 +133,7 @@ WEB PROJECT PLANING
 
 
 ## ▶️ 주요 END POINT DOC
-<strong>회원 서비스</strong>
+#### 회원 서비스
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|
 | /user         | POST               | 회원가입을 합니다. 회원가입은 포트원 본인인증 API를 사용해서 인증된 회원만 회원가입이 가능합니다. |
@@ -146,6 +146,7 @@ WEB PROJECT PLANING
 | /myPage/user/delete     | DELETE               | 회원정보를 삭제하는 서비스입니다. 회원정보 삭제시 아이디, 비밀번호 체크를 한번더 통해서 인증된 회원만 수정이 가능합니다. |
 | /myPage/user/searchForm     | GET               | 회원정보 조회를 합니다. 회원조회시 회원의 중요 정보(아이디, 비밀번호 등)을 제외한 개인정보(이름, 주소, 휴대폰 번호)등을 확인 할 수 있습니다.|
 <br/>
+---
 
 <strong>상품 서비스</strong>
 | URI           | REQUEST METHOD | DESCRIPTION            |

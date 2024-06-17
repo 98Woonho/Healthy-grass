@@ -111,11 +111,19 @@ WEB PROJECT PLANING
 <br/>
 
 
-## ▶️ END POINT
+## ▶️ 주요 END POINT
 <strong>회원 서비스</strong>
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|
-| /productDetail | GET         | 물건상세 폼으로 갑니다. 상세폼에는 상품상세게시판/상품문의게시판/상품후기게시판/장바구니버튼/구매버튼 등이 보여져야합니다. |
+| /user         | POST               | 회원가입을 합니다. 회원가입은 포트원 본인인증 API를 사용해서 인증된 회원만 회원가입이 가능합니다. |
+| /user/findUserIdByEmail     | POST               | 회원이 가입한 이메일로 회원의 아이디를 찾는 서비스입니다. |
+| /user/findUserIdByPhone     | POST               | 회원이 가입한 휴대폰번호로 회원의 아이디를 찾는 서비스입니다. |
+| /user/findUserPasswordByEmailAsRandomValue     | POST               | 회원 이메일과 랜덤코드를 받아서 회원의 비밀번호를 찾는 서비스입니다. 인증에 통과한 회원에게 비밀번호 랜덤값을 전송합니다. |
+| /user/findUserPasswordByAuthentication     | POST               | 포트원 본인인증 API를 사용해서 회원의 비밀번호를 찾는 서비스입니다. 본인인증에 통과한 회원에게 비밀번호 랜덤값을 전송합니다.|
+| /user/duplicateUserCheck     | POST               | 회원가입시 중복된 회원인지 확인하는 서비스입니다.  |
+| /myPage/user/modify     | PATCH               | 회원정보를 수정하는 서비스입니다. 회원정보 수정시 아이디, 비밀번호 체크를 한번더 통해서 인증된 회원만 수정이 가능합니다. |
+| /myPage/user/delete     | DELETE               | 회원정보를 삭제하는 서비스입니다. 회원정보 삭제시 아이디, 비밀번호 체크를 한번더 통해서 인증된 회원만 수정이 가능합니다. |
+| /myPage/user/searchForm     | GET               | 회원정보 조회를 합니다. 회원조회시 회원의 중요 정보(아이디, 비밀번호 등)을 제외한 개인정보(이름, 주소, 휴대폰 번호)등을 확인 할 수 있습니다.|
 
 <br/>
 
@@ -161,13 +169,27 @@ WEB PROJECT PLANING
 
 
 <strong>장바구니 서비스</strong>
-
+| URI           | REQUEST METHOD | DESCRIPTION            |
+|---------------|----------------|------------------------|
+| /cart         | GET               | 장바구니에 담긴 물건들을 보여주는 서비스입니다.|
+| /cart         | POST              | 장바구니에 물건을 담는 서비스입니다. 비회원도 장바구니에 물건을 담을 수 있습니다. |
+| /cart/Amount   | POST             | 장바구니에서도 물건의 수량을 변경할 수 있는 서비스입니다. 수량을 변경하면 cart-items의 테이블에 담긴 수량이 변경됩니다. |
+| /cart/delete   | DELETE             | 장바구니에 담긴 물건을 삭제할 수 있는 서비스입니다. 물건을 삭제하면 CASCADE옵션으로 인해 cart의 하위 테이블도 함께 삭제됩니다. |
 
 <br/>
 
 
 <strong>주문/결제 서비스</strong>
-
+| URI           | REQUEST METHOD | DESCRIPTION            |
+|---------------|----------------|------------------------|
+| /order         | GET              | 주문한 물건들을 보여주는 서비스입니다. 물건 주문 시 주문할 물건만 보여줍니다.|
+| /order         | POST             | 물건들을 주문하는 서비스입니다. 물건 주문은 장바구니 또는 상품페이지에서 가능합니다. |
+| /order/user    | GET              | 주문자 정보와 동일함 클릭시 회원가입시 입력한 정보를 바탕으로 화면에 전달해주는 서비스입니다. |
+| /order/shipping    | GET          | 이전에 입력한 배송지를 바탕으로 화면에 전달해주는 서비스입니다. |
+| /order/recent    | GET          | 최근에 입력한 배송지를 바탕으로 화면에 전달해주는 서비스입니다. |
+| /payment/paymentForm         | GET        | 결제한 정보를 조회할 수 있는 서비스입니다.|
+| /payment/save         | POST               | 결제한 정보를 저장하는 서비스입니다. 결제정보 저장 후 회원은 결제 정보 조회가 가능합니다.|
+| /payment/cancel         | POST               | 결제를 취소하는 서비스입니다. 결제 취소는 관리자가 승인 한 이후 환불처리가 이루어집니다.|
 
 <br/>
 

@@ -15,10 +15,6 @@ WEB PROJECT PLANING
 </strong>
 <br/>
 
-## ▶️ 로고&배너
-![건강풀때기로고](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/442c5e96-77af-4b44-b5ea-e0169ad619d3)
-![건강풀때기](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/05b4248f-d9ff-4688-bacc-211d3c5e9b49)
-
 ## ▶️ 참가 인원 
 [박민석 BE/FE](https://github.com/pakms980319) | [황보성현 BE/FE](https://github.com/hbsh2330) | [이운호 BE/FE](https://github.com/98Woonho) |
 <br/>

@@ -51,7 +51,8 @@ ERD
 | /admin/productInquiryDetail/comments | PATCH | 관리자가 작성한 상품 문의댓글을 수정합니다. |
 | /admin/productInquiryDetail/comments | DELETE | 관리자가 작성한 상품 문의댓글을 삭제합니다. |
 
-파인트리
+
+
 C:.
 │  .gitignore
 │  build.gradle

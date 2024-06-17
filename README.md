@@ -38,7 +38,7 @@ WEB PROJECT PLANING
 <br/>
 
 ## ▶️ 개발 환경
-|개발 환경|-|
+|-|개발 환경|
 |---------------|----------------|
 |IDE|IntelliJ Idea|
 |JDK|JDK 17|

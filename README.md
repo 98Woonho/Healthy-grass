@@ -107,13 +107,14 @@ WEB PROJECT PLANING
 
 
 ## ▶️ END POINT
-회원 서비스
+<strong>회원 서비스</strong>
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|
 | /productDetail | GET         | 물건상세 폼으로 갑니다. 상세폼에는 상품상세게시판/상품문의게시판/상품후기게시판/장바구니버튼/구매버튼 등이 보여져야합니다. |
 
+<br/>
 
-상품 서비스
+<strong>상품 서비스</strong>
 | URI           | REQUEST METHOD | DESCRIPTION            |
 |---------------|----------------|------------------------|
 | /productList | GET         | 상품 리스트를 조회합니다. | 
@@ -126,9 +127,9 @@ WEB PROJECT PLANING
 | /admin/modifyProduct | GET        | 상품 수정 폼 페이지를 조회합니다.  |
 | /admin/product | PUT        | 상품을 수정합니다.  |
 
+<br/>
 
-
-게시판 서비스
+<strong>게시판 서비스</strong>
 | URI                | REQUEST METHOD | DESCRIPTION                  |
 |--------------------|----------------|------------------------------|
 | /customerInquiryBoardList       | GET                | 고객 문의 게시판을 조회합니다. |
@@ -151,12 +152,21 @@ WEB PROJECT PLANING
 | /productReviewBoard      | GET                | 상품 리뷰 게시글을 조회합니다. |
 | /myProductReviewBoardList      | GET                | 나의 상품 리뷰 게시판을 조회합니다. |
 
+<br/>
 
-장바구니 서비스
 
-주문/결제 서비스
+<strong>장바구니 서비스</strong>
 
-배송지 서비스
+
+<br/>
+
+
+<strong>주문/결제 서비스</strong>
+
+
+<br/>
+
+<strong>배송지 서비스</strong>
 | URI                | REQUEST METHOD | DESCRIPTION                  |
 |--------------------|----------------|------------------------------|
 | /myPage/editAddress       | GET                | 배송지 작성/수정 페이지를 조회한다. |

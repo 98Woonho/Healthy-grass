@@ -185,7 +185,6 @@ WEB PROJECT PLANING
 | /order         | GET              | 주문한 물건들을 보여주는 서비스입니다. 물건 주문 시 주문할 물건만 보여줍니다.|
 | /order         | POST             | 물건들을 주문하는 서비스입니다. 물건 주문은 장바구니 또는 상품페이지에서 가능합니다. |
 | /order/user    | GET              | 주문자 정보와 동일함 클릭시 회원가입시 입력한 정보를 바탕으로 화면에 전달해주는 서비스입니다. |
-| /order/shipping    | GET          | 이전에 입력한 배송지를 바탕으로 화면에 전달해주는 서비스입니다. |
 | /order/recent    | GET          | 최근에 입력한 배송지를 바탕으로 화면에 전달해주는 서비스입니다. |
 | /payment/paymentForm         | GET        | 결제한 정보를 조회할 수 있는 서비스입니다.|
 | /payment/save         | POST               | 결제한 정보를 저장하는 서비스입니다. 결제정보 저장 후 회원은 결제 정보 조회가 가능합니다.|
@@ -196,10 +195,10 @@ WEB PROJECT PLANING
 <strong>배송지 서비스</strong>
 | URI                | REQUEST METHOD | DESCRIPTION                  |
 |--------------------|----------------|------------------------------|
-| /myPage/editAddress       | GET                | 배송지 작성/수정 페이지를 조회한다. |
-| /myPage/editAddress       | POST                | 배송지를 작성/수정 한다. |
-| /myPage/editAddress       | POST                | 배송지를 작성/수정 한다. |
-| /order/shipping       | GET                | 나의 배송지 정보를 반환한다. |
+| /myPage/editAddress       | GET                | 배송지 작성/수정 페이지를 조회하는 서비스 입니다. |
+| /myPage/editAddress       | POST                | 배송지를 작성/수정 하는 서비스 입니다. |
+| /myPage/editAddress       | POST                | 배송지를 작성/수정 하는 서비스 입니다. |
+| /order/shipping       | GET                | 나의 배송지 정보를 반환하는 서비스 입니다. |
 
 <br/>
 

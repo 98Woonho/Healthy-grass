@@ -131,7 +131,25 @@ WEB PROJECT PLANING
 게시판 서비스
 | URI                | REQUEST METHOD | DESCRIPTION                  |
 |--------------------|----------------|------------------------------|
-| /customerInquiryBoardList       | GET                | 고객 문의 게시판을 조회합니다.|
+| /customerInquiryBoardList       | GET                | 고객 문의 게시판을 조회합니다. |
+| /customerInquiryBoard       | GET                | 고객 문의 상세 정보를 조회합니다. |
+| /myCustomerInquiryBoardList       | GET                | 나의 고객 문의 게시판을 조회합니다. |
+| /customerInquiryBoardComment       | GET                | 고객 문의 게시글에 작성된 댓글 리스트를 반환합니다. |
+| /productInquiryBoardList       | GET                | 상품 문의 게시판을 조회합니다. |
+| /productInquiryBoard       | GET                | 상품 문의 게시글을 조회합니다. |
+| /productInquiryBoard/passwordCheck       | POST                | 상품 문의 게시글 비밀번호를 체크합니다. |
+| /myProductInquiryBoardList      | GET                | 나의 상품 문의 게시판을 조회합니다. |
+| /productInquiryBoardListAPI      | GET                | 상품에 대해 작성된 상품 문의 게시글 리스트를 반환합니다. |
+| /productInquiry      | GET                | 상품 문의 게시글 작성 페이지를 조회합니다. |
+| /productInquiry      | POST                | 상품 문의 게시글을 작성합니다. |
+| /updateProductInquiry      | GET                | 상품 문의 게시글 수정 페이지를 조회합니다. |
+| /productInquiry      | PUT                | 상품 문의 게시글을 수정합니다. |
+| /productInquiry      | DELETE                | 상품 문의 게시글을 삭제합니다. |
+| /ProductInquiryBoardComment      | GET                | 게시글에 작성된 댓글 리스트를 반환합니다. |
+| /productReviewBoardListAPI      | POST                | 상품에 대해 작성된 상품 리뷰 리스트를 반환합니다. |
+| /productReviewBoardList      | GET                | 상품 리뷰 게시판을 조회합니다. |
+| /productReviewBoard      | GET                | 상품 리뷰 게시글을 조회합니다. |
+| /myProductReviewBoardList      | GET                | 나의 상품 리뷰 게시판을 조회합니다. |
 
 
 장바구니 서비스
@@ -139,7 +157,12 @@ WEB PROJECT PLANING
 주문/결제 서비스
 
 배송지 서비스
-
+| URI                | REQUEST METHOD | DESCRIPTION                  |
+|--------------------|----------------|------------------------------|
+| /myPage/editAddress       | GET                | 배송지 작성/수정 페이지를 조회한다. |
+| /myPage/editAddress       | POST                | 배송지를 작성/수정 한다. |
+| /myPage/editAddress       | POST                | 배송지를 작성/수정 한다. |
+| /order/shipping       | GET                | 나의 배송지 정보를 반환한다. |
 
 <br/>
 

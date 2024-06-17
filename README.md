@@ -105,6 +105,11 @@ WEB PROJECT PLANING
 <br/>
 
 
+## ▶️ 시퀀스 다이어그램
+<strong>회원가입</strong>
+![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/f98cdc4f-6d20-4034-859e-986047a1ad94)
+<br/>
+
 
 ## ▶️ END POINT
 <strong>회원 서비스</strong>

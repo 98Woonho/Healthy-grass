@@ -104,6 +104,8 @@ WEB PROJECT PLANING
 |관리자 페이지|매출 현황 그래프 <br/> 문의글 관리/댓글 작성 <br/> 상품 관리 <br/> 주문/결제 관리|
 <br/>
 
+<ul><li>test</li><li>test</li></ul>
+
 ## ▶️ ERD
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/2ee7465b-0b5b-476f-8096-ac8169a02274)
 <br/>

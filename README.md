@@ -35,14 +35,16 @@ WEB PROJECT PLANING
 
 ## ▶️ 개발 환경
 <strong>
-    <p>IDE : IntelliJ Ultimate</p>
-    <p>OpenJDK 17</p>
-    <p>Java17</p>
-    <p>SpringBoot 3.2.5</p>
-    <p>gradle</p>
-    <p>Mysql Server</p>
-    <p>Mysql Workbench</p>
+    <p>IDE : IntelliJ Idea</p>
+    <p>JDK 17</p>
+    <p>SpringBoot Version : 3.2.5</p>
+    <p>Build Tool : gradle</p>
+    <p>DBMS : Mysql</p>
     <p>Connection Pool : HikariCP</p>
+    <p>Version Control : Git</p>
+    <p>Repository Hosting : GitHub</p>
+    <p>Testing Framework : JUnit5</p>
+    <p>Security : Spring Security</p>
 </strong>
 <br/>
 

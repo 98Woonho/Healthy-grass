@@ -200,7 +200,7 @@ public class ProductInquiryBoardController {
     }
 
     @GetMapping("productInquiry")
-    public String addProductGet(@RequestParam("productId") Integer pId, Model model) {
+    public String addProductInquiryGet(@RequestParam("productId") Integer pId, Model model) {
         System.out.println("ProductInquiryBoardController's addProductGet pId: " + pId);
 
         try {

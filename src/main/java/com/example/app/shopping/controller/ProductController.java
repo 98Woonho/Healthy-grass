@@ -112,7 +112,7 @@ public class ProductController {
         return response;
     }
 
-    //실시간으로 상품금액의 크기를 변경시키는 로직
+    // 실시간으로 상품금액의 크기를 변경시키는 로직
     @PostMapping("/productPrice")
     public @ResponseBody Integer totalProductAmountChange(@RequestBody Map<String, Integer> request){
         System.out.println("totalProductAmount : " +request.get("totalProductAmount"));

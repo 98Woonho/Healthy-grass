@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -56,10 +56,27 @@
             </div>
         </section>
         <script th:src="@{/js/productInquiryBoardDetail/btnProcess.js}"></script>
-        <section class="second-section" id="comments-section">
+        <section class="second-section">
+            <h4>댓글</h4>
             <!-- 댓글이 들어가는 곳 -->
+            <div id="comments-section">
+
+            </div>
         </section>
         <script th:src="@{/js/productInquiryBoardDetail/productInquiryBoardDetailCommentProcess.js}"></script>
+        <section class="third-section" id="comments-input-section" sec:authorize="hasRole('ROLE_ADMIN')">
+            <form id="commentForm">
+                <h2>댓글</h2>
+                <label for="commentTitle">제목:</label>
+                <input type="text" id="commentTitle" name="title" required>
+
+                <label for="commentContent">내용:</label>
+                <textarea id="commentContent" name="content" rows="4" cols="50" required></textarea>
+
+                <button type="submit">작성</button>
+            </form>
+        </section>
+        <script th:src="@{/js/productInquiryBoardDetail/postCommentProcess.js}"></script>
     </div>
     <div class="footer">
         <!-- Footer content -->

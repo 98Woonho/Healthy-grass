@@ -1,0 +1,12 @@
+/* main-detail */
+.no-dot {
+    list-style-type: none;
+}
+
+.menu-section {
+    margin-bottom: 3rem;
+}
+
+.no-text-line {
+    text-decoration-line: none;
+}

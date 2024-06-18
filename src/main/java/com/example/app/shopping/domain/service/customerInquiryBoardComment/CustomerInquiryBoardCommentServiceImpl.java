@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class CustomerInquiryBoardCommentServiceImpl implements ProductInquiryBoardCommentService {
+public class CustomerInquiryBoardCommentServiceImpl implements CustomerInquiryBoardCommentService {
 
     @Autowired
     private CustomerInquiryBoardCommentMapper mapper;

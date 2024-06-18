@@ -8,4 +8,26 @@
         WHERE pibc.P_Board_Id = #{id}
         ORDER BY pibc.updateDate DESC, pibc.regDate DESC
     </select>
+
+    <!-- 댓글 삽입 -->
+    <insert id="insertProductInquiryBoardComment" parameterType="com.example.app.shopping.domain.dto.ProductInquiryBoardCommentDto">
+        INSERT INTO product_inquiry_board_comment (
+        P_Board_Id,
+        title,
+        content,
+        regDate,
+        updateDate
+        ) VALUES (
+        #{P_Board_Id},
+        #{title},
+        #{content},
+        #{regDate},
+        #{updateDate}
+        )
+    </insert>
+
+    <!-- 댓글 삭제 -->
+    <delete id="deleteCommentById" parameterType="long">
+        DELETE FROM product_inquiry_board_comment WHERE id = #{id}
+    </delete>
 </mapper>

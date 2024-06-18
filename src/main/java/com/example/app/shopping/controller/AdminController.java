@@ -22,6 +22,14 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    // 관리자 페이지 GET
+    @GetMapping("")
+    public String getAdminPage() {
+        log.info("GET AdminController's getAdminPage");
+
+        return "admin/admin";
+    }
+
     // 제품 등록 Get
     @GetMapping("addProduct")
     public void getAddProduct(Model model) {

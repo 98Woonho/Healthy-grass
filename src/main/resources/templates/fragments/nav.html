@@ -57,16 +57,18 @@
                         <a href="/productReviewBoardList" sec:authorize="hasRole('ROLE_ADMIN')">상품리뷰게시판</a>
                     </div>
                 </li>
-            </ul>
-            <th:block sec:authorize="isAuthenticated()">
-                <ul>
+                <th:block sec:authorize="isAuthenticated()">
                     <li>
-                        <div>
+                        <a href="#">회원관리</a>
+                        <div class="dropdown">
                             <a href="/myPage">마이페이지</a>
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a href="/admin">관리자페이지</a>
+                            </th:block>
                         </div>
                     </li>
-                </ul>
-            </th:block>
+                </th:block>
+            </ul>
 
 
             <!-- 인증되지 않은 사용자를 위한 폼 -->

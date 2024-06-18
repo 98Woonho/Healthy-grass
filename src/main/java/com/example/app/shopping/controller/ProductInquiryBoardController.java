@@ -10,6 +10,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,16 +60,28 @@ public class ProductInquiryBoardController {
     @GetMapping("/productInquiryBoard")
     public String productInquiryBoard(
             @RequestParam(name = "id", defaultValue = "0", required = false) Integer id,
-            Model model) {
+            Model model, Authentication authentication) {
         System.out.println("productInquiryBoardController's productInquiryBoard id: " + id + " model: " + model);
 
         Map<String, Object> response = null;  // 반환할 데이터를 담을 변수
 
+        boolean isAdmin = false;
+
+        if (authentication != null) {
+            // 관리자 권한 체크 ( 관리자는 잠금글에 비밀번호 체크 할 필요 없지 접근 가능하다 )
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            Collection<? extends GrantedAuthority> authorities = principalDetails.getAuthorities();
+            isAdmin = authorities.stream()
+                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+        }
+
+
         try {
             response = productInquiryBoardService.getproductInquiryBoardDetail(id);
 
-            if("Y".equals(response.get("isLocked")) && !id.equals(unlockId) ) {
-                // 잠금 상태이고 비밀번호 체크가 안 된 상태라면
+            if(!isAdmin && "Y".equals(response.get("isLocked")) && !id.equals(unlockId) ) {
+                
+                // 관리자가 아니고 잠금 상태이고 비밀번호 체크가 안 된 상태라면
                 model.addAttribute("id", id);
 
                 return "/productInquiryBoard/passwordChk";

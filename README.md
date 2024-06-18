@@ -115,6 +115,11 @@ WEB PROJECT PLANING
 <br/>
 ---
 
+## ▶️ 클래스 다이어그램
+![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/cb640f9c-2ba7-4465-b549-318dac47a972)
+<br/>
+---
+
 ## ▶️ 시퀀스 다이어그램
 <strong><p>회원가입</p></strong>
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/c4db6478-c703-4933-940a-7f4816d3f1df)
@@ -128,10 +133,6 @@ WEB PROJECT PLANING
 
 <strong><p>비밀번호 찾기</p></strong>
 ![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/141478303/c2ff37df-0393-4426-b95a-332c1fc759a1)
-<br/>
----
-## ▶️ 클래스 다이어그램
-![image](https://github.com/pakms980319/ShoppingMall-SpringBoot-Mybatis/assets/114930673/cb640f9c-2ba7-4465-b549-318dac47a972)
 <br/>
 ---
 

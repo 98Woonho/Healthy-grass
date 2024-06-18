@@ -35,3 +35,64 @@
     color: red;
     font-weight: bold;
 }
+
+.comment {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.comment-title {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.comment-date {
+    font-size: 12px;
+    color: #888;
+}
+
+.comment-body {
+    margin-bottom: 10px;
+}
+
+.comment-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #888;
+}
+
+.comment-update-date {
+    font-style: italic;
+}
+
+.delete-comment-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.delete-comment-btn:hover {
+    background-color: #ff1a1a;
+}
+
+.comment-image {
+    max-width: 300px;
+    height: auto;
+    border-radius: 5px;
+}

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>고객문의등록</title>
+
+    <link rel="stylesheet" th:href="@{/css/customerInquiry/addCustomerInquiry.css}">
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
+    <!-- fragments css -->
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+        <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+    </div>
+</div>
+<div class="main">
+    <h2>고객 문의 작성</h2>
+    <section class="first-section">
+        <form enctype="multipart/form-data">
+            <span>제목: <input type="text" name="title" id="title"></span> <br />
+
+            <span> 내용: <textarea id="content" name="content" rows="10" cols="50"></textarea> </span> <br/>
+
+            <span>이미지: <input type="file" name="image" id="image" accept="image/*"></span> <br/>
+
+            <div class="button-container">
+                <button id="submit">작성</button>
+            </div>
+        </form>
+    </section>
+    <script defer th:src="@{/js/customerInquiry/formValidation.js}"></script>
+    <script defer th:src="@{/js/customerInquiry/submitBtnProcess.js}"></script>
+</div>
+<div class="footer">
+
+</div>
+</body>
+</html>

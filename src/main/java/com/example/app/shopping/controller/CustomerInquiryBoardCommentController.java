@@ -25,6 +25,7 @@ public class CustomerInquiryBoardCommentController {
             response.put("list", service.getComments(id));
             response.put("success", true);
         } catch (Exception e) {
+            e.printStackTrace();
             response.put("success", false);
         }
 

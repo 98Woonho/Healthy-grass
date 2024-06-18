@@ -283,13 +283,17 @@ public class ProductInquiryBoardController {
         return result;
     }
 
-    // 수정 페이지로 이동  현재 경로 문제로 에러 발생중 경로 수정 바람, 스크립트에도 요청 방식 바꿨는데 요청해서 boardId 들어오는지 확인 필요함
+    // 수정 페이지로 이동
     @GetMapping("/updateProductInquiry")
     public String updateProductInquiryPage (@RequestParam("boardId") Integer boardId, Model model, Authentication authentication) {
         System.out.println("ProductInquiryBoardController's updateProductInquiry boardId: " + boardId);
 
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        String uId = principalDetails.getUsername();
+        String uId = "";
+
+        if (authentication != null) {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            uId = principalDetails.getUsername();
+        }
 
         try {
             Map<String, Object> result = productInquiryBoardService.getproductInquiryBoardDetail(boardId);

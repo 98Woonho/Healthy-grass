@@ -14,26 +14,59 @@ function fetchComments(boardId) {
             }
         })
         .catch(error => {
+            console.error(error);
             displayError('서버로의 요청에 실패했습니다.');
         });
 }
 
 function displayComments(comments) {
     const commentsSection = document.getElementById('comments-section');
+    commentsSection.innerHTML = ''; // 이전 댓글 초기화
+
+
     comments.forEach(comment => {
         const commentElement = document.createElement('div');
         commentElement.classList.add('comment');
+        const imgUrl = comment.imgPath ? `${comment.imgPath}/${comment.imgName}` : '';
         commentElement.innerHTML = `
-            <p><span>--------------------------------------------------------</span></p>
-            <p>제목: <span>${comment.title}</span></p>
-            <p>내용: <span>${comment.content}</span></p>
-            <p>업로드 사진: <span>${comment.imgPath + '/' + comment.imgName}</span></p>
-            <p>작성일: <span>${comment.regDate}</span></p>
-            <p>수정일: <span>${comment.updateDate}</span></p>
-            <p><span>--------------------------------------------------------</span></p>
+            <div class="comment-header">
+                <span class="comment-title">${comment.title}</span>
+                <span class="comment-date">${comment.regDate}</span>
+            </div>
+            <div class="comment-body">
+                ${imgUrl ? `<p><img src="${imgUrl}" alt="첨부 이미지" class="comment-image" /></p>` : ''}
+                <p>${comment.content}</p>
+            </div>
+            <div class="comment-footer">
+                <span class="comment-update-date">수정일: ${comment.updateDate}</span>
+                <button class="delete-comment-btn" data-id="${comment.id}">삭제</button>
+            </div>
         `;
         commentsSection.appendChild(commentElement);
     });
+
+    document.querySelectorAll('.delete-comment-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const commentId = this.getAttribute('data-id');
+            deleteComment(commentId);
+        });
+    });
+}
+
+function deleteComment(commentId) {
+    axios.delete(`/customerInquiryBoardComment?id=${commentId}`)
+        .then(function (response) {
+            if (response.data.success) {
+                alert(response.data.msg || '댓글이 성공적으로 삭제되었습니다.');
+                window.location.reload(); // 페이지 새로고침
+            } else {
+                alert(response.data.msg || '댓글 삭제에 실패했습니다.');
+            }
+        })
+        .catch(function (error) {
+            console.error('There was an error!', error);
+            alert('댓글 삭제에 실패했습니다. 다시 시도해 주세요.');
+        });
 }
 
 function displayError(message) {

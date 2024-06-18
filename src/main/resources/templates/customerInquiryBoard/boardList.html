@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>고객문의 게시판</title>
     <script defer th:src="@{/js/customerInquiryBoardList/searchFormOnchange.js}"></script>
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
     <link rel="stylesheet" th:href="@{/css/customerInquiryBoardList/common.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
@@ -99,8 +103,14 @@
                 <div th:if="${!success}" class="error-message">
                     <p>고객문의 게시글 조회에 실패하였습니다.</p>
                 </div>
+
+                <!-- 작성 버튼 -->
+                <div class="button-container">
+                    <button id="createPostButton" onclick="createAndSubmitForm()">작성</button>
+                </div>
             </div>
         </section>
+        <script defer th:src="@{/js/customerInquiryBoardDetail/customerInquiryAddBtnProcess.js}"></script>
     </div>
     <div class="footer">
 

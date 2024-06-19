@@ -78,28 +78,28 @@
         LIMIT #{offset}, #{criteria.amount}
     </select>
 
-    <select id="findDistinctMajorCategoryList" resultType="String">
+    <select id="findDistinctMajorCategoryList">
         SELECT DISTINCT majorCategory
         FROM product
     </select>
 
-    <select id="findDistinctMiddleCategoryList" resultType="String">
+    <select id="findDistinctMiddleCategoryList">
         SELECT DISTINCT middleCategory
         FROM product
     </select>
 
-    <select id="findProductList" resultType="String">
+    <select id="findProductList">
         SELECT name
         FROM product
     </select>
 
-    <select id="findProductByProductName" resultType="com.example.app.shopping.domain.dto.ProductDto">
+    <select id="findProductByProductName">
         SELECT *
         FROM product
         WHERE name = #{productName};
     </select>
 
-    <select id="findProductById1" resultType="com.example.app.shopping.domain.dto.ProductDto">
+    <select id="findProductById1">
         SELECT *
         FROM product
         WHERE id = #{id};

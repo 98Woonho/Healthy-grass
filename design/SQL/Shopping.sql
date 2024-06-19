@@ -6,6 +6,13 @@ USE `shopping`;
 -- ------------------------------------------------------
 -- Server version	8.0.36
 
+DROP SCHEMA IF EXISTS `shopping`;
+
+CREATE SCHEMA `shopping`;
+
+use `shopping`;
+
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -418,7 +425,6 @@ CREATE TABLE `shipping_address` (
   `zipcode` varchar(100) DEFAULT NULL,
   `streetAdr` varchar(100) DEFAULT NULL,
   `detailAdr` varchar(100) DEFAULT NULL,
-  `shipping_text` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_ShippingAddress_User_idx` (`Uid`),
   CONSTRAINT `FK_ShippingAddress_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

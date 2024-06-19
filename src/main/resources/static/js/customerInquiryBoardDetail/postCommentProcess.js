@@ -1,14 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const submitButton = document.getElementById('submit');
-    const imageInput = document.getElementById('image');
+    const commentForm = document.getElementById('commentForm');
+    const commentTitleInput = document.getElementById('commentTitle');
+    const commentContentInput = document.getElementById('commentContent');
+    const commentImageInput = document.getElementById('commentImage');
+    const boardIdElement = document.getElementById('boardId');
 
-    submitButton.addEventListener('click', function (event) {
+    commentForm.addEventListener('submit', function (event) {
         event.preventDefault(); // 기본 폼 제출 방지
 
         // 폼 데이터 가져오기
-        const title = document.getElementById('title').value;
-        const content = document.getElementById('content').value;
-        const image = imageInput.files[0];
+        const title = commentTitleInput.value.trim();
+        const content = commentContentInput.value.trim();
+        const image = commentImageInput.files[0];
+        const boardId = boardIdElement.innerText; // boardId 값 가져오기
+
+        // 유효성 검사
+        if (!title || !content) {
+            alert('제목과 내용을 입력해 주세요.');
+            return;
+        }
 
         // 이미지 유효성 검사
         if (image && !image.type.startsWith('image/')) {
@@ -19,11 +29,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (image) {
             // 이미지 리사이즈
             resizeImage(image, 800, 600, function (resizedFile) {
-                uploadFormWithImage(title, content, resizedFile);
+                uploadFormWithImage(boardId, title, content, resizedFile);
             });
         } else {
             // 이미지가 없는 경우 그대로 업로드
-            uploadFormWithImage(title, content, null);
+            uploadFormWithImage(boardId, title, content, null);
         }
     });
 
@@ -50,8 +60,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function uploadFormWithImage(title, content, imageFile) {
+    function uploadFormWithImage(boardId, title, content, imageFile) {
         const formData = new FormData();
+        formData.append('boardId', boardId); // boardId 추가
         formData.append('title', title);
         formData.append('content', content);
         if (imageFile) {
@@ -59,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // axios를 사용하여 POST 요청 보내기
-        axios.post('/customerInquiry', formData, {
+        axios.post('/customerInquiry/comment', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -68,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // 요청이 성공했을 때의 처리
             if (response.data.success) {
                 alert(response.data.msg);
-                window.location.href = '/customerInquiryBoardList'; // 문의 목록 페이지로 이동
+                location.reload(); // 페이지 새로고침하여 댓글 목록 업데이트
             } else {
                 alert(response.data.msg);
             }
@@ -76,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(function (error) {
             // 요청이 실패했을 때의 처리
             console.error('There was an error!', error);
-            alert('문의 등록에 실패했습니다. 다시 시도해 주세요.');
+            alert('댓글 등록에 실패했습니다. 다시 시도해 주세요.');
         });
     }
 });

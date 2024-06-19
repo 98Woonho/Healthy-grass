@@ -34,8 +34,8 @@ function displayComments(comments) {
                 <span class="comment-date">${comment.regDate}</span>
             </div>
             <div class="comment-body">
-                ${imgUrl ? `<p><img src="${imgUrl}" alt="첨부 이미지" class="comment-image" /></p>` : ''}
-                <p>${comment.content}</p>
+                ${imgUrl ? `<p><img src="${imgUrl}" alt="첨부 이미지" class="comment-image" style="max-width: 400px;" /></p>` : ''}
+                <p>${comment.comment}</p>
             </div>
             <div class="comment-footer">
                 <span class="comment-update-date">수정일: ${comment.updateDate}</span>
@@ -54,7 +54,7 @@ function displayComments(comments) {
 }
 
 function deleteComment(commentId) {
-    axios.delete(`/customerInquiryBoardComment?id=${commentId}`)
+    axios.delete(`/customerInquiry/comment?id=${commentId}`)
         .then(function (response) {
             if (response.data.success) {
                 alert(response.data.msg || '댓글이 성공적으로 삭제되었습니다.');

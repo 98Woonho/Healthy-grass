@@ -36,6 +36,84 @@
     font-weight: bold;
 }
 
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px; /* 버튼 간의 간격을 조정 */
+}
+
+.button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-container button#editBtn {
+    background-color: #007bff;
+    color: white;
+}
+
+.button-container button#editBtn:hover {
+    background-color: #0056b3;
+}
+
+.button-container button#deleteBtn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.button-container button#deleteBtn:hover {
+    background-color: #c82333;
+}
+
+.third-section {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.third-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.third-section label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.third-section input[type="text"],
+.third-section textarea,
+.third-section input[type="file"] {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.third-section textarea {
+    resize: vertical;
+}
+
+.third-section button {
+    align-self: flex-start;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.third-section button:hover {
+    background-color: #0056b3;
+}
+
 .comment {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
@@ -91,8 +169,25 @@
     background-color: #ff1a1a;
 }
 
-.comment-image {
-    max-width: 300px;
-    height: auto;
-    border-radius: 5px;
+.third-section input[type="file"] {
+    padding: 0px; /* 파일 입력 필드의 패딩 조정 */
+    border: none; /* 기본 테두리 제거 */
+    background-color: #f9f9f9; /* 배경색 조정 */
+    font-size: 14px; /* 글꼴 크기 조정 */
+    color: #555; /* 글꼴 색상 조정 */
+    cursor: pointer; /* 마우스 커서 변경 */
 }
+
+.third-section input[type="file"]::file-selector-button {
+    background-color: #007bff; /* 버튼 배경색 */
+    color: white; /* 버튼 글꼴 색상 */
+    padding: 5px 10px; /* 버튼 패딩 */
+    border: none; /* 버튼 테두리 제거 */
+    border-radius: 4px; /* 버튼 모서리 둥글게 */
+    cursor: pointer; /* 마우스 커서 변경 */
+}
+
+.third-section input[type="file"]::file-selector-button:hover {
+    background-color: #0056b3; /* 버튼 호버 색상 */
+}
+

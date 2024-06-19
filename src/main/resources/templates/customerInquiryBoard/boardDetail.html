@@ -1,10 +1,14 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
     <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
     <link rel="stylesheet" th:href="@{/css/customerInquiryBoardDetail/customerInquiryBoardDetail.css}">
@@ -25,7 +29,7 @@
                         <p>작성자: <span th:text="${customerInquiryBoardDetail.Uid}"></span></p>
                         <p>제목: <span th:text="${customerInquiryBoardDetail.title}"></span></p>
                         <!-- 업로드된 이미지가 있을 때만 이미지를 보여줌 -->
-                        <div th:if="${customerInquiryBoardDetail.get(imgPath) != null}">
+                        <div th:if="${customerInquiryBoardDetail.get('imgPath') != null}">
                             <p>업로드 사진: <img th:src="@{${customerInquiryBoardDetail.imgPath + '/' + customerInquiryBoardDetail.imgName}}" alt="업로드된 이미지"></p>
                         </div>
                         <p>글 내용: <span th:text="${customerInquiryBoardDetail.content}"></span></p>
@@ -53,6 +57,22 @@
             <!-- 댓글이 들어가는 곳 -->
         </section>
         <script defer th:src="@{/js/customerInquiryBoardDetail/customerInquiryBoardDetailCommentProcess.js}"></script>
+        <section class="third-section" id="comments-input-section" sec:authorize="hasRole('ROLE_ADMIN')">
+            <form id="commentForm" enctype="multipart/form-data">
+                <h4>답변달기</h4>
+                <label for="commentTitle">제목:</label>
+                <input type="text" id="commentTitle" name="title" required>
+
+                <label for="commentContent">내용:</label>
+                <textarea id="commentContent" name="content" rows="4" cols="50" required></textarea>
+
+                <label for="commentImage">첨부 이미지:</label>
+                <input type="file" name="image" id="commentImage" accept="image/*">
+
+                <button type="submit">작성</button>
+            </form>
+        </section>
+        <script th:src="@{/js/customerInquiryBoardDetail/postCommentProcess.js}"></script>
     </div>
     <div class="footer">
         <!-- Footer content -->

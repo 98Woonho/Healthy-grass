@@ -11,4 +11,6 @@ public interface CustomerInquiryBoardService {
     public Map<String, Object> getCustomerInquiryBoardDetail(Integer id) throws Exception;
     public Map<String, Object> getMyCustomerInquiryBoards(Criteria criteria, String uId) throws Exception;
     public Map<String, Object> postCustomerInquiryServ(CustomerInquiryBoardDto boardDto, MultipartFile file) throws Exception;
+    public Map<String, Object> putCustomerInquiryServ(CustomerInquiryBoardDto boardDto, MultipartFile file, boolean deleteImage) throws Exception;
+    Map<String, Object> deleteCustomerInquiryServ(Long id) throws Exception;
 }

@@ -8,12 +8,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -132,7 +134,7 @@ public class CustomerInquiryBoardController {
     @PostMapping("/customerInquiry")
     public @ResponseBody Map<String, Object> postCustomerInquiry(@ModelAttribute postCustomerInquiryDto postDto, Authentication authentication)
     {
-        System.out.println("CustomerInquiryBoardController's handleCustomerInquiry dto: " + postDto);
+        System.out.println("CustomerInquiryBoardController's postCustomerInquiry dto: " + postDto);
 
         Map<String, Object> response = new HashMap<>();
 
@@ -219,9 +221,9 @@ public class CustomerInquiryBoardController {
         게시글 수정 요청을 서비스를 수행합니다.
     */
     @PutMapping("/customerInquiry")
-    public @ResponseBody Map<String, Object> updateCustomerInquiry(
-            @ModelAttribute postCustomerInquiryDto postDto, Authentication authentication) {
-        System.out.println("CustomerInquiryBoardController's updateCustomerInquiry dto: " + postDto);
+    public @ResponseBody Map<String, Object> putCustomerInquiry (
+            @ModelAttribute PutCustomerInquiryDto putDto, Authentication authentication) {
+        System.out.println("CustomerInquiryBoardController's putCustomerInquiry dto: " + putDto);
 
         Map<String, Object> response = new HashMap<>();
 
@@ -232,15 +234,16 @@ public class CustomerInquiryBoardController {
         }
 
         CustomerInquiryBoardDto boardDto = new CustomerInquiryBoardDto();
-        boardDto.setId(postDto.getId());
+        boardDto.setId(putDto.getId());
         boardDto.setUid(authentication.getName());
-        boardDto.setTitle(postDto.getTitle());
-        boardDto.setContent(postDto.getContent());
+        boardDto.setTitle(putDto.getTitle());
+        boardDto.setContent(putDto.getContent());
 
-        MultipartFile file = postDto.getImage();
+        MultipartFile file = putDto.getImage();
+        boolean deleteImage = putDto.isDeleteImage();
 
         try {
-//            response = service.updateCustomerInquiry(boardDto, file);
+            response = service.putCustomerInquiryServ(boardDto, file, deleteImage);
         } catch (Exception e) {
             response.put("success", false);
             response.put("msg", "문의 수정에 실패하였습니다.");
@@ -250,7 +253,7 @@ public class CustomerInquiryBoardController {
     }
 
     @Data
-    private static class putCustomerInquiryDto {
+    private static class PutCustomerInquiryDto {
         @JsonProperty("id")
         private Long id;
         @JsonProperty("title")
@@ -259,5 +262,54 @@ public class CustomerInquiryBoardController {
         private String content;
         @JsonProperty("image")
         private MultipartFile image;
+        @JsonProperty("deleteImage")
+        private boolean deleteImage;
+    }
+
+    /*
+        게시글 삭제 요청 처리
+        관리자, 작성자 본인만 삭제 가능
+    */
+    @DeleteMapping("customerInquiry")
+    public @ResponseBody Map<String, Object> deleteCustomerInquiry(@RequestParam("id") Integer id, Authentication authentication) {
+        System.out.println("CustomerInquiryBoardController's deleteCustomerInquiry id: " + id);
+
+        Map<String, Object> response = new HashMap<>();
+
+        boolean isAdmin = false;
+
+        if (authentication == null) {
+            // 만약 비회원 상태라면
+            response.put("success", false);
+            response.put("msg", "작성한 회원만 삭제 요청을 할 수 있습니다.");
+
+            return response;
+        }
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        String userName = principalDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = principalDetails.getAuthorities();
+        isAdmin = authorities.stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+
+        try {
+            Map<String, Object> boardInfo = service.getCustomerInquiryBoardDetail(id);
+
+            if (!isAdmin && !userName.equals(boardInfo.get("Uid"))) {
+                response.put("success", false);
+                response.put("msg", "본인이 작성한 게시글만 삭제할 수 있습니다.");
+            } else {
+                // 제거 요청에 대한 서비스 호출
+                response = service.deleteCustomerInquiryServ(Long.valueOf(id));
+            }
+        } catch (NullPointerException e) {
+            response.put("success", false);
+            response.put("msg", "게시글 정보를 찾을 수 없습니다.");
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("msg", "데이터베이스 에러");
+        }
+
+        return response;
     }
 }

@@ -106,6 +106,7 @@ public class ProductInquiryBoardController {
     public @ResponseBody Map<String, Object> passwordCheck(@RequestBody Map<String, Object> request) {
         Integer id = Integer.parseInt((String)request.get("id"));
         String password = (String) request.get("password");
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         System.out.println("productInquiryBoardController's passwordCheck password: " + password + " id: " + id);
         Map<String, Object> response = new HashMap<>();
@@ -118,7 +119,7 @@ public class ProductInquiryBoardController {
 
 
             // 게시판 작성을 구현하고 나면 Bcrypt 비교로 수정 필요
-            if (boardPassword.equals(password)) {
+            if (bCryptPasswordEncoder.matches(password,boardPassword)) {
                 unlockId = id;
                 System.out.println(unlockId);
                 response.put("result", result);
@@ -248,36 +249,21 @@ public class ProductInquiryBoardController {
             boardDto.setUid(uId);
         }
 
-        /*
-        *  isLocked 가 check 되었다면 'Y', 아니라면 'N' 으로 변환 작업
-        *  패스워드 인코딩
-        */
-
-        if(boardDto.getIsLocked() != null) {
-            boardDto.setIsLocked("Y");
-
-            if(boardDto.getPassword() != null || !boardDto.getPassword().equals("")) {
-                boardDto.setPassword(encoder.encode(boardDto.getPassword()));
-            } else {
-                // 잠금글 체크를 하고 비밀번호를 안치면 잠금글 해제
-                boardDto.setIsLocked("N");
-            }
-
-        } else {
-            boardDto.setIsLocked("N");
-        }
-
         // 업로드 날짜 등록
         boardDto.setRegDate(LocalDate.now());
         boardDto.setUpdateDate(LocalDate.now());
 
         // DB에 삽입 작업 + result 추가 작업
         try {
+            if ("Y".equals(boardDto.getIsLocked())) {
+                boardDto.setPassword(encoder.encode(boardDto.getPassword()));
+            }
+
             result = productInquiryBoardService.postProductInquiry(boardDto);
         } catch (Exception e) {
             e.printStackTrace();
             result.put("success", false);
-            result.put("msg", "데이터베이스 에러");
+            result.put("msg", "문의글 등록에 실패하였습니다.");
         }
 
         return result;
@@ -348,6 +334,8 @@ public class ProductInquiryBoardController {
 
         Map<String, Object> response = new HashMap<>();
 
+        boolean isAdmin = false;
+
         if (authentication == null) {
             // 만약 비회원 상태라면
             response.put("success", false);
@@ -358,11 +346,14 @@ public class ProductInquiryBoardController {
 
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         String userName = principalDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = principalDetails.getAuthorities();
+        isAdmin = authorities.stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
 
         try {
             Map<String, Object> boardInfo = productInquiryBoardService.getproductInquiryBoardDetail(id);
 
-            if (!userName.equals(boardInfo.get("Uid"))) {
+            if (!isAdmin && !userName.equals(boardInfo.get("Uid"))) {
                 response.put("success", false);
                 response.put("msg", "본인이 작성한 게시글만 삭제할 수 있습니다.");
             } else {

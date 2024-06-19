@@ -16,4 +16,7 @@ public interface CustomerInquiryBoardMapper {
     int findMyCustomerInquiryBoardsCount(@Param("criteria") Criteria criteria, @Param("uId") String uId) throws Exception;
     List<Map<String, Object>> findMyCustomerInquiryBoards(@Param("criteria") Criteria criteria, @Param("offset") int offset, @Param("uId") String uId) throws Exception;
     Integer insertCustomerInquiry(CustomerInquiryBoardDto boardDto) throws Exception;
+    Integer updateCustomerInquiry(CustomerInquiryBoardDto boardDto) throws Exception;
+    CustomerInquiryBoardDto selectCustomerInquiryById(Long id) throws Exception;
+    int deleteCustomerInquiry(Long id) throws Exception;
 }

@@ -117,4 +117,28 @@
         INSERT INTO customer_inquiry_board (Uid, title, content, imgPath, imgName, regDate, updateDate)
         VALUES (#{Uid}, #{title}, #{content}, #{imgPath}, #{imgName}, #{regDate}, #{updateDate})
     </insert>
+
+    <update id="updateCustomerInquiry" parameterType="com.example.app.shopping.domain.dto.CustomerInquiryBoardDto">
+        UPDATE customer_inquiry_board
+        SET
+        title = #{title},
+        content = #{content},
+        imgPath = #{imgPath},
+        imgName = #{imgName},
+        updateDate = #{updateDate}
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectCustomerInquiryById" parameterType="Long" resultType="com.example.app.shopping.domain.dto.CustomerInquiryBoardDto">
+        SELECT
+        *
+        FROM
+        customer_inquiry_board
+        WHERE id = #{id}
+    </select>
+
+    <delete id="deleteCustomerInquiry" parameterType="long">
+        DELETE FROM customer_inquiry_board WHERE id = #{id}
+    </delete>
+
 </mapper>

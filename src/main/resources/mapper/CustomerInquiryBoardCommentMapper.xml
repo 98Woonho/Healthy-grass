@@ -8,4 +8,19 @@
         WHERE cibc.C_Board_Id = #{id}
         ORDER BY cibc.updateDate DESC, cibc.regDate DESC
     </select>
+    <insert id="insertComment" parameterType="com.example.app.shopping.domain.dto.CustomerInquiryCommentDto">
+        INSERT INTO customer_inquiry_comment (C_Board_id, title, comment, imgPath, imgName, regDate, updateDate)
+        VALUES (#{C_Board_id}, #{title}, #{comment}, #{imgPath}, #{imgName}, #{regDate}, #{updateDate})
+    </insert>
+    <!-- 댓글 정보 조회 -->
+    <select id="selectCustomerInquiryCommentById" parameterType="long" resultType="com.example.app.shopping.domain.dto.CustomerInquiryCommentDto">
+        SELECT id, C_Board_id, title, comment, imgPath, imgName, regDate, updateDate
+        FROM customer_inquiry_comment
+        WHERE id = #{id}
+    </select>
+
+    <!-- 댓글 삭제 -->
+    <delete id="deleteCustomerInquiryComment" parameterType="long">
+        DELETE FROM customer_inquiry_comment WHERE id = #{id}
+    </delete>
 </mapper>

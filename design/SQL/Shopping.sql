@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `shopping` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `shopping`;
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: shopping
 -- ------------------------------------------------------
--- Server version	8.0.35
+-- Server version	8.0.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,34 +20,6 @@
 --
 -- Table structure for table `cart`
 --
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-                        `id` varchar(50) NOT NULL,
-                        `name` varchar(45) DEFAULT NULL,
-                        `password` varchar(150) DEFAULT NULL,
-                        `zipcode` varchar(80) DEFAULT NULL,
-                        `streetAdr` varchar(100) DEFAULT NULL,
-                        `detailAdr` varchar(100) DEFAULT NULL,
-                        `phone` varchar(45) DEFAULT NULL,
-                        `email` varchar(45) DEFAULT NULL,
-                        `role` varchar(20) DEFAULT NULL,
-                        `provider` varchar(80) DEFAULT NULL,
-                        `providerId` varchar(50) DEFAULT NULL,
-                        PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('9woonho8', '이운호', '$2a$10$5cIgZLCcWyH8S70LN8tqV.ApfMRRtn.n7eDAWFV9v3nsV8.Ofj0gq', '04340', '서울 용산구 남산공원길 123', '101', '010-9533-1150', 'lkj1150@naver.com', 'ROLE_USER', '', ''),('hbsh2330','황보성현','$2a$10$221jc4pEnlb91HVm8IFCY.pfY1UP4RIlWDvskc0BF2L1X9loV3Br6','42938','대구 달성군 가창면 가창동로 3','','010-4216-2330','hbsh2330@naver.com','ROLE_USER',NULL,NULL),('pakms980319','박민석','$2a$10$cUr/kxN21FkE5xj.fpLaMuOFtlVHTWoxAZiEH4GnAL8wKEU4Z9vNm','43109','대구 군위군 군위읍 개봉길 23-72','길거리 바닥','010-5282-4082','pakms980319@gmail.com','ROLE_ADMIN',NULL,NULL),('user1','Alice','password1','12345','123 Main St','Apt 1','010-1234-5678','alice@example.com','user','local','provider1'),('user10','Judy','password10','01234','707 Spruce St','Apt 10','010-0123-4567','judy@example.com','admin','google','provider10'),('user11','Karl','password11','11223','808 Willow St','Apt 11','010-1123-5678','karl@example.com','user','facebook','provider11'),('user12','Laura','password12','22334','909 Redwood St','Apt 12','010-2234-6789','laura@example.com','user','facebook','provider12'),('user13','Mallory','password13','33445','1010 Palm St','Apt 13','010-3345-7890','mallory@example.com','user','local','provider13'),('user14','Nathan','password14','44556','1111 Fir St','Apt 14','010-4456-8901','nathan@example.com','user','local','provider14'),('user15','Olivia','password15','55667','1212 Poplar St','Apt 15','010-5567-9012','olivia@example.com','admin','google','provider15'),('user16','Peggy','password16','66778','1313 Beech St','Apt 16','010-6678-0123','peggy@example.com','user','google','provider16'),('user17','Quentin','password17','77889','1414 Cedar St','Apt 17','010-7789-1234','quentin@example.com','user','facebook','provider17'),('user18','Rupert','password18','88990','1515 Holly St','Apt 18','010-8890-2345','rupert@example.com','user','facebook','provider18'),('user19','Sybil','password19','99001','1616 Alder St','Apt 19','010-9901-3456','sybil@example.com','user','local','provider19'),('user2','Bob','password2','23456','456 Oak St','Apt 2','010-2345-6789','bob@example.com','admin','local','provider2'),('user20','Trent','password20','10112','1717 Juniper St','Apt 20','010-1011-4567','trent@example.com','admin','local','provider20'),('user3','Charlie','password3','34567','789 Pine St','Apt 3','010-3456-7890','charlie@example.com','user','google','provider3'),('user4','David','password4','45678','101 Maple St','Apt 4','010-4567-8901','david@example.com','user','google','provider4'),('user5','Eve','password5','56789','202 Birch St','Apt 5','010-5678-9012','eve@example.com','admin','facebook','provider5'),('user6','Frank','password6','67890','303 Cedar St','Apt 6','010-6789-0123','frank@example.com','user','facebook','provider6'),('user7','Grace','password7','78901','404 Walnut St','Apt 7','010-7890-1234','grace@example.com','user','local','provider7'),('user8','Heidi','password8','89012','505 Ash St','Apt 8','010-8901-2345','heidi@example.com','user','local','provider8'),('user9','Ivan','password9','90123','606 Elm St','Apt 9','010-9012-3456','ivan@example.com','user','google','provider9');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -461,6 +435,29 @@ LOCK TABLES `shipping_address` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `signature`
+--
+
+DROP TABLE IF EXISTS `signature`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `signature` (
+  `signature` varbinary(3072) NOT NULL,
+  `date` date DEFAULT NULL,
+  PRIMARY KEY (`signature`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `signature`
+--
+
+LOCK TABLES `signature` WRITE;
+/*!40000 ALTER TABLE `signature` DISABLE KEYS */;
+/*!40000 ALTER TABLE `signature` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -530,4 +527,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-16 17:57:04
+-- Dump completed on 2024-06-19 12:47:34

@@ -66,6 +66,24 @@ amountDown.addEventListener('click', function (e){
 const productId = document.querySelector("#productId");
 
 
+const wishBtn = document.querySelector('.wishBtn');
+wishBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    axios.post('/product/wish', {
+        'productId' : productId.value
+    })
+        .then(res => {
+            console.log(res);
+            alert(res.data);
+        })
+        .catch(err => {
+            if (err.response.status === 409) {
+                alert(err.response.data);
+            } else {
+                alert('알 수 없는 이유로 제품을 찜리스트에 등록 하지 못했습니다. 잠시 후 다시 시도해 주세요.');
+            }
+        })
+})
 
 
 const cartBtn = document.querySelector('.cartBtn');

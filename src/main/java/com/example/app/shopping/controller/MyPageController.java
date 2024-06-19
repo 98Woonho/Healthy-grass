@@ -201,5 +201,4 @@ public class MyPageController {
         }
         return "redirect:/user/loginForm";
     }
-
 }

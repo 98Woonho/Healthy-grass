@@ -1,8 +1,11 @@
 package com.example.app.shopping.controller;
 
 import com.example.app.shopping.config.auth.PrincipalDetails;
+import com.example.app.shopping.domain.dto.CustomerInquiryBoardDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.service.customerInquiryBoard.CustomerInquiryBoardServiceImpl;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -114,17 +117,57 @@ public class CustomerInquiryBoardController {
     }
 
 
-    @PostMapping("/customerInquiry")
-    public @ResponseBody String postCustomerInquiry(@RequestParam("title") String title,
-                                                      @RequestParam("content") String content,
-                                                      @RequestParam(value = "image", required = false) MultipartFile image)
-    {
-        System.out.println("CustomerInquiryBoardController's handleCustomerInquiry");
-        System.out.println("title: " + title);
-        System.out.println("content: " + content);
-        if (image != null)
-            System.out.println("image: " + image);
+    /*
+        POST    /customerInquiry
 
-        return "";
+        고객 문의글에 작성된 내용을 받아 DB에 저장합니다.
+        성공 시
+        ("success", true)
+        ("msg", "성공 메시지")
+        실패 시
+        ("success", false)
+        ("msg", "실패 메시지")
+        가 Map 형태로 전달됩니다.
+    */
+    @PostMapping("/customerInquiry")
+    public @ResponseBody Map<String, Object> postCustomerInquiry(@ModelAttribute postCustomerInquiryDto postDto, Authentication authentication)
+    {
+        System.out.println("CustomerInquiryBoardController's handleCustomerInquiry dto: " + postDto);
+
+        Map<String, Object> response = new HashMap<>();
+
+        if(authentication == null) {
+            response.put("success", false);
+            response.put("msg", "비회원은 작성할 수 없습니다.");
+
+            return response;
+        }
+
+        CustomerInquiryBoardDto boardDto = new CustomerInquiryBoardDto();
+
+        boardDto.setUid(authentication.getName());
+        boardDto.setTitle(postDto.getTitle());
+        boardDto.setContent(postDto.getContent());
+
+        MultipartFile file = postDto.getImage();
+
+        try {
+            response = service.postCustomerInquiryServ(boardDto, file);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("msg", "상품 등록에 실패하였습니다.");
+        }
+
+        return response;
+    }
+
+    @Data
+    private static class postCustomerInquiryDto {
+        @JsonProperty("title")
+        private String title;
+        @JsonProperty("content")
+        private String content;
+        @JsonProperty("image")
+        private MultipartFile image;
     }
 }

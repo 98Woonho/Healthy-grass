@@ -22,8 +22,12 @@ document.getElementById('submit').addEventListener('click', function(event) {
     })
     .then(function (response) {
         // 요청이 성공했을 때의 처리
-        alert('문의가 성공적으로 등록되었습니다.');
-        window.location.href = '/customerInquiryBoardList'; // 문의 목록 페이지로 이동
+        if (response.data.success) {
+            alert(response.data.msg);
+            window.location.href = '/customerInquiryBoardList'; // 문의 목록 페이지로 이동
+        } else {
+            alert(response.data.msg);
+        }
     })
     .catch(function (error) {
         // 요청이 실패했을 때의 처리

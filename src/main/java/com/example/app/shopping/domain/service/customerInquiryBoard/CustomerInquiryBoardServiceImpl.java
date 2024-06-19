@@ -1,15 +1,23 @@
 package com.example.app.shopping.domain.service.customerInquiryBoard;
 
+import com.example.app.shopping.domain.dto.CustomerInquiryBoardDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.dto.common.PageDto;
 import com.example.app.shopping.domain.mapper.CustomerInquiryBoardMapper;
+import com.example.app.shopping.properties.FileUploadPathProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class CustomerInquiryBoardServiceImpl implements CustomerInquiryBoardService {
@@ -60,5 +68,49 @@ public class CustomerInquiryBoardServiceImpl implements CustomerInquiryBoardServ
         returnVal.put("pageDto", pageDto);
 
         return returnVal;
+    }
+
+    @Override
+    public Map<String, Object> postCustomerInquiryServ(CustomerInquiryBoardDto boardDto, MultipartFile file) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+
+        if (file != null && !file.isEmpty()) {
+            String uploadDir = FileUploadPathProperties.getUploadDir() + "/customerInquiry/" + LocalDate.now();
+            File uploadDirFile = new File(uploadDir);
+            if (!uploadDirFile.exists()) {
+                uploadDirFile.mkdirs(); // 디렉터리가 존재하지 않으면 생성
+            }
+
+            String originalFileName = file.getOriginalFilename();
+            String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
+            String filePath = Paths.get(uploadDir, uniqueFileName).toString();
+
+            File destinationFile = new File(filePath);
+            try {
+                file.transferTo(destinationFile);
+            } catch (IOException e) {
+                throw new Exception("파일 업로드에 실패했습니다.");
+            }
+
+            // boardDto에 파일 경로와 파일 이름 설정
+            boardDto.setImgPath(uploadDir);
+            boardDto.setImgName(uniqueFileName);
+        }
+
+        boardDto.setRegDate(LocalDate.now());
+        boardDto.setUpdateDate(LocalDate.now());
+
+        Integer insertReturnVal = mapper.insertCustomerInquiry(boardDto);
+
+        if (insertReturnVal < 1) {
+            // 삽입 실패 시
+            throw new Exception("게시글 등록에 실패하였습니다.");
+        } else {
+            result.put("success", true);
+            result.put("msg", "게시글 등록에 성공하였습니다.");
+        }
+
+        return result;
     }
 }

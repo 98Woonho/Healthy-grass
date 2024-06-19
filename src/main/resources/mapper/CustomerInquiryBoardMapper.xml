@@ -110,4 +110,9 @@
         cib.regDate DESC
         LIMIT #{offset}, #{criteria.amount}
     </select>
+
+    <insert id="insertCustomerInquiry" parameterType="com.example.app.shopping.domain.dto.CustomerInquiryBoardDto">
+        INSERT INTO customer_inquiry_board (Uid, title, content, imgPath, imgName, regDate, updateDate)
+        VALUES (#{Uid}, #{title}, #{content}, #{imgPath}, #{imgName}, #{regDate}, #{updateDate})
+    </insert>
 </mapper>

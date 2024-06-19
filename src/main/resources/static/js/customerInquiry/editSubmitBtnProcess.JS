@@ -6,24 +6,25 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault(); // 기본 폼 제출 방지
 
         // 폼 데이터 가져오기
-        const title = document.getElementById('title').value;
-        const content = document.getElementById('content').value;
-        const image = imageInput.files[0];
+        const form = document.getElementById('editForm');
+        const formData = new FormData(form);
 
         // 이미지 유효성 검사
-        if (image && !image.type.startsWith('image/')) {
+        const file = imageInput.files[0];
+        if (file && !file.type.startsWith('image/')) {
             alert('이미지 파일만 업로드할 수 있습니다.');
             return;
         }
 
-        if (image) {
+        if (file) {
             // 이미지 리사이즈
-            resizeImage(image, 800, 600, function (resizedFile) {
-                uploadFormWithImage(title, content, resizedFile);
+            resizeImage(file, 800, 600, function (resizedFile) {
+                formData.set('image', resizedFile);
+                uploadForm(formData);
             });
         } else {
             // 이미지가 없는 경우 그대로 업로드
-            uploadFormWithImage(title, content, null);
+            uploadForm(formData);
         }
     });
 
@@ -50,16 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function uploadFormWithImage(title, content, imageFile) {
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('content', content);
-        if (imageFile) {
-            formData.append('image', imageFile);
-        }
-
-        // axios를 사용하여 POST 요청 보내기
-        axios.post('/customerInquiry', formData, {
+    function uploadForm(formData) {
+        axios.put('/customerInquiry', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -68,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // 요청이 성공했을 때의 처리
             if (response.data.success) {
                 alert(response.data.msg);
-                window.location.href = '/customerInquiryBoardList'; // 문의 목록 페이지로 이동
+                window.location.href = '/customerInquiryBoardList'; // 수정 후 목록 페이지로 이동
             } else {
                 alert(response.data.msg);
             }
@@ -76,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(function (error) {
             // 요청이 실패했을 때의 처리
             console.error('There was an error!', error);
-            alert('문의 등록에 실패했습니다. 다시 시도해 주세요.');
+            alert('문의 수정에 실패했습니다. 다시 시도해 주세요.');
         });
     }
 });

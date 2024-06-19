@@ -1,0 +1,104 @@
+.main {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.first-section {
+    margin-bottom: 20px;
+}
+
+.first-section p, .first-section span, .first-section textarea, .first-section button, .first-section input[type="file"] {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.first-section p a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.first-section span {
+    margin-bottom: 10px;
+}
+
+.first-section input[type="text"], .first-section textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.first-section input[type="file"] {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.first-section .button-container {
+    text-align: center;
+}
+
+.first-section button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.first-section button:hover {
+    background-color: #0056b3;
+}
+
+/* form 요소 스타일링 */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form span {
+    display: flex;
+    flex-direction: column;
+}
+
+form input[type="text"],
+form textarea,
+form input[type="file"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+form .button-container {
+    display: flex;
+    justify-content: center;
+}
+
+form button {
+    width: 100px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}

@@ -24,11 +24,20 @@
                         <p>게시글 번호: <span id="boardId" th:text="${customerInquiryBoardDetail.id}"></span></p>
                         <p>작성자: <span th:text="${customerInquiryBoardDetail.Uid}"></span></p>
                         <p>제목: <span th:text="${customerInquiryBoardDetail.title}"></span></p>
+                        <!-- 업로드된 이미지가 있을 때만 이미지를 보여줌 -->
+                        <div th:if="${customerInquiryBoardDetail.get(imgPath) != null}">
+                            <p>업로드 사진: <img th:src="@{${customerInquiryBoardDetail.imgPath + '/' + customerInquiryBoardDetail.imgName}}" alt="업로드된 이미지"></p>
+                        </div>
                         <p>글 내용: <span th:text="${customerInquiryBoardDetail.content}"></span></p>
-                        <p>업로드 사진: <span th:text="${customerInquiryBoardDetail.imgPath + '/' + customerInquiryBoardDetail.imgName}"></span></p>  <!-- 테스트 데이터가 잘못된거고 실제 path + imgName 으로 경로가 삽입되어야 하는게 맞습니다. -->
                         <p>작성일: <span th:text="${customerInquiryBoardDetail.regDate}"></span></p>
                         <p>수정일: <span th:text="${customerInquiryBoardDetail.updateDate}"></span></p>
                         <p>댓글 수: <span th:text="${customerInquiryBoardDetail.commentCount}"></span></p>
+                    </div>
+
+                    <!-- 수정 및 삭제 버튼 추가 -->
+                    <div class="button-container">
+                        <button id="editBtn">수정</button>
+                        <button id="deleteBtn">삭제</button>
                     </div>
                 </div>
                 <div th:if="${!response.success}">
@@ -39,6 +48,7 @@
                 <p>서버로의 요청에 실패했습니다.</p>
             </div>
         </section>
+        <script defer th:src="@{/js/customerInquiryBoardDetail/btnProcess.js}"></script>
         <section class="second-section" id="comments-section">
             <!-- 댓글이 들어가는 곳 -->
         </section>

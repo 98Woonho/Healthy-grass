@@ -45,7 +45,8 @@
         </if>
         ORDER BY
         pib.updateDate DESC,
-        pib.regDate DESC
+        pib.regDate DESC,
+        pib.id DESC
         LIMIT #{offset}, #{criteria.amount}
     </select>
 
@@ -153,7 +154,8 @@
         </if>
         ORDER BY
         pib.updateDate DESC,
-        pib.regDate DESC
+        pib.regDate DESC,
+        pib.id DESC
         LIMIT #{offset}, #{criteria.amount}
     </select>
 

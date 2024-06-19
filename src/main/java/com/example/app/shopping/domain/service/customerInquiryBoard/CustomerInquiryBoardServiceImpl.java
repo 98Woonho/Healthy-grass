@@ -75,7 +75,8 @@ public class CustomerInquiryBoardServiceImpl implements CustomerInquiryBoardServ
         Map<String, Object> result = new HashMap<>();
 
         if (file != null && !file.isEmpty()) {
-            String uploadDir = FileUploadPathProperties.getUploadDir() + "/customerInquiry/" + LocalDate.now();
+            String relativeDir = "customerInquiry/" + LocalDate.now();
+            String uploadDir = FileUploadPathProperties.getUploadDir() + "/" + relativeDir;
             File uploadDirFile = new File(uploadDir);
             if (!uploadDirFile.exists()) {
                 uploadDirFile.mkdirs(); // 디렉터리가 존재하지 않으면 생성
@@ -93,8 +94,8 @@ public class CustomerInquiryBoardServiceImpl implements CustomerInquiryBoardServ
                 throw new Exception("파일 업로드에 실패했습니다.");
             }
 
-            // boardDto에 파일 경로와 파일 이름 설정
-            boardDto.setImgPath(uploadDir);
+            // boardDto에 파일 경로와 파일 이름 설정 (상대 경로 사용)
+            boardDto.setImgPath("/uploads/" + relativeDir);
             boardDto.setImgName(uniqueFileName);
         }
 

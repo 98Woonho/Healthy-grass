@@ -41,7 +41,8 @@
         </if>
         ORDER BY
         cib.updateDate DESC,
-        cib.regDate DESC
+        cib.regDate DESC,
+        cib.id DESC
         LIMIT #{offset}, #{criteria.amount}
     </select>
 
@@ -107,7 +108,8 @@
         </if>
         ORDER BY
         cib.updateDate DESC,
-        cib.regDate DESC
+        cib.regDate DESC,
+        cib.id DESC
         LIMIT #{offset}, #{criteria.amount}
     </select>
 

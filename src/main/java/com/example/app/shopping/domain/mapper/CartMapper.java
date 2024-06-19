@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface CartMapper {
-
     void insertCart();
 
     void insertCartByUserId(@Param("userId") String userId);

@@ -95,9 +95,6 @@ public class AdminService {
         // 새로운 업로드 경로 디렉터리 생성
         File newDir = new File(newUploadPath);
 
-        // 디렉터리 이름 변경
-        dir.renameTo(newDir);
-
         // 이미지 경로 set
         productDto.setMainImgPath(File.separator + "shopping" + File.separator + productDto.getName() + File.separator);
         productDto.setSubImgPath(File.separator + "shopping" + File.separator + productDto.getName() + File.separator);
@@ -111,7 +108,7 @@ public class AdminService {
             }
 
             // 이미지 오브젝트 생성
-            File mainImageObj = new File(newDir, "main_" + mainImage.getOriginalFilename());
+            File mainImageObj = new File(dir, "main_" + mainImage.getOriginalFilename());
 
             // 이미지 저장
             mainImage.transferTo(mainImageObj);
@@ -128,13 +125,13 @@ public class AdminService {
         // 서브 이미지가 수정 되었을 경우
         if (subImage != null) {
             // 이전 이미지 삭제
-            File prevSubImage = new File(newDir, prevProductDto.getSubImgName());
+            File prevSubImage = new File(dir, prevProductDto.getSubImgName());
             if (prevSubImage.exists()) {
                 prevSubImage.delete();
             }
 
             // 이미지 오브젝트 생성
-            File subImageObj = new File(newDir, "sub_" + subImage.getOriginalFilename());
+            File subImageObj = new File(dir, "sub_" + subImage.getOriginalFilename());
 
             // 이미지 저장
             subImage.transferTo(subImageObj);
@@ -145,7 +142,7 @@ public class AdminService {
         // 서브 이미지 수정 안 되었을 경우
         } else {
             // 기존 이미지 이름 set
-            productDto.setMainImgName(prevProductDto.getSubImgName());
+            productDto.setSubImgName(prevProductDto.getSubImgName());
         }
 
         // 수정 시간 set
@@ -156,6 +153,8 @@ public class AdminService {
         int discountedPrice = (int) (productDto.getPrice() * productDto.getDiscount() * 0.01);
         productDto.setDiscountedPrice(productDto.getPrice() - discountedPrice);
 
+        // 디렉터리 이름 변경
+        dir.renameTo(newDir);
 
         // product table update
         productMapper.updateProduct(productDto);

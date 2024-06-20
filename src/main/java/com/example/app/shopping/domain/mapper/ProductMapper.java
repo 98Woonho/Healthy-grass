@@ -56,4 +56,6 @@ public interface ProductMapper {
     void insertProduct(ProductDto productDto);
 
     void updateProduct(ProductDto productDto);
+
+    List<Map<String, Object>> selectAllProducts(@Param("criteria") Criteria criteria, @Param("offset") int offset) throws Exception;
 }

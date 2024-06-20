@@ -618,4 +618,19 @@
         FROM product
         WHERE id = #{productId}
     </select>
+
+    <!-- 관리자 상품리스트 조회 쿼리 -->
+    <select id="selectAllProducts" parameterType="map" resultType="map">
+        SELECT
+        *
+        FROM
+        product p
+        <where>
+            <if test="criteria.keyword != null and criteria.keyword != ''">
+                AND (p.name LIKE CONCAT('%', #{criteria.keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY p.updateDate DESC, p.regDate DESC
+        LIMIT #{offset}, #{criteria.amount}
+    </select>
 </mapper>

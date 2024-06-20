@@ -1,7 +1,9 @@
 package com.example.app.shopping.controller;
 
 import com.example.app.shopping.domain.dto.ProductDto;
+import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.service.admin.AdminService;
+import com.example.app.shopping.domain.service.product.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -21,6 +25,9 @@ import java.util.List;
 public class AdminController {
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private ProductService productService;
 
     // 관리자 페이지 GET
     @GetMapping("")
@@ -84,5 +91,29 @@ public class AdminController {
         // 제품 수정
         adminService.modifyProduct(mainImage, subImage, productDto);
         return ResponseEntity.ok("제품 수정이 완료 되었습니다.");
+    }
+
+    /*
+        최근 등록된 상품을 조회하는 페이지로 이동
+    */
+    @GetMapping("/productList")
+    public String getProductList(@ModelAttribute Criteria criteria, Model model) {
+        Map<String, Object> response = new HashMap<>();
+
+        if (criteria.getPageno() == null) criteria.setPageno(1);
+        criteria.setAmount(6);
+        log.info("AdminController's getProductList Criteria: " + criteria);
+
+        try {
+            // 서비스 호출
+            response = productService.getProductList(criteria);
+            model.addAttribute("success", true);
+            model.addAttribute("list", response.get("list"));
+            model.addAttribute("pageDto", response.get("pageDto"));
+        } catch (Exception e) {
+            model.addAttribute("success", false);
+        }
+
+        return "/admin/productList";
     }
 }

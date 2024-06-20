@@ -1,22 +1,24 @@
 package com.example.app.shopping.controller;
 
 import com.example.app.shopping.config.auth.PrincipalDetails;
-import com.example.app.shopping.config.auth.PrincipalDetailsService;
-import com.example.app.shopping.domain.dto.PaymentDto;
 import com.example.app.shopping.domain.dto.ShippingAddressDto;
 import com.example.app.shopping.domain.dto.UserDto;
+import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.service.PaymentService;
 import com.example.app.shopping.domain.service.myPage.MyPageService;
 import com.example.app.shopping.domain.service.user.UserService;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,6 +28,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +42,8 @@ public class MyPageController {
     private UserDetailsService userDetailsService;
     @Autowired
     private MyPageService myPageService;
+    @Autowired
+    private PaymentService paymentService;
 
 
     @GetMapping("")
@@ -202,4 +207,88 @@ public class MyPageController {
         return "redirect:/user/loginForm";
     }
 
+    /*
+        마이 페이지 결제 목록 게시판 페이지로 이동합니다.
+    */
+    @GetMapping("/paymentList")
+    public String getMyPaymentBoard(@ModelAttribute Criteria criteria, Authentication authentication, Model model) {
+        log.info("MyPageController's getMyPaymentBoard criteria: " + criteria);
+
+        if (criteria.getPageno() == null) {
+            criteria.setPageno(1);
+        }
+
+        criteria.setAmount(6);
+
+        String uId =
+                authentication != null ? authentication.getName() : "";
+
+        try {
+            Map<String, Object> serviceReturnVal = paymentService.getMyPayments(criteria, uId);
+            model.addAttribute("success", true);
+            model.addAttribute("list", serviceReturnVal.get("list"));
+            model.addAttribute("pageDto", serviceReturnVal.get("pageDto"));
+        } catch(Exception e) {
+            model.addAttribute("success", false);
+        }
+
+        return "/myPage/paymentList";
+    }
+
+    /*
+        payment 의 refund status 를 수정 요청 합니다.
+        request 에 id 만 있다면 사용자의 환불 요청
+        request 에 id, status 가 있다면 관리자의 환불 승인
+
+        관리자라면 검증과정 없이 수정 작업을 수행
+        사용자라면 해당 payment 가 본인의 것인지 검증하는 작업이 포함됩니다.
+    */
+    @PutMapping("/payment")
+    public Map<String, Object> putPayment(@RequestBody Map<String, Object> request, Authentication authentication) {
+        log.info("MyPageController's putPayment request: " + request);
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (authentication == null) {
+            response.put("success", false);
+            response.put("msg", "비회원은 이용할 수 없는 서비스입니다.");
+
+            return response;
+        }
+
+        boolean isAdmin = false;
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        String userName = principalDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = principalDetails.getAuthorities();
+        isAdmin = authorities.stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+
+        try {
+            // 권한 체크 및 로그인 정보가 본인인지 검증합니다.
+            Map<String, Object> paymentInfo = paymentService.getPaymentById(request.get("id"));
+
+            if (!isAdmin && !userName.equals(paymentInfo.get("Uid"))) {
+                // 관리자가 아니고 자신의 payment 에 대한 수정 요청이 아닐시
+                response.put("success", false);
+                response.put("msg", "본인이 작성한 게시글만 삭제할 수 있습니다.");
+            } else {
+                // payment 수정
+                boolean isUpdated = paymentService.putPaymentServ(request);
+
+                if (isUpdated) {
+                    response.put("success", true);
+                    response.put("msg", "환불 요청이 성공적으로 처리되었습니다.");
+                } else {
+                    response.put("success", false);
+                    response.put("msg", "환불 요청 처리에 실패하였습니다.");
+                }
+            }
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("msg", "환불 요청 처리 중 오류가 발생하였습니다.");
+        }
+
+        return response;
+    }
 }

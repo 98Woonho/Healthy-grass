@@ -16,27 +16,27 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails ,OAuth2User{
 
     private UserDto userDto;
 
     //OAUTH2---------------------------------------
-//    private String accessToken;
-//    private Map<String,Object> attributes;
-//
-//    public PrincipalDetails(UserDto userDto) {
-//        this.userDto = userDto;
-//    }
-//
-//
-//    @Override
-//    public Map<String, Object> getAttributes() {
-//        return null;
-//    }
-//    @Override
-//    public String getName() {
-//        return null;
-//    }
+    private String accessToken;
+    private Map<String,Object> attributes;
+
+    public PrincipalDetails(UserDto userDto) {
+        this.userDto = userDto;
+    }
+
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return null;
+    }
+    @Override
+    public String getName() {
+        return null;
+    }
     //OAUTH2---------------------------------------
 
     @Override

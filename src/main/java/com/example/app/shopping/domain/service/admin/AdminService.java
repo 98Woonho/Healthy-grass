@@ -159,4 +159,9 @@ public class AdminService {
         // product table update
         productMapper.updateProduct(productDto);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteProduct(Long id) {
+        productMapper.deleteProduct(id);
+    }
 }

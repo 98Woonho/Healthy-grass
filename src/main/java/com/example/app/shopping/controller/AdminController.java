@@ -88,6 +88,13 @@ public class AdminController {
         return ResponseEntity.ok("제품 수정이 완료 되었습니다.");
     }
 
+    @DeleteMapping("product")
+    public ResponseEntity<String> deleteProduct(@RequestParam(value = "id") Long id) {
+        adminService.deleteProduct(id);
+
+        return ResponseEntity.ok("제품 삭제가 완료 되었습니다.");
+    }
+
     /*
         최근 등록된 상품을 조회하는 페이지로 이동
     */

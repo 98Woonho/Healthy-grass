@@ -57,5 +57,7 @@ public interface ProductMapper {
 
     void updateProduct(ProductDto productDto);
 
+    void deleteProduct(@Param("id") Long id);
+
     List<Map<String, Object>> selectAllProducts(@Param("criteria") Criteria criteria, @Param("offset") int offset) throws Exception;
 }

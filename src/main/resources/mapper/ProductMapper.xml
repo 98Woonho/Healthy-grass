@@ -613,6 +613,12 @@
         WHERE BINARY `id` = #{id}
         LIMIT 1
     </update>
+
+    <delete id="deleteProduct" parameterType="Long">
+        DELETE FROM `product`
+        WHERE id = #{id}
+    </delete>
+
     <select id="findAmountByProductId" parameterType="int" resultType="int">
         SELECT amount
         FROM product

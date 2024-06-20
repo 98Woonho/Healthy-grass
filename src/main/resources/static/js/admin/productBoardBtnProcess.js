@@ -15,15 +15,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (confirm('정말로 이 상품을 삭제하시겠습니까?')) {
                 axios.delete(`/admin/product?id=${productId}`)
                     .then(response => {
-                        if (response.data.success) {
-                            alert(response.data.msg);
-                            window.location.reload();
-                        } else {
-                            alert(response.data.msg);
-                        }
+                        alert(response.data);
+                        window.location.reload();
                     })
                     .catch(error => {
-                        console.error('Error:', error);
                         alert('상품 삭제 중 오류가 발생하였습니다.');
                     });
             }

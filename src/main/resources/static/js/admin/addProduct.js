@@ -239,8 +239,8 @@ addProductForm.onsubmit = function(e) {
 
     axios.post('/admin/product', formData, { header : { 'Content-Type': 'multipart/form-data' }})
         .then(res => {
-            console.log(res);
             alert(res.data);
+            location.href = '/admin/productList';
         })
         .catch(err => {
             alert('알 수 없는 이유로 제품 등록에 실패 하였습니다. 잠시 후 다시 시도해 주세요.');

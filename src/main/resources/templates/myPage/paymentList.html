@@ -50,10 +50,22 @@
                         <!-- 결제 목록을 동적으로 채웁니다. -->
                         <tr th:each="payment : ${list}">
                             <td th:text="${payment.regDate}">-</td>
-                            <td th:text="${payment.name}">-</td>
+                            <td>
+                                <a th:href="@{'/myPage/payment?id=' + ${payment.id}}" th:text="${payment.name}">-</a>
+                            </td>
                             <td th:text="${payment.paid_amount}">-</td>
                             <td th:text="${payment.delivery_status}" class="delivery-status">-</td>
-                            <td><button class="refund-request-btn" th:attr="data-id=${payment.id}">환불요청</button></td>
+                            <td>
+                                <th:block th:if="${payment.refund_request_status == 'N'}">
+                                    <button class="refund-request-btn" th:attr="data-id=${payment.id}">환불요청</button>
+                                </th:block>
+                                <th:block th:if="${payment.refund_request_status == 'R'}">
+                                    환불 요청중
+                                </th:block>
+                                <th:block th:if="${payment.refund_request_status == 'C'}">
+                                    환불 완료
+                                </th:block>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

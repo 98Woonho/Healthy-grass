@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지 - 결제 정보 조회</title>
+
+    <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
+    <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/myPage/paymentList.css}">
+
+    <!-- fragments css -->
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+</head>
+<body>
+<div class="header">
+    <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+    <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+</div>
+<div class="main">
+    <section class="first-section">
+        <h1>마이 페이지</h1>
+    </section>
+    <section class="second-section box1">
+        <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
+
+        <div class="box w-full h-800">
+            <div class="shopping-title">
+                <h4>결제 정보 조회</h4>
+            </div>
+            <div class="container" style="width: 95%;">
+
+                <div th:if="${success}" class="">
+
+                    <div class="">
+
+                    </div>
+
+                    <div class="">
+
+                    </div>
+
+                </div>
+
+                <!-- 에러 메시지 -->
+                <div th:if="${!success}" class="error-message">
+                    <p>결제 정보 조회에 실패하였습니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="footer">
+    <p class="text">푸터(사이트 정보 등)</p>
+</div>
+</body>
+</html>

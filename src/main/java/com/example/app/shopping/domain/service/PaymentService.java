@@ -47,6 +47,12 @@ public class PaymentService {
         return result;
     }
 
+    /*
+        환불요청상태 변경 서비스
+        환불 요청: R (Requested)
+        환불 상태 없음: N (None, default)
+        환불 완료: C (Completed)
+     */
     public boolean putPaymentServ(Map<String, Object> request) throws Exception {
         int putReturnVal = paymentMapper.updateRefundStatus(request);
 

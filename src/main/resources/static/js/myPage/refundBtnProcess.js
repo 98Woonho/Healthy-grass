@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const paymentId = this.getAttribute('data-id');
 
             if (confirm('정말로 환불 요청을 하시겠습니까?')) {
-                axios.put(`/myPage/payment`, { id: paymentId })
+                axios.put(`/myPage/payment`, { id: paymentId, status: "R" })
                     .then(function(response) {
                         if (response.data.success) {
                             alert('환불 요청이 성공적으로 처리되었습니다.');

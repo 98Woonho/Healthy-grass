@@ -244,7 +244,7 @@ public class MyPageController {
         사용자라면 해당 payment 가 본인의 것인지 검증하는 작업이 포함됩니다.
     */
     @PutMapping("/payment")
-    public Map<String, Object> putPayment(@RequestBody Map<String, Object> request, Authentication authentication) {
+    public @ResponseBody Map<String, Object> putPayment(@RequestBody Map<String, Object> request, Authentication authentication) {
         log.info("MyPageController's putPayment request: " + request);
 
         Map<String, Object> response = new HashMap<>();
@@ -290,5 +290,24 @@ public class MyPageController {
         }
 
         return response;
+    }
+    
+    /*
+        payment 상세보기 페이지 이동
+        payment id 를 사용하여 구매한 order_item 목록도 가져온다
+    */
+    @GetMapping("/payment")
+    public String getPayment(@RequestParam(name = "id", defaultValue = "0", required = false) Long id, Model model) {
+        log.info("MyPageController's getPayment id: " + id);
+        Map<String, Object> response = new HashMap<>();
+
+        model.addAttribute("success", true);  // 임시
+
+        /*
+            필요한 작업
+
+        */
+
+        return "/myPage/paymentDetail";
     }
 }

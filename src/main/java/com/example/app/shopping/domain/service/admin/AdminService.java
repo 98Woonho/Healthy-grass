@@ -3,6 +3,7 @@ package com.example.app.shopping.domain.service.admin;
 import com.example.app.shopping.domain.dto.ProductDto;
 import com.example.app.shopping.domain.dto.common.PageDto;
 import com.example.app.shopping.domain.mapper.ProductMapper;
+import com.example.app.shopping.properties.FileUploadPathProperties;
 import org.apache.logging.log4j.spi.LoggerRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class AdminService {
     @Transactional(rollbackFor = Exception.class)
     public void addProduct(MultipartFile mainImage, MultipartFile subImage, ProductDto productDto) throws IOException {
         // 이미지 업로드 경로
-        String uploadPath = "c:\\" + File.separator + "shopping" + File.separator + productDto.getName();
+        String uploadPath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + productDto.getName();
 
         // 업로드 경로 디렉터리 생성
         File dir = new File(uploadPath);
@@ -56,8 +57,8 @@ public class AdminService {
         subImage.transferTo(subImageObj);
 
         // 이미지 경로 set
-        productDto.setMainImgPath(File.separator + "shopping" + File.separator + productDto.getName() + File.separator);
-        productDto.setSubImgPath(File.separator + "shopping" + File.separator + productDto.getName() + File.separator);
+        productDto.setMainImgPath(File.separator + "uploads" + File.separator + "product" + File.separator + productDto.getName() + File.separator);
+        productDto.setSubImgPath(File.separator + "uploads" + File.separator + "product" + File.separator + productDto.getName() + File.separator);
 
         // 이미지 이름 set
         productDto.setMainImgName("main_" + mainImage.getOriginalFilename());
@@ -85,19 +86,17 @@ public class AdminService {
         ProductDto prevProductDto = productMapper.findProductById1(productDto.getId());
 
         // 이전 이미지 업로드 경로
-        String prevUploadPath = "c:\\" + File.separator + "shopping" + File.separator + prevProductDto.getName();
+        String prevUploadPath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + prevProductDto.getName();
 
         // 새로운 이미지 업로드 경로
-        String newUploadPath = "c:\\" + File.separator + "shopping" + File.separator + productDto.getName();
+        String newUploadPath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + productDto.getName();
 
         // 이전 업로드 경로 디렉터리 생성
         File dir = new File(prevUploadPath);
-        // 새로운 업로드 경로 디렉터리 생성
-        File newDir = new File(newUploadPath);
 
         // 이미지 경로 set
-        productDto.setMainImgPath(File.separator + "shopping" + File.separator + productDto.getName() + File.separator);
-        productDto.setSubImgPath(File.separator + "shopping" + File.separator + productDto.getName() + File.separator);
+        productDto.setMainImgPath(File.separator + "uploads" + File.separator + "product" + File.separator + productDto.getName() + File.separator);
+        productDto.setSubImgPath(File.separator + "uploads" + File.separator + "product" + File.separator + productDto.getName() + File.separator);
 
         // 메인 이미지가 수정 되었을 경우
         if (mainImage != null) {
@@ -153,6 +152,9 @@ public class AdminService {
         int discountedPrice = (int) (productDto.getPrice() * productDto.getDiscount() * 0.01);
         productDto.setDiscountedPrice(productDto.getPrice() - discountedPrice);
 
+
+        // 새로운 업로드 경로 디렉터리 생성
+        File newDir = new File(newUploadPath);
         // 디렉터리 이름 변경
         dir.renameTo(newDir);
 
@@ -162,6 +164,32 @@ public class AdminService {
 
     @Transactional(rollbackFor = Exception.class)
     public void deleteProduct(Long id) {
+        ProductDto productDto = productMapper.findProductById1(id);
+
+        // 이미지 업로드 경로
+        String uploadPath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + productDto.getName();
+
+        // 업로드 경로 디렉터리 생성
+        File dir = new File(uploadPath);
+
+        try {
+            while (dir.exists()) { // 폴더가 존재한다면
+                File[] listFiles = dir.listFiles();
+
+                for (File file : listFiles) { // 폴더 내 파일을 반복시켜서 삭제
+                    file.delete();
+                }
+
+                if (listFiles.length == 0 && dir.isDirectory()) { // 하위 파일이 없는지와 폴더인지 확인 후 폴더 삭제
+                    dir.delete();
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         productMapper.deleteProduct(id);
+
+
     }
 }

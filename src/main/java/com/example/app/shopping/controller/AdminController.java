@@ -62,30 +62,25 @@ public class AdminController {
 
     // 제품 수정 Get
     @GetMapping("modifyProduct")
-    public void getModifyProduct(@RequestParam(value = "productName", required = false) String productName,
-                                 Model model) {
+    public void getModifyProduct(@RequestParam(value = "id", required = false) Integer productId,
+                                 Model model) throws Exception {
         // 제품 메인 카테고리 List 가져오기
         List<String> productMajorCategoryList = adminService.getProductMajorCategoryList();
 
         // 제품 서브 카테고리 List 가져오기
         List<String> productMiddleCategoryList = adminService.getProductMiddleCategoryList();
 
-        // 제품 List 가져오기
-        List<String> productList = adminService.getProductList();
-
-        // 제품이름으로 정보 가져오기
-        ProductDto product = adminService.getProductByProductName(productName);
+        // 제품 id로 정보 가져오기
+        Map<String, Object> product = adminService.getProductById(productId);
 
         model.addAttribute("productMajorCategoryList", productMajorCategoryList);
         model.addAttribute("productMiddleCategoryList", productMiddleCategoryList);
-        model.addAttribute("productList", productList);
-        model.addAttribute("productName", productName);
         model.addAttribute("product", product);
     }
 
     // 제품 수정 Put
     @PutMapping("product")
-    public ResponseEntity<String> putAddProduct(@RequestPart(value = "mainImage", required = false) MultipartFile mainImage,
+    public ResponseEntity<String> putProduct(@RequestPart(value = "mainImage", required = false) MultipartFile mainImage,
                                                  @RequestPart(value = "subImage", required = false) MultipartFile subImage,
                                                  ProductDto productDto) throws IOException {
         // 제품 수정

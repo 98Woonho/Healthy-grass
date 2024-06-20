@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AdminService {
@@ -32,8 +33,8 @@ public class AdminService {
         return productMapper.findProductList();
     }
 
-    public ProductDto getProductByProductName(String productName) {
-        return productMapper.findProductByProductName(productName);
+    public Map<String, Object> getProductById(Integer id) throws Exception {
+        return productMapper.findProductById(id);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -104,7 +105,7 @@ public class AdminService {
         // 메인 이미지가 수정 되었을 경우
         if (mainImage != null) {
             // 이전 이미지 삭제
-            File prevMainImage = new File(newDir, prevProductDto.getMainImgName());
+            File prevMainImage = new File(dir, prevProductDto.getMainImgName());
             if (prevMainImage.exists()) {
                 prevMainImage.delete();
             }

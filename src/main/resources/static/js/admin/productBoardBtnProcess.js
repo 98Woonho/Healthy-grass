@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.edit-btn').forEach(button => {
         button.addEventListener('click', function () {
             const productId = this.getAttribute('data-id');
-            window.location.href = `/admin/productEdit?id=${productId}`;
+            console.log(productId);
+            window.location.href = `/admin/modifyProduct?id=${productId}`;
         });
     });
 

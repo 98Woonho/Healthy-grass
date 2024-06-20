@@ -69,8 +69,8 @@
                             <td th:text="${product.get('discountedPrice') != null ? product.discountedPrice : ''}">-</td>
                             <td th:text="${product.get('majorCategory') != null ? product.majorCategory : ''}">-</td>
                             <td th:text="${product.get('middleCategory') != null ? product.middleCategory : ''}">-</td>
-                            <td><button class="edit-btn" data-id="${product.id}">수정</button></td>
-                            <td><button class="delete-btn" data-id="${product.id}">삭제</button></td>
+                            <td><button class="edit-btn" th:data-id="${product.id}">수정</button></td>
+                            <td><button class="delete-btn" th:data-id="${product.id}">삭제</button></td>
                         </tr>
                         </tbody>
                     </table>

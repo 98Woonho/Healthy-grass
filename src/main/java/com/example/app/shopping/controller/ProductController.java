@@ -28,8 +28,6 @@ public class ProductController {
             criteria.setAmount(10);
         }
 
-        System.out.println("criteria : " + criteria);
-
         try {
             Map<String, Object> serviceReturnVal = productService.getItems(criteria);
             model.addAttribute("success", true);

@@ -2,6 +2,8 @@ package com.example.app.shopping.domain.service.admin;
 
 import com.example.app.shopping.domain.dto.ProductDto;
 import com.example.app.shopping.domain.dto.common.PageDto;
+import com.example.app.shopping.domain.mapper.MajorCategoryMapper;
+import com.example.app.shopping.domain.mapper.MiddleCategoryMapper;
 import com.example.app.shopping.domain.mapper.ProductMapper;
 import com.example.app.shopping.properties.FileUploadPathProperties;
 import org.apache.logging.log4j.spi.LoggerRegistry;
@@ -22,6 +24,12 @@ public class AdminService {
     @Autowired
     private ProductMapper productMapper;
 
+    @Autowired
+    private MajorCategoryMapper majorCategoryMapper;
+
+    @Autowired
+    private MiddleCategoryMapper middleCategoryMapper;
+
     // 랜덤 파일 이름 생성 메서드
     private String generateRandomFileName(String originalFilename) {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
@@ -30,19 +38,19 @@ public class AdminService {
     }
 
     public List<String> getProductMajorCategoryList() {
-        return productMapper.findDistinctMajorCategoryList();
+        return majorCategoryMapper.findMajorCategoryList();
     }
 
     public List<String> getProductMiddleCategoryList() {
-        return productMapper.findDistinctMiddleCategoryList();
+        return middleCategoryMapper.findMiddleCategoryList();
     }
 
     public List<String> getProductList() {
         return productMapper.findProductList();
     }
 
-    public Map<String, Object> getProductById(Integer id) throws Exception {
-        return productMapper.findProductById(id);
+    public ProductDto getProductById(Long id) {
+        return productMapper.findProductById1(id);
     }
 
     @Transactional(rollbackFor = Exception.class)

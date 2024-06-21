@@ -6,13 +6,6 @@ USE `shopping`;
 -- ------------------------------------------------------
 -- Server version	8.0.36
 
-DROP SCHEMA IF EXISTS `shopping`;
-
-CREATE SCHEMA `shopping`;
-
-use `shopping`;
-
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -89,7 +82,7 @@ DROP TABLE IF EXISTS `customer_inquiry_board`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer_inquiry_board` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `Uid` varchar(50),
+  `Uid` varchar(50) DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `content` text,
   `imgPath` varchar(200) DEFAULT NULL,
@@ -121,7 +114,7 @@ DROP TABLE IF EXISTS `customer_inquiry_comment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer_inquiry_comment` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `C_Board_id` bigint,
+  `C_Board_id` bigint DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `comment` text,
   `imgPath` varchar(200) DEFAULT NULL,
@@ -145,6 +138,52 @@ INSERT INTO `customer_inquiry_comment` VALUES (1,1,'Comment Title 1','Comment 1'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `major_category`
+--
+
+DROP TABLE IF EXISTS `major_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `major_category` (
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `major_category`
+--
+
+LOCK TABLES `major_category` WRITE;
+/*!40000 ALTER TABLE `major_category` DISABLE KEYS */;
+INSERT INTO `major_category` VALUES ('가공식품'),('건강식품'),('과일/채소'),('쌀/잡곡'),('축산물');
+/*!40000 ALTER TABLE `major_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `middle_category`
+--
+
+DROP TABLE IF EXISTS `middle_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `middle_category` (
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `middle_category`
+--
+
+LOCK TABLES `middle_category` WRITE;
+/*!40000 ALTER TABLE `middle_category` DISABLE KEYS */;
+INSERT INTO `middle_category` VALUES ('가공육'),('과일류'),('기타 채소 과일류'),('꿀/조청'),('달걀'),('닭고기/오리'),('도라지'),('돼지고기'),('두유/미숫가루'),('만두/탕/간편조리'),('밤/견과류'),('버섯류'),('빵/떡/과자'),('수삼/인삼/백하수오'),('약과/한과/유과'),('엑기스/분말/즙류'),('일반쌀'),('채소류'),('한우'),('현미/찹쌀/잡곡'),('홍삼/절편');
+/*!40000 ALTER TABLE `middle_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `order`
 --
 
@@ -153,7 +192,7 @@ DROP TABLE IF EXISTS `order`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `Uid` varchar(50),
+  `Uid` varchar(50) DEFAULT NULL,
   `total_amount` int DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -181,7 +220,7 @@ DROP TABLE IF EXISTS `order_item`;
 CREATE TABLE `order_item` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `Oid` bigint NOT NULL,
-  `Pid` bigint,
+  `Pid` bigint DEFAULT NULL,
   `quantity` int DEFAULT NULL,
   `price` int DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -295,7 +334,11 @@ CREATE TABLE `product` (
   `mainImgName` varchar(100) DEFAULT NULL,
   `subImgPath` varchar(200) DEFAULT NULL,
   `subImgName` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `middle_category_name` (`middleCategory`),
+  KEY `major_category_name` (`majorCategory`),
+  CONSTRAINT `major_category_name` FOREIGN KEY (`majorCategory`) REFERENCES `major_category` (`name`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `middle_category_name` FOREIGN KEY (`middleCategory`) REFERENCES `middle_category` (`name`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=243 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -318,8 +361,8 @@ DROP TABLE IF EXISTS `product_inquiry_board`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_inquiry_board` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `Pid` bigint,
-  `Uid` varchar(50),
+  `Pid` bigint DEFAULT NULL,
+  `Uid` varchar(50) DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `content` text,
   `regDate` date DEFAULT NULL,
@@ -353,7 +396,7 @@ DROP TABLE IF EXISTS `product_inquiry_board_comment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_inquiry_board_comment` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `P_Board_Id` bigint,
+  `P_Board_Id` bigint DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `content` text,
   `regDate` date DEFAULT NULL,
@@ -383,8 +426,8 @@ DROP TABLE IF EXISTS `product_review_board`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_review_board` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `Pid` bigint,
-  `Uid` varchar(50),
+  `Pid` bigint DEFAULT NULL,
+  `Uid` varchar(50) DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `regDate` date DEFAULT NULL,
   `updateDate` date DEFAULT NULL,
@@ -492,8 +535,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('9woonho8', '이운호', '$2a$10$vzuGDB53XGeMO4jamEnLtOjpRula3DaHvf/hffVjGtsU3AMKA27gK', '41431', '대구 북구 팔거천동로 104', '101동 1401호', '010-9533-1150', 'lkj1150@naver.com', 'ROLE_USER', NULL, NULL
-),('hbsh2330','황보성현','$2a$10$221jc4pEnlb91HVm8IFCY.pfY1UP4RIlWDvskc0BF2L1X9loV3Br6','42938','대구 달성군 가창면 가창동로 3','','010-4216-2330','hbsh2330@naver.com','ROLE_USER',NULL,NULL),('pakms980319','박민석','$2a$10$cUr/kxN21FkE5xj.fpLaMuOFtlVHTWoxAZiEH4GnAL8wKEU4Z9vNm','43109','대구 군위군 군위읍 개봉길 23-72','길거리 바닥','010-5282-4082','pakms980319@gmail.com','ROLE_ADMIN',NULL,NULL),('user1','Alice','password1','12345','123 Main St','Apt 1','010-1234-5678','alice@example.com','user','local','provider1'),('user10','Judy','password10','01234','707 Spruce St','Apt 10','010-0123-4567','judy@example.com','admin','google','provider10'),('user11','Karl','password11','11223','808 Willow St','Apt 11','010-1123-5678','karl@example.com','user','facebook','provider11'),('user12','Laura','password12','22334','909 Redwood St','Apt 12','010-2234-6789','laura@example.com','user','facebook','provider12'),('user13','Mallory','password13','33445','1010 Palm St','Apt 13','010-3345-7890','mallory@example.com','user','local','provider13'),('user14','Nathan','password14','44556','1111 Fir St','Apt 14','010-4456-8901','nathan@example.com','user','local','provider14'),('user15','Olivia','password15','55667','1212 Poplar St','Apt 15','010-5567-9012','olivia@example.com','admin','google','provider15'),('user16','Peggy','password16','66778','1313 Beech St','Apt 16','010-6678-0123','peggy@example.com','user','google','provider16'),('user17','Quentin','password17','77889','1414 Cedar St','Apt 17','010-7789-1234','quentin@example.com','user','facebook','provider17'),('user18','Rupert','password18','88990','1515 Holly St','Apt 18','010-8890-2345','rupert@example.com','user','facebook','provider18'),('user19','Sybil','password19','99001','1616 Alder St','Apt 19','010-9901-3456','sybil@example.com','user','local','provider19'),('user2','Bob','password2','23456','456 Oak St','Apt 2','010-2345-6789','bob@example.com','admin','local','provider2'),('user20','Trent','password20','10112','1717 Juniper St','Apt 20','010-1011-4567','trent@example.com','admin','local','provider20'),('user3','Charlie','password3','34567','789 Pine St','Apt 3','010-3456-7890','charlie@example.com','user','google','provider3'),('user4','David','password4','45678','101 Maple St','Apt 4','010-4567-8901','david@example.com','user','google','provider4'),('user5','Eve','password5','56789','202 Birch St','Apt 5','010-5678-9012','eve@example.com','admin','facebook','provider5'),('user6','Frank','password6','67890','303 Cedar St','Apt 6','010-6789-0123','frank@example.com','user','facebook','provider6'),('user7','Grace','password7','78901','404 Walnut St','Apt 7','010-7890-1234','grace@example.com','user','local','provider7'),('user8','Heidi','password8','89012','505 Ash St','Apt 8','010-8901-2345','heidi@example.com','user','local','provider8'),('user9','Ivan','password9','90123','606 Elm St','Apt 9','010-9012-3456','ivan@example.com','user','google','provider9');
+INSERT INTO `user` VALUES ('9woonho8','이운호','$2a$10$vzuGDB53XGeMO4jamEnLtOjpRula3DaHvf/hffVjGtsU3AMKA27gK','41431','대구 북구 팔거천동로 104','101동 1401호','010-9533-1150','lkj1150@naver.com','ROLE_USER',NULL,NULL),('hbsh2330','황보성현','$2a$10$221jc4pEnlb91HVm8IFCY.pfY1UP4RIlWDvskc0BF2L1X9loV3Br6','42938','대구 달성군 가창면 가창동로 3','','010-4216-2330','hbsh2330@naver.com','ROLE_USER',NULL,NULL),('pakms980319','박민석','$2a$10$cUr/kxN21FkE5xj.fpLaMuOFtlVHTWoxAZiEH4GnAL8wKEU4Z9vNm','43109','대구 군위군 군위읍 개봉길 23-72','길거리 바닥','010-5282-4082','pakms980319@gmail.com','ROLE_ADMIN',NULL,NULL),('user1','Alice','password1','12345','123 Main St','Apt 1','010-1234-5678','alice@example.com','user','local','provider1'),('user10','Judy','password10','01234','707 Spruce St','Apt 10','010-0123-4567','judy@example.com','admin','google','provider10'),('user11','Karl','password11','11223','808 Willow St','Apt 11','010-1123-5678','karl@example.com','user','facebook','provider11'),('user12','Laura','password12','22334','909 Redwood St','Apt 12','010-2234-6789','laura@example.com','user','facebook','provider12'),('user13','Mallory','password13','33445','1010 Palm St','Apt 13','010-3345-7890','mallory@example.com','user','local','provider13'),('user14','Nathan','password14','44556','1111 Fir St','Apt 14','010-4456-8901','nathan@example.com','user','local','provider14'),('user15','Olivia','password15','55667','1212 Poplar St','Apt 15','010-5567-9012','olivia@example.com','admin','google','provider15'),('user16','Peggy','password16','66778','1313 Beech St','Apt 16','010-6678-0123','peggy@example.com','user','google','provider16'),('user17','Quentin','password17','77889','1414 Cedar St','Apt 17','010-7789-1234','quentin@example.com','user','facebook','provider17'),('user18','Rupert','password18','88990','1515 Holly St','Apt 18','010-8890-2345','rupert@example.com','user','facebook','provider18'),('user19','Sybil','password19','99001','1616 Alder St','Apt 19','010-9901-3456','sybil@example.com','user','local','provider19'),('user2','Bob','password2','23456','456 Oak St','Apt 2','010-2345-6789','bob@example.com','admin','local','provider2'),('user20','Trent','password20','10112','1717 Juniper St','Apt 20','010-1011-4567','trent@example.com','admin','local','provider20'),('user3','Charlie','password3','34567','789 Pine St','Apt 3','010-3456-7890','charlie@example.com','user','google','provider3'),('user4','David','password4','45678','101 Maple St','Apt 4','010-4567-8901','david@example.com','user','google','provider4'),('user5','Eve','password5','56789','202 Birch St','Apt 5','010-5678-9012','eve@example.com','admin','facebook','provider5'),('user6','Frank','password6','67890','303 Cedar St','Apt 6','010-6789-0123','frank@example.com','user','facebook','provider6'),('user7','Grace','password7','78901','404 Walnut St','Apt 7','010-7890-1234','grace@example.com','user','local','provider7'),('user8','Heidi','password8','89012','505 Ash St','Apt 8','010-8901-2345','heidi@example.com','user','local','provider8'),('user9','Ivan','password9','90123','606 Elm St','Apt 9','010-9012-3456','ivan@example.com','user','google','provider9');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -534,4 +576,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-19 12:47:34
+-- Dump completed on 2024-06-21 11:18:38

@@ -78,25 +78,9 @@
         LIMIT #{offset}, #{criteria.amount}
     </select>
 
-    <select id="findDistinctMajorCategoryList">
-        SELECT DISTINCT majorCategory
-        FROM product
-    </select>
-
-    <select id="findDistinctMiddleCategoryList">
-        SELECT DISTINCT middleCategory
-        FROM product
-    </select>
-
     <select id="findProductList">
         SELECT name
         FROM product
-    </select>
-
-    <select id="findProductByProductName">
-        SELECT *
-        FROM product
-        WHERE name = #{productName};
     </select>
 
     <select id="findProductById1">

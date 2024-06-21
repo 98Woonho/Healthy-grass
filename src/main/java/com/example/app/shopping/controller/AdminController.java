@@ -62,8 +62,8 @@ public class AdminController {
 
     // 제품 수정 Get
     @GetMapping("modifyProduct")
-    public void getModifyProduct(@RequestParam(value = "id", required = false) Integer productId,
-                                 Model model) throws Exception {
+    public void getModifyProduct(@RequestParam(value = "id", required = false) Long productId,
+                                 Model model) {
         // 제품 메인 카테고리 List 가져오기
         List<String> productMajorCategoryList = adminService.getProductMajorCategoryList();
 
@@ -71,7 +71,7 @@ public class AdminController {
         List<String> productMiddleCategoryList = adminService.getProductMiddleCategoryList();
 
         // 제품 id로 정보 가져오기
-        Map<String, Object> product = adminService.getProductById(productId);
+        ProductDto product = adminService.getProductById(productId);
 
         model.addAttribute("productMajorCategoryList", productMajorCategoryList);
         model.addAttribute("productMiddleCategoryList", productMiddleCategoryList);

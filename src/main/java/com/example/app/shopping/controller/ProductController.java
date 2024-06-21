@@ -88,6 +88,7 @@ public class ProductController {
             response = productService.getHighDiscountProducts();
             response.put("success", true);
         } catch (Exception e) {
+            e.printStackTrace();
             response = new HashMap<>();
             response.put("success", false);
         }

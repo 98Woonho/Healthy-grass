@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.OrderItemMapper">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.app.shopping.domain.mapper.OrderItemMapper">
+
+    <!-- order_item 테이블에서 Oid에 해당하는 항목들과 product 테이블을 조인하여 조회하는 쿼리 -->
+    <select id="selectOrderItemsWithProductByOid" parameterType="long" resultType="map">
+        SELECT
+        oi.*,
+        p.name,
+        p.majorCategory,
+        p.middleCategory,
+        p.mainImgPath,
+        p.mainImgName
+        FROM
+        order_item oi
+        JOIN
+        product p ON oi.Pid = p.id
+        WHERE
+        oi.Oid = #{id};
+    </select>
 
 </mapper>

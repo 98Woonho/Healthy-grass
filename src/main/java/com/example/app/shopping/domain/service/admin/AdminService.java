@@ -15,12 +15,19 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class AdminService {
-
     @Autowired
     private ProductMapper productMapper;
+
+    // 랜덤 파일 이름 생성 메서드
+    private String generateRandomFileName(String originalFilename) {
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        String extension = originalFilename.substring(originalFilename.lastIndexOf('.'));
+        return uuid + extension;
+    }
 
     public List<String> getProductMajorCategoryList() {
         return productMapper.findDistinctMajorCategoryList();
@@ -40,34 +47,37 @@ public class AdminService {
 
     @Transactional(rollbackFor = Exception.class)
     public void addProduct(MultipartFile mainImage, MultipartFile subImage, ProductDto productDto) throws IOException {
+        // 생성 시간 set
+        LocalDate currentDate = LocalDate.now();
+        productDto.setRegDate(currentDate);
+        productDto.setUpdateDate(currentDate);
+
         // 이미지 업로드 경로
-        String uploadPath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + productDto.getName();
+        String uploadPath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + productDto.getRegDate();
 
         // 업로드 경로 디렉터리 생성
         File dir = new File(uploadPath);
         if (!dir.exists())
             dir.mkdirs();
 
+        String mainImageFileName = generateRandomFileName(mainImage.getOriginalFilename());
+        String subImageFileName = generateRandomFileName(subImage.getOriginalFilename());
+
         // 이미지 오브젝트 생성
-        File mainImageObj = new File(dir, "main_" + mainImage.getOriginalFilename());
-        File subImageObj = new File(dir, "sub_" + subImage.getOriginalFilename());
+        File mainImageObj = new File(dir, mainImageFileName);
+        File subImageObj = new File(dir, subImageFileName);
 
         // 이미지 저장
         mainImage.transferTo(mainImageObj);
         subImage.transferTo(subImageObj);
 
         // 이미지 경로 set
-        productDto.setMainImgPath(File.separator + "uploads" + File.separator + "product" + File.separator + productDto.getName() + File.separator);
-        productDto.setSubImgPath(File.separator + "uploads" + File.separator + "product" + File.separator + productDto.getName() + File.separator);
+        productDto.setMainImgPath(File.separator + "uploads" + File.separator + "product" + File.separator + productDto.getRegDate() + File.separator);
+        productDto.setSubImgPath(File.separator + "uploads" + File.separator + "product" + File.separator + productDto.getRegDate() + File.separator);
 
         // 이미지 이름 set
-        productDto.setMainImgName("main_" + mainImage.getOriginalFilename());
-        productDto.setSubImgName("sub_" + subImage.getOriginalFilename());
-
-        // 생성 시간 set
-        LocalDate currentDate = LocalDate.now();
-        productDto.setRegDate(currentDate);
-        productDto.setUpdateDate(currentDate);
+        productDto.setMainImgName(mainImageFileName);
+        productDto.setSubImgName(subImageFileName);
 
         // 할인된 가격 set
         int discountedPrice = (int) (productDto.getPrice() * productDto.getDiscount() * 0.01);
@@ -86,17 +96,14 @@ public class AdminService {
         ProductDto prevProductDto = productMapper.findProductById1(productDto.getId());
 
         // 이전 이미지 업로드 경로
-        String prevUploadPath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + prevProductDto.getName();
-
-        // 새로운 이미지 업로드 경로
-        String newUploadPath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + productDto.getName();
+        String prevUploadPath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + prevProductDto.getUpdateDate();
 
         // 이전 업로드 경로 디렉터리 생성
         File dir = new File(prevUploadPath);
 
         // 이미지 경로 set
-        productDto.setMainImgPath(File.separator + "uploads" + File.separator + "product" + File.separator + productDto.getName() + File.separator);
-        productDto.setSubImgPath(File.separator + "uploads" + File.separator + "product" + File.separator + productDto.getName() + File.separator);
+        productDto.setMainImgPath(File.separator + "uploads" + File.separator + "product" + File.separator + prevProductDto.getRegDate() + File.separator);
+        productDto.setSubImgPath(File.separator + "uploads" + File.separator + "product" + File.separator + prevProductDto.getRegDate() + File.separator);
 
         // 메인 이미지가 수정 되었을 경우
         if (mainImage != null) {
@@ -106,14 +113,17 @@ public class AdminService {
                 prevMainImage.delete();
             }
 
+            String mainImageFileName = generateRandomFileName(mainImage.getOriginalFilename());
+
+
             // 이미지 오브젝트 생성
-            File mainImageObj = new File(dir, "main_" + mainImage.getOriginalFilename());
+            File mainImageObj = new File(dir, mainImageFileName);
 
             // 이미지 저장
             mainImage.transferTo(mainImageObj);
 
             // 이미지 이름 set
-            productDto.setMainImgName("main_" + mainImage.getOriginalFilename());
+            productDto.setMainImgName(mainImageFileName);
 
         // 메인 이미지 수정 안 되었을 경우
         } else {
@@ -129,14 +139,17 @@ public class AdminService {
                 prevSubImage.delete();
             }
 
+            String subImageFileName = generateRandomFileName(subImage.getOriginalFilename());
+
+
             // 이미지 오브젝트 생성
-            File subImageObj = new File(dir, "sub_" + subImage.getOriginalFilename());
+            File subImageObj = new File(dir, subImageFileName);
 
             // 이미지 저장
             subImage.transferTo(subImageObj);
 
             // 이미지 이름 set
-            productDto.setSubImgName("sub_" + subImage.getOriginalFilename());
+            productDto.setSubImgName(subImageFileName);
 
         // 서브 이미지 수정 안 되었을 경우
         } else {
@@ -144,17 +157,20 @@ public class AdminService {
             productDto.setSubImgName(prevProductDto.getSubImgName());
         }
 
-        // 수정 시간 set
-        LocalDate currentDate = LocalDate.now();
-        productDto.setUpdateDate(currentDate);
-
         // 할인된 가격 set
         int discountedPrice = (int) (productDto.getPrice() * productDto.getDiscount() * 0.01);
         productDto.setDiscountedPrice(productDto.getPrice() - discountedPrice);
 
+        // 수정 시간 set
+        LocalDate currentDate = LocalDate.now();
+        productDto.setUpdateDate(currentDate);
+
+        // 새로운 이미지 업로드 경로
+        String newUploadPath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + productDto.getUpdateDate();
 
         // 새로운 업로드 경로 디렉터리 생성
         File newDir = new File(newUploadPath);
+
         // 디렉터리 이름 변경
         dir.renameTo(newDir);
 
@@ -166,30 +182,17 @@ public class AdminService {
     public void deleteProduct(Long id) {
         ProductDto productDto = productMapper.findProductById1(id);
 
-        // 이미지 업로드 경로
-        String uploadPath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + productDto.getName();
+        // 이미지 경로
+        String mainFilePath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + productDto.getRegDate() + File.separator + productDto.getMainImgName();
+        String subFilePath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + productDto.getRegDate() + File.separator + productDto.getSubImgName();
 
         // 업로드 경로 디렉터리 생성
-        File dir = new File(uploadPath);
+        File mainFile = new File(mainFilePath);
+        File subFile = new File(subFilePath);
 
-        try {
-            while (dir.exists()) { // 폴더가 존재한다면
-                File[] listFiles = dir.listFiles();
-
-                for (File file : listFiles) { // 폴더 내 파일을 반복시켜서 삭제
-                    file.delete();
-                }
-
-                if (listFiles.length == 0 && dir.isDirectory()) { // 하위 파일이 없는지와 폴더인지 확인 후 폴더 삭제
-                    dir.delete();
-                }
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        mainFile.delete();
+        subFile.delete();
 
         productMapper.deleteProduct(id);
-
-
     }
 }

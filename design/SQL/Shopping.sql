@@ -89,7 +89,7 @@ DROP TABLE IF EXISTS `customer_inquiry_board`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer_inquiry_board` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `Uid` varchar(50) NOT NULL,
+  `Uid` varchar(50),
   `title` varchar(100) DEFAULT NULL,
   `content` text,
   `imgPath` varchar(200) DEFAULT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE `customer_inquiry_board` (
   `updateDate` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_CustomerInquiryBoard_User_idx` (`Uid`),
-  CONSTRAINT `FK_CustomerInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_CustomerInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -121,7 +121,7 @@ DROP TABLE IF EXISTS `customer_inquiry_comment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer_inquiry_comment` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `C_Board_id` bigint NOT NULL,
+  `C_Board_id` bigint,
   `title` varchar(100) DEFAULT NULL,
   `comment` text,
   `imgPath` varchar(200) DEFAULT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE `customer_inquiry_comment` (
   `updateDate` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_CustomerInquiryComment_CustomerInquiryBoard_idx` (`C_Board_id`),
-  CONSTRAINT `FK_CustomerInquiryComment_CustomerInquiryBoard` FOREIGN KEY (`C_Board_id`) REFERENCES `customer_inquiry_board` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_CustomerInquiryComment_CustomerInquiryBoard` FOREIGN KEY (`C_Board_id`) REFERENCES `customer_inquiry_board` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -153,12 +153,12 @@ DROP TABLE IF EXISTS `order`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `Uid` varchar(50) NOT NULL,
+  `Uid` varchar(50),
   `total_amount` int DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Order_User_Uid_idx` (`Uid`),
-  CONSTRAINT `FK_Order_User_Uid` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_Order_User_Uid` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -181,14 +181,14 @@ DROP TABLE IF EXISTS `order_item`;
 CREATE TABLE `order_item` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `Oid` bigint NOT NULL,
-  `Pid` bigint NOT NULL,
+  `Pid` bigint,
   `quantity` int DEFAULT NULL,
   `price` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_OrderItem_Order_Oid_idx` (`Oid`),
   KEY `FK_OrderItem_Product_Pid_idx` (`Pid`),
   CONSTRAINT `FK_OrderItem_Order_Oid` FOREIGN KEY (`Oid`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_OrderItem_Product_Pid` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_OrderItem_Product_Pid` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=160 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -318,8 +318,8 @@ DROP TABLE IF EXISTS `product_inquiry_board`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_inquiry_board` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `Pid` bigint NOT NULL,
-  `Uid` varchar(50) NOT NULL,
+  `Pid` bigint,
+  `Uid` varchar(50),
   `title` varchar(100) DEFAULT NULL,
   `content` text,
   `regDate` date DEFAULT NULL,
@@ -329,8 +329,8 @@ CREATE TABLE `product_inquiry_board` (
   PRIMARY KEY (`id`),
   KEY `FK_ProductInquiryBoard_Proudct_idx` (`Pid`),
   KEY `FK_ProductInquiryBoard_User_idx` (`Uid`),
-  CONSTRAINT `FK_ProductInquiryBoard_Proudct` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_ProductInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_ProductInquiryBoard_Proudct` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `FK_ProductInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -353,14 +353,14 @@ DROP TABLE IF EXISTS `product_inquiry_board_comment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_inquiry_board_comment` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `P_Board_Id` bigint NOT NULL,
+  `P_Board_Id` bigint,
   `title` varchar(100) DEFAULT NULL,
   `content` text,
   `regDate` date DEFAULT NULL,
   `updateDate` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_ProductInquiryBoardComment_ProductInquiryBoard_idx` (`P_Board_Id`),
-  CONSTRAINT `FK_ProductInquiryBoardComment_ProductInquiryBoard` FOREIGN KEY (`P_Board_Id`) REFERENCES `product_inquiry_board` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_ProductInquiryBoardComment_ProductInquiryBoard` FOREIGN KEY (`P_Board_Id`) REFERENCES `product_inquiry_board` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -383,8 +383,8 @@ DROP TABLE IF EXISTS `product_review_board`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_review_board` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `Pid` bigint NOT NULL,
-  `Uid` varchar(50) NOT NULL,
+  `Pid` bigint,
+  `Uid` varchar(50),
   `title` varchar(100) DEFAULT NULL,
   `regDate` date DEFAULT NULL,
   `updateDate` date DEFAULT NULL,
@@ -395,8 +395,8 @@ CREATE TABLE `product_review_board` (
   PRIMARY KEY (`id`),
   KEY `FK_ProductReviewBoard_Product_idx` (`Pid`),
   KEY `FK_ProductReviewBoard_User_idx` (`Uid`),
-  CONSTRAINT `FK_ProductReviewBoard_Product` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_ProductReviewBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_ProductReviewBoard_Product` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `FK_ProductReviewBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

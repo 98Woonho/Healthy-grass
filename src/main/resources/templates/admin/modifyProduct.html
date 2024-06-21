@@ -34,7 +34,7 @@
                     <p>메인 이미지 프리뷰</p>
                     <div class="preview" id="mainPreview">
                         <li class="item">
-                            <img id="mainImg" th:data-name="${product.mainImgName.split('_')[1]}" th:src="@{${product.mainImgPath} + ${product.mainImgName}}" alt="">
+                            <img id="mainImg" th:data-name="${product.mainImgName}" th:src="@{${product.mainImgPath} + ${product.mainImgName}}" alt="">
                             <button type="button" class="delete-btn">삭제</button>
                         </li>
                     </div>
@@ -47,7 +47,7 @@
                     <p>서브 이미지 프리뷰</p>
                     <div class="preview" id="subPreview">
                         <li class="item">
-                            <img id="subImg" th:data-name="${product.subImgName.split('_')[1]}" th:src="@{${product.subImgPath} + ${product.subImgName}}" alt="">
+                            <img id="subImg" th:data-name="${product.subImgName}" th:src="@{${product.subImgPath} + ${product.subImgName}}" alt="">
                             <button type="button" class="delete-btn">삭제</button>
                         </li>
                     </div>

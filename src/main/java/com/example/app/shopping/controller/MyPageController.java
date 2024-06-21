@@ -6,6 +6,7 @@ import com.example.app.shopping.domain.dto.UserDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.service.PaymentService;
 import com.example.app.shopping.domain.service.myPage.MyPageService;
+import com.example.app.shopping.domain.service.orderItem.OrderItemService;
 import com.example.app.shopping.domain.service.user.UserService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,6 +45,8 @@ public class MyPageController {
     private MyPageService myPageService;
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    private OrderItemService orderItemService;
 
 
     @GetMapping("")
@@ -297,16 +300,57 @@ public class MyPageController {
         payment id 를 사용하여 구매한 order_item 목록도 가져온다
     */
     @GetMapping("/payment")
-    public String getPayment(@RequestParam(name = "id", defaultValue = "0", required = false) Long id, Model model) {
+    public String getPayment(@RequestParam(name = "id", defaultValue = "0", required = false) Long id, Model model, Authentication authentication) {
         log.info("MyPageController's getPayment id: " + id);
         Map<String, Object> response = new HashMap<>();
 
-        model.addAttribute("success", true);  // 임시
+        // 비회원일 시 결제 정보 조회가 불가능하다
+        if (authentication == null) {
+            model.addAttribute("success", false);
+            model.addAttribute("msg", "비회원은 이용할 수 없는 서비스입니다.");
 
-        /*
-            필요한 작업
+            return "/myPage/paymentDetail";
+        }
 
-        */
+        boolean isAdmin = false;
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        String userName = principalDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = principalDetails.getAuthorities();
+        isAdmin = authorities.stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+
+        try {
+            // 권한 체크 및 로그인 정보가 본인인지 검증합니다.
+            Map<String, Object> paymentInfo = paymentService.getPaymentById(id);
+
+            System.out.println(paymentInfo);
+
+            if (!isAdmin && !userName.equals(paymentInfo.get("Uid"))) {
+                System.out.println("test");
+                // 관리자가 아니고 자신의 payment 에 대한 조회 요청이 아닐시
+                model.addAttribute("success", false);
+                model.addAttribute("msg", "본인의 결제 정보만 조회할 수 있습니다.");
+            } else {
+                // 만약 payment 조회 결과가 없다면 에러처리
+                if (paymentInfo.isEmpty()) {
+                    throw new Exception();
+                }
+
+                // 조회 로직 작성 (payment에 대한 정보와 order_item 리스트가 필요)
+                Long orderId = (Long) paymentInfo.get("Oid");
+
+                model.addAttribute("payment", paymentInfo);
+                model.addAttribute("orderItemList",
+                        orderItemService.getOrderItemsWithProductByOid(orderId)
+                );
+                model.addAttribute("success", true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("success", false);
+            model.addAttribute("msg", "조회중 오류가 발생했습니다.");
+        }
 
         return "/myPage/paymentDetail";
     }

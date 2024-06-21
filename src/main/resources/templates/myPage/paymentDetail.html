@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
     <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
-    <link rel="stylesheet" th:href="@{/css/myPage/paymentList.css}">
+    <link rel="stylesheet" th:href="@{/css/myPage/paymentDetail.css}">
 
     <!-- fragments css -->
     <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
@@ -31,16 +31,46 @@
             </div>
             <div class="container" style="width: 95%;">
 
-                <div th:if="${success}" class="">
+                <div th:if="${success}" class="payment-detail">
 
-                    <div class="">
-
+                    <div class="payment-info">
+                        <h2>결제 정보</h2>
+                        <p>결제 ID: <span th:text="${payment.id}"></span></p>
+                        <p>결제 이름: <span th:text="${payment.name}"></span></p>
+                        <p>결제 금액: <span th:text="${payment.paid_amount}"></span></p>
+                        <p>배송 상태: <span th:text="${payment.delivery_status}"></span></p>
+                        <p>환불 요청 상태:
+                            <span>
+                                <th:block th:if="${payment.refund_request_status == 'N'}">
+                                    X
+                                </th:block>
+                                <th:block th:if="${payment.refund_request_status == 'R'}">
+                                    환불 요청중
+                                </th:block>
+                                <th:block th:if="${payment.refund_request_status == 'C'}">
+                                    환불 완료
+                                </th:block>
+                            </span>
+                        </p>
+                        <p>결제 날짜: <span th:text="${payment.regDate}"></span></p>
                     </div>
 
-                    <div class="">
-
+                    <div class="order-item-list-info">
+                        <h2>주문 항목</h2>
+                        <div th:if="${#lists.isEmpty(orderItemList)}">
+                            <p>주문 항목이 없습니다.</p>
+                        </div>
+                        <div th:unless="${#lists.isEmpty(orderItemList)}" class="order-items">
+                            <div th:each="item : ${orderItemList}" class="order-item">
+                                <img th:src="@{${item.mainImgPath} + '/' + ${item.mainImgName}}" alt="상품 이미지" class="product-image">
+                                <p>상품명: <span th:text="${item.name}"></span></p>
+                                <p>카테고리: <span th:text="${item.majorCategory} + ' / ' + ${item.middleCategory}"></span></p>
+                                <p>수량: <span th:text="${item.quantity}"></span></p>
+                                <p>가격: <span th:text="${item.price}"></span></p>
+                                <button class="review-btn" th:data-oid="${item.Oid}" th:data-pid="${item.Pid}">리뷰 작성</button>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
 
                 <!-- 에러 메시지 -->

@@ -1,15 +1,14 @@
 package com.example.app.shopping.domain.service.product;
 
-import com.example.app.shopping.domain.dto.WishlistDto;
+import com.example.app.shopping.domain.dto.WishDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.dto.common.PageDto;
 import com.example.app.shopping.domain.mapper.ProductMapper;
-import com.example.app.shopping.domain.mapper.WishListMapper;
+import com.example.app.shopping.domain.mapper.WishMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
 
     @Autowired
-    private WishListMapper wishListMapper;
+    private WishMapper wishMapper;
 
     // 상품리스트 조회 (페이징 처리)
     @Override
@@ -101,18 +100,5 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Map<String, Object> getProductList(int productId) throws Exception {
         return productMapper.findProductById(productId);
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    public String addWish(Long Pid, String Uid) {
-        WishlistDto wishlistDto = wishListMapper.findWishByPidAndUid(Pid, Uid);
-
-        if (wishlistDto != null) {
-            return "FAILURE_DUPLICATE_WISH";
-        }
-
-        wishListMapper.insertWish(Pid, Uid);
-
-        return "SUCCESS";
     }
 }

@@ -123,22 +123,4 @@ public class ProductController {
         System.out.println("totalProductAmount : " +request.get("totalProductAmount"));
         return request.get("totalProductAmount");
     }
-
-    // 찜리스트에 제품 저장
-    @PostMapping("/product/wish")
-    public ResponseEntity<String> postWish(@RequestBody Map<String, Long> parameters, Authentication authentication) {
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        UserDto userDto = principalDetails.getUserDto();
-
-        Long Pid = parameters.get("productId");
-        String Uid = userDto.getId();
-
-        String result = productService.addWish(Pid, Uid);
-
-        if (result.equals("FAILURE_DUPLICATE_WISH")) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 찜리스트에 등록된 제품입니다.");
-        }
-
-        return ResponseEntity.ok("찜리스트에 제품이 등록 되었습니다.");
-    }
 }

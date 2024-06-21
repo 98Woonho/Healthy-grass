@@ -69,11 +69,10 @@ const productId = document.querySelector("#productId");
 const wishBtn = document.querySelector('.wishBtn');
 wishBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    axios.post('/product/wish', {
+    axios.post('/myPage/wish', {
         'productId' : productId.value
     })
         .then(res => {
-            console.log(res);
             alert(res.data);
         })
         .catch(err => {
@@ -112,5 +111,4 @@ cartBtn.addEventListener("click", function (e){
     viewCartBtn.addEventListener('click', function() {
         location.href = '/cart';
     });
-
 })

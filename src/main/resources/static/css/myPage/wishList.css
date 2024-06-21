@@ -1,0 +1,37 @@
+.product-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.product-info img {
+    width: 200px;
+}
+
+.product-name {
+    font-size: 1.5rem;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+.pagination ul {
+    list-style-type: none;
+    padding: 0;
+}
+.pagination ul li {
+    display: inline;
+    margin: 0 5px;
+}
+.pagination ul li a {
+    text-decoration: none;
+    color: #007bff;
+}
+.pagination ul li a:hover {
+    text-decoration: underline;
+}
+.pagination ul li.active a {
+    font-weight: bold;
+    color: #000;
+}

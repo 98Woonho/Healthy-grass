@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WishlistDto {
+public class WishDto {
     private Long id;
     private Long Pid;
     private String Uid;

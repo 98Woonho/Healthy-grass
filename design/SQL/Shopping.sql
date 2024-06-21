@@ -499,13 +499,13 @@ INSERT INTO `user` VALUES  ('9woonho8', '이운호', '$2a$10$iyxzj4pMtutQcCFhsOm
 UNLOCK TABLES;
 
 --
--- Table structure for table `wishlist`
+-- Table structure for table `wish`
 --
 
-DROP TABLE IF EXISTS `wishlist`;
+DROP TABLE IF EXISTS `wish`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `wishlist` (
+CREATE TABLE `wish` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `Pid` bigint NOT NULL,
   `Uid` varchar(50) NOT NULL,
@@ -518,12 +518,12 @@ CREATE TABLE `wishlist` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `wishlist`
+-- Dumping data for table `wish`
 --
 
-LOCK TABLES `wishlist` WRITE;
-/*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
-/*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
+LOCK TABLES `wish` WRITE;
+/*!40000 ALTER TABLE `wish` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wish` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

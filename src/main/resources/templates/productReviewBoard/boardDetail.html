@@ -28,9 +28,11 @@
                             </a>
                         </p>
                         <p>게시글 번호: <span id="boardId" th:text="${productReviewBoardDetail.id}"></span></p>
-                        <p>작성자: <span th:text="${productReviewBoardDetail.Uid}"></span></p>
+                        <p>작성자: <span th:text="${productReviewBoardDetail.get('Uid')}"></span></p>
                         <p>제목: <span th:text="${productReviewBoardDetail.title}"></span></p>
-                        <p>이미지: <span th:text="${productReviewBoardDetail.imgPath + '/' + productReviewBoardDetail.imgName}"></span></p>
+                        <th:block th:if="${productReviewBoardDetail.get('imgPath')}">
+                            <p>이미지: <span th:text="${productReviewBoardDetail.get('imgPath') + '/' + productReviewBoardDetail.get('imgName')}"></span></p>
+                        </th:block>
                         <p>글내용: <span th:text="${productReviewBoardDetail.content}"></span></p>
                         <p>평점: <span th:text="${productReviewBoardDetail.rating}"></span></p>
                         <p>작성일: <span th:text="${productReviewBoardDetail.regDate}"></span></p>

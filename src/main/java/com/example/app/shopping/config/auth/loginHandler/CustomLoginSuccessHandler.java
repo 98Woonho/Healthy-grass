@@ -56,7 +56,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler  
 //                }
                 response.sendRedirect("/");
             }catch(Exception e){
-                e.printStackTrace();
+//                e.printStackTrace();
             }
 
         });

@@ -26,4 +26,6 @@ public class PaymentDto {
     private String status;
     private Date regDate;
     private Date updateDate;
+    private String delivery_status;
+    private String refund_request_status;
 }

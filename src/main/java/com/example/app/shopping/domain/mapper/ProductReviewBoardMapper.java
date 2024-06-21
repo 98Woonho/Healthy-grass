@@ -1,5 +1,6 @@
 package com.example.app.shopping.domain.mapper;
 
+import com.example.app.shopping.domain.dto.ProductReviewBoardDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,4 +15,5 @@ public interface ProductReviewBoardMapper {
     Map<String, Object> findProductReviewBoardById(@Param("id") Integer id) throws Exception;
     int findMyProductReviewBoardsCount(@Param("criteria") Criteria criteria, @Param("uId") String uId) throws Exception;
     List<Map<String, Object>> findMyProductReviewBoards(@Param("criteria") Criteria criteria, @Param("offset") int offset, @Param("uId") String uId) throws Exception;
+    Integer insertProductReview(ProductReviewBoardDto boardDto) throws Exception;
 }

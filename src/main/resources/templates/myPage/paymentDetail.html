@@ -63,7 +63,9 @@
                         <div th:unless="${#lists.isEmpty(orderItemList)}" class="order-items">
                             <div th:each="item : ${orderItemList}" class="order-item">
                                 <img th:src="@{${item.mainImgPath} + '/' + ${item.mainImgName}}" alt="상품 이미지" class="product-image">
-                                <p>상품명: <span th:text="${item.name}"></span></p>
+                                <p>상품명:
+                                    <a th:href="@{'/product?id=' + ${item.Pid}}" th:text="${item.name}"></a>
+                                </p>
                                 <p>카테고리: <span th:text="${item.majorCategory} + ' / ' + ${item.middleCategory}"></span></p>
                                 <p>수량: <span th:text="${item.quantity}"></span></p>
                                 <p>가격: <span th:text="${item.price}"></span></p>
@@ -72,6 +74,7 @@
                         </div>
                     </div>
                 </div>
+                <script defer th:src="@{/js/myPage/addProductReviewBtnProcess.js}"></script>
 
                 <!-- 에러 메시지 -->
                 <div th:if="${!success}" class="error-message">

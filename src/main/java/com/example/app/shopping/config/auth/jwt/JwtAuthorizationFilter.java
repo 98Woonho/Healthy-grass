@@ -1,17 +1,12 @@
 package com.example.app.shopping.config.auth.jwt;
 
 
-
 import com.example.app.shopping.domain.dto.UserDto;
 import com.example.app.shopping.domain.mapper.UserMapper;
-import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +15,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * JWT를 이용한 인증
@@ -57,7 +51,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             }
         } catch (Exception ignored) {
             //일반적으로 접근하는 요청 URI에 대한 쿠키 예외는 무시한다..
-            //System.out.println("[JWTAUTHORIZATIONFILTER] ignored " + ignored);
+//            System.out.println("[JWTAUTHORIZATIONFILTER] ignored " + ignored);
+            //ignored.printStackTrace();
         }
        // System.out.println("[JWTAUTHORIZATIONFILTER] doFilterInternal...token " + token);
 
@@ -71,7 +66,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                // System.out.println("JWT 토큰 유효성 검증 오류!");
             }
         }catch(Exception e){
-            //e.printStackTrace();
+           // e.printStackTrace();
         }
         chain.doFilter(request, response);
     }

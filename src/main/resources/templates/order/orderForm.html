@@ -122,7 +122,7 @@
                     <td>
                         <div>
 <!--                            상품 이름-->
-                            <a th:href="@{/product(id=${product.id})}">
+                            <a class="product-name" th:href="@{/product(id=${product.id})}">
                                 <th:block th:text="${product.name}"></th:block>
                             </a>
                         </div>
@@ -162,7 +162,7 @@
                     <td colspan="6">
                         <div>
                             <!--                            장바구니에서 주문 한 모든 금액 -->
-                            주문 금액 <strong th:text="${orderList[0].noSaleTotalPrice}">전체구매금액
+                            주문 금액 <strong class="total-pay" th:text="${orderList[0].noSaleTotalPrice}">전체구매금액
                         </strong>
                             <span style="color: red">- <strong>상품 할인
                                 <!--                                상품 할인 가격-->
@@ -191,7 +191,7 @@
                         </th>
                         <td>
                             <!--                            주문자 이름 정보-->
-                            <input type="text" th:value="${userDto.name}" disabled></td>
+                            <input  type="text" th:value="${userDto.name}" disabled></td>
                     </tr>
                     <tr>
                         <th scope="row">
@@ -205,6 +205,7 @@
                     </tbody>
                 </table>
             </div>
+            <input class="user-email" type="hidden" th:value="${userDto.email}">
             <!-- .tbl-order -->
                 <h3>배송지 정보</h3>
 

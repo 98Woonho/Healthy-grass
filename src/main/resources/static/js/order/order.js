@@ -14,14 +14,14 @@ const salePrices = document.querySelectorAll('.sale_price');
 
 let totalSalePrice = 0;
 
-salePrices.forEach(function(sale) {
+salePrices.forEach(function (sale) {
     let SalePrice = parseInt(sale.textContent);
-        totalSalePrice += SalePrice;
+    totalSalePrice += SalePrice;
 });
 
 const productSalePrices = document.querySelectorAll('.product_sale_price');
 
-productSalePrices.forEach(productSalePrice =>{
+productSalePrices.forEach(productSalePrice => {
     productSalePrice.textContent = totalSalePrice;
 })
 const receiver = document.querySelector('.receiver');
@@ -31,7 +31,7 @@ const detailAdr = document.querySelector('.detailAdr');
 const phone = document.querySelector('.phone');
 const zipcodeSearch = document.querySelector('.zipcode-search');
 const isSameOrderInformationChecked = document.querySelector('.is-same-orderInformation-chk');
-isSameOrderInformationChecked.addEventListener('change', function (e){
+isSameOrderInformationChecked.addEventListener('change', function (e) {
     e.preventDefault()
     // 만약 주문자 정보가 동일함이 체크되었으면
     if (e.target.checked) {
@@ -49,7 +49,7 @@ isSameOrderInformationChecked.addEventListener('change', function (e){
                 console.log(err);
             });
         //아니면 빈 문자열 넣음
-    }else {
+    } else {
         receiver.value = "";
         zipcode.value = "";
         streetAdr.value = "";
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const selectedValue = e.target.value;
             if (selectedValue === 'N') {
-                if (isSameOrderInformationChecked.checked){
+                if (isSameOrderInformationChecked.checked) {
                     isSameOrderInformationChecked.checked = false;
                     receiver.value = "";
                     zipcode.value = "";
@@ -98,8 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         detailAdr.focus();
                     }
                 }).open();
-            } else if (selectedValue === 'B'){
-                if (isSameOrderInformationChecked.checked){
+            } else if (selectedValue === 'B') {
+                if (isSameOrderInformationChecked.checked) {
                     isSameOrderInformationChecked.checked = false;
                     receiver.value = "";
                     zipcode.value = "";
@@ -119,8 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     .catch(err => {
                         console.log(err);
                     });
-            } else if (selectedValue === 'R'){
-                if (isSameOrderInformationChecked.checked){
+            } else if (selectedValue === 'R') {
+                if (isSameOrderInformationChecked.checked) {
                     isSameOrderInformationChecked.checked = false;
                     receiver.value = "";
                     zipcode.value = "";
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-zipcodeSearch.addEventListener('click', function (e){
+zipcodeSearch.addEventListener('click', function (e) {
     e.preventDefault();
     new daum.Postcode({
         oncomplete: function (data) {
@@ -155,30 +155,91 @@ zipcodeSearch.addEventListener('click', function (e){
     }).open();
 })
 
-//결제
-const payBtn = document.querySelector('.pay-btn');
 
-payBtn.addEventListener('click', function (e){
-    e.preventDefault();
-    //
-    // 모든 라디오 버튼을 선택
-    const radioButtons = document.querySelectorAll('input[name="radio_paymethod"]');
-
-    // 각 라디오 버튼에 change 이벤트 리스너 추가
-    radioButtons.forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            // 클릭된 라디오 버튼의 값 가져오기
-            const selectedValue = e.target.value;
-            if (selectedValue === 'B'){
-                var IMP = window.IMP;
-                IMP.init('imp40654467');// IMPort 고객사 식별코드
+const productName = document.querySelector('.product-name');
+const totalPay = document.querySelector('.total-pay');
+const userEmail = document.querySelector('.user-email');
+// 모든 라디오 버튼을 선택
+const radioButtons = document.querySelectorAll('input[name="radio_paymethod"]');
+let selectedValue;
+// 각 라디오 버튼에 change 이벤트 리스너 추가
+radioButtons.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        // 클릭된 라디오 버튼의 값 가져오기
+        selectedValue = e.target.value;
+        //결제
+        const payBtn = document.querySelector('.pay-btn');
+        console.log(productName);
+        payBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            console.log(selectedValue)
+            IMP.init('imp40654467');// IMPort 고객사 식별코드
+            if (selectedValue === 'B') {
                 IMP.request_pay({
                     pg: 'html5_inicis.INIpayTest',
                     pay_method: 'card', //카드결제
                     merchant_uid: 'merchant_' + new Date().getTime(),
-                    name: '당근 10kg',
-                    amount: 100,
-                    buyer_email: 'hbsh@naver.com',
+                    name: productName.innerText,
+                    amount: totalPay.innerText,
+                    buyer_email: userEmail.value,
+                    buyer_name: '구매자 이름',
+                    buyer_tel: '연락처',
+                    buyer_addr: '주소',
+                    buyer_postcode: '우편번호'
+                } , function (rsp) { // callback
+                    if (rsp.success) {
+                        var msg = '결제가 완료되었습니다.';
+                        msg += '고유ID : ' + rsp.imp_uid;
+                        msg += '상점 거래ID : ' + rsp.merchant_uid;
+                        msg += '결제 금액 : ' + rsp.paid_amount;
+                        msg += '카드 승인번호 : ' + rsp.apply_num;
+
+                        console.log(rsp);
+
+                        axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
+                            .then(resp => {
+                                console.log(resp)
+                            })
+                            .catch(err => {console.log(err);})
+                    }
+                })
+            } else if (selectedValue === 'V') {
+                    IMP.request_pay({
+                        pg: "html5_inicis.INIpayTest",
+                        pay_method: "trans",
+                        merchant_uid: 'merchant_' + new Date().getTime(),
+                        name: productName.innerText,
+                        amount: totalPay.innerText,
+                        buyer_email: userEmail.value,
+                        buyer_name: '구매자 이름',
+                        buyer_tel: '연락처',
+                        buyer_addr: '주소',
+                        buyer_postcode: '우편번호'
+                    }, function (rsp) { // callback
+                        if (rsp.success) {
+                            var msg = '결제가 완료되었습니다.';
+                            msg += '고유ID : ' + rsp.imp_uid;
+                            msg += '상점 거래ID : ' + rsp.merchant_uid;
+                            msg += '결제 금액 : ' + rsp.paid_amount;
+                            msg += '카드 승인번호 : ' + rsp.apply_num;
+
+                            console.log(rsp);
+
+                            axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
+                                .then(resp => {
+                                    console.log(resp)
+                                })
+                                .catch(err => {console.log(err);})
+                        }
+                    })
+            } else if (selectedValue === 'C'){
+                IMP.request_pay({
+                    pg: "html5_inicis.INIpayTest",
+                    pay_method: "vbank",
+                    merchant_uid: 'merchant_' + new Date().getTime(),
+                    name: productName.innerText,
+                    amount: totalPay.innerText,
+                    buyer_email: userEmail.value,
                     buyer_name: '구매자 이름',
                     buyer_tel: '연락처',
                     buyer_addr: '주소',
@@ -197,21 +258,11 @@ payBtn.addEventListener('click', function (e){
                             .then(resp => {
                                 console.log(resp)
                             })
-                            .catch(err => {
-                                console.log(err);
-                            })
-
-                    } else {
-                        var msg = '결제에 실패하였습니다.';
-                        alert(msg + rsp.error_msg);
-
-                        console.log(rsp);
+                            .catch(err => {console.log(err);})
                     }
-                })
+                });
             }
+        })
+    })
+})
 
-            // 필요한 추가 작업 수행
-            // 예: 특정 결제 방식에 따라 다른 입력 필드를 활성화/비활성화
-        });
-    });
-});

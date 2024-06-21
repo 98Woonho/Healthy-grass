@@ -173,15 +173,6 @@ public class AdminService {
         LocalDate currentDate = LocalDate.now();
         productDto.setUpdateDate(currentDate);
 
-        // 새로운 이미지 업로드 경로
-        String newUploadPath = FileUploadPathProperties.getUploadDir() + File.separator + "product" + File.separator + productDto.getUpdateDate();
-
-        // 새로운 업로드 경로 디렉터리 생성
-        File newDir = new File(newUploadPath);
-
-        // 디렉터리 이름 변경
-        dir.renameTo(newDir);
-
         // product table update
         productMapper.updateProduct(productDto);
     }

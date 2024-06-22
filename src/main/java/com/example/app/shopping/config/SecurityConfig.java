@@ -6,6 +6,7 @@ import com.example.app.shopping.config.auth.jwt.JwtProperties;
 import com.example.app.shopping.config.auth.jwt.JwtTokenProvider;
 import com.example.app.shopping.config.auth.loginHandler.CustomAuthenticationFailureHandler;
 import com.example.app.shopping.config.auth.loginHandler.CustomLoginSuccessHandler;
+import com.example.app.shopping.config.auth.loginHandler.Oauth2JwtLoginSuccessHandler;
 import com.example.app.shopping.config.auth.logoutHandler.CustomLogoutSuccessHandler;
 import com.example.app.shopping.domain.mapper.UserMapper;
 import com.example.app.shopping.handler.CustomLoginFailureHandler;
@@ -103,12 +104,11 @@ public class SecurityConfig {
                     rememberMe.tokenRepository(tokenRepository()); //rememberMe를 테이블에 저장해서 관리합니다.
                 }
         );
-//        //OAUTH2-CLIENT
-//        http.oauth2Login((oauth2)->{
-//            oauth2.loginPage("/user/loginForm");
-//
-//            oauth2.successHandler(new Oauth2JwtLoginSuccessHandler());
-//        });
+        //OAUTH2-CLIENT
+        http.oauth2Login((oauth2)->{
+            oauth2.loginPage("/user/loginForm");
+            oauth2.successHandler(oauth2JwtLoginSuccessHandler());
+        });
 
 
 
@@ -157,5 +157,10 @@ public class SecurityConfig {
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter(){
         return new JwtAuthorizationFilter();
+    }
+
+    @Bean
+    public Oauth2JwtLoginSuccessHandler oauth2JwtLoginSuccessHandler(){
+        return new Oauth2JwtLoginSuccessHandler();
     }
 }

@@ -7,7 +7,7 @@
         VALUES (#{Pid}, #{Uid})
     </insert>
 
-    <select id="findWishByPidAndUid"
+    <select id="findWish"
             resultType="com.example.app.shopping.domain.dto.WishDto">
         SELECT *
         FROM `wish`

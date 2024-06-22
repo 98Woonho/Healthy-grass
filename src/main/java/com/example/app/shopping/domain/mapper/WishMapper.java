@@ -10,9 +10,9 @@ import java.util.Map;
 
 @Mapper
 public interface WishMapper {
-    void insertWish(@Param("Pid") Long Pid, @Param("Uid") String Uid);
+    void insertWish(WishDto wishDto);
 
-    WishDto findWishByPidAndUid(@Param("Pid") Long Pid, @Param("Uid") String Uid);
+    WishDto findWish(WishDto wishDto);
 
     List<Map<String, Object>> findWishListByCriteriaAndUid(@Param("criteria") Criteria criteria, @Param("offset") int offset, @Param("Uid") String Uid);
 

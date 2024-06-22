@@ -41,21 +41,23 @@ public class MyPageService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public String addWish(Long Pid, String Uid) {
-        WishDto wishlistDto = wishMapper.findWishByPidAndUid(Pid, Uid);
+    public String addWish(WishDto wishDto) {
+        WishDto wishlistDto = wishMapper.findWish(wishDto);
 
         if (wishlistDto != null) {
             return "FAILURE_DUPLICATE_WISH";
         }
 
-        wishMapper.insertWish(Pid, Uid);
+        wishMapper.insertWish(wishDto);
 
         return "SUCCESS";
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void deleteWish(Long pId, String uId) {
-        wishMapper.deleteWishByPidAndUid(pId, uId);
+    public void deleteWish(List<Long> pIdList, String uId) {
+        for (Long pId : pIdList) {
+            wishMapper.deleteWishByPidAndUid(pId, uId);
+        }
     }
 
     // 유저의 배송지가 존재하는지 확인

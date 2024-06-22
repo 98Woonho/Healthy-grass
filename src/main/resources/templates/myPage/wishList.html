@@ -53,13 +53,15 @@
         <div class="box w-full">
             <div class="container">
                 <h1>찜리스트</h1>
-
                 <input id="allSelect" type="checkbox">
                 <span>전체 선택</span>
-                <button type="button" onClick="handleSelectDelete">선택 삭제</button>
+                <button type="button" onClick="handleSelectDelete()">선택 삭제</button>
 
                 <div>
-                    <div class="product-info" th:each="wish : ${wishList}">
+                    <div class="no-product" th:if="${wishList.size() == 0}">
+                        <p>찜한 상품이 없습니다.</p>
+                    </div>
+                    <div th:data-pid="${wish.Pid}" class="product-info" th:each="wish : ${wishList}">
                         <input class="select" type="checkbox">
                         <div>
                             <img src="https://i.namu.wiki/i/VBcDkoPXajYoNcRUcVHQdfvB-Npe16B_s3ULp71MXsw2qcyVgvbZjQtQOFXKcZBn36hB1O07LSPkLYEKRtP5FA.webp"
@@ -72,16 +74,16 @@
                         </div>
                         <div>
                             <div>
-                                <button type="button" quantity="1" th:pid="${wish.Pid}" onClick="handleAddToCart(this)">장바구니 담기</button>
+                                <button type="button" class="add-cart-btn">장바구니 담기</button>
                             </div>
                             <div>
-                                <button type="button" th:pId="${wish.Pid}" onClick="handleDelete(this)">삭제</button>
+                                <button type="button" class="delete-btn">삭제</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="pagination">
+                <div class="page-btn-container">
                     <ul>
                         <!-- 이전 페이지로 이동하는 링크 -->
                         <li th:if="${pageDto.prev}">

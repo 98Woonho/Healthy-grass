@@ -12,26 +12,39 @@
     font-size: 1.5rem;
 }
 
-.pagination {
+.page-btn-container {
     text-align: center;
     margin-top: 20px;
 }
-.pagination ul {
+.page-btn-container ul {
     list-style-type: none;
     padding: 0;
 }
-.pagination ul li {
+.page-btn-container ul li {
     display: inline;
     margin: 0 5px;
 }
-.pagination ul li a {
+.page-btn-container ul li a {
     text-decoration: none;
     color: #007bff;
 }
-.pagination ul li a:hover {
+.page-btn-container ul li a:hover {
     text-decoration: underline;
 }
-.pagination ul li.active a {
+.page-btn-container ul li.active a {
     font-weight: bold;
     color: #000;
+}
+
+.no-product {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 300px;
+}
+
+.no-product p {
+    font-size: 1.5rem;
+    font-weight: 700;
 }

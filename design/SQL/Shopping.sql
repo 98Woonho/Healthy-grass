@@ -507,13 +507,13 @@ DROP TABLE IF EXISTS `wish`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `wish` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `pId` bigint NOT NULL,
-  `uId` varchar(50) NOT NULL,
+  `Pid` bigint NOT NULL,
+  `Uid` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_WishList_Uid_idx` (`uId`),
-  KEY `FK_WishList_Pid_idx` (`uId`),
-  CONSTRAINT `FK_WishList_pId` FOREIGN KEY (`pId`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_WishList_uId` FOREIGN KEY (`uId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_WishList_Uid_idx` (`Uid`),
+  KEY `FK_WishList_Pid_idx` (`Pid`),
+  CONSTRAINT `FK_WishList_Pid` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_WishList_Uid` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

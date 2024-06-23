@@ -45,7 +45,7 @@
                     <p>메인 이미지 프리뷰</p>
                     <div class="preview" id="mainPreview">
                         <li class="item">
-                            <img id="mainImg" th:data-name="${product.mainImgName.split('_')[1]}" th:src="@{${product.mainImgPath} + ${product.mainImgName}}" alt="">
+                            <img id="mainImg" th:data-name="${product.mainImgName}" th:src="@{${product.mainImgPath} + ${product.mainImgName}}" alt="">
                             <button type="button" class="delete-btn">삭제</button>
                         </li>
                     </div>
@@ -58,7 +58,7 @@
                     <p>서브 이미지 프리뷰</p>
                     <div class="preview" id="subPreview">
                         <li class="item">
-                            <img id="subImg" th:data-name="${product.subImgName.split('_')[1]}" th:src="@{${product.subImgPath} + ${product.subImgName}}" alt="">
+                            <img id="subImg" th:data-name="${product.subImgName}" th:src="@{${product.subImgPath} + ${product.subImgName}}" alt="">
                             <button type="button" class="delete-btn">삭제</button>
                         </li>
                     </div>
@@ -86,21 +86,19 @@
                     <div>
                         <label for="majorCategory">메인 카테고리</label>
                         <input type="text" id="majorCategory" name="majorCategory" th:value="${product.majorCategory}" placeholder="메인 카테고리">
-                        <select id="majorCategorySelect" onChange="changeCategorySelect(this)">
-                            <th:block th:each="productMajorCategory : ${productMajorCategoryList}">
-                                <option th:selected="${product.majorCategory == productMajorCategory}" th:value="${productMajorCategory}" th:text="${productMajorCategory}"></option>
+                        <select id="majorCategorySelect">
+                            <th:block th:each="majorCategory : ${majorCategoryList}">
+                                <option th:selected="${product.majorCategory == majorCategory}" th:value="${majorCategory}" th:text="${majorCategory}"></option>
                             </th:block>
-                            <option value="direct-input">직접 입력</option>
                         </select>
                     </div>
                     <div>
                         <label for="middleCategory">서브 카테고리</label>
                         <input type="text" id="middleCategory" name="middleCategory" th:value="${product.middleCategory}" placeholder="서브 카테고리">
-                        <select th:value="${product.middleCategory}" id="middleCategorySelect" onChange="changeCategorySelect(this)">
-                            <th:block th:each="productMiddleCategory : ${productMiddleCategoryList}">
-                                <option th:selected="${product.middleCategory == productMiddleCategory}" th:value="${productMiddleCategory}" th:text="${productMiddleCategory}"></option>
+                        <select th:value="${product.middleCategory}" id="middleCategorySelect">
+                            <th:block th:each="middleCategory : ${middleCategoryList}">
+                                <option th:selected="${product.middleCategory == middleCategory.name}" th:attr="data-major-category-name=${middleCategory.majorCategoryName}" th:value="${middleCategory.name}" th:text="${middleCategory.name}"></option>
                             </th:block>
-                            <option value="direct-input">직접 입력</option>
                         </select>
                     </div>
                     <div>

@@ -1,6 +1,8 @@
 package com.example.app.shopping.controller;
 
+import com.example.app.shopping.domain.dto.MiddleCategoryDto;
 import com.example.app.shopping.domain.dto.ProductDto;
+import com.example.app.shopping.domain.mapper.MiddleCategoryMapper;
 import com.example.app.shopping.domain.service.admin.AdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +36,13 @@ public class AdminController {
     @GetMapping("addProduct")
     public void getAddProduct(Model model) {
         // 제품 메인 카테고리 List 가져오기
-        List<String> productMajorCategoryList = adminService.getProductMajorCategoryList();
+        List<String> majorCategoryList = adminService.getMajorCategoryList();
 
         // 제품 서브 카테고리 List 가져오기
-        List<String> productMiddleCategoryList = adminService.getProductMiddleCategoryList();
+        List<MiddleCategoryDto> middleCategoryList = adminService.getMiddleCategoryList();
 
-        model.addAttribute("productMajorCategoryList", productMajorCategoryList);
-        model.addAttribute("productMiddleCategoryList", productMiddleCategoryList);
+        model.addAttribute("majorCategoryList", majorCategoryList);
+        model.addAttribute("middleCategoryList", middleCategoryList);
     }
 
     // 제품 등록 Post
@@ -58,10 +60,10 @@ public class AdminController {
     public void getModifyProduct(@RequestParam(value = "productName", required = false) String productName,
                                  Model model) {
         // 제품 메인 카테고리 List 가져오기
-        List<String> productMajorCategoryList = adminService.getProductMajorCategoryList();
+        List<String> majorCategoryList = adminService.getMajorCategoryList();
 
         // 제품 서브 카테고리 List 가져오기
-        List<String> productMiddleCategoryList = adminService.getProductMiddleCategoryList();
+        List<MiddleCategoryDto> middleCategoryList = adminService.getMiddleCategoryList();
 
         // 제품 List 가져오기
         List<String> productList = adminService.getProductList();
@@ -69,8 +71,8 @@ public class AdminController {
         // 제품이름으로 정보 가져오기
         ProductDto product = adminService.getProductByProductName(productName);
 
-        model.addAttribute("productMajorCategoryList", productMajorCategoryList);
-        model.addAttribute("productMiddleCategoryList", productMiddleCategoryList);
+        model.addAttribute("majorCategoryList", majorCategoryList);
+        model.addAttribute("middleCategoryList", middleCategoryList);
         model.addAttribute("productList", productList);
         model.addAttribute("productName", productName);
         model.addAttribute("product", product);

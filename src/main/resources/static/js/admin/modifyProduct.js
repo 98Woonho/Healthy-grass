@@ -3,6 +3,8 @@ const mainUploadBox = document.getElementById('mainUploadBox');
 const subUploadBox = document.getElementById('subUploadBox');
 const majorCategory = document.getElementById('majorCategory');
 const middleCategory = document.getElementById('middleCategory');
+const middleCategorySelect = document.getElementById('middleCategorySelect');
+const middleCategoryOptions = middleCategorySelect.querySelectorAll('option');
 const mainPreview = document.getElementById('mainPreview');
 const subPreview = document.getElementById('subPreview');
 const items = document.querySelectorAll('.item');
@@ -24,20 +26,26 @@ items.forEach(item => {
     })
 })
 
-// 카테고리 선택 function
-const changeCategorySelect = (select) => {
-    const categoryInput = select.parentElement.querySelector('input');
-
-    // 카테고리에서 직접 입력 select 시
-    if (select.value === 'direct-input') {
-        categoryInput.value = '';
-        categoryInput.style.pointerEvents = 'auto'; // pointer-events: auto 로 변경
-        categoryInput.focus();
-    } else {
-        categoryInput.style.pointerEvents = 'none'; // pointer-events: none 로 변경
-        categoryInput.value = select.value;
-    }
+// 서브 카테고리 필터 함수
+function filterMiddleCategory() {
+    middleCategoryOptions.forEach(middleCategoryOption => {
+        if (majorCategorySelect.value !== middleCategoryOption.getAttribute('data-major-category-name')) {
+            middleCategoryOption.disabled = true;
+            middleCategoryOption.style.display = 'none';
+        } else {
+            middleCategoryOption.disabled = false;
+            middleCategoryOption.style.display = 'block';
+        }
+    })
 }
+
+filterMiddleCategory();
+
+
+// 메인 카테고리 선택 시, 서브 카테고리 filter
+majorCategorySelect.addEventListener('change', function () {
+    filterMiddleCategory();
+})
 
 let mainImage;
 

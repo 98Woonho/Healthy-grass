@@ -1,7 +1,10 @@
 package com.example.app.shopping.domain.service.admin;
 
+import com.example.app.shopping.domain.dto.MiddleCategoryDto;
 import com.example.app.shopping.domain.dto.ProductDto;
 import com.example.app.shopping.domain.dto.common.PageDto;
+import com.example.app.shopping.domain.mapper.MajorCategoryMapper;
+import com.example.app.shopping.domain.mapper.MiddleCategoryMapper;
 import com.example.app.shopping.domain.mapper.ProductMapper;
 import org.apache.logging.log4j.spi.LoggerRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +23,18 @@ public class AdminService {
     @Autowired
     private ProductMapper productMapper;
 
-    public List<String> getProductMajorCategoryList() {
-        return productMapper.findDistinctMajorCategoryList();
+    @Autowired
+    private MajorCategoryMapper majorCategoryMapper;
+
+    @Autowired
+    private MiddleCategoryMapper middleCategoryMapper;
+
+    public List<String> getMajorCategoryList() {
+        return majorCategoryMapper.findMajorCategoryList();
     }
 
-    public List<String> getProductMiddleCategoryList() {
-        return productMapper.findDistinctMiddleCategoryList();
+    public List<MiddleCategoryDto> getMiddleCategoryList() {
+        return middleCategoryMapper.findMiddleCategoryList();
     }
 
     public List<String> getProductList() {

@@ -21,7 +21,11 @@
                              status,
                              regDate,
                              updateDate,
-                             userid)
+                             userid,
+                             Oid,
+                             delivery_status,
+                             refund_request_status,
+                             delivery_message)
         VALUES (#{paymentDto.buyer_addr},
                 #{paymentDto.buyer_email},
                 #{paymentDto.buyer_name},
@@ -36,9 +40,13 @@
                 #{paymentDto.pg_type},
                 #{paymentDto.pay_method},
                 #{paymentDto.status},
-                #{paymentDto.regDate},
+                NOW(),
                 #{paymentDto.updateDate},
-                #{id})
+                #{id},
+                null,
+                "배송준비",
+                "N",
+                #{paymentDto.custom_data})
     </insert>
     <select id="searchPayment" resultType="com.example.app.shopping.domain.dto.PaymentDto" parameterType="com.example.app.shopping.domain.dto.PaymentDto">
         SELECT id,

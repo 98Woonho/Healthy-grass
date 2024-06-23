@@ -18,9 +18,35 @@ USE `shopping`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `cart`
+-- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+                        `id` varchar(50) NOT NULL,
+                        `name` varchar(45) DEFAULT NULL,
+                        `password` varchar(150) DEFAULT NULL,
+                        `zipcode` varchar(80) DEFAULT NULL,
+                        `streetAdr` varchar(100) DEFAULT NULL,
+                        `detailAdr` varchar(100) DEFAULT NULL,
+                        `phone` varchar(45) DEFAULT NULL,
+                        `email` varchar(45) DEFAULT NULL,
+                        `role` varchar(20) DEFAULT NULL,
+                        `provider` varchar(80) DEFAULT NULL,
+                        `providerId` varchar(50) DEFAULT NULL,
+                        PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+--
+-- Table structure for table `cart`
+--
 DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -457,36 +483,9 @@ CREATE TABLE `signature` (
 
 LOCK TABLES `signature` WRITE;
 /*!40000 ALTER TABLE `signature` DISABLE KEYS */;
-INSERT INTO `signature` VALUES (_binary 'ßÉ`⁄ÉKkh\⁄\∆`7:0v\Ë=ù}\Ê2W•\\H™3ó6','2024-06-20');
+INSERT INTO `signature` VALUES (_binary 'ÔøΩÔøΩ`⁄ÉKkh\ÔøΩ\ÔøΩ`7:0v\ÔøΩ=ÔøΩ}\ÔøΩ2WÔøΩ\\HÔøΩ3ÔøΩ6','2024-06-20');
 /*!40000 ALTER TABLE `signature` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `id` varchar(50) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `password` varchar(150) DEFAULT NULL,
-  `zipcode` varchar(80) DEFAULT NULL,
-  `streetAdr` varchar(100) DEFAULT NULL,
-  `detailAdr` varchar(100) DEFAULT NULL,
-  `phone` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `role` varchar(20) DEFAULT NULL,
-  `provider` varchar(80) DEFAULT NULL,
-  `providerId` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;

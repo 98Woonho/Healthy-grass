@@ -155,114 +155,307 @@ zipcodeSearch.addEventListener('click', function (e) {
     }).open();
 })
 
+// 요소의 위치 정보를 받는 함수
+function getElementOffset(element) {
+    const rect = element.getBoundingClientRect();
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return {
+        top: rect.top + scrollTop,
+        left: rect.left + scrollLeft
+    };
+}
+// 배송 메세지 입력
+const selectElement = document.getElementById('orderMessageSelect');
+const textareaElement = document.getElementById('orderMessageTextarea');
+selectElement.addEventListener('change', function (e){
+    e.preventDefault();
+    console.log(selectElement.value);
+    if (selectElement.value !== '배송 메시지를 선택해주세요.') {
+        textareaElement.disabled = true; // textarea를 비활성화
+        textareaElement.value = selectElement.value; // 선택된 옵션의 값을 textarea에 설정
+    } else {
+        textareaElement.disabled = false; // textarea를 활성화
+        textareaElement.value = ''; // 기본 값이나 선택된 값을 지움
+    }
+})
 
 const productName = document.querySelector('.product-name');
-const totalPay = document.querySelector('.total-pay');
+const saleTotalPrice = document.querySelector('.sale-total-price');
 const userEmail = document.querySelector('.user-email');
-// 모든 라디오 버튼을 선택
+const userName = document.querySelector('.user-name');
+const userPhone = document.querySelector('.user-phone');
+const payBtn = document.querySelector('.pay-btn');
 const radioButtons = document.querySelectorAll('input[name="radio_paymethod"]');
 let selectedValue;
+
+// 결제 방식에 따른 설정 객체
+const paymentMethods = {
+    'B': {
+        pg: 'html5_inicis.INIpayTest',
+        pay_method: 'card'
+    },
+    'V': {
+        pg: 'html5_inicis.INIpayTest',
+        pay_method: 'trans'
+    },
+    'C': {
+        pg: 'html5_inicis.INIpayTest',
+        pay_method: 'vbank'
+    },
+    'K': {
+        pg: 'kakaopay.TC0ONETIME',
+        pay_method: 'card'
+    },
+    'T': {
+        pg: 'tosspay.tosstest',
+        pay_method: 'card'
+    }
+};
+
 // 각 라디오 버튼에 change 이벤트 리스너 추가
 radioButtons.forEach(radio => {
     radio.addEventListener('change', (e) => {
         // 클릭된 라디오 버튼의 값 가져오기
         selectedValue = e.target.value;
-        //결제
-        const payBtn = document.querySelector('.pay-btn');
-        console.log(productName);
-        payBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log(selectedValue)
-            IMP.init('imp40654467');// IMPort 고객사 식별코드
-            if (selectedValue === 'B') {
-                IMP.request_pay({
-                    pg: 'html5_inicis.INIpayTest',
-                    pay_method: 'card', //카드결제
-                    merchant_uid: 'merchant_' + new Date().getTime(),
-                    name: productName.innerText,
-                    amount: totalPay.innerText,
-                    buyer_email: userEmail.value,
-                    buyer_name: '구매자 이름',
-                    buyer_tel: '연락처',
-                    buyer_addr: '주소',
-                    buyer_postcode: '우편번호'
-                } , function (rsp) { // callback
-                    if (rsp.success) {
-                        var msg = '결제가 완료되었습니다.';
-                        msg += '고유ID : ' + rsp.imp_uid;
-                        msg += '상점 거래ID : ' + rsp.merchant_uid;
-                        msg += '결제 금액 : ' + rsp.paid_amount;
-                        msg += '카드 승인번호 : ' + rsp.apply_num;
+        console.log(selectedValue);
+    });
+});
 
-                        console.log(rsp);
+// 결제 버튼 클릭 시 처리 함수
+payBtn.addEventListener('click', function (e) {
+    e.preventDefault();
 
-                        axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
-                            .then(resp => {
-                                console.log(resp)
-                            })
-                            .catch(err => {console.log(err);})
-                    }
+    if (receiver.value === "" || receiver.value === null) {
+        alert('받으시는 분을 입력해주세요');
+        receiver.focus();
+        window.scrollTo({top: getElementOffset(receiver).top - 200})
+        return;
+    }
+    if (zipcode.value === "" || zipcode.value === null){
+        alert('배송지 우편번호를 입력해주세요');
+        zipcode.focus();
+        window.scrollTo({top: getElementOffset(zipcode).top - 200})
+        return;
+    }
+    if (streetAdr.value === "" || streetAdr.value === null){
+        alert('배송지 주소를 입력해주세요');
+        streetAdr.focus();
+        window.scrollTo({top: getElementOffset(streetAdr).top - 200})
+        return;
+    }
+    if (phone.value === "" || phone.value === null){
+        alert('휴대폰 번호를 입력해주세요');
+        phone.focus();
+        window.scrollTo({top: getElementOffset(phone).top - 200})
+        return;
+    }
+    if (streetAdr.value === "" || streetAdr.value === null){
+        alert('배송지 주소를 입력해주세요 입력해주세요');
+        streetAdr.focus();
+        window.scrollTo({top: getElementOffset(streetAdr).top - 200})
+        return;
+    }
+
+    console.log(selectedValue);
+
+    // 결제 처리 함수 호출
+    processPayment(selectedValue);
+});
+
+// 결제 처리 함수
+function processPayment(selectedValue) {
+    const method = paymentMethods[selectedValue];
+
+    if (!method) {
+        alert('결제 방법을 선택해주세요');
+        return;
+    }
+
+    IMP.init('imp40654467'); // IMPort 고객사 식별코드
+    IMP.request_pay({
+        pg: method.pg,
+        pay_method: method.pay_method,
+        merchant_uid: 'merchant_' + new Date().getTime(),
+        name: productName.innerText,
+        amount: saleTotalPrice.innerText,
+        buyer_email: userEmail.value,
+        buyer_name: userName.value,
+        buyer_tel: userPhone.value,
+        buyer_addr: streetAdr.value + detailAdr.value,
+        buyer_postcode: zipcode.value,
+        custom_data: textareaElement.value
+    }, function (rsp) { // callback
+        if (rsp.success) {
+            console.log(rsp);
+            alert('결제가 완료되었습니다.');
+
+            axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
+                .then(resp => {
+                    console.log(resp);
                 })
-            } else if (selectedValue === 'V') {
-                    IMP.request_pay({
-                        pg: "html5_inicis.INIpayTest",
-                        pay_method: "trans",
-                        merchant_uid: 'merchant_' + new Date().getTime(),
-                        name: productName.innerText,
-                        amount: totalPay.innerText,
-                        buyer_email: userEmail.value,
-                        buyer_name: '구매자 이름',
-                        buyer_tel: '연락처',
-                        buyer_addr: '주소',
-                        buyer_postcode: '우편번호'
-                    }, function (rsp) { // callback
-                        if (rsp.success) {
-                            var msg = '결제가 완료되었습니다.';
-                            msg += '고유ID : ' + rsp.imp_uid;
-                            msg += '상점 거래ID : ' + rsp.merchant_uid;
-                            msg += '결제 금액 : ' + rsp.paid_amount;
-                            msg += '카드 승인번호 : ' + rsp.apply_num;
-
-                            console.log(rsp);
-
-                            axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
-                                .then(resp => {
-                                    console.log(resp)
-                                })
-                                .catch(err => {console.log(err);})
-                        }
-                    })
-            } else if (selectedValue === 'C'){
-                IMP.request_pay({
-                    pg: "html5_inicis.INIpayTest",
-                    pay_method: "vbank",
-                    merchant_uid: 'merchant_' + new Date().getTime(),
-                    name: productName.innerText,
-                    amount: totalPay.innerText,
-                    buyer_email: userEmail.value,
-                    buyer_name: '구매자 이름',
-                    buyer_tel: '연락처',
-                    buyer_addr: '주소',
-                    buyer_postcode: '우편번호'
-                }, function (rsp) { // callback
-                    if (rsp.success) {
-                        var msg = '결제가 완료되었습니다.';
-                        msg += '고유ID : ' + rsp.imp_uid;
-                        msg += '상점 거래ID : ' + rsp.merchant_uid;
-                        msg += '결제 금액 : ' + rsp.paid_amount;
-                        msg += '카드 승인번호 : ' + rsp.apply_num;
-
-                        console.log(rsp);
-
-                        axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
-                            .then(resp => {
-                                console.log(resp)
-                            })
-                            .catch(err => {console.log(err);})
-                    }
+                .catch(err => {
+                    console.log(err);
                 });
-            }
-        })
-    })
-})
+        } else {
+            alert('결제에 실패하였습니다.');
+        }
+    });
+}
+
+
+// const productName = document.querySelector('.product-name');
+// const saleTotalPrice = document.querySelector('.sale-total-price');
+// const userEmail = document.querySelector('.user-email');
+// const userName = document.querySelector('.user-name');
+// const userPhone = document.querySelector('.user-phone');
+// // 모든 라디오 버튼을 선택
+// const radioButtons = document.querySelectorAll('input[name="radio_paymethod"]');
+// let selectedValue;
+// // 각 라디오 버튼에 change 이벤트 리스너 추가
+// radioButtons.forEach(radio => {
+//     radio.addEventListener('change', (e) => {
+//         // 클릭된 라디오 버튼의 값 가져오기
+//         selectedValue = e.target.value;
+//         console.log(selectedValue);
+//         //결제
+//         const payBtn = document.querySelector('.pay-btn');
+//         payBtn.addEventListener('click', function (e) {
+//             e.preventDefault();
+//
+//             if (receiver.value === "" || receiver.value === null){
+//                 alert('받으시는 분을 입력해주세요')
+//                 receiver.focus();
+//                 // let offset = getElementOffset(receiver);
+//                 // window.scrollTo(
+//                 //     {top: offset.top})
+//                 return;
+//             }
+//
+//             console.log(selectedValue)
+//             IMP.init('imp40654467');// IMPort 고객사 식별코드
+//             if (selectedValue === 'B') {
+//                 IMP.request_pay({
+//                     pg: 'html5_inicis.INIpayTest',
+//                     pay_method: 'card', //카드결제
+//                     merchant_uid: 'merchant_' + new Date().getTime(),
+//                     name: productName.innerText,
+//                     amount: saleTotalPrice.innerText,
+//                     buyer_email: userEmail.value,
+//                     buyer_name: userName.value,
+//                     buyer_tel: userPhone.value,
+//                     buyer_addr: streetAdr.value + detailAdr.value,
+//                     buyer_postcode: zipcode.value
+//                 } , function (rsp) { // callback
+//                     if (rsp.success) {
+//                         console.log(rsp)
+//                         alert('결제가 완료되었습니다.');
+//
+//                         axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
+//                             .then(resp => {
+//                                 console.log(resp)
+//                             })
+//                             .catch(err => {console.log(err);})
+//                     }
+//                 })
+//             } else if (selectedValue === 'V') {
+//                     IMP.request_pay({
+//                         pg: "html5_inicis.INIpayTest",
+//                         pay_method: "trans",
+//                         merchant_uid: 'merchant_' + new Date().getTime(),
+//                         name: productName.innerText,
+//                         amount: saleTotalPrice.innerText,
+//                         buyer_email: userEmail.value,
+//                         buyer_name: userName.value,
+//                         buyer_tel: userPhone.value,
+//                         buyer_addr: streetAdr.value + detailAdr.value,
+//                         buyer_postcode: zipcode.value
+//                     }, function (rsp) { // callback
+//                         if (rsp.success) {
+//                             console.log(rsp)
+//                             alert('결제가 완료되었습니다.');
+//
+//                             axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
+//                                 .then(resp => {
+//                                     console.log(resp)
+//                                 })
+//                                 .catch(err => {console.log(err);})
+//                         }
+//                     })
+//             } else if (selectedValue === 'C'){
+//                 IMP.request_pay({
+//                     pg: "html5_inicis.INIpayTest",
+//                     pay_method: "vbank",
+//                     merchant_uid: 'merchant_' + new Date().getTime(),
+//                     name: productName.innerText,
+//                     amount: saleTotalPrice.innerText,
+//                     buyer_email: userEmail.value,
+//                     buyer_name: userName.value,
+//                     buyer_tel: userPhone.value,
+//                     buyer_addr: streetAdr.value + detailAdr.value,
+//                     buyer_postcode: zipcode.value
+//                 }, function (rsp) { // callback
+//                     if (rsp.success) {
+//                         console.log(rsp)
+//                         alert('결제가 완료되었습니다.');
+//
+//                         axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
+//                             .then(resp => {
+//                                 console.log(resp)
+//                             })
+//                             .catch(err => {console.log(err);})
+//                     }
+//                 });
+//             } else if (selectedValue === 'K'){
+//                 IMP.request_pay({
+//                     pg: "kakaopay.TC0ONETIME",
+//                     pay_method: "card",
+//                     merchant_uid: 'merchant_' + new Date().getTime(),
+//                     name: productName.innerText,
+//                     amount: saleTotalPrice.innerText,
+//                     buyer_email: userEmail.value,
+//                     buyer_name: userName.value,
+//                     buyer_tel: userPhone.value,
+//                     buyer_addr: streetAdr.value + detailAdr.value,
+//                     buyer_postcode: zipcode.value
+//                 }, function (rsp) { // callback
+//                     if (rsp.success) {
+//                         console.log(rsp)
+//                         alert('결제가 완료되었습니다.');
+//
+//                         axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
+//                             .then(resp => {
+//                                 console.log(resp)
+//                             })
+//                             .catch(err => {console.log(err);})
+//                     }
+//                 });
+//             } else if(selectedValue === 'T'){
+//                 IMP.request_pay({
+//                     pg: "tosspay.tosstest",
+//                     pay_method: "card",
+//                     merchant_uid: 'merchant_' + new Date().getTime(),
+//                     name: productName.innerText,
+//                     amount: saleTotalPrice.innerText,
+//                     buyer_email: userEmail.value,
+//                     buyer_name: userName.value,
+//                     buyer_tel: userPhone.value,
+//                     buyer_addr: streetAdr.value + detailAdr.value,
+//                     buyer_postcode: zipcode.value
+//                 }, function (rsp) { // callback
+//                     if (rsp.success) {
+//                         console.log(rsp)
+//                         alert('결제가 완료되었습니다.');
+//
+//                         axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
+//                             .then(resp => {
+//                                 console.log(resp)
+//                             })
+//                             .catch(err => {console.log(err);})
+//                     }
+//                 });
+//             }
+//         })
+//     })
+// })
 

@@ -191,7 +191,7 @@
                         </th>
                         <td>
                             <!--                            주문자 이름 정보-->
-                            <input  type="text" th:value="${userDto.name}" disabled></td>
+                            <input class="user-name" type="text" th:value="${userDto.name}" disabled></td>
                     </tr>
                     <tr>
                         <th scope="row">
@@ -200,12 +200,13 @@
                         </th>
                         <td>
                             <!--                            주문자 연락처 정보-->
-                            <input type="text" th:value="${userDto.phone}" disabled>
+                            <input class="user-phone" type="text" th:value="${userDto.phone}" disabled>
+                            <input class="user-email" type="hidden" th:value="${userDto.email}">
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <input class="user-email" type="hidden" th:value="${userDto.email}">
+
             <!-- .tbl-order -->
                 <h3>배송지 정보</h3>
 
@@ -269,7 +270,7 @@
                                 <div>주문메시지<br></div>
                             </th>
                             <td>
-                                <select>
+                                <select id="orderMessageSelect">
                                     <option>배송 메시지를 선택해주세요.</option>
                                     <option>배송 전에 연락주세요.</option>
                                     <option>부재시 경비(관리)실에 맡겨주세요.</option>
@@ -277,9 +278,7 @@
                                     <option>고객 무인택배함에 보관해주세요.</option>
                                     <option>파손 위험이 있습니다. 주의해주세요.</option>
                                 </select>
-                                <textarea rows="5" style="width:80%;">
-
-                                </textarea>
+                                <textarea id="orderMessageTextarea" rows="5" style="width:80%;"></textarea>
                                 <div>
                                     *배송일 지정은 불가하며, 해당 사유로 환불이 불가한 점 꼭 확인하시기 바랍니다.
                                 </div>
@@ -303,7 +302,8 @@
                         <td>
                             <ul>
                                 <li>
-                                    <label><input type="radio" class="chk-rdo" name="radio_paymethod" value="B">
+                                    <label>
+                                        <input type="radio" class="chk-rdo" name="radio_paymethod" value="B">
                                         <span>일반결제</span>
                                     </label>
                                 </li>
@@ -317,35 +317,25 @@
                                         <span>가상계좌</span>
                                     </label>
                                 </li>
-                                <li>
-                                    <label><input type="radio" class="chk-rdo" name="radio_paymethod" value="S">
-                                        <span>에스크로</span>
-                                    </label>
-                                </li>
                             </ul>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">
-                            <div class="txt-l payTitle">간편결제</div>
+                        <th>
+                            <div>간편결제</div>
                         </th>
                         <td>
-                            <ul class="pay-method">
-                                <li class="">
-                                    <label data-pay-tab="kakaoPay">
-                                        <em><span class="op-card-dc-price fc-red"></span></em> <em><span
-                                            class="op-kkp-dc-price fc-red"></span></em> <input type="radio"
-                                                                                               class="chk-rdo"
-                                                                                               name="radio_paymethod" value="KAKAOPAY"> <span>카카오페이(KAKAOPAY)</span>
+                            <ul>
+                                <li>
+                                    <label>
+                                        <input type="radio" class="chk-rdo" name="radio_paymethod" value="K">
+                                        <span>카카오페이(KAKAOPAY)</span>
                                     </label>
                                 </li>
-                                <li class="">
-                                    <label data-pay-tab="npay">
-                                        <em><span class="op-card-dc-price fc-red"></span></em> <em><span
-                                            class="op-npy-dc-price fc-red"></span></em> <input type="radio"
-                                                                                               class="chk-rdo"
-                                                                                               name="radio_paymethod"
-                                                                                               value="NPAY"> <span>네이버페이(NAVER Pay)</span>
+                                <li>
+                                    <label>
+                                        <input type="radio" class="chk-rdo" name="radio_paymethod" value="T">
+                                        <span>토스페이(TOSSPAY)</span>
                                     </label>
                                 </li>
                             </ul>
@@ -413,9 +403,8 @@
                                 </div>
                             </td>
                             <td>
-                                <div>
+                                <div class="sale-total-price">
                                     <!--  할인후 최종 가격-->
-                                    <br>
                                     <th:block th:text="${totalAmount}"></th:block>
                                 </div>
                             </td>

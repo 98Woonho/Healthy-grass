@@ -61,4 +61,56 @@
         FROM payment
         WHERE userid = #{id}
     </select>
+
+    <!-- 마이 페이지 Payments Counting -->
+    <select id="selectAllCountByUid" resultType="Integer" parameterType="String">
+        SELECT
+        COUNT(*)
+        FROM
+        payment p
+        INNER JOIN
+        `order` o ON p.Oid = o.id
+        WHERE
+        o.Uid = #{uId}
+    </select>
+
+    <!-- 마이 페이지 Payment 리스트 조회 -->
+    <select id="selectAllByUid" resultType="map" parameterType="map">
+        SELECT
+        p.*
+        FROM
+        payment p
+        INNER JOIN
+        `order` o ON p.Oid = o.id
+        WHERE
+        o.Uid = #{uId}
+        ORDER BY
+        p.regDate DESC, p.id DESC
+        LIMIT #{offset}, #{criteria.amount}
+    </select>
+
+    <!-- id 를 사용한 payment 조회 -->
+    <select id="selectPaymentById" resultType="map">
+        SELECT
+        p.*
+        FROM
+        payment p
+        INNER JOIN
+        `order` o ON p.Oid = o.id
+        WHERE
+        p.id = #{id}
+    </select>
+
+    <!-- 환불 상태에 대한 update -->
+    <update id="updateRefundStatus">
+        UPDATE payment
+        <set>
+            <if test="status != null">
+                refund_request_status = #{status},
+            </if>
+            updateDate = DATE(NOW())
+        </set>
+        WHERE id = #{id}
+    </update>
+
 </mapper>

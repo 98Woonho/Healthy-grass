@@ -1,6 +1,7 @@
 package com.example.app.shopping.domain.service.product;
 
 import com.example.app.shopping.domain.dto.WishDto;
+import com.example.app.shopping.domain.dto.ProductDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.dto.common.PageDto;
 import com.example.app.shopping.domain.mapper.ProductMapper;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,5 +102,31 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Map<String, Object> getProductList(int productId) throws Exception {
         return productMapper.findProductById(productId);
+    }
+
+    /*
+        관리자 상품 리스트 조회 페이지에 사용하는 서비스입니다.
+        Criteria 에 있는 내용을 기반으로 상품 리스트 결과를 반환합니다.
+    */
+    @Override
+    public Map<String, Object> getProductList(Criteria criteria) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+
+        // 카테고리 정보 초기화
+        criteria.setMajorCategory("");
+        criteria.setMiddleCategory("");
+
+        // 검색 결과로 나오는 상품의 수 확인
+        int count = productMapper.selectItemsCount(criteria);
+        PageDto pageDto = new PageDto(count, criteria);
+
+        // 시작 게시물 번호 구하기
+        int offset = (criteria.getPageno() - 1) * criteria.getAmount();
+
+        List<Map<String, Object>> list = productMapper.selectAllProducts(criteria, offset);
+        result.put("list", list);
+        result.put("pageDto", pageDto);
+
+        return result;
     }
 }

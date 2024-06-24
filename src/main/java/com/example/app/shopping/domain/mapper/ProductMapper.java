@@ -17,8 +17,6 @@ public interface ProductMapper {
 
     List<String> findProductList();
 
-    ProductDto findProductByProductName(String productName);
-
     ProductDto findProductById1(Long id);
 
     Map<String, Object> findProductById(@Param("id") Integer id) throws Exception;
@@ -52,4 +50,8 @@ public interface ProductMapper {
     void insertProduct(ProductDto productDto);
 
     void updateProduct(ProductDto productDto);
+
+    void deleteProduct(@Param("id") Long id);
+
+    List<Map<String, Object>> selectAllProducts(@Param("criteria") Criteria criteria, @Param("offset") int offset) throws Exception;
 }

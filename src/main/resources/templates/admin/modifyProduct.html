@@ -22,21 +22,10 @@
 <main>
     <h1>제품 수정</h1>
     <div class="admin-container">
-        <div class="admin-container-left">
-            메뉴
-        </div>
-        <div class="admin-container-right">
-            <form action="/admin/modifyProduct" method="get" th:if="${productName == null}">
-                <label for="productSelect">제품을 선택해 주세요</label>
-                <select id="productSelect" name="productName">
-                    <th:block th:each="product : ${productList}">
-                        <option th:value="${product}" th:text="${product}"></option>
-                    </th:block>
-                </select>
-                <button>확인</button>
-            </form>
+        <th:block th:insert="~{fragments/admin/mainMenu.html :: mainManu_fragment}"></th:block>
 
-            <div class="product-image" th:if="${productName != null}">
+        <div class="admin-container-right">
+            <div class="product-image">
                 <div>
                     <p>메인 이미지 등록</p>
                     <div class="upload-box" id="mainUploadBox">
@@ -48,7 +37,7 @@
                             <img id="mainImg" th:data-name="${product.mainImgName}" th:src="@{${product.mainImgPath} + ${product.mainImgName}}" alt="">
                             <button type="button" class="delete-btn">삭제</button>
                         </li>
-                    </div>
+                     </div>
                 </div>
                 <div>
                     <p>서브 이미지 등록</p>
@@ -64,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <form id="modifyProductForm" th:if="${productName != null}">
+            <form id="modifyProductForm">
                 <input type="hidden" name="id" th:value="${product.id}">
                 <div class="product-info">
                     <div>

@@ -264,6 +264,7 @@ modifyProductForm.onsubmit = function(e) {
     axios.put('/admin/product', formData, { header : { 'Content-Type': 'multipart/form-data' }})
         .then(res => {
             alert(res.data);
+            location.href = '/admin/productList';
         })
         .catch(err => {
             alert('알 수 없는 이유로 제품 수정에 실패 하였습니다. 잠시 후 다시 시도해 주세요.');

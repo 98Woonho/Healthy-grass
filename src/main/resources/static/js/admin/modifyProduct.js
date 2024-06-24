@@ -28,13 +28,19 @@ items.forEach(item => {
 
 // 서브 카테고리 필터 함수
 function filterMiddleCategory() {
-    middleCategoryOptions.forEach(middleCategoryOption => {
+    let count = 0;
+    middleCategoryOptions.forEach((middleCategoryOption) => {
         if (majorCategorySelect.value !== middleCategoryOption.getAttribute('data-major-category-name')) {
             middleCategoryOption.disabled = true;
             middleCategoryOption.style.display = 'none';
         } else {
+            if (count === 0) {
+                middleCategory.value = middleCategoryOption.value;
+                middleCategorySelect.value = middleCategoryOption.value;
+            }
             middleCategoryOption.disabled = false;
             middleCategoryOption.style.display = 'block';
+            count++;
         }
     })
 }

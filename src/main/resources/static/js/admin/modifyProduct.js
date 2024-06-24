@@ -42,9 +42,15 @@ function filterMiddleCategory() {
 filterMiddleCategory();
 
 
-// 메인 카테고리 선택 시, 서브 카테고리 filter
+// 메인 카테고리 선택 시 이벤트
 majorCategorySelect.addEventListener('change', function () {
     filterMiddleCategory();
+    majorCategory.value = majorCategorySelect.value;
+})
+
+// 서브 카테고리 선택 시 이벤트
+middleCategorySelect.addEventListener('change', function () {
+    middleCategory.value = middleCategorySelect.value;
 })
 
 let mainImage;

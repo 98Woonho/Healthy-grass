@@ -34,8 +34,6 @@ public class AdminController {
     // 관리자 페이지 GET
     @GetMapping("")
     public String getAdminPage() {
-        log.info("GET AdminController's getAdminPage");
-
         return "admin/admin";
     }
 
@@ -106,7 +104,6 @@ public class AdminController {
 
         if (criteria.getPageno() == null) criteria.setPageno(1);
         criteria.setAmount(6);
-        log.info("AdminController's getProductList Criteria: " + criteria);
 
         try {
             // 서비스 호출

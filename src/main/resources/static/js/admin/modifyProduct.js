@@ -92,13 +92,6 @@ mainUploadBox.addEventListener('drop', (e) => {
         return;
     }
 
-    // 서브 이미지와 동일한 이미지는 등록 불가
-    if (mainImage.name === subImg.dataset.name || (subImage && mainImage.name === subImage.name)) {
-        alert('동일한 이미지는 등록할 수 없습니다.');
-        mainImage = undefined;
-        return;
-    }
-
     const reader = new FileReader(); // FileReader
     reader.readAsDataURL(mainImage); // reader에 image 정보 넣기.
     reader.onload = function (e) {
@@ -160,13 +153,6 @@ subUploadBox.addEventListener('drop', (e) => {
     // 이미지 파일 용량 제한
     if (subImage.size > (1024 * 1024 * 5)) {
         alert('파일 하나당 최대 사이즈는 5MB이하여야 합니다.');
-        return;
-    }
-
-    // 메인 이미지와 동일한 이미지는 등록 불가
-    if (subImage.name === mainImg.dataset.name || (mainImage && subImage.name === mainImage.name)) {
-        alert('동일한 이미지는 등록할 수 없습니다.');
-        subImage = undefined;
         return;
     }
 

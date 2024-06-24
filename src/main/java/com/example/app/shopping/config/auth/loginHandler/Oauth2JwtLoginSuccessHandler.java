@@ -53,7 +53,7 @@ public class Oauth2JwtLoginSuccessHandler implements AuthenticationSuccessHandle
 //                }
             response.sendRedirect("/");
             }catch(Exception e){
-                e.printStackTrace();
+//                e.printStackTrace();
             }
 
 

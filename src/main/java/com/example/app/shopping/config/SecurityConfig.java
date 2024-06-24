@@ -1,16 +1,16 @@
 package com.example.app.shopping.config;
 
+
 import com.example.app.shopping.config.auth.PrincipalDetailsService;
 import com.example.app.shopping.config.auth.jwt.JwtAuthorizationFilter;
 import com.example.app.shopping.config.auth.jwt.JwtProperties;
 import com.example.app.shopping.config.auth.jwt.JwtTokenProvider;
-import com.example.app.shopping.config.auth.loginHandler.CustomAuthenticationFailureHandler;
 import com.example.app.shopping.config.auth.loginHandler.CustomLoginSuccessHandler;
 import com.example.app.shopping.config.auth.loginHandler.Oauth2JwtLoginSuccessHandler;
+import com.example.app.shopping.config.auth.logoutHandler.CustomLogoutHandler;
 import com.example.app.shopping.config.auth.logoutHandler.CustomLogoutSuccessHandler;
 import com.example.app.shopping.domain.mapper.UserMapper;
 import com.example.app.shopping.handler.CustomLoginFailureHandler;
-import com.example.app.shopping.handler.CustomLogoutHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -71,7 +71,6 @@ public class SecurityConfig {
         http.logout(
                 logout ->{
                     logout.logoutUrl("/user/logout").permitAll(); // 로그아웃 url 지정
-                    logout.addLogoutHandler(customLogoutHandler()); // 로그아웃시 customLogoutHandler 실행
                     logout.logoutSuccessUrl("/"); // 로그아웃 성공시 이동할 url
                     logout.addLogoutHandler(customLogoutHandler());
                     logout.logoutSuccessHandler( customLogoutSuccessHandler() );

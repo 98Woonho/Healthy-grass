@@ -270,7 +270,9 @@ public class MyPageController {
         try {
             // 권한 체크 및 로그인 정보가 본인인지 검증합니다.
             Map<String, Object> paymentInfo = paymentService.getPaymentById(request.get("id"));
-
+            System.out.println("isAdmin: " + isAdmin);
+            System.out.println("userName: " + paymentInfo.get("Uid"));
+            System.out.println("paymentInfo: " + paymentInfo);
             if (!isAdmin && !userName.equals(paymentInfo.get("Uid"))) {
                 // 관리자가 아니고 자신의 payment 에 대한 수정 요청이 아닐시
                 response.put("success", false);

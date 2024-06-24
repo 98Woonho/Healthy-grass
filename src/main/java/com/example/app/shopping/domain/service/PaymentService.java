@@ -1,9 +1,11 @@
 package com.example.app.shopping.domain.service;
 
+import com.example.app.shopping.controller.PaymentController;
+import com.example.app.shopping.domain.dto.OrderDto;
 import com.example.app.shopping.domain.dto.PaymentDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.dto.common.PageDto;
-import com.example.app.shopping.domain.mapper.PaymentMapper;
+import com.example.app.shopping.domain.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +17,32 @@ import java.util.Map;
 public class PaymentService {
     @Autowired
     private PaymentMapper paymentMapper;
+    @Autowired
+    private OrderMapper orderMapper;
+    @Autowired
+    private OrderItemMapper orderItemMapper;
+    @Autowired
+    private CartMapper cartMapper;
+    @Autowired
+    private CartItemMapper cartItemMapper;
 
-    public void payResultSave(PaymentDto paymentDto, String id) {
-        // 등록 날짜정보랑 수정 한 정보 set으로 넣기
-        paymentMapper.save(paymentDto, id);
+    public void payResultSave(PaymentController.RequestDto paymentDto, String uid) {
+        try {
+            OrderDto orderInfo = new OrderDto();
+            orderInfo.setUid(uid);
+            orderInfo.setTotal_amount(paymentDto.getPaid_amount());
+            orderMapper.save(orderInfo);
+            Long id = orderInfo.getId(); // AutoIncrement 값 가져오기
+            Integer cartId = cartMapper.findCartIdByUserId(uid);
+            for (PaymentController.ProductList product : paymentDto.getProductList()) {
+                orderItemMapper.save(id, product.getId(), product.getQuantity(), product.getPrice());
+                cartItemMapper.deleteCartItemByCartIdAndProductId(cartId, product.getId());
+            }
+
+            paymentMapper.save(paymentDto, uid, id);
+        } catch (Exception e) {
+            throw new RuntimeException("결제 처리 중 오류 발생: " + e.getMessage(), e);
+        }
     }
 
     public List<PaymentDto> searchPayment(String id) {

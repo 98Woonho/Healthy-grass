@@ -116,6 +116,7 @@
                                 <a th:href="@{/product(id=${product.id})}">
                                     <img th:src="${product.mainImgPath}" th:alt="${product.mainImgName}" width="65">
                                 </a>
+                                <input class="product-id" type="hidden" th:value="${product.id}">
                             </div>
                         </div>
                     </td>
@@ -129,7 +130,7 @@
                     </td>
                     <td>
                         <!--                        상품 수량-->
-                        <div th:text="${orderList[status.index].quantity}">1</div>
+                        <div class="order-quantity" th:text="${orderList[status.index].quantity}">1</div>
                     </td>
                     <td>
                         <div>
@@ -149,11 +150,10 @@
                             <!--  상품 가격 -->
                             <del th:text="${product.price * orderList[status.index].quantity}"></del>
                             <!-- 할인 적용 후 가격 -->
-                            <br>
-                            <th:block th:text="${product.discountedPrice * orderList[status.index].quantity}"></th:block>
+                            <div class="price" th:text="${product.discountedPrice * orderList[status.index].quantity}"></div>
                         </div>
 <!--                        상품 할인이 적용이 되지 않을 때 보여질 가격-->
-                        <div th:unless="${product.discountedPrice != null && product.discountedPrice != 0}">
+                        <div class="price" th:unless="${product.discountedPrice != null && product.discountedPrice != 0}">
                             <div th:text="${product.price * orderList[status.index].quantity}"></div>
                         </div>
                     </td>
@@ -220,7 +220,6 @@
                             </th>
                             <td>
                                 <label><input type="radio" name="addressType" value="B"> 기본 배송지</label>
-                                <label><input type="radio" name="addressType" value="R"> 최근 배송지</label>
 <!--                                신규 배송지 입력시 다음 주소 api 호출-->
                                 <label><input type="radio" name="addressType" value="N"> 신규 배송지</label>
                                 <label> <input class="is-same-orderInformation-chk" type="checkbox"> 주문자 정보와 동일함</label>
@@ -261,7 +260,6 @@
 <!--                                연락처 정보 -->
                                 <input class="phone" type="text" oninput="PhoneRegex(this)">
  <!--                                    기본배송지로 설정 누르면 배송지가 있으면 수정 없으면 등록-->
-                                <button type="submit">기본 배송지로 설정</button>
                             </td>
                         </tr>
                         <tr>
@@ -315,27 +313,6 @@
                                 <li>
                                     <label><input type="radio" class="chk-rdo" name="radio_paymethod" value="C">
                                         <span>가상계좌</span>
-                                    </label>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <div>간편결제</div>
-                        </th>
-                        <td>
-                            <ul>
-                                <li>
-                                    <label>
-                                        <input type="radio" class="chk-rdo" name="radio_paymethod" value="K">
-                                        <span>카카오페이(KAKAOPAY)</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="radio" class="chk-rdo" name="radio_paymethod" value="T">
-                                        <span>토스페이(TOSSPAY)</span>
                                     </label>
                                 </li>
                             </ul>
@@ -414,7 +391,7 @@
                 </div>
                 <!--end_if-->
                 <label>
-                    <input type="checkbox"> 결제정보 확인 / 구매진행 동의
+                    <input class="payment-agree" type="checkbox"> 결제정보 확인 / 구매진행 동의
                 </label>
                 <div>
                     <a href="javascript:void(0)" >취소</a>

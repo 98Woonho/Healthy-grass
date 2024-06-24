@@ -18,7 +18,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -45,13 +47,51 @@ public class PaymentController {
     //결제 결과값을 db에 저장
     @PostMapping("/save")
     @ResponseBody
-    public void payment_save(@RequestBody PaymentDto paymentDto, Authentication authentication) {
+    public void payment_save(@RequestBody RequestDto request, Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         String id = principal.getUserDto().getId();
-        System.out.println(paymentDto);
-
-        paymentService.payResultSave(paymentDto, id);
+        log.info("PaymentController's payment_save request: " + request);
+        paymentService.payResultSave(request, id);
     }
+
+    @Data
+    public static class ProductList {
+        public int id;
+        public int quantity;
+        public int price;
+    }
+
+    @Data
+    public static class RequestDto{
+        public boolean success;
+        public String imp_uid;
+        public String pay_method;
+        public String merchant_uid;
+        public String name;
+        public int paid_amount;
+        public String currency;
+        public String pg_provider;
+        public String pg_type;
+        public String pg_tid;
+        public String apply_num;
+        public String buyer_name;
+        public String buyer_email;
+        public String buyer_tel;
+        public String buyer_addr;
+        public String buyer_postcode;
+        public Object custom_data;
+        public String status;
+        public int paid_at;
+        public String receipt_url;
+        public Object card_name;
+        public Object bank_name;
+        public int card_quota;
+        public String card_number;
+        public ArrayList<ProductList> productList;
+    }
+
+
+
 
     //엑세스 토큰 받기
     @GetMapping("/token")

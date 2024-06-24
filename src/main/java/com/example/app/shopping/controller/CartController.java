@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -25,8 +26,7 @@ public class CartController {
     @GetMapping("")
     public String cartForm(Authentication authentication, Model model) throws Exception {
         if (authentication == null) {
-            System.out.println("cartAddNotUserLogin!!!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            return null;
+            return "user/loginForm";
         } else {
             PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
             String userId = principal.getUserDto().getId();
@@ -46,8 +46,7 @@ public class CartController {
         System.out.println("quantity : " + quantity);
         //로그인 안한 유저가 장바구니에 물건을 담을 때 동작할 서비스
         if (authentication == null) {
-            System.out.println("cartAddNotUserLogin!!!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            return cartService.cartAddNotUserLogin(productId, quantity);
+           return "FAILURE_LOGIN";
         } else {
             PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
 

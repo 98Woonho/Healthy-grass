@@ -44,7 +44,6 @@ public class CartService {
 
                 // 등록한 유저의 카트 ID 조회
                 cartId = cartMapper.findCartIdByUserId(userId);
-                System.out.println("1");
                 // 가져온 상품을 cart_item DB 에 등록한다 ( 카드 ID, 제품 ID, 선택한 수량 )
                 cartItemMapper.insertCartItem(cartId, productId, quantity);
 
@@ -60,6 +59,7 @@ public class CartService {
                     cartItemMapper.insertCartItem(cartId, productId, quantity);
 
                     // msg : 상품을 구매했습니다
+                    return "SUCCESS_EXIST_PRODUCT";
                 } else {
                     // cart_item DB 에 등록 된 적 있는 상품이라면
                     Integer productQuantity =

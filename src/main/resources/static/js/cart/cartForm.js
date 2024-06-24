@@ -240,7 +240,7 @@ function getCheckedValues() {
         if (checkbox.checked) {
             const row = checkbox.closest('tr');
             const cartPrice = row.querySelector('.cart_price').textContent;
-            const amountValue = row.querySelector('.amount_value').value;
+            const amountValue = row.querySelector('.amount_value').value; // 상품 수량
             const productId = row.querySelector('.amount_value').getAttribute("data-product-id");
             const totalAmount = document.querySelector('.total_amount').textContent;
             const noSaleTotalPrice = document.querySelector('.noSaleCartTotalPrice').value;

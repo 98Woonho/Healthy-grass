@@ -21,5 +21,10 @@
         WHERE
         oi.Oid = #{id};
     </select>
+    <insert id="save" parameterType="java.util.Map">
+        INSERT INTO order_item (Oid, Pid, quantity, price)
+        VALUES (#{Oid}, #{Pid}, #{quantity}, #{price})
+    </insert>
+
 
 </mapper>

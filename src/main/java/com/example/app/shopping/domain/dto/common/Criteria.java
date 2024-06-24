@@ -2,7 +2,6 @@ package com.example.app.shopping.domain.dto.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor

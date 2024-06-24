@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WishlistDto {
-    private Long id;
-    private Long Pid;
-    private String Uid;
+public class MiddleCategoryDto {
+    private String name;
+    private String majorCategoryName;
 }

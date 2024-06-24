@@ -5,24 +5,43 @@ const majorCategorySelect = document.getElementById('majorCategorySelect');
 const middleCategorySelect = document.getElementById('middleCategorySelect');
 const majorCategory = document.getElementById('majorCategory');
 const middleCategory = document.getElementById('middleCategory');
+const middleCategoryOptions = middleCategorySelect.querySelectorAll('option');
 
 majorCategory.value = majorCategorySelect.value;
 middleCategory.value = middleCategorySelect.value;
 
-// 카테고리 선택 function
-const changeCategorySelect = (select) => {
-    const categoryInput = select.parentElement.querySelector('input');
-
-    // 카테고리에서 직접 입력 select 시
-    if (select.value === 'direct-input') {
-        categoryInput.value = '';
-        categoryInput.style.pointerEvents = 'auto'; // pointer-events: auto 로 변경
-        categoryInput.focus();
-    } else {
-        categoryInput.style.pointerEvents = 'none'; // pointer-events: none 로 변경
-        categoryInput.value = select.value;
-    }
+// 서브 카테고리 필터 함수
+function filterMiddleCategory() {
+    let count = 0;
+    middleCategoryOptions.forEach((middleCategoryOption) => {
+        if (majorCategorySelect.value !== middleCategoryOption.getAttribute('data-major-category-name')) {
+            middleCategoryOption.disabled = true;
+            middleCategoryOption.style.display = 'none';
+        } else {
+            if (count === 0) {
+                middleCategory.value = middleCategoryOption.value;
+                middleCategorySelect.value = middleCategoryOption.value;
+            }
+            middleCategoryOption.disabled = false;
+            middleCategoryOption.style.display = 'block';
+            count++;
+        }
+    })
 }
+
+filterMiddleCategory();
+
+
+// 메인 카테고리 선택 시 이벤트
+majorCategorySelect.addEventListener('change', function () {
+    filterMiddleCategory();
+    majorCategory.value = majorCategorySelect.value;
+})
+
+// 서브 카테고리 선택 시 이벤트
+middleCategorySelect.addEventListener('change', function () {
+    middleCategory.value = middleCategorySelect.value;
+})
 
 let mainImage;
 
@@ -60,13 +79,6 @@ mainUploadBox.addEventListener('drop', (e) => {
     // 이미지 파일 용량 제한
     if (mainImage.size > (1024 * 1024 * 5)) {
         alert('파일 하나당 최대 사이즈는 5MB이하여야 합니다.');
-        return;
-    }
-
-    // 메인 이미지와 동일한 이미지는 등록 불가
-    if (subImage && mainImage.name === subImage.name) {
-        alert('동일한 이미지는 등록할 수 없습니다.');
-        mainImage = undefined;
         return;
     }
 
@@ -109,7 +121,7 @@ subUploadBox.addEventListener('drop', (e) => {
 
     // 이미지가 등록되어있는 상황에서 더 등록할 시, 경고문 출력
     if (subPreview.querySelectorAll('.item').length === 1) {
-        alert('대표 이미지는 한 개만 등록 가능합니다.');
+        alert('서브 이미지는 한 개만 등록 가능합니다.');
         return;
     }
 
@@ -131,13 +143,6 @@ subUploadBox.addEventListener('drop', (e) => {
     // 이미지 파일 용량 제한
     if (subImage.size > (1024 * 1024 * 5)) {
         alert('파일 하나당 최대 사이즈는 5MB이하여야 합니다.');
-    }
-
-    // 메인 이미지와 동일한 이미지는 등록 불가
-    if (mainImage && subImage.name === mainImage.name) {
-        alert('동일한 이미지는 등록할 수 없습니다.');
-        subImage = undefined;
-        return;
     }
 
     const reader = new FileReader(); // FileReader
@@ -239,8 +244,8 @@ addProductForm.onsubmit = function(e) {
 
     axios.post('/admin/product', formData, { header : { 'Content-Type': 'multipart/form-data' }})
         .then(res => {
-            console.log(res);
             alert(res.data);
+            location.href = '/admin/productList';
         })
         .catch(err => {
             alert('알 수 없는 이유로 제품 등록에 실패 하였습니다. 잠시 후 다시 시도해 주세요.');

@@ -32,8 +32,6 @@ public class ProductReviewBoardController {
     // 상품 조회에서 상품 리뷰 뿌려주는 rest API, 기존 게시판과 구분을 위해 url 끝에 API 를 작성하였습니다.
     @PostMapping("/productReviewBoardListAPI")
     public @ResponseBody Map<String, Object> productReviewBoardListAPI(@RequestBody ProductReviewBoardAPI request) {
-        System.out.println("ProductReviewBoardController's productReviewBoardListAPI");
-        System.out.println("request: " + request);
         Criteria criteria = request.getCriteria();
 
         Integer pId = request.getPId();

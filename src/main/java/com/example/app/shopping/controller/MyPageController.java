@@ -324,10 +324,7 @@ public class MyPageController {
             // 권한 체크 및 로그인 정보가 본인인지 검증합니다.
             Map<String, Object> paymentInfo = paymentService.getPaymentById(id);
 
-            System.out.println(paymentInfo);
-
-            if (!isAdmin && !userName.equals(paymentInfo.get("Uid"))) {
-                System.out.println("test");
+            if (!isAdmin && !userName.equals(paymentInfo.get("userid"))) {
                 // 관리자가 아니고 자신의 payment 에 대한 조회 요청이 아닐시
                 model.addAttribute("success", false);
                 model.addAttribute("msg", "본인의 결제 정보만 조회할 수 있습니다.");

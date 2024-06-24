@@ -182,8 +182,54 @@
 
     <insert id="insertProductReview" parameterType="com.example.app.shopping.domain.dto.ProductReviewBoardDto">
         INSERT INTO product_review_board
-        (Pid, Uid, title, regDate, updateDate, content, imgPath, imgName, rating)
+        (Pid, Uid, Oid, title, regDate, updateDate, content, imgPath, imgName, rating)
         VALUES
-        (#{Pid}, #{Uid}, #{title}, #{regDate}, #{updateDate}, #{content}, #{imgPath}, #{imgName}, #{rating})
+        (#{Pid}, #{Uid}, #{Oid}, #{title}, #{regDate}, #{updateDate}, #{content}, #{imgPath}, #{imgName}, #{rating})
     </insert>
+
+
+    <!-- 리뷰 상세 조회 -->
+    <select id="selectProductReviewBoardById" parameterType="java.lang.Long" resultType="com.example.app.shopping.domain.dto.ProductReviewBoardDto">
+        SELECT
+        prb.*
+        FROM product_review_board prb
+        WHERE prb.id = #{id}
+    </select>
+
+    <!-- 리뷰 업데이트 -->
+    <update id="updateProductReview" parameterType="com.example.app.shopping.domain.dto.ProductReviewBoardDto">
+        UPDATE product_review_board
+        SET
+        title = #{title},
+        content = #{content},
+        imgPath = #{imgPath},
+        imgName = #{imgName},
+        updateDate = #{updateDate},
+        rating = #{rating}
+        WHERE id = #{id}
+        AND Uid = #{Uid} <!-- 인증된 사용자만 수정 가능 -->
+    </update>
+
+    <!-- 리뷰 detail select map return -->
+    <select id="findReviewById" parameterType="Long" resultType="map">
+        SELECT
+        *
+        FROM product_review_board
+        WHERE id = #{id}
+    </select>
+
+    <!-- 리뷰 detail select dto return -->
+    <select id="selectReviewById" parameterType="Long" resultType="com.example.app.shopping.domain.dto.ProductReviewBoardDto">
+        SELECT
+        *
+        FROM product_review_board
+        WHERE id = #{id}
+    </select>
+
+    <!-- 리뷰 delete -->
+    <delete id="deleteReview" parameterType="Long">
+        DELETE
+        FROM product_review_board
+        WHERE id = #{id}
+    </delete>
 </mapper>

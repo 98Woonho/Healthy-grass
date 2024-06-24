@@ -11,5 +11,8 @@ public interface ProductReviewBoardService {
     public Map<String, Object> getproductReviewBoardDetail(Integer id) throws Exception;
     public Map<String, Object> getMyProductReviewBoards(Criteria criteria, String uId) throws Exception;
     public Map<String, Object> checkAddReview(Long oId, Long pId, String uId) throws Exception;
-    void insertProductReviewServ(ProductReviewBoardDto boardDto, MultipartFile image) throws Exception;
+    void insertProductReviewServ(ProductReviewBoardDto boardDto, MultipartFile image, Long oId) throws Exception;
+    Map<String, Object> putProductReviewServ(ProductReviewBoardDto boardDto, MultipartFile file, boolean deleteImage) throws Exception;
+    Map<String, Object> getReviewDetail(Long id) throws Exception;
+    Map<String, Object> deleteReview(Long id) throws Exception;
 }

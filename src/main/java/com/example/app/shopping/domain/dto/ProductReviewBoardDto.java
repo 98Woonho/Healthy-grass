@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class ProductReviewBoardDto {
     private Long id;
     private Long Pid;
+    private Long Oid;
     private String Uid;
     private String title;
     private LocalDate regDate;

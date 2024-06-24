@@ -15,5 +15,5 @@ public interface OrderItemMapper {
     Map<String, Object> selectOrderItemByoIdAndpId(@Param("oId") Long oId, @Param("pId") Long pId) throws Exception;
     
     // 리뷰 등록 상태를 변경한다
-    Integer updateReviewStatus(String status) throws Exception;
+    Integer updateReviewStatus(@Param("status") String status, @Param("pId") Long pId, @Param("oId") Long oId) throws Exception;
 }

@@ -10,12 +10,14 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -190,7 +192,7 @@ public class ProductReviewBoardController {
         Order 의 pId 와 Product 의 id 가 일치하는지 확인합니다.
     */
     @PostMapping(value = "/productReview")
-    public   @ResponseBody Map<String, Object> postProductReview(@ModelAttribute PostProductReviewRequestDto request, Authentication authentication) {
+    public @ResponseBody Map<String, Object> postProductReview(@ModelAttribute PostProductReviewRequestDto request, Authentication authentication) {
         log.info("ProductReviewBoardController's postProductReview request: " + request);
 
         Map<String, Object> response = new HashMap<>();
@@ -221,9 +223,9 @@ public class ProductReviewBoardController {
 
             MultipartFile image = request.getImage();
 
-            service.insertProductReviewServ(boardDto, image);
+            service.insertProductReviewServ(boardDto, image, request.getOId());
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             response.put("success", false);
             response.put("msg", e.getMessage());
         }
@@ -247,4 +249,125 @@ public class ProductReviewBoardController {
         @JsonProperty("image")
         private MultipartFile image;
     }
+
+
+    /*
+        상품 리뷰 수정페이지로 이동
+        기존 상품 리뷰에 대한 데이터 전달
+    */
+    @GetMapping("/productReview/edit")
+    private String productReviewEditPage(@RequestParam("boardId") Long boardId, Model model) {
+        log.info("ProductReviewBoardController's productReviewEditPage boardId: " + boardId);
+
+        try {
+            model.addAttribute("review", service.getproductReviewBoardDetail(boardId.intValue()));
+            model.addAttribute("success", true);
+        } catch (Exception e) {
+            model.addAttribute("success", false);
+            model.addAttribute("msg", "리뷰 정보를 가져오는데 실패하였습니다.");
+        }
+
+        return "productReviewBoard/editProductReview";
+    }
+
+    /*
+        상품 리뷰 수정 put
+    */
+    @PutMapping("/productReview")
+    public @ResponseBody Map<String, Object> putProductReview(
+            @ModelAttribute PutProductReviewDto putDto, Authentication authentication) {
+        log.info("ProductReviewBoardController's putProductReview dto: " + putDto);
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (authentication == null) {
+            response.put("success", false);
+            response.put("msg", "비회원은 수정할 수 없습니다.");
+            return response;
+        }
+
+        ProductReviewBoardDto boardDto = new ProductReviewBoardDto();
+        boardDto.setId(putDto.getId());
+        boardDto.setUid(authentication.getName());
+        boardDto.setTitle(putDto.getTitle());
+        boardDto.setContent(putDto.getContent());
+        boardDto.setRating(putDto.getRating());
+
+        MultipartFile file = putDto.getImage();
+        boolean deleteImage = putDto.isDeleteImage();
+
+        try {
+            response = service.putProductReviewServ(boardDto, file, deleteImage);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("msg", "리뷰 수정에 실패하였습니다.");
+        }
+
+        return response;
+    }
+
+    @Data
+    private static class PutProductReviewDto {
+        @JsonProperty("id")
+        private Long id;
+        @JsonProperty("title")
+        private String title;
+        @JsonProperty("content")
+        private String content;
+        @JsonProperty("rating")
+        private Integer rating;
+        @JsonProperty("image")
+        private MultipartFile image;
+        @JsonProperty("deleteImage")
+        private boolean deleteImage;
+    }
+
+
+    /*
+        리뷰 삭제 요청 처리
+        관리자, 작성자 본인만 삭제 가능
+    */
+    @DeleteMapping("productReview")
+    public @ResponseBody Map<String, Object> deleteReview(@RequestParam("boardId") Long id, Authentication authentication) {
+        System.out.println("ReviewController's deleteReview id: " + id);
+
+        Map<String, Object> response = new HashMap<>();
+
+        boolean isAdmin = false;
+
+        if (authentication == null) {
+            // 만약 비회원 상태라면
+            response.put("success", false);
+            response.put("msg", "작성한 회원만 삭제 요청을 할 수 있습니다.");
+
+            return response;
+        }
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        String userName = principalDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = principalDetails.getAuthorities();
+        isAdmin = authorities.stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+
+        try {
+            Map<String, Object> reviewInfo = service.getReviewDetail(id);
+
+            if (!isAdmin && !userName.equals(reviewInfo.get("Uid"))) {
+                response.put("success", false);
+                response.put("msg", "본인이 작성한 리뷰만 삭제할 수 있습니다.");
+            } else {
+                // 제거 요청에 대한 서비스 호출
+                response = service.deleteReview(id);
+            }
+        } catch (NullPointerException e) {
+            response.put("success", false);
+            response.put("msg", "리뷰 정보를 찾을 수 없습니다.");
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("msg", e.getMessage());
+        }
+
+        return response;
+    }
+
 }

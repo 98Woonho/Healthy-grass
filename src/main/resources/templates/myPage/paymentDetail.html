@@ -69,7 +69,13 @@
                                 <p>카테고리: <span th:text="${item.majorCategory} + ' / ' + ${item.middleCategory}"></span></p>
                                 <p>수량: <span th:text="${item.quantity}"></span></p>
                                 <p>가격: <span th:text="${item.price}"></span></p>
-                                <button class="review-btn" th:data-oid="${item.Oid}" th:data-pid="${item.Pid}">리뷰 작성</button>
+                                <th:block th:if="${item.review_status == 'N'}">
+                                    <button class="review-btn" th:data-oid="${item.Oid}" th:data-pid="${item.Pid}">리뷰 작성</button>
+                                </th:block>
+                                <th:block th:if="${item.review_status == 'Y'}">
+                                    <span>작성 완료</span>
+                                </th:block>
+
                             </div>
                         </div>
                     </div>

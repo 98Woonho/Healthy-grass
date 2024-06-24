@@ -32,10 +32,11 @@
     </select>
 
 
-    <!-- 미구현 -->
+    <!-- 리뷰 상태값 변경 -->
     <update id="updateReviewStatus" parameterType="map">
         UPDATE order_item
-        SET
+        SET review_status = #{status}
+        WHERE Pid = #{pId} AND Oid = #{oId}
     </update>
 
 </mapper>

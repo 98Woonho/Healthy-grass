@@ -1,88 +1,91 @@
 <th:block th:fragment="nav_fragment" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="">
-    <nav>
+    <nav class="layout-150">
         <div class="nav-container">
-            <div>쇼핑몰</div>
-            <ul class="nav-menu">
-                <li>
-                    <a href="/productList?majorCategory=쌀/잡곡">쌀/잡곡</a>
-                    <div class="dropdown">
-                        <a href="/productList?majorCategory=쌀/잡곡&middleCategory=일반쌀">일반쌀</a>
-                        <a href="/productList?majorCategory=쌀/잡곡&middleCategory=현미/찹쌀/잡곡">현미/찹쌀/잡곡</a>
-                    </div>
-                </li>
-                <li>
-                    <a href="/productList?majorCategory=과일/채소">과일/채소</a>
-                    <div class="dropdown">
-                        <a href="/productList?majorCategory=과일/채소&middleCategory=과일류">과일류</a>
-                        <a href="/productList?majorCategory=과일/채소&middleCategory=채소류">채소류</a>
-                        <a href="/productList?majorCategory=과일/채소&middleCategory=버섯류">버섯류</a>
-                        <a href="/productList?majorCategory=과일/채소&middleCategory=밤/견과류">밤/견과류</a>
-                        <a href="/productList?majorCategory=과일/채소&middleCategory=기타 채소 과일류">기타 채소 과일류</a>
-                    </div>
-                </li>
-                <li>
-                    <a href="/productList?majorCategory=축산물">축산물</a>
-                    <div class="dropdown">
-                        <a href="/productList?majorCategory=축산물&middleCategory=한우">한우</a>
-                        <a href="/productList?majorCategory=축산물&middleCategory=돼지고기">돼지고기</a>
-                        <a href="/productList?majorCategory=축산물&middleCategory=닭고기/오리">닭고기/오리</a>
-                        <a href="/productList?majorCategory=축산물&middleCategory=가공육">가공육</a>
-                        <a href="/productList?majorCategory=축산물&middleCategory=달걀">달걀</a>
-                    </div>
-                </li>
-                <li>
-                    <a href="/productList?majorCategory=건강식품">건강식품</a>
-                    <div class="dropdown">
-                        <a href="/productList?majorCategory=건강식품&middleCategory=수삼/인삼/백하수오">수삼/인삼/백하수오</a>
-                        <a href="/productList?majorCategory=건강식품&middleCategory=도라지">도라지</a>
-                        <a href="/productList?majorCategory=건강식품&middleCategory=홍삼/절편">홍삼/절편</a>
-                        <a href="/productList?majorCategory=건강식품&middleCategory=엑기스/분말/즙류">엑기스/분말/즙류</a>
-                        <a href="/productList?majorCategory=건강식품&middleCategory=꿀/조청">꿀/조청</a>
-                    </div>
-                </li>
-                <li>
-                    <a href="/productList?majorCategory=가공식품">가공식품</a>
-                    <div class="dropdown">
-                        <a href="/productList?majorCategory=가공식품&middleCategory=빵/떡/과자">빵/떡/과자</a>
-                        <a href="/productList?majorCategory=가공식품&middleCategory=만두/탕/간편조리">만두/탕/간편조리</a>
-                        <a href="/productList?majorCategory=가공식품&middleCategory=약과/한과/유과">약과/한과/유과</a>
-                        <a href="/productList?majorCategory=가공식품&middleCategory=두유/미숫가루">두유/미숫가루</a>
-                    </div>
-                </li>
-                <li>
-                    <a href="#">게시판</a>
-                    <div class="dropdown">
-                        <a href="/productInquiryBoardList">상품문의게시판</a>
-                        <a href="/customerInquiryBoardList">고객문의게시판</a>
-                        <a href="/productReviewBoardList" sec:authorize="hasRole('ROLE_ADMIN')">상품리뷰게시판</a>
-                    </div>
-                </li>
-                <th:block sec:authorize="isAuthenticated()">
+
+            <div class="left">
+                <ul class="nav-menu">
                     <li>
-                        <a href="#">회원관리</a>
+                        <a href="/productList?majorCategory=쌀/잡곡">쌀/잡곡</a>
                         <div class="dropdown">
-                            <a href="/myPage">마이페이지</a>
-                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                                <a href="/admin">관리자페이지</a>
-                            </th:block>
+                            <a href="/productList?majorCategory=쌀/잡곡&middleCategory=일반쌀">일반쌀</a>
+                            <a href="/productList?majorCategory=쌀/잡곡&middleCategory=현미/찹쌀/잡곡">현미/찹쌀/잡곡</a>
                         </div>
                     </li>
-                </th:block>
-            </ul>
+                    <li>
+                        <a href="/productList?majorCategory=과일/채소">과일/채소</a>
+                        <div class="dropdown">
+                            <a href="/productList?majorCategory=과일/채소&middleCategory=과일류">과일류</a>
+                            <a href="/productList?majorCategory=과일/채소&middleCategory=채소류">채소류</a>
+                            <a href="/productList?majorCategory=과일/채소&middleCategory=버섯류">버섯류</a>
+                            <a href="/productList?majorCategory=과일/채소&middleCategory=밤/견과류">밤/견과류</a>
+                            <a href="/productList?majorCategory=과일/채소&middleCategory=기타 채소 과일류">기타 채소 과일류</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/productList?majorCategory=축산물">축산물</a>
+                        <div class="dropdown">
+                            <a href="/productList?majorCategory=축산물&middleCategory=한우">한우</a>
+                            <a href="/productList?majorCategory=축산물&middleCategory=돼지고기">돼지고기</a>
+                            <a href="/productList?majorCategory=축산물&middleCategory=닭고기/오리">닭고기/오리</a>
+                            <a href="/productList?majorCategory=축산물&middleCategory=가공육">가공육</a>
+                            <a href="/productList?majorCategory=축산물&middleCategory=달걀">달걀</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/productList?majorCategory=건강식품">건강식품</a>
+                        <div class="dropdown">
+                            <a href="/productList?majorCategory=건강식품&middleCategory=수삼/인삼/백하수오">수삼/인삼/백하수오</a>
+                            <a href="/productList?majorCategory=건강식품&middleCategory=도라지">도라지</a>
+                            <a href="/productList?majorCategory=건강식품&middleCategory=홍삼/절편">홍삼/절편</a>
+                            <a href="/productList?majorCategory=건강식품&middleCategory=엑기스/분말/즙류">엑기스/분말/즙류</a>
+                            <a href="/productList?majorCategory=건강식품&middleCategory=꿀/조청">꿀/조청</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/productList?majorCategory=가공식품">가공식품</a>
+                        <div class="dropdown">
+                            <a href="/productList?majorCategory=가공식품&middleCategory=빵/떡/과자">빵/떡/과자</a>
+                            <a href="/productList?majorCategory=가공식품&middleCategory=만두/탕/간편조리">만두/탕/간편조리</a>
+                            <a href="/productList?majorCategory=가공식품&middleCategory=약과/한과/유과">약과/한과/유과</a>
+                            <a href="/productList?majorCategory=가공식품&middleCategory=두유/미숫가루">두유/미숫가루</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#">게시판</a>
+                        <div class="dropdown">
+                            <a href="/productInquiryBoardList">상품문의게시판</a>
+                            <a href="/customerInquiryBoardList">고객문의게시판</a>
+                            <a href="/productReviewBoardList" sec:authorize="hasRole('ROLE_ADMIN')">상품리뷰게시판</a>
+                        </div>
+                    </li>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <li>
+                            <a href="#">회원관리</a>
+                            <div class="dropdown">
+                                <a href="/myPage">마이페이지</a>
+                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <a href="/admin">관리자페이지</a>
+                                </th:block>
+                            </div>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+            <div class="center">
+                <img src="https://www.nongsarang.co.kr/design/cepa5678/__ns/img/common/t_logo.png" alt="LOGO">
+            </div>
+            <div class="right">
+                <div class="search">
+                    <input  class="form-control me-2">
+                </div>
+                <div>
+                    <a href="javascript:void(0)">
+                        <span class="material-symbols-outlined" >shopping_cart</span>
+                    </a>
+                </div>
+            </div>
 
 
-            <!-- 인증되지 않은 사용자를 위한 폼 -->
-            <th:block sec:authorize="isAnonymous()">
-                <form action="/user/loginForm" method="get">
-                    <button>로그인</button>
-                </form>
-            </th:block>
-            <!-- 인증된 사용자를 위한 폼 -->
-            <th:block sec:authorize="isAuthenticated()">
-                <form action="/user/logout" method="get">
-                    <button>로그아웃</button>
-                </form>
-            </th:block>
         </div>
     </nav>
 </th:block>

@@ -51,10 +51,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(
                 authorize -> {
                     authorize.requestMatchers("/js/**","/css/**","/images/**","/templates").permitAll();
-                    authorize.requestMatchers("/**").permitAll(); //모든 페이지에 허가 나중에 수정해야함.
-
-//                    authorize.requestMatchers("/user/**").hasAnyRole("ROLE_USER","ROLE_ADMIN");
-//                    authorize.requestMatchers("/admin/**").hasRole("ROLE_ADMIN");
+                    authorize.requestMatchers("/user/**").hasAnyRole("USER","ADMIN");
+                    authorize.requestMatchers("/admin/**").hasRole("ADMIN");
                     authorize.anyRequest().permitAll(); //이 이외 나머지 페이지 접근에 대해 모두 허용
                 }
         );

@@ -1,13 +1,28 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+    <title>에러 페이지</title>
 </head>
 <body>
-    <h2>에러 페이지</h2>
+<div class="wrapper">
+    <div class="header">
+        <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+        <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+    </div>
+    <div class="main">
+        <section class="first-section">
+            에러 페이지
+        </section>
+    </div>
+    <div class="footer">
+        <!-- Footer content -->
+    </div>
+</div>
 </body>
 </html>

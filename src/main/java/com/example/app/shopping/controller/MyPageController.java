@@ -3,8 +3,12 @@ package com.example.app.shopping.controller;
 import com.example.app.shopping.config.auth.PrincipalDetails;
 import com.example.app.shopping.domain.dto.ShippingAddressDto;
 import com.example.app.shopping.domain.dto.UserDto;
+
+import com.example.app.shopping.domain.dto.WishDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
+import com.example.app.shopping.domain.dto.common.PageDto;
 import com.example.app.shopping.domain.service.PaymentService;
+
 import com.example.app.shopping.domain.service.myPage.MyPageService;
 import com.example.app.shopping.domain.service.orderItem.OrderItemService;
 import com.example.app.shopping.domain.service.user.UserService;
@@ -31,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -55,6 +60,57 @@ public class MyPageController {
             return "/myPage/mypage";
         }
         return "redirect:/user/loginForm";
+    }
+
+    @GetMapping("wishList")
+    public String getWishList(Criteria criteria, Authentication authentication, Model model) {
+        // 현재 로그인 한 유저
+        String Uid = ((PrincipalDetails) authentication.getPrincipal()).getUsername();
+
+        // 표시할 게시물 양
+        criteria.setAmount(10);
+
+        int count = myPageService.getWishCount(Uid);
+        PageDto pageDto = new PageDto(count, criteria);
+
+        int offset = (criteria.getPageno() - 1) * criteria.getAmount();
+
+        List<Map<String, Object>> wishList = myPageService.getWishList(criteria, offset, Uid);
+
+        // 2페이지 이상 && 찜한 상품이 없으면 이전 페이지로 return
+        if (wishList.size() == 0 && criteria.getPageno() > 1) {
+            criteria.setPageno(criteria.getPageno() - 1);
+            return "redirect:/myPage/wishList?pageno=" + criteria.getPageno();
+        }
+
+        model.addAttribute("wishList", wishList);
+        model.addAttribute("pageDto", pageDto);
+
+        return "myPage/wishList";
+    }
+
+    // 찜리스트에 제품 저장
+    @PostMapping("wish")
+    public ResponseEntity<String> postWish(@RequestBody WishDto wishDto, Authentication authentication) {
+        String Uid = ((PrincipalDetails) authentication.getPrincipal()).getUsername();
+        wishDto.setUid(Uid);
+
+        String result = myPageService.addWish(wishDto);
+
+        if (result.equals("FAILURE_DUPLICATE_WISH")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 찜리스트에 등록된 제품입니다.");
+        }
+
+        return ResponseEntity.ok("찜리스트에 제품이 등록 되었습니다.");
+    }
+
+    @DeleteMapping("/wish/{pIds}")
+    public ResponseEntity<String> deleteWish(@PathVariable(value="pIds") List<Long> pIdList, Authentication authentication) {
+        String uId = ((PrincipalDetails) authentication.getPrincipal()).getUsername();
+
+        myPageService.deleteWish(pIdList, uId);
+
+        return ResponseEntity.ok("");
     }
 
     @GetMapping("editAddress")
@@ -90,7 +146,6 @@ public class MyPageController {
             myPageService.registerShippingAddress(shippingAddressDto);
 
         }
-
         return ResponseEntity.ok("배송지가 저장 되었습니다.");
     }
 
@@ -354,4 +409,5 @@ public class MyPageController {
 
         return "/myPage/paymentDetail";
     }
+
 }

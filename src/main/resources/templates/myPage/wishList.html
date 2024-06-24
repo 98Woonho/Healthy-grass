@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내고객문의페이지</title>
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
+    <link rel="stylesheet" th:href="@{/css/myPage/wishList.css}">
+    <script defer th:src="@{/js/myPage/wishList.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
+    <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
+
+    <!-- fragments css -->
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+</head>
+<body>
+
+<input type="hidden" id="pageno" th:value="${pageDto.criteria.pageno}">
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">장바구니에 상품을 등록했습니다.</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                img 1 개를 구매하였습니다.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">쇼핑 계속하기</button>
+                <button type="button" class="btn btn-primary" id="viewCartBtn">장바구니 확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="header">
+    <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+    <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+</div>
+<div class="main">
+    <section class="box1">
+        <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
+
+
+
+        <div class="box w-full">
+            <div class="container">
+                <h1>찜리스트</h1>
+                <input id="allSelect" type="checkbox">
+                <span>전체 선택</span>
+                <button type="button" onClick="handleSelectDelete()">선택 삭제</button>
+
+                <div>
+                    <div class="no-product" th:if="${wishList.size() == 0}">
+                        <p>찜한 상품이 없습니다.</p>
+                    </div>
+                    <div th:data-pid="${wish.Pid}" class="product-info" th:each="wish : ${wishList}">
+                        <input class="select" type="checkbox">
+                        <div>
+                            <img src="https://i.namu.wiki/i/VBcDkoPXajYoNcRUcVHQdfvB-Npe16B_s3ULp71MXsw2qcyVgvbZjQtQOFXKcZBn36hB1O07LSPkLYEKRtP5FA.webp"
+                                 alt="">
+                            <!--                            <img th:src="@{${wish.mainImgPath} + ${wish.mainImgName}}" alt="">-->
+                        </div>
+                        <div>
+                            <a th:href="@{/product (id=${wish.Pid})}" class="product-name" th:text="${wish.name}"></a>
+                            <span th:text="${#numbers.formatInteger(wish.discountedPrice, 0, 'COMMA')}"></span>원
+                        </div>
+                        <div>
+                            <div>
+                                <button type="button" class="add-cart-btn">장바구니 담기</button>
+                            </div>
+                            <div>
+                                <button type="button" class="delete-btn">삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-btn-container">
+                    <ul>
+                        <!-- 이전 페이지로 이동하는 링크 -->
+                        <li th:if="${pageDto.prev}">
+                            <a th:href="@{/myPage/wishList (pageno=${criteria.pageno - 1})}">Prev</a>
+                        </li>
+
+                        <!-- 페이지 번호를 표시하는 링크 -->
+                        <li th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}" th:classappend="${pageNumber == criteria.pageno} ? 'active'">
+                            <a th:href="@{/myPage/wishList (pageno=${pageNumber})}">[[${pageNumber}]]</a>
+                        </li>
+
+                        <!-- 다음 페이지로 이동하는 링크 -->
+                        <li th:if="${pageDto.next}">
+                            <a th:href="@{/myPage/wishList (pageno=${criteria.pageno + 1})}">Next</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="footer">
+    <p class="text">푸터(사이트 정보 등)</p>
+</div>
+</body>
+</html>

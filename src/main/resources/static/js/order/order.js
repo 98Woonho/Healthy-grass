@@ -109,25 +109,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 axios.get("/order/shipping")
                     .then(res => {
-                        const shipping = res.data;
-                        receiver.value = shipping.name;
-                        zipcode.value = shipping.zipcode;
-                        streetAdr.value = shipping.streetAdr;
-                        detailAdr.value = shipping.detailAdr;
-                        phone.value = shipping.phone;
+                        const shipping = res.data
+                        receiver.value = shipping === '' ? '' : shipping.name;
+                        zipcode.value = shipping === '' ? '' : shipping.zipcode;
+                        streetAdr.value = shipping === '' ? '' : shipping.streetAdr;
+                        detailAdr.value = shipping === '' ? '' : shipping.detailAdr;
+                        phone.value = shipping === '' ? '' : shipping.phone;
                     })
                     .catch(err => {
                         console.log(err);
                     });
-            } else if (selectedValue === 'R'){
-                if (isSameOrderInformationChecked.checked){
-                    isSameOrderInformationChecked.checked = false;
-                    receiver.value = "";
-                    zipcode.value = "";
-                    streetAdr.value = "";
-                    detailAdr.value = "";
-                    phone.value = "";
-                }
             }
         });
     });

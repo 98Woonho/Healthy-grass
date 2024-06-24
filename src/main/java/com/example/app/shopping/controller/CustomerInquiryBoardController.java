@@ -27,8 +27,6 @@ public class CustomerInquiryBoardController {
 
     @GetMapping("/customerInquiryBoardList")
     public String customerInquiryBoardList (@ModelAttribute Criteria criteria, Model model) {
-        System.out.println("CustomerInquiryBoardController's customerInquiryBoardList");
-
         if (criteria.getPageno() == null) {
             criteria.setPageno(1);
         }

@@ -71,12 +71,12 @@
                 <div class="board me-5">
                     <ul>
                         <li>
-                            <a href="#">무엇이든 물어보세요</a>
-                            <div class="dropdown">
-                                <a href="/productInquiryBoardList">상품문의</a>
-                                <a href="/customerInquiryBoardList">고객문의</a>
-                                <a href="/productReviewBoardList" sec:authorize="hasRole('ROLE_ADMIN')">상품리뷰게시판</a>
-                            </div>
+                            <a href="#">고객 게시판</a>
+                            <ul class="dropdown">
+                                <li><a href="/productInquiryBoardList">상품문의</a></li>
+                                <li>  <a href="/customerInquiryBoardList">고객문의</a></li>
+                                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/productReviewBoardList" >상품리뷰게시판</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

@@ -191,19 +191,64 @@ nav .nav-menu>li .dropdown{
     font-weight :800;
     border-radius : 50%;
 }
-
+.board{
+    display:flex;
+    justify-content : center;
+    align-items : center;
+    height : 100%;
+    width : 100%;
+}
 .board>ul{
     display:flex;
     justify-content : center;
     align-items : center;
+
+    padding : 2px;
+    height : 80px;
+    width : 100%;
+
 }
 .board>ul>li{
     position:relative;
     top:0;
     bottom:0;
     margin : auto;
+    border : 1px solid;
+    padding : 5px;
+    width : 130px;
+    height : 35px;
+    text-align:center;
+    border-radius : 5px;
+    box-shadow : 5px 5px 5px lightgray;
 }
 .board>ul>li>a{
     display:block;
-
 }
+.board>ul>li:hover .dropdown{
+    display:block;
+}
+
+.main h3{
+    padding : 15px;
+    background-color : lightgray;
+    text-align:center;
+    color : white;
+}
+
+
+.discountPrdLst{}
+.discountPrdLst>{}
+
+.item-list>.thumb{
+    width :100%;
+    height : 300px;
+    border : 1px solid gray;
+}
+
+.item-list>.thumb img{
+    width : 100%;
+    height : 100%;
+    object-fit:contain;
+    border : 1px solid;
+}
+

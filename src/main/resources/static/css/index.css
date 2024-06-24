@@ -23,6 +23,7 @@ ul{
 .top-header{
     width : 100%;
 
+
 }
 .wrapper{
 }
@@ -39,7 +40,7 @@ ul{
     display:flex;
     justify-content : space-between;
     align-items : center;
-
+    color : gray !important;
 }
 
 .wrapper>.header>.top-header>.left{
@@ -51,7 +52,10 @@ ul{
     align-items : center;
 }
 
-.wrapper>.header>.top-header>.left>.notification>.swiper{}
+.wrapper>.header>.top-header>.left>.notification>.swiper{
+    width : 100%;
+    height : 100%;
+}
 
 .wrapper>.header>.top-header>.left>.notification>.swiper>.swiper-wrapper{
     position:relative;
@@ -115,7 +119,7 @@ nav{
   justify-content : center;
   align-items : center;
   background-color : white !important;
-
+  margin-bottom : 45px;
 }
 nav .nav-menu>li>a{
  color : black !important;
@@ -183,6 +187,23 @@ nav .nav-menu>li .dropdown{
     background-color : red;
     color : white;
     font-size : .6rem;
+    font-family: sans-serif;
     font-weight :800;
     border-radius : 50%;
+}
+
+.board>ul{
+    display:flex;
+    justify-content : center;
+    align-items : center;
+}
+.board>ul>li{
+    position:relative;
+    top:0;
+    bottom:0;
+    margin : auto;
+}
+.board>ul>li>a{
+    display:block;
+
 }

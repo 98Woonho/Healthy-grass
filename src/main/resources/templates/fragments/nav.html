@@ -50,14 +50,7 @@
                             <a href="/productList?majorCategory=가공식품&middleCategory=두유/미숫가루">두유/미숫가루</a>
                         </div>
                     </li>
-                    <li>
-                        <a href="#">게시판</a>
-                        <div class="dropdown">
-                            <a href="/productInquiryBoardList">상품문의게시판</a>
-                            <a href="/customerInquiryBoardList">고객문의게시판</a>
-                            <a href="/productReviewBoardList" sec:authorize="hasRole('ROLE_ADMIN')">상품리뷰게시판</a>
-                        </div>
-                    </li>
+
                     <th:block sec:authorize="isAuthenticated()">
                         <li>
                             <a href="#">회원관리</a>
@@ -75,6 +68,18 @@
                 <img src="https://www.nongsarang.co.kr/design/cepa5678/__ns/img/common/t_logo.png" alt="LOGO">
             </div>
             <div class="right">
+                <div class="board me-5">
+                    <ul>
+                        <li>
+                            <a href="#">무엇이든 물어보세요</a>
+                            <div class="dropdown">
+                                <a href="/productInquiryBoardList">상품문의</a>
+                                <a href="/customerInquiryBoardList">고객문의</a>
+                                <a href="/productReviewBoardList" sec:authorize="hasRole('ROLE_ADMIN')">상품리뷰게시판</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
                 <div class="search">
                     <input  class="form-control me-2">
                 </div>

@@ -19,6 +19,13 @@
     <!-- fragments css -->
     <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+
+    <!-- index.css   -->
+    <link rel="stylesheet" href="/css/index.css">
+
+    <!-- index.js    -->
+    <script script="/js/index.js" defer></script>
+
 </head>
 <body>
 <div class="wrapper">
@@ -26,17 +33,10 @@
         <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
         <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
     </div>
+    <hr>
     <div class="main">
         <section class="first-section">
-            <h1>인덱스 화면입니다.</h1> <br>
-            <hr>
-            <div class="product-total-search">
-                <form action="/productList" method="GET">
-                    <h2>통합 검색</h2>
-                    <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
-                    <button type="submit">검색</button>
-                </form>
-            </div>
+
         </section>
         <section class="second-section">
             <div class="mainDiscountPick wrapper">

@@ -618,4 +618,9 @@
         FROM product
         WHERE id = #{productId}
     </select>
+    <update id="updateProductAmount" parameterType="map">
+        UPDATE product
+        SET amount = #{amount}
+        WHERE id = #{productId}
+    </update>
 </mapper>

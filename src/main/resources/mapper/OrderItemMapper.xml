@@ -21,10 +21,14 @@
         WHERE
         oi.Oid = #{id};
     </select>
-    <insert id="save" parameterType="java.util.Map">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.app.shopping.domain.dto.OrderItemDto">
         INSERT INTO order_item (Oid, Pid, quantity, price)
         VALUES (#{Oid}, #{Pid}, #{quantity}, #{price})
     </insert>
-
+    <select id="findQuantityByorderId" parameterType="long" resultType="long">
+        SELECT quantity
+        FROM order_item
+        WHERE id = #{orderItemId}
+    </select>
 
 </mapper>

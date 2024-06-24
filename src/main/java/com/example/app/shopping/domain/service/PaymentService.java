@@ -2,6 +2,7 @@ package com.example.app.shopping.domain.service;
 
 import com.example.app.shopping.controller.PaymentController;
 import com.example.app.shopping.domain.dto.OrderDto;
+import com.example.app.shopping.domain.dto.OrderItemDto;
 import com.example.app.shopping.domain.dto.PaymentDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.dto.common.PageDto;
@@ -25,6 +26,8 @@ public class PaymentService {
     private CartMapper cartMapper;
     @Autowired
     private CartItemMapper cartItemMapper;
+    @Autowired
+    private ProductMapper productMapper;
 
     public void payResultSave(PaymentController.RequestDto paymentDto, String uid) {
         try {
@@ -35,11 +38,27 @@ public class PaymentService {
             Long id = orderInfo.getId(); // AutoIncrement 값 가져오기
             Integer cartId = cartMapper.findCartIdByUserId(uid);
             for (PaymentController.ProductList product : paymentDto.getProductList()) {
-                orderItemMapper.save(id, product.getId(), product.getQuantity(), product.getPrice());
-                cartItemMapper.deleteCartItemByCartIdAndProductId(cartId, product.getId());
-            }
 
+                OrderItemDto orderItemDto = new OrderItemDto();
+                orderItemDto.setOid(id);
+                orderItemDto.setPid((long) product.getId());
+                orderItemDto.setQuantity(product.getQuantity());
+                orderItemDto.setPrice(product.getPrice());
+                orderItemMapper.save(orderItemDto);
+
+                //재고 빼주는 로직
+                Long orderItemId = orderItemDto.getId();
+                cartItemMapper.deleteCartItemByCartIdAndProductId(cartId, product.getId());
+                System.out.println("orderItemId : " +orderItemId);
+                long quantity = orderItemMapper.findQuantityByorderId(orderItemId);
+                int ProductAmount = productMapper.findAmountByProductId(product.getId());
+                long amount = ProductAmount - quantity;
+
+                System.out.println(amount);
+                productMapper.updateProductAmount(product.getId(), amount);
+            }
             paymentMapper.save(paymentDto, uid, id);
+
         } catch (Exception e) {
             throw new RuntimeException("결제 처리 중 오류 발생: " + e.getMessage(), e);
         }

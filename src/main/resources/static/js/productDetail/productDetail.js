@@ -3,6 +3,7 @@ const totalProductAmount = parseInt(totalPriceText.textContent);
 let quantityInput = document.getElementById('quantity');
 let NoSalePrice = document.querySelector('#productPrice');
 let totalNoSalePrice = NoSalePrice.innerText
+
 //수량이 변하면 총 상품금액이 변하는 로직
 function getProductPrice() {
     axios.post('/productPrice', {'totalProductAmount' : totalProductAmount})
@@ -16,6 +17,11 @@ function getProductPrice() {
             console.log(err);
         })
 }
+
+//로드 될때 자동 실행
+document.addEventListener('DOMContentLoaded', (event) => {
+    getProductPrice();
+});
 
 quantityInput.addEventListener('change', function (e){
     e.preventDefault()
@@ -48,8 +54,6 @@ amountUp.addEventListener('click', function (e){
     console.log(quantityInput.value);
 
     getProductPrice();
-
-
 })
 
 amountDown.addEventListener('click', function (e){
@@ -156,43 +160,3 @@ function getNowPurchase() {
         Pid: productId
     }];
 }
-
-// const buyNowBtn = document.querySelector('.buyNowBtn')
-// buyNowBtn.addEventListener('click', function (e){
-//    axios.post('/cart/nowPurchase', {
-//        "productId" : productId.value,
-//        "quantity" : quantityInput.value
-//    })
-//        .then(res =>{
-//            console.log(res.data);
-//            function getNowPurchase(){
-//            const checkedValues = [];
-//            if (res.data === "SUCCESS"){
-//                const data = getCheckedValues()
-//                axios.post('/order', data)
-//                const cartPrice = document.querySelector('#discountedPrice').innerText;
-//                const amountValue = quantityInput.value; // 상품 수량
-//                const productId = document.querySelector('.product-id').value; //productId
-//                const totalAmount = totalPriceText.textContent; //할인 받고 총 구매금액
-//                 //할인 적용되지 않은 상품 가격 총합
-//                checkedValues.push({
-//                    price: cartPrice,
-//                    quantity: amountValue,
-//                    total_amount : totalAmount,
-//                    noSaleTotalPrice : totalNoSalePrice,
-//                    Pid : productId
-//                });
-//                return checkedValues;
-//            }
-//            } else if (res.data === "AMOUNT_FULL"){
-//                alert("구매한 상품이 상품 재고보다 많아 추가 구매한 상품은 취소되었습니다.")
-//                location.href = "/order";
-//            } else if (res.data === "FAILURE_LOGIN"){
-//                alert("물건을 구매하기 전에 로그인을 진행해 주세요")
-//                location.href = "/user/loginForm"
-//            }
-//        })
-//        .catch(err=> {
-//            console.log(err);
-//        });
-// })

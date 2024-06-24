@@ -56,4 +56,7 @@ public interface ProductMapper {
     void insertProduct(ProductDto productDto);
 
     void updateProduct(ProductDto productDto);
+
+    void updateProductAmount(@Param("productId") int productId, @Param("amount") long amount);
+
 }

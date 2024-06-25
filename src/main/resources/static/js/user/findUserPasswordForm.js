@@ -3,14 +3,12 @@ const findUserPasswordBtn = document.querySelector('.findUserPasswordBtn');
 
 const EmailRegex = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", "i");
 const findByEmail = document.querySelector("#findByEmail");
-const findByPhone = document.querySelector("#findByPhone");
 const emailDiv = document.querySelector("#emailDiv");
 const findIdCheckBox = document.getElementsByName("findIdCheckBox");
 const idDiv = document.querySelector("#idDiv");
 const passwordCheck = document.querySelector("#passwordCheck");
 let phoneDiv = document.querySelector("#phoneDiv");
-let nameDiv = document.querySelector("#nameDiv");
-
+const ipinConfirm = document.querySelector('.ipin-confirm');
 function check(element) {
 
     findIdCheckBox.forEach((e) => {
@@ -23,12 +21,14 @@ function check(element) {
         idDiv.classList.remove("hidden");
         phoneDiv.classList.add("hidden");
         findUserPasswordBtn.classList.remove("hidden");
+        ipinConfirm.classList.add("hidden")
     } else {
         emailDiv.classList.add("hidden");
         idDiv.classList.add("hidden");
         phoneDiv.classList.remove("hidden");
         passwordCheck.classList.add("hidden");
         findUserPasswordBtn.classList.add("hidden");
+        ipinConfirm.classList.remove("hidden")
     }
 }
 

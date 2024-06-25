@@ -23,7 +23,6 @@
 }
 
 .second-section .loginForm label {
-    display: block;
     margin-bottom: 5px;
     font-weight: bold;
     color: #555;
@@ -76,29 +75,36 @@
 }
 
 .third-section .login-container {
+    display: flex;
     text-align: center;
     margin-top: 20px;
-}
-
-.third-section .login-container h2 {
-    margin-bottom: 20px;
-    color: #333;
+    justify-content: center;
+    gap: 1rem;
 }
 
 .third-section .login-container a {
-    display: block;
-    margin-bottom: 10px;
-    color: #007bff;
+    color: #4a4a4a;
     text-decoration: none;
     font-size: 16px;
+    font-weight: bold;
 }
 
 .third-section .login-container a:hover {
     text-decoration: underline;
 }
-
+.third-section h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
 hr {
     margin-top: 20px;
     border: none;
     border-top: 1px solid #ccc;
+}
+
+.btn-sns {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
 }

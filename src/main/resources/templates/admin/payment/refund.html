@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마이페이지 - 결제 목록 게시판 조회</title>
+    <title>관리자 페이지 - 결제 관리(환불)</title>
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
-    <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
-    <link rel="stylesheet" th:href="@{/css/myPage/paymentList.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/admin/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/admin/mainDetail.css}">
+
+    <link rel="stylesheet" th:href="@{/css/admin/payment/refund/common.css}">
 
     <!-- fragments css -->
     <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
@@ -23,74 +24,69 @@
 </div>
 <div class="main">
     <section class="first-section">
-        <h1>마이 페이지</h1>
+        <h1>관리자 페이지</h1>
     </section>
     <section class="second-section box1">
-        <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
+        <th:block th:insert="~{fragments/admin/mainMenu.html :: mainManu_fragment}"></th:block>
 
-        <div class="box w-full h-800">
+        <div th:if="${success}" class="box w-full h-800">
             <div class="shopping-title">
-                <h4>결제 목록 게시판</h4>
+                <h4>결제 관리(환불)</h4>
             </div>
-            <div class="container" style="width: 95%;">
+            <div class="container">
                 <!-- 결제 목록 -->
                 <div class="payment-list">
                     <h2>결제 목록</h2>
-                    <table>
+                    <table class="table">
                         <thead>
                         <tr>
                             <th>등록날짜</th>
+                            <th>사용자</th>
+                            <th>구매자</th>
                             <th>결제 이름</th>
                             <th>결제 금액</th>
-                            <th>배송 상태</th>
-                            <th>환불 요청</th>
+                            <th>환불 승인</th>
+                            <th>환불 취소</th>
                         </tr>
                         </thead>
                         <tbody>
                         <!-- 결제 목록을 동적으로 채웁니다. -->
                         <tr th:each="payment : ${list}">
                             <td th:text="${payment.regDate}">-</td>
+                            <td th:text="${payment.userid}">-</td>
+                            <td th:text="${payment.buyer_name}">-</td>
                             <td>
                                 <a th:href="@{'/myPage/payment?id=' + ${payment.id}}" th:text="${payment.name}">-</a>
                             </td>
                             <td th:text="${payment.paid_amount}">-</td>
-                            <td th:text="${payment.delivery_status}" class="delivery-status">-</td>
-                            <td>
-                                <th:block th:if="${payment.refund_request_status == 'N'}">
-                                    <button class="refund-request-btn" th:attr="data-id=${payment.id}">환불요청</button>
-                                </th:block>
-                                <th:block th:if="${payment.refund_request_status == 'R'}">
-                                    환불 요청중
-                                </th:block>
-                                <th:block th:if="${payment.refund_request_status == 'C'}">
-                                    환불 완료
-                                </th:block>
-                                <th:block th:if="${payment.refund_request_status == 'B'}">
-                                    환불 취소
-                                </th:block>
+                            <td class="refund-accept">
+                                <button class="refund-request-btn" th:data-id="${payment.id}" status="C" id="accept-btn">환불 승인</button>
+                            </td>
+                            <td class="refund-cancel">
+                                <button class="refund-request-btn" th:data-id="${payment.id}" status="B" id="cancel-btn">환불 취소</button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <script defer th:src="@{/js/myPage/refundBtnProcess.js}"></script>
+                <script defer th:src="@{/js/admin/payment/refund/refundBtn.js}"></script> <!-- 수정필요 -->
 
                 <!-- 페이징 -->
                 <div class="pagination">
                     <ul>
                         <!-- 이전 페이지로 이동하는 링크 -->
                         <li th:if="${pageDto.prev}">
-                            <a th:href="@{${'/myPage/paymentList?pageno=' + (criteria.pageno - 1)}}">Prev</a>
+                            <a th:href="@{${'/admin/payment/refund?pageno=' + (criteria.pageno - 1)}}">Prev</a>
                         </li>
 
                         <!-- 페이지 번호를 표시하는 링크 -->
                         <li th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}" th:classappend="${pageNumber == criteria.pageno} ? 'active'">
-                            <a th:href="@{${'/myPage/paymentList?pageno=' + pageNumber}}">[[${pageNumber}]]</a>
+                            <a th:href="@{${'/admin/payment/refund?pageno=' + pageNumber}}">[[${pageNumber}]]</a>
                         </li>
 
                         <!-- 다음 페이지로 이동하는 링크 -->
                         <li th:if="${pageDto.next}">
-                            <a th:href="@{${'/myPage/paymentList?pageno=' + (criteria.pageno + 1)}}">Next</a>
+                            <a th:href="@{${'/admin/payment/refund?pageno=' + (criteria.pageno + 1)}}">Next</a>
                         </li>
                     </ul>
                 </div>
@@ -101,6 +97,10 @@
                 </div>
 
             </div>
+        </div>
+
+        <div th:if="${!success}" class="box w-full h-800">
+            <p>조회할 결제 건이 없습니다.</p>
         </div>
     </section>
 </div>

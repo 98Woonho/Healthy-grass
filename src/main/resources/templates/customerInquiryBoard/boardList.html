@@ -26,7 +26,7 @@
                <h1>고객문의게시판</h1>
 
                 <!-- 검색 폼 -->
-                    <form action="/customerInquiryBoardList" method="GET" id="searchForm">
+                <form action="/customerInquiryBoardList" method="GET" id="searchForm">
                     <div class="form-group" sec:authorize="hasRole('ROLE_ADMIN')">
                         <label for="commentChk">답변하지 못한 게시글 조회</label>
                         <input type="checkbox" name="commentChk" id="commentChk" value="true" th:checked="${criteria.commentChk != null and criteria.commentChk != ''}" onchange="submitFormOnChange()">

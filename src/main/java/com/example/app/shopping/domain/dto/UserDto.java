@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @PasswordMatches
 @Builder
 public class UserDto {
+
     @NotBlank(message = "Id를 입력하세요")
     @Pattern(regexp = "^[A-Za-z0-9]{6,16}$")
     private String id;

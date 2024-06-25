@@ -156,7 +156,7 @@
                             <div th:with="product=${response}">
 
                                 <th:block th:if="${product.get('mainImgPath')}">
-                                    <img th:src="@{${product.mainImgPath + '/' + product.mainImgName}}" alt="업로드된 이미지" style="max-width: 100px;">
+                                    <img th:src="@{${product.mainImgPath + product.mainImgName}}" alt="업로드된 이미지" style="max-width: 100px;">
                                 </th:block>
                                 상품을 장바구니에 담았습니다.
                             </div>

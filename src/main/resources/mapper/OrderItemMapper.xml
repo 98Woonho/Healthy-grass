@@ -31,4 +31,21 @@
         WHERE id = #{orderItemId}
     </select>
 
+    <!-- order_item 테이블에서 pId, oId 를 사용하여 해당하는 데이터를 조회하는 쿼리 -->
+    <select id="selectOrderItemByoIdAndpId" parameterType="map" resultType="map">
+        SELECT
+        oi.*
+        FROM order_item oi
+        WHERE
+        oi.Oid = #{oId} AND oi.Pid = #{pId}
+    </select>
+
+
+    <!-- 리뷰 상태값 변경 -->
+    <update id="updateReviewStatus" parameterType="map">
+        UPDATE order_item
+        SET review_status = #{status}
+        WHERE Pid = #{pId} AND Oid = #{oId}
+    </update>
+
 </mapper>

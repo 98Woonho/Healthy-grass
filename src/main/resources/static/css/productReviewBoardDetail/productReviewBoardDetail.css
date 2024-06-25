@@ -1,37 +1,53 @@
-/* common.css */
-
 .main {
+    margin: 20px auto;
     padding: 20px;
-    background-color: #f8f8f8;
-    max-width: 1200px;
-    margin: 0 auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
 }
 
-.first-section, .second-section {
+.first-section {
     margin-bottom: 20px;
 }
-.first-section p, .second-section p {
-    margin: 10px 0;
+
+.first-section p {
+    margin-bottom: 15px;
     font-size: 16px;
-    line-height: 1.5;
 }
-.first-section a {
-    color: #007bff;
+
+.first-section p a {
     text-decoration: none;
+    color: #007bff;
 }
-.first-section a:hover {
-    text-decoration: underline;
+
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
 }
-.first-section span, .second-section span {
-    font-weight: bold;
+
+.button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
-.comment {
-    border-top: 1px solid #ddd;
-    padding-top: 10px;
-    margin-top: 10px;
+
+#edit-btn {
+    background-color: #007bff;
 }
-.error-message {
-    color: red;
-    font-weight: bold;
+
+#edit-btn:hover {
+    background-color: #0056b3;
+}
+
+#delete-btn {
+    background-color: #ff0000;
+}
+
+#delete-btn:hover {
+    background-color: #cc0000;
 }

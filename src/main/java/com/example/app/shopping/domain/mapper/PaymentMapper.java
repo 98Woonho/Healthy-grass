@@ -17,4 +17,5 @@ public interface PaymentMapper {
     List<Map<String, Object>> selectAllByUid(@Param("criteria") Criteria criteria, @Param("offset") int offset, @Param("uId") String uId) throws Exception;
     int updateRefundStatus(Map<String, Object> request) throws Exception;
     Map<String, Object> selectPaymentById(@Param("id") Object id) throws Exception;
+    Map<String, Object> selectPaymentByoId(@Param("oId") Long oId) throws Exception;
 }

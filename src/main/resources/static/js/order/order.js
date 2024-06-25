@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 axios.get("/order/shipping")
                     .then(res => {
+
                         const shipping = res.data;
                         if (shipping.name === undefined){
                             alert('기본 배송지로 등록한 배송지가 없습니다. 마이페이지에서 배송지 주소를 입력해주세요')
@@ -119,6 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         detailAdr.value = shipping.detailAdr;
                         phone.value = shipping.phone;
                         }
+// // 운호씨 코드
+//                         receiver.value = shipping === '' ? '' : shipping.name;
+//                         zipcode.value = shipping === '' ? '' : shipping.zipcode;
+//                         streetAdr.value = shipping === '' ? '' : shipping.streetAdr;
+//                         detailAdr.value = shipping === '' ? '' : shipping.detailAdr;
+//                         phone.value = shipping === '' ? '' : shipping.phone;
                     })
                     .catch(err => {
                         console.log(err);

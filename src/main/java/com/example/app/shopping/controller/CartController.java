@@ -38,12 +38,10 @@ public class CartController {
     //장바구니 클릭하면 물건이 장바구니에 담기는 로직
     @PostMapping("")
     @ResponseBody
-    public String cartAdd(@RequestBody Map<String, Object> result, Authentication authentication) {
-        String str_productId = (String) result.get("productId");
-        String str_quantity = (String) result.get("quantity");
-        Integer productId = Integer.parseInt(str_productId);
-        Integer quantity = Integer.parseInt(str_quantity);
-        System.out.println("quantity : " + quantity);
+    public String cartAdd(@RequestBody Map<String, Integer> result, Authentication authentication) {
+        Integer productId = result.get("productId");
+        Integer quantity = result.get("quantity");
+
         //로그인 안한 유저가 장바구니에 물건을 담을 때 동작할 서비스
         if (authentication == null) {
            return "FAILURE_LOGIN";
@@ -58,7 +56,7 @@ public class CartController {
     //장바구니에서 수량을 변경하면 DB에 상품이 변경되는 로직
     @PostMapping("/AddAmount")
     @ResponseBody
-    public void addAmount(@RequestBody Map<String, Object> result){
+    public void addAmount(@RequestBody Map<String, Object> result) {
         int amountValue = Integer.parseInt((String) result.get("amountValue"));
         int cartId = Integer.parseInt((String) result.get("cartId"));
         int productId = Integer.parseInt((String) result.get("productId"));
@@ -67,7 +65,7 @@ public class CartController {
     //장바구니에서 삭제 누르면 장바구니 아이템 삭제
     @DeleteMapping("/delete")
     @ResponseBody
-    public String deleteCartItem(@RequestBody Map<String, Object> result){
+    public String deleteCartItem(@RequestBody Map<String, Object> result) {
         int cartId = Integer.parseInt((String) result.get("cartId"));
         int productId = Integer.parseInt((String) result.get("productId"));
         System.out.println(cartId);

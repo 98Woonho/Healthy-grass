@@ -119,4 +119,13 @@
         WHERE id = #{id}
     </update>
 
+    <!-- oId 를 사용한 payment 조회 -->
+    <select id="selectPaymentByoId" resultType="map">
+        SELECT
+        *
+        FROM Payment p
+        WHERE
+        p.Oid = #{oId}
+    </select>
+
 </mapper>

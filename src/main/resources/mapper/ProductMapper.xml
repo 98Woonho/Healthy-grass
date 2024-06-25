@@ -62,7 +62,20 @@
             </if>
         </where>
         GROUP BY
-        p.id
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        prb.reviewCount,
+        prb.averageRating
         ORDER BY
         <choose>
             <when test="criteria.sorting == '가격 내림차순'">
@@ -78,25 +91,9 @@
         LIMIT #{offset}, #{criteria.amount}
     </select>
 
-    <select id="findDistinctMajorCategoryList">
-        SELECT DISTINCT majorCategory
-        FROM product
-    </select>
-
-    <select id="findDistinctMiddleCategoryList">
-        SELECT DISTINCT middleCategory
-        FROM product
-    </select>
-
     <select id="findProductList">
         SELECT name
         FROM product
-    </select>
-
-    <select id="findProductByProductName">
-        SELECT *
-        FROM product
-        WHERE name = #{productName};
     </select>
 
     <select id="findProductById1">
@@ -139,43 +136,76 @@
         WHERE
         p.id = #{id}
         GROUP BY
-        p.id
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        prb.reviewCount,
+        prb.averageRating
     </select>
+
     <select id="findProductByIdList" parameterType="Integer" resultType="map" >
         SELECT
-            p.id,
-            p.name,
-            p.price,
-            p.discountedPrice,
-            p.discount,
-            p.amount,
-            p.majorCategory,
-            p.middleCategory,
-            p.content,
-            p.regDate,
-            p.updateDate,
-            p.mainImgPath,
-            p.mainImgName,
-            p.subImgPath,
-            p.subImgName,
-            IFNULL(prb.reviewCount, 0) AS reviewCount,
-            IFNULL(prb.averageRating, 0) AS averageRating
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        IFNULL(prb.reviewCount, 0) AS reviewCount,
+        IFNULL(prb.averageRating, 0) AS averageRating
         FROM
-            product p
-                LEFT JOIN (
-                SELECT
-                    r.Pid,
-                    COUNT(r.id) AS reviewCount,
-                    AVG(r.rating) AS averageRating
-                FROM
-                    product_review_board r
-                GROUP BY
-                    r.Pid
-            ) prb ON p.id = prb.Pid
-        WHERE
-            p.id = #{id}
+        product p
+        LEFT JOIN (
+        SELECT
+        r.Pid,
+        COUNT(r.id) AS reviewCount,
+        AVG(r.rating) AS averageRating
+        FROM
+        product_review_board r
         GROUP BY
-            p.id
+        r.Pid
+        ) prb ON p.id = prb.Pid
+        WHERE
+        p.id = #{id}
+        GROUP BY
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        prb.reviewCount,
+        prb.averageRating
     </select>
 
     <select id="findByAllCategoryProducts" resultType="map">
@@ -219,7 +249,24 @@
         oi.Pid
         ) oic ON p.id = oic.Pid
         GROUP BY
-        p.id
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        prb.reviewCount,
+        prb.averageRating,
+        oic.orderCount
         ORDER BY
         oic.orderCount DESC,
         reviewCount DESC,
@@ -271,7 +318,24 @@
         WHERE
         p.majorCategory = '쌀/잡곡'
         GROUP BY
-        p.id
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        prb.reviewCount,
+        prb.averageRating,
+        oic.orderCount
         ORDER BY
         oic.orderCount DESC,
         reviewCount DESC,
@@ -323,7 +387,24 @@
         WHERE
         p.majorCategory = '과일/채소'
         GROUP BY
-        p.id
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        prb.reviewCount,
+        prb.averageRating,
+        oic.orderCount
         ORDER BY
         oic.orderCount DESC,
         reviewCount DESC,
@@ -375,7 +456,24 @@
         WHERE
         p.majorCategory = '축산물'
         GROUP BY
-        p.id
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        prb.reviewCount,
+        prb.averageRating,
+        oic.orderCount
         ORDER BY
         oic.orderCount DESC,
         reviewCount DESC,
@@ -427,7 +525,24 @@
         WHERE
         p.majorCategory = '건강식품'
         GROUP BY
-        p.id
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        prb.reviewCount,
+        prb.averageRating,
+        oic.orderCount
         ORDER BY
         oic.orderCount DESC,
         reviewCount DESC,
@@ -479,7 +594,24 @@
         WHERE
         p.majorCategory = '가공식품'
         GROUP BY
-        p.id
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        prb.reviewCount,
+        prb.averageRating,
+        oic.orderCount
         ORDER BY
         oic.orderCount DESC,
         reviewCount DESC,
@@ -530,7 +662,24 @@
         oi.Pid
         ) oic ON p.id = oic.Pid
         GROUP BY
-        p.id
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        prb.reviewCount,
+        prb.averageRating,
+        oic.orderCount
         ORDER BY
         p.discount DESC, reviewCount DESC, averageRating DESC,
         p.id DESC
@@ -578,7 +727,24 @@
         oi.Pid
         ) oic ON p.id = oic.Pid
         GROUP BY
-        p.id
+        p.id,
+        p.name,
+        p.price,
+        p.discountedPrice,
+        p.discount,
+        p.amount,
+        p.majorCategory,
+        p.middleCategory,
+        p.content,
+        p.regDate,
+        p.updateDate,
+        p.mainImgPath,
+        p.mainImgName,
+        p.subImgPath,
+        p.subImgName,
+        prb.reviewCount,
+        prb.averageRating,
+        oic.orderCount
         ORDER BY
         p.updateDate DESC, p.regDate DESC, reviewCount DESC, averageRating DESC, p.discount DESC,
         p.id DESC
@@ -590,37 +756,59 @@
             useGeneratedKeys="true"
             keyColumn="id"
             keyProperty="id">
-            INSERT INTO `product` (`name`, `price`, `discount`, `discountedPrice`, `amount`, `majorCategory`, `middleCategory`, `content`, `regDate`, `updateDate`, `mainImgPath`, `mainImgName`, `subImgPath`, `subImgName`)
-            VALUES (#{name}, #{price}, #{discount}, #{discountedPrice}, #{amount}, #{majorCategory}, #{middleCategory}, #{content}, #{regDate}, #{updateDate}, #{mainImgPath}, #{mainImgName}, #{subImgPath}, #{subImgName})
+        INSERT INTO `product` (`name`, `price`, `discount`, `discountedPrice`, `amount`, `majorCategory`, `middleCategory`, `content`, `regDate`, `updateDate`, `mainImgPath`, `mainImgName`, `subImgPath`, `subImgName`)
+        VALUES (#{name}, #{price}, #{discount}, #{discountedPrice}, #{amount}, #{majorCategory}, #{middleCategory}, #{content}, #{regDate}, #{updateDate}, #{mainImgPath}, #{mainImgName}, #{subImgPath}, #{subImgName})
     </insert>
 
     <update id="updateProduct"
             parameterType="com.example.app.shopping.domain.dto.ProductDto">
         UPDATE `product`
         SET `name` = #{name},
-            `price` = #{price},
-            `discount` = #{discount},
-            `discountedPrice` = #{discountedPrice},
-            `amount` = #{amount},
-            `majorCategory` = #{majorCategory},
-            `middleCategory` = #{middleCategory},
-            `content` = #{content},
-            `updateDate` = #{updateDate},
-            `mainImgPath` = #{mainImgPath},
-            `mainImgName` = #{mainImgName},
-            `subImgPath` = #{subImgPath},
-            `subImgName` = #{subImgName}
+        `price` = #{price},
+        `discount` = #{discount},
+        `discountedPrice` = #{discountedPrice},
+        `amount` = #{amount},
+        `majorCategory` = #{majorCategory},
+        `middleCategory` = #{middleCategory},
+        `content` = #{content},
+        `updateDate` = #{updateDate},
+        `mainImgPath` = #{mainImgPath},
+        `mainImgName` = #{mainImgName},
+        `subImgPath` = #{subImgPath},
+        `subImgName` = #{subImgName}
         WHERE BINARY `id` = #{id}
         LIMIT 1
     </update>
+
+    <delete id="deleteProduct" parameterType="Long">
+        DELETE FROM `product`
+        WHERE id = #{id}
+    </delete>
+
     <select id="findAmountByProductId" parameterType="int" resultType="int">
         SELECT amount
         FROM product
         WHERE id = #{productId}
     </select>
+
     <update id="updateProductAmount" parameterType="map">
         UPDATE product
         SET amount = #{amount}
         WHERE id = #{productId}
     </update>
+
+    <!-- 관리자 상품리스트 조회 쿼리 -->
+    <select id="selectAllProducts" parameterType="map" resultType="map">
+        SELECT
+        *
+        FROM
+        product p
+        <where>
+            <if test="criteria.keyword != null and criteria.keyword != ''">
+                AND (p.name LIKE CONCAT('%', #{criteria.keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY p.updateDate DESC, p.regDate DESC
+        LIMIT #{offset}, #{criteria.amount}
+    </select>
 </mapper>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>상품 리뷰 수정</title>
+
+    <link rel="stylesheet" th:href="@{/css/productReview/editProductReview.css}">
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
+    <!-- fragments css -->
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+        <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+    </div>
+</div>
+<div class="main">
+    <h2>상품 리뷰 수정</h2>
+    <section class="first-section">
+        <div th:if="${success}">
+            <form id="editForm" enctype="multipart/form-data">
+                <input type="hidden" name="id" id="id" th:value="${review.id}"/>
+                <span>상품: <a th:href="@{'/product?id=' + ${review.Pid}}" th:text="${review.productName}"></a></span> <br />
+
+                <span>제목: <input type="text" name="title" id="title" th:value="${review.title}"></span> <br />
+
+                <span> 내용: <textarea id="content" name="content" rows="10" cols="50" th:text="${review.content}"></textarea> </span> <br/>
+                <span>평점:
+                    <select id="rating" name="rating" class="common-input">
+                        <option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"
+                                th:selected="${i == review.rating}"></option>
+                    </select>
+                </span> <br/>
+
+                <div th:if="${review.get('imgPath') != null}">
+                    <span th:if="${review.imgPath != null and review.imgName != null}">현재 이미지: <img th:src="${review.imgPath + '/' + review.imgName}" alt="현재 이미지" style="max-width: 200px;"></span> <br/>
+                    <input type="checkbox" id="deleteImage" name="deleteImage" value="true"> 기존 이미지 삭제 <br/>
+                </div>
+                <span>등록할 이미지: <input type="file" name="image" id="image" accept="image/*"></span> <br/>
+
+                <div class="button-container">
+                    <button id="submit">수정</button>
+                </div>
+            </form>
+        </div>
+        <div th:if="${!success}">
+            <p th:text="${msg}"></p>
+            <a th:href="@{/productReviewBoardList}">목록으로 돌아가기</a>
+        </div>
+    </section>
+    <script defer th:src="@{/js/productReview/formValidationEdit.js}"></script>
+    <script defer th:src="@{/js/productReview/editSubmitBtnProcess.js}"></script>
+</div>
+<div class="footer">
+
+</div>
+</body>
+</html>

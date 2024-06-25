@@ -1,6 +1,9 @@
 package com.example.app.shopping.controller;
 
 import com.example.app.shopping.config.auth.PrincipalDetails;
+import com.example.app.shopping.config.auth.jwt.JwtProperties;
+import com.example.app.shopping.config.auth.jwt.JwtTokenProvider;
+import com.example.app.shopping.config.auth.jwt.TokenInfo;
 import com.example.app.shopping.domain.dto.ShippingAddressDto;
 import com.example.app.shopping.domain.dto.UserDto;
 
@@ -13,6 +16,7 @@ import com.example.app.shopping.domain.service.myPage.MyPageService;
 import com.example.app.shopping.domain.service.orderItem.OrderItemService;
 import com.example.app.shopping.domain.service.user.UserService;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -32,6 +36,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -52,7 +58,8 @@ public class MyPageController {
     private PaymentService paymentService;
     @Autowired
     private OrderItemService orderItemService;
-
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("")
     public String myPage(Authentication authentication){
@@ -195,14 +202,30 @@ public class MyPageController {
         }
 
         String response = userService.userUpdate(userDto);
+
         // 수정 시 세션도 수정된 값 전달
         UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getId());
+
 
         //Authentication 구현체
         UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
 
         // SecurityContext에 새로운 Authentication 객체 설정
         SecurityContextHolder.getContext().setAuthentication(newAuth);
+
+        //--------------------------------------
+        //JWT Modify
+        //--------------------------------------
+
+        TokenInfo tokenInfo = jwtTokenProvider.generateToken(newAuth);
+        // 쿠키 생성
+        Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, tokenInfo.getAccessToken());
+        cookie.setMaxAge(JwtProperties.EXPIRATION_TIME); // 쿠키의 만료시간 설정
+        cookie.setPath("/");
+
+        // 쿠키를 HTTP 응답 헤더에 추가하여 클라이언트에게 전달
+        HttpServletResponse servletResponse = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+        servletResponse.addCookie(cookie);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -227,14 +250,16 @@ public class MyPageController {
     }
 
     @DeleteMapping("/user/delete")
-    public @ResponseBody String userDelete(@RequestParam String id, HttpServletRequest request, HttpServletResponse response) {
+    public @ResponseBody String userDelete(@RequestParam("id") String id, HttpServletRequest request, HttpServletResponse response) {
         String result = userService.deleteUser(id);
+
         if (result.equals("SUCCESS")) {
             // 삭제 시 세션과 인증 정보를 무효화하여 보안강화를 하기 위한 목적.
             SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
             logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
             return result;
-        }
+         }
+
         return result;
     }
 

@@ -3,6 +3,7 @@ package com.example.app.shopping.config.auth;
 import com.example.app.shopping.domain.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +16,9 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class PrincipalDetails implements UserDetails ,OAuth2User{
 
+    @Getter
     private UserDto userDto;
 
     //OAUTH2---------------------------------------
@@ -80,4 +81,5 @@ public class PrincipalDetails implements UserDetails ,OAuth2User{
     public boolean isEnabled() {
         return true;
     }
+
 }

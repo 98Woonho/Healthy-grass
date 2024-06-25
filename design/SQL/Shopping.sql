@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `shopping` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `shopping`;
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: shopping
@@ -30,7 +28,7 @@ CREATE TABLE `cart` (
   PRIMARY KEY (`id`),
   KEY `FK_Cart_User_idx` (`Uid`),
   CONSTRAINT `FK_Cart_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +37,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (2,'admin'),(1,'hbsh2330');
+INSERT INTO `cart` VALUES (3,'kakao_3491192927');
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +58,7 @@ CREATE TABLE `cart_items` (
   KEY `FK_CartItems_Product_idx` (`Pid`),
   CONSTRAINT `FK_CartItems_Cart` FOREIGN KEY (`Cart_Id`) REFERENCES `cart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_CartItems_Product` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +67,7 @@ CREATE TABLE `cart_items` (
 
 LOCK TABLES `cart_items` WRITE;
 /*!40000 ALTER TABLE `cart_items` DISABLE KEYS */;
-INSERT INTO `cart_items` VALUES (1,1,49,1),(2,1,59,10),(3,1,39,90),(9,2,229,1);
+INSERT INTO `cart_items` VALUES (10,3,229,2);
 /*!40000 ALTER TABLE `cart_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +80,7 @@ DROP TABLE IF EXISTS `customer_inquiry_board`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer_inquiry_board` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `Uid` varchar(50) NOT NULL,
+  `Uid` varchar(50) DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `content` text,
   `imgPath` varchar(200) DEFAULT NULL,
@@ -91,7 +89,7 @@ CREATE TABLE `customer_inquiry_board` (
   `updateDate` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_CustomerInquiryBoard_User_idx` (`Uid`),
-  CONSTRAINT `FK_CustomerInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`)
+  CONSTRAINT `FK_CustomerInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -101,7 +99,7 @@ CREATE TABLE `customer_inquiry_board` (
 
 LOCK TABLES `customer_inquiry_board` WRITE;
 /*!40000 ALTER TABLE `customer_inquiry_board` DISABLE KEYS */;
-INSERT INTO `customer_inquiry_board` VALUES (1,'user1','Title 1','Content 1','/images/img1.jpg','img1.jpg','2023-01-01','2023-01-02'),(2,'user2','Title 2','Content 2','/images/img2.jpg','img2.jpg','2023-01-02','2023-01-03'),(3,'user3','Title 3','Content 3','/images/img3.jpg','img3.jpg','2023-01-03','2023-01-04'),(4,'user4','Title 4','Content 4','/images/img4.jpg','img4.jpg','2023-01-04','2023-01-05'),(5,'user5','Title 5','Content 5','/images/img5.jpg','img5.jpg','2023-01-05','2023-01-06'),(6,'user6','Title 6','Content 6','/images/img6.jpg','img6.jpg','2023-01-06','2023-01-07'),(7,'user7','Title 7','Content 7','/images/img7.jpg','img7.jpg','2023-01-07','2023-01-08'),(8,'user8','Title 8','Content 8','/images/img8.jpg','img8.jpg','2023-01-08','2023-01-09'),(9,'user9','Title 9','Content 9','/images/img9.jpg','img9.jpg','2023-01-09','2023-01-10'),(10,'user10','Title 10','Content 10','/images/img10.jpg','img10.jpg','2023-01-10','2023-01-11'),(11,'user11','Title 11','Content 11','/images/img11.jpg','img11.jpg','2023-01-11','2023-01-12'),(12,'user12','Title 12','Content 12','/images/img12.jpg','img12.jpg','2023-01-12','2023-01-13'),(13,'user13','Title 13','Content 13','/images/img13.jpg','img13.jpg','2023-01-13','2023-01-14'),(14,'user14','Title 14','Content 14','/images/img14.jpg','img14.jpg','2023-01-14','2023-01-15'),(15,'user15','Title 15','Content 15','/images/img15.jpg','img15.jpg','2023-01-15','2023-01-16'),(16,'user16','Title 16','Content 16','/images/img16.jpg','img16.jpg','2023-01-16','2023-01-17'),(17,'user17','Title 17','Content 17','/images/img17.jpg','img17.jpg','2023-01-17','2023-01-18'),(18,'user18','Title 18','Content 18','/images/img18.jpg','img18.jpg','2023-01-18','2023-01-19'),(19,'user19','Title 19','Content 19','/images/img19.jpg','img19.jpg','2023-01-19','2023-01-20'),(20,'user20','Title 20','Content 20','/images/img20.jpg','img20.jpg','2023-01-20','2023-01-21'),(21,'pakms980319','Inquiry about product availability','Is this product available in stock?','/images/inquiries/1','inquiry1.jpg','2024-06-01','2024-06-02'),(22,'pakms980319','Shipping details','When will my order be shipped?','/images/inquiries/2','inquiry2.jpg','2024-06-03','2024-06-04'),(23,'pakms980319','Payment issue','I am having trouble with the payment process.','/images/inquiries/3','inquiry3.jpg','2024-06-05','2024-06-06'),(24,'pakms980319','Order cancellation','Can I cancel my order?','/images/inquiries/4','inquiry4.jpg','2024-06-07','2024-06-08'),(25,'pakms980319','Return policy','What is your return policy?','/images/inquiries/5','inquiry5.jpg','2024-06-09','2024-06-10'),(26,'pakms980319','Product warranty','Is there a warranty on this product?','/images/inquiries/6','inquiry6.jpg','2024-06-11','2024-06-12'),(27,'pakms980319','Discount availability','Are there any discounts available?','/images/inquiries/7','inquiry7.jpg','2024-06-13','2024-06-14'),(28,'pakms980319','Product compatibility','Is this product compatible with model X?','/images/inquiries/8','inquiry8.jpg','2024-06-15','2024-06-16'),(29,'pakms980319','Damaged product received','I received a damaged product.','/images/inquiries/9','inquiry9.jpg','2024-06-17','2024-06-18'),(30,'pakms980319','Order status','What is the status of my order?','/images/inquiries/10','inquiry10.jpg','2024-06-19','2024-06-20'),(31,'pakms980319','Billing issue','There is a problem with my billing.','/images/inquiries/11','inquiry11.jpg','2024-06-21','2024-06-22'),(32,'pakms980319','Account issue','I cannot log into my account.','/images/inquiries/12','inquiry12.jpg','2024-06-23','2024-06-24'),(33,'pakms980319','Shipping delay','Why is my shipment delayed?','/images/inquiries/13','inquiry13.jpg','2024-06-25','2024-06-26'),(34,'pakms980319','Product exchange','Can I exchange this product?','/images/inquiries/14','inquiry14.jpg','2024-06-27','2024-06-28'),(35,'pakms980319','Refund status','When will I receive my refund?','/images/inquiries/15','inquiry15.jpg','2024-06-29','2024-06-30'),(36,'pakms980319','Technical support','I need technical support for this product.','/images/inquiries/16','inquiry16.jpg','2024-07-01','2024-07-02'),(37,'pakms980319','Product recommendation','Can you recommend a product for my needs?','/images/inquiries/17','inquiry17.jpg','2024-07-03','2024-07-04'),(38,'pakms980319','Feature request','I would like to request a feature.','/images/inquiries/18','inquiry18.jpg','2024-07-05','2024-07-06'),(39,'pakms980319','Incorrect order received','I received the wrong order.','/images/inquiries/19','inquiry19.jpg','2024-07-07','2024-07-08'),(40,'pakms980319','Loyalty points','How can I redeem my loyalty points?','/images/inquiries/20','inquiry20.jpg','2024-07-09','2024-07-10'),(41,'pakms980319','Gift card usage','How do I use my gift card?','/images/inquiries/21','inquiry21.jpg','2024-07-11','2024-07-12'),(42,'pakms980319','Bulk order','Do you offer discounts for bulk orders?','/images/inquiries/22','inquiry22.jpg','2024-07-13','2024-07-14'),(43,'pakms980319','Product authenticity','Is this product authentic?','/images/inquiries/23','inquiry23.jpg','2024-07-15','2024-07-16'),(44,'pakms980319','Store location','Where is your nearest store?','/images/inquiries/24','inquiry24.jpg','2024-07-17','2024-07-18'),(45,'pakms980319','Order modification','Can I modify my order?','/images/inquiries/25','inquiry25.jpg','2024-07-19','2024-07-20'),(46,'pakms980319','Out of stock notification','Can you notify me when this product is back in stock?','/images/inquiries/26','inquiry26.jpg','2024-07-21','2024-07-22'),(47,'pakms980319','Subscription issue','I have an issue with my subscription.','/images/inquiries/27','inquiry27.jpg','2024-07-23','2024-07-24'),(48,'pakms980319','Order confirmation','Did you receive my order?','/images/inquiries/28','inquiry28.jpg','2024-07-25','2024-07-26'),(49,'pakms980319','Missing items','Some items are missing from my order.','/images/inquiries/29','inquiry29.jpg','2024-07-27','2024-07-28'),(50,'pakms980319','Feedback','I would like to leave feedback.','/images/inquiries/30','inquiry30.jpg','2024-07-29','2024-07-30');
+INSERT INTO `customer_inquiry_board` VALUES (1,'user1','Title 1','Content 1','/images/img1.jpg','img1.jpg','2023-01-01','2023-01-02'),(2,'user2','Title 2','Content 2','/images/img2.jpg','img2.jpg','2023-01-02','2023-01-03'),(3,'user3','Title 3','Content 3','/images/img3.jpg','img3.jpg','2023-01-03','2023-01-04'),(4,'user4','Title 4','Content 4','/images/img4.jpg','img4.jpg','2023-01-04','2023-01-05'),(5,'user5','Title 5','Content 5','/images/img5.jpg','img5.jpg','2023-01-05','2023-01-06'),(6,'user6','Title 6','Content 6','/images/img6.jpg','img6.jpg','2023-01-06','2023-01-07'),(7,'user7','Title 7','Content 7','/images/img7.jpg','img7.jpg','2023-01-07','2023-01-08'),(8,'user8','Title 8','Content 8','/images/img8.jpg','img8.jpg','2023-01-08','2023-01-09'),(9,'user9','Title 9','Content 9','/images/img9.jpg','img9.jpg','2023-01-09','2023-01-10'),(10,'user10','Title 10','Content 10','/images/img10.jpg','img10.jpg','2023-01-10','2023-01-11'),(11,'user11','Title 11','Content 11','/images/img11.jpg','img11.jpg','2023-01-11','2023-01-12'),(12,'user12','Title 12','Content 12','/images/img12.jpg','img12.jpg','2023-01-12','2023-01-13'),(13,'user13','Title 13','Content 13','/images/img13.jpg','img13.jpg','2023-01-13','2023-01-14'),(14,'user14','Title 14','Content 14','/images/img14.jpg','img14.jpg','2023-01-14','2023-01-15'),(15,'user15','Title 15','Content 15','/images/img15.jpg','img15.jpg','2023-01-15','2023-01-16'),(16,'user16','Title 16','Content 16','/images/img16.jpg','img16.jpg','2023-01-16','2023-01-17'),(17,'user17','Title 17','Content 17','/images/img17.jpg','img17.jpg','2023-01-17','2023-01-18'),(18,'user18','Title 18','Content 18','/images/img18.jpg','img18.jpg','2023-01-18','2023-01-19'),(19,'user19','Title 19','Content 19','/images/img19.jpg','img19.jpg','2023-01-19','2023-01-20'),(20,'user20','Title 20','Content 20','/images/img20.jpg','img20.jpg','2023-01-20','2023-01-21'),(21,NULL,'Inquiry about product availability','Is this product available in stock?','/images/inquiries/1','inquiry1.jpg','2024-06-01','2024-06-02'),(22,NULL,'Shipping details','When will my order be shipped?','/images/inquiries/2','inquiry2.jpg','2024-06-03','2024-06-04'),(23,NULL,'Payment issue','I am having trouble with the payment process.','/images/inquiries/3','inquiry3.jpg','2024-06-05','2024-06-06'),(24,NULL,'Order cancellation','Can I cancel my order?','/images/inquiries/4','inquiry4.jpg','2024-06-07','2024-06-08'),(25,NULL,'Return policy','What is your return policy?','/images/inquiries/5','inquiry5.jpg','2024-06-09','2024-06-10'),(26,NULL,'Product warranty','Is there a warranty on this product?','/images/inquiries/6','inquiry6.jpg','2024-06-11','2024-06-12'),(27,NULL,'Discount availability','Are there any discounts available?','/images/inquiries/7','inquiry7.jpg','2024-06-13','2024-06-14'),(28,NULL,'Product compatibility','Is this product compatible with model X?','/images/inquiries/8','inquiry8.jpg','2024-06-15','2024-06-16'),(29,NULL,'Damaged product received','I received a damaged product.','/images/inquiries/9','inquiry9.jpg','2024-06-17','2024-06-18'),(30,NULL,'Order status','What is the status of my order?','/images/inquiries/10','inquiry10.jpg','2024-06-19','2024-06-20'),(31,NULL,'Billing issue','There is a problem with my billing.','/images/inquiries/11','inquiry11.jpg','2024-06-21','2024-06-22'),(32,NULL,'Account issue','I cannot log into my account.','/images/inquiries/12','inquiry12.jpg','2024-06-23','2024-06-24'),(33,NULL,'Shipping delay','Why is my shipment delayed?','/images/inquiries/13','inquiry13.jpg','2024-06-25','2024-06-26'),(34,NULL,'Product exchange','Can I exchange this product?','/images/inquiries/14','inquiry14.jpg','2024-06-27','2024-06-28'),(35,NULL,'Refund status','When will I receive my refund?','/images/inquiries/15','inquiry15.jpg','2024-06-29','2024-06-30'),(36,NULL,'Technical support','I need technical support for this product.','/images/inquiries/16','inquiry16.jpg','2024-07-01','2024-07-02'),(37,NULL,'Product recommendation','Can you recommend a product for my needs?','/images/inquiries/17','inquiry17.jpg','2024-07-03','2024-07-04'),(38,NULL,'Feature request','I would like to request a feature.','/images/inquiries/18','inquiry18.jpg','2024-07-05','2024-07-06'),(39,NULL,'Incorrect order received','I received the wrong order.','/images/inquiries/19','inquiry19.jpg','2024-07-07','2024-07-08'),(40,NULL,'Loyalty points','How can I redeem my loyalty points?','/images/inquiries/20','inquiry20.jpg','2024-07-09','2024-07-10'),(41,NULL,'Gift card usage','How do I use my gift card?','/images/inquiries/21','inquiry21.jpg','2024-07-11','2024-07-12'),(42,NULL,'Bulk order','Do you offer discounts for bulk orders?','/images/inquiries/22','inquiry22.jpg','2024-07-13','2024-07-14'),(43,NULL,'Product authenticity','Is this product authentic?','/images/inquiries/23','inquiry23.jpg','2024-07-15','2024-07-16'),(44,NULL,'Store location','Where is your nearest store?','/images/inquiries/24','inquiry24.jpg','2024-07-17','2024-07-18'),(45,NULL,'Order modification','Can I modify my order?','/images/inquiries/25','inquiry25.jpg','2024-07-19','2024-07-20'),(46,NULL,'Out of stock notification','Can you notify me when this product is back in stock?','/images/inquiries/26','inquiry26.jpg','2024-07-21','2024-07-22'),(47,NULL,'Subscription issue','I have an issue with my subscription.','/images/inquiries/27','inquiry27.jpg','2024-07-23','2024-07-24'),(48,NULL,'Order confirmation','Did you receive my order?','/images/inquiries/28','inquiry28.jpg','2024-07-25','2024-07-26'),(49,NULL,'Missing items','Some items are missing from my order.','/images/inquiries/29','inquiry29.jpg','2024-07-27','2024-07-28'),(50,NULL,'Feedback','I would like to leave feedback.','/images/inquiries/30','inquiry30.jpg','2024-07-29','2024-07-30');
 /*!40000 ALTER TABLE `customer_inquiry_board` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +112,7 @@ DROP TABLE IF EXISTS `customer_inquiry_comment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer_inquiry_comment` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `C_Board_id` bigint NOT NULL,
+  `C_Board_id` bigint DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `comment` text,
   `imgPath` varchar(200) DEFAULT NULL,
@@ -123,7 +121,7 @@ CREATE TABLE `customer_inquiry_comment` (
   `updateDate` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_CustomerInquiryComment_CustomerInquiryBoard_idx` (`C_Board_id`),
-  CONSTRAINT `FK_CustomerInquiryComment_CustomerInquiryBoard` FOREIGN KEY (`C_Board_id`) REFERENCES `customer_inquiry_board` (`id`)
+  CONSTRAINT `FK_CustomerInquiryComment_CustomerInquiryBoard` FOREIGN KEY (`C_Board_id`) REFERENCES `customer_inquiry_board` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -172,7 +170,7 @@ CREATE TABLE `middle_category` (
   `major_category_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`name`),
   KEY `idx_middle_category_major_category_name` (`major_category_name`),
-  CONSTRAINT `FK_major_category_name_middle_category_major_category_name` FOREIGN KEY (`major_category_name`) REFERENCES `major_category` (`name`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `FK_major_category_name_middle_category_major_category_name` FOREIGN KEY (`major_category_name`) REFERENCES `major_category` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -195,12 +193,12 @@ DROP TABLE IF EXISTS `order`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `Uid` varchar(50) NOT NULL,
+  `Uid` varchar(50) DEFAULT NULL,
   `total_amount` int DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Order_User_Uid_idx` (`Uid`),
-  CONSTRAINT `FK_Order_User_Uid` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_Order_User_Uid` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -210,7 +208,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (57,'admin',100,'paid'),(58,'admin',200,'paid'),(59,'admin',300,'paid'),(60,'admin',400,'paid'),(61,'admin',500,'paid'),(62,'admin',600,'paid'),(63,'admin',700,'paid'),(64,'admin',800,'paid'),(65,'admin',900,'paid'),(66,'admin',1000,'paid'),(67,'admin',1100,'paid'),(68,'admin',1200,'paid'),(69,'admin',1300,'paid'),(70,'admin',1400,'paid'),(71,'admin',1500,'paid'),(72,'admin',1600,'paid'),(73,'admin',1700,'paid'),(74,'admin',1800,'paid'),(75,'admin',1900,'paid'),(76,'admin',2000,'paid'),(77,'admin',100,'주문완료'),(78,'admin',100,'주문완료');
+INSERT INTO `order` VALUES (57,NULL,100,'paid'),(58,NULL,200,'paid'),(59,NULL,300,'paid'),(60,NULL,400,'paid'),(61,NULL,500,'paid'),(62,NULL,600,'paid'),(63,NULL,700,'paid'),(64,NULL,800,'paid'),(65,NULL,900,'paid'),(66,NULL,1000,'paid'),(67,NULL,1100,'paid'),(68,NULL,1200,'paid'),(69,NULL,1300,'paid'),(70,NULL,1400,'paid'),(71,NULL,1500,'paid'),(72,NULL,1600,'paid'),(73,NULL,1700,'paid'),(74,NULL,1800,'paid'),(75,NULL,1900,'paid'),(76,NULL,2000,'paid'),(77,NULL,100,'주문완료'),(78,NULL,100,'주문완료');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,7 +222,7 @@ DROP TABLE IF EXISTS `order_item`;
 CREATE TABLE `order_item` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `Oid` bigint NOT NULL,
-  `Pid` bigint NOT NULL,
+  `Pid` bigint DEFAULT NULL,
   `quantity` int DEFAULT NULL,
   `price` int DEFAULT NULL,
   `review_status` varchar(45) DEFAULT 'N',
@@ -232,7 +230,7 @@ CREATE TABLE `order_item` (
   KEY `FK_OrderItem_Order_Oid_idx` (`Oid`),
   KEY `FK_OrderItem_Product_Pid_idx` (`Pid`),
   CONSTRAINT `FK_OrderItem_Order_Oid` FOREIGN KEY (`Oid`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_OrderItem_Product_Pid` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_OrderItem_Product_Pid` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -279,7 +277,7 @@ CREATE TABLE `payment` (
   PRIMARY KEY (`id`),
   KEY `userid` (`userid`),
   KEY `payment_order_oId_idx` (`Oid`),
-  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`id`),
+  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `payment_order_oId` FOREIGN KEY (`Oid`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -290,7 +288,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (2,'123 Main St','buyer1@example.com','Buyer One','12345','123-456-7890','Visa','imp_123','merchant_123','Order 57',100,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',57,'배송준비','C',NULL),(3,'123 Main St','buyer2@example.com','Buyer Two','12345','123-456-7890','Visa','imp_124','merchant_124','Order 58',200,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',58,'배송준비','N',NULL),(4,'123 Main St','buyer3@example.com','Buyer Three','12345','123-456-7890','Visa','imp_125','merchant_125','Order 59',300,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',59,'배송준비','N',NULL),(5,'123 Main St','buyer4@example.com','Buyer Four','12345','123-456-7890','Visa','imp_126','merchant_126','Order 60',400,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',60,'배송준비','N',NULL),(6,'123 Main St','buyer5@example.com','Buyer Five','12345','123-456-7890','Visa','imp_127','merchant_127','Order 61',500,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',61,'배송준비','N',NULL),(7,'123 Main St','buyer6@example.com','Buyer Six','12345','123-456-7890','Visa','imp_128','merchant_128','Order 62',600,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',62,'배송준비','N',NULL),(8,'123 Main St','buyer7@example.com','Buyer Seven','12345','123-456-7890','Visa','imp_129','merchant_129','Order 63',700,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',63,'배송준비','N',NULL),(9,'123 Main St','buyer8@example.com','Buyer Eight','12345','123-456-7890','Visa','imp_130','merchant_130','Order 64',800,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',64,'배송중','N',NULL),(10,'123 Main St','buyer9@example.com','Buyer Nine','12345','123-456-7890','Visa','imp_131','merchant_131','Order 65',900,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',65,'배송준비','N',NULL),(11,'123 Main St','buyer10@example.com','Buyer Ten','12345','123-456-7890','Visa','imp_132','merchant_132','Order 66',1000,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',66,'배송준비','N',NULL),(12,'123 Main St','buyer11@example.com','Buyer Eleven','12345','123-456-7890','Visa','imp_133','merchant_133','Order 67',1100,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',67,'배송완료','N',NULL),(13,'123 Main St','buyer12@example.com','Buyer Twelve','12345','123-456-7890','Visa','imp_134','merchant_134','Order 68',1200,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',68,'배송준비','N',NULL),(14,'123 Main St','buyer13@example.com','Buyer Thirteen','12345','123-456-7890','Visa','imp_135','merchant_135','Order 69',1300,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',69,'배송준비','N',NULL),(15,'123 Main St','buyer14@example.com','Buyer Fourteen','12345','123-456-7890','Visa','imp_136','merchant_136','Order 70',1400,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',70,'배송준비','N',NULL),(16,'123 Main St','buyer15@example.com','Buyer Fifteen','12345','123-456-7890','Visa','imp_137','merchant_137','Order 71',1500,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',71,'배송준비','N',NULL),(17,'123 Main St','buyer16@example.com','Buyer Sixteen','12345','123-456-7890','Visa','imp_138','merchant_138','Order 72',1600,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',72,'배송준비','N',NULL),(18,'123 Main St','buyer17@example.com','Buyer Seventeen','12345','123-456-7890','Visa','imp_139','merchant_139','Order 73',1700,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',73,'배송준비','R',NULL),(19,'123 Main St','buyer18@example.com','Buyer Eighteen','12345','123-456-7890','Visa','imp_140','merchant_140','Order 74',1800,1718849865,'PG1','card','paid','2024-06-20','2024-06-24','admin',74,'배송준비','R',NULL),(20,'123 Main St','buyer19@example.com','Buyer Nineteen','12345','123-456-7890','Visa','imp_141','merchant_141','Order 75',1900,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',75,'배송준비','R',NULL),(21,'123 Main St','buyer20@example.com','Buyer Twenty','12345','123-456-7890','Visa','imp_142','merchant_142','Order 76',2000,1718849865,'PG1','card','paid','2024-06-20','2024-06-20','admin',76,'배송준비','R',NULL),(24,'서울 강동구 아리수로 46d','','박민석','05237','010-5282-4082',NULL,'imp_162274964576','merchant_1719277274634','한과 상품 8',100,1719277323,'payment','point','paid','2024-06-25',NULL,'admin',77,'배송준비','N','asdsadsadsadsad'),(25,'대구 군위군 군위읍 개봉길 23-72길거리 바닥','','박민석','43109','010-5282-4082',NULL,'imp_788376527843','merchant_1719277376300','미숫가루 상품 8',100,1719277407,'payment','point','paid','2024-06-25',NULL,'admin',78,'배송준비','N',NULL);
+INSERT INTO `payment` VALUES (2,'123 Main St','buyer1@example.com','Buyer One','12345','123-456-7890','Visa','imp_123','merchant_123','Order 57',100,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,57,'배송준비','C',NULL),(3,'123 Main St','buyer2@example.com','Buyer Two','12345','123-456-7890','Visa','imp_124','merchant_124','Order 58',200,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,58,'배송준비','N',NULL),(4,'123 Main St','buyer3@example.com','Buyer Three','12345','123-456-7890','Visa','imp_125','merchant_125','Order 59',300,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,59,'배송준비','N',NULL),(5,'123 Main St','buyer4@example.com','Buyer Four','12345','123-456-7890','Visa','imp_126','merchant_126','Order 60',400,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,60,'배송준비','N',NULL),(6,'123 Main St','buyer5@example.com','Buyer Five','12345','123-456-7890','Visa','imp_127','merchant_127','Order 61',500,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,61,'배송준비','N',NULL),(7,'123 Main St','buyer6@example.com','Buyer Six','12345','123-456-7890','Visa','imp_128','merchant_128','Order 62',600,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,62,'배송준비','N',NULL),(8,'123 Main St','buyer7@example.com','Buyer Seven','12345','123-456-7890','Visa','imp_129','merchant_129','Order 63',700,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,63,'배송준비','N',NULL),(9,'123 Main St','buyer8@example.com','Buyer Eight','12345','123-456-7890','Visa','imp_130','merchant_130','Order 64',800,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,64,'배송중','N',NULL),(10,'123 Main St','buyer9@example.com','Buyer Nine','12345','123-456-7890','Visa','imp_131','merchant_131','Order 65',900,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,65,'배송준비','N',NULL),(11,'123 Main St','buyer10@example.com','Buyer Ten','12345','123-456-7890','Visa','imp_132','merchant_132','Order 66',1000,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,66,'배송준비','N',NULL),(12,'123 Main St','buyer11@example.com','Buyer Eleven','12345','123-456-7890','Visa','imp_133','merchant_133','Order 67',1100,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,67,'배송완료','N',NULL),(13,'123 Main St','buyer12@example.com','Buyer Twelve','12345','123-456-7890','Visa','imp_134','merchant_134','Order 68',1200,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,68,'배송준비','N',NULL),(14,'123 Main St','buyer13@example.com','Buyer Thirteen','12345','123-456-7890','Visa','imp_135','merchant_135','Order 69',1300,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,69,'배송준비','N',NULL),(15,'123 Main St','buyer14@example.com','Buyer Fourteen','12345','123-456-7890','Visa','imp_136','merchant_136','Order 70',1400,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,70,'배송준비','N',NULL),(16,'123 Main St','buyer15@example.com','Buyer Fifteen','12345','123-456-7890','Visa','imp_137','merchant_137','Order 71',1500,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,71,'배송준비','N',NULL),(17,'123 Main St','buyer16@example.com','Buyer Sixteen','12345','123-456-7890','Visa','imp_138','merchant_138','Order 72',1600,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,72,'배송준비','N',NULL),(18,'123 Main St','buyer17@example.com','Buyer Seventeen','12345','123-456-7890','Visa','imp_139','merchant_139','Order 73',1700,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,73,'배송준비','R',NULL),(19,'123 Main St','buyer18@example.com','Buyer Eighteen','12345','123-456-7890','Visa','imp_140','merchant_140','Order 74',1800,1718849865,'PG1','card','paid','2024-06-20','2024-06-24',NULL,74,'배송준비','R',NULL),(20,'123 Main St','buyer19@example.com','Buyer Nineteen','12345','123-456-7890','Visa','imp_141','merchant_141','Order 75',1900,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,75,'배송준비','R',NULL),(21,'123 Main St','buyer20@example.com','Buyer Twenty','12345','123-456-7890','Visa','imp_142','merchant_142','Order 76',2000,1718849865,'PG1','card','paid','2024-06-20','2024-06-20',NULL,76,'배송준비','R',NULL),(24,'서울 강동구 아리수로 46d','','박민석','05237','010-5282-4082',NULL,'imp_162274964576','merchant_1719277274634','한과 상품 8',100,1719277323,'payment','point','paid','2024-06-25',NULL,NULL,77,'배송준비','N','asdsadsadsadsad'),(25,'대구 군위군 군위읍 개봉길 23-72길거리 바닥','','박민석','43109','010-5282-4082',NULL,'imp_788376527843','merchant_1719277376300','미숫가루 상품 8',100,1719277407,'payment','point','paid','2024-06-25',NULL,NULL,78,'배송준비','N',NULL);
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,7 +314,6 @@ CREATE TABLE `persistent_logins` (
 
 LOCK TABLES `persistent_logins` WRITE;
 /*!40000 ALTER TABLE `persistent_logins` DISABLE KEYS */;
-INSERT INTO `persistent_logins` VALUES ('hbsh2330','sLmON9S3eEtT9TlG49SR5A==','WMPwWcGoo0774XdRgrGiow==','2024-06-12 07:12:32');
 /*!40000 ALTER TABLE `persistent_logins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -366,8 +363,8 @@ DROP TABLE IF EXISTS `product_inquiry_board`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_inquiry_board` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `Pid` bigint NOT NULL,
-  `Uid` varchar(50) NOT NULL,
+  `Pid` bigint DEFAULT NULL,
+  `Uid` varchar(50) DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `content` text,
   `regDate` date DEFAULT NULL,
@@ -377,8 +374,8 @@ CREATE TABLE `product_inquiry_board` (
   PRIMARY KEY (`id`),
   KEY `FK_ProductInquiryBoard_Proudct_idx` (`Pid`),
   KEY `FK_ProductInquiryBoard_User_idx` (`Uid`),
-  CONSTRAINT `FK_ProductInquiryBoard_Proudct` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`),
-  CONSTRAINT `FK_ProductInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`)
+  CONSTRAINT `FK_ProductInquiryBoard_Proudct` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `FK_ProductInquiryBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -388,7 +385,7 @@ CREATE TABLE `product_inquiry_board` (
 
 LOCK TABLES `product_inquiry_board` WRITE;
 /*!40000 ALTER TABLE `product_inquiry_board` DISABLE KEYS */;
-INSERT INTO `product_inquiry_board` VALUES (1,32,'user1','문의 제목 1','문의 내용 1','2024-05-01','2024-05-02','N','password1'),(2,33,'user2','문의 제목 2','문의 내용 2','2024-05-03','2024-05-04','Y','password2'),(3,34,'user3','문의 제목 3','문의 내용 3','2024-05-05','2024-05-06','N','password3'),(4,35,'user4','문의 제목 4','문의 내용 4','2024-05-07','2024-05-08','Y','password4'),(5,36,'user5','문의 제목 5','문의 내용 5','2024-05-09','2024-05-10','N','password5'),(6,37,'user6','문의 제목 6','문의 내용 6','2024-05-11','2024-05-12','Y','password6'),(7,38,'user7','문의 제목 7','문의 내용 7','2024-05-13','2024-05-14','N','password7'),(8,39,'user8','문의 제목 8','문의 내용 8','2024-05-15','2024-05-16','Y','password8'),(9,40,'user9','문의 제목 9','문의 내용 9','2024-05-17','2024-05-18','Y','password9'),(10,41,'user10','문의 제목 10','문의 내용 10','2024-05-19','2024-05-20','Y','password10'),(11,42,'user11','문의 제목 11','문의 내용 11','2024-05-21','2024-05-22','N','password11'),(12,43,'user12','문의 제목 12','문의 내용 12','2024-05-23','2024-05-24','Y','password12'),(13,44,'user13','문의 제목 13','문의 내용 13','2024-05-25','2024-05-26','N','password13'),(14,45,'user14','문의 제목 14','문의 내용 14','2024-05-27','2024-05-28','Y','password14'),(15,46,'user15','문의 제목 15','문의 내용 15','2024-05-29','2024-05-30','N','password15'),(16,47,'user16','문의 제목 16','문의 내용 16','2024-05-31','2024-06-01','Y','password16'),(17,48,'user17','문의 제목 17','문의 내용 17','2024-06-02','2024-06-03','N','password17'),(18,49,'user18','문의 제목 18','문의 내용 18','2024-06-04','2024-06-05','Y','password18'),(19,50,'user19','문의 제목 19','문의 내용 19','2024-06-06','2024-06-07','N','password19'),(20,51,'user20','문의 제목 20','문의 내용 20','2024-06-08','2024-06-09','Y','password20'),(21,32,'pakms980319','Inquiry about product 32','Can you provide more details about product 32?','2024-06-01','2024-06-02','N','password123'),(22,33,'pakms980319','Inquiry about product 33','Is product 33 available in blue color?','2024-06-03','2024-06-04','N','password123'),(23,34,'pakms980319','Inquiry about product 34','What is the warranty period for product 34?','2024-06-05','2024-06-06','Y','password123'),(24,35,'pakms980319','Inquiry about product 35','Are there any discounts available for product 35?','2024-06-07','2024-06-08','N','password123'),(25,36,'pakms980319','Inquiry about product 36','Can product 36 be shipped internationally?','2024-06-09','2024-06-10','Y','password123'),(26,37,'pakms980319','Inquiry about product 37','What is the return policy for product 37?','2024-06-11','2024-06-12','N','password123'),(27,38,'pakms980319','Inquiry about product 38','Is product 38 compatible with model X?','2024-06-13','2024-06-14','N','password123'),(28,39,'pakms980319','Inquiry about product 39','Can I get a bulk discount on product 39?','2024-06-15','2024-06-16','N','password123'),(29,40,'pakms980319','Inquiry about product 40','Does product 40 come with free shipping?','2024-06-17','2024-06-18','N','password123'),(30,41,'pakms980319','Inquiry about product 41','Is product 41 available in stores?','2024-06-19','2024-06-20','Y','password123'),(31,42,'pakms980319','Inquiry about product 42','Can product 42 be customized?','2024-06-21','2024-06-22','N','password123'),(32,43,'pakms980319','Inquiry about product 43','What is the expected delivery time for product 43?','2024-06-23','2024-06-24','N','password123'),(33,44,'pakms980319','Inquiry about product 44','Is product 44 available in large size?','2024-06-25','2024-06-26','N','password123'),(34,45,'pakms980319','Inquiry about product 45','Are there any additional accessories for product 45?','2024-06-27','2024-06-28','N','password123'),(35,46,'pakms980319','Inquiry about product 46','What materials are used in product 46?','2024-06-29','2024-06-30','N','password123'),(36,47,'pakms980319','Inquiry about product 47','Is product 47 eco-friendly?','2024-07-01','2024-07-02','Y','password123'),(37,48,'pakms980319','Inquiry about product 48','Can I get a sample of product 48?','2024-07-03','2024-07-04','N','password123'),(38,49,'pakms980319','Inquiry about product 49','What are the dimensions of product 49?','2024-07-05','2024-07-06','N','password123'),(39,50,'pakms980319','Inquiry about product 50','Is product 50 suitable for outdoor use?','2024-07-07','2024-07-08','N','password123'),(40,51,'pakms980319','Inquiry about product 51','Does product 51 come in other colors?','2024-07-09','2024-07-10','N','password123'),(41,52,'pakms980319','Inquiry about product 52','What is the battery life of product 52?','2024-07-11','2024-07-12','Y','password123'),(42,53,'pakms980319','Inquiry about product 53','Is product 53 available for preorder?','2024-07-13','2024-07-14','N','password123'),(43,54,'pakms980319','Inquiry about product 54','Can product 54 be used with product Y?','2024-07-15','2024-07-16','N','password123'),(44,55,'pakms980319','Inquiry about product 55','What is the weight of product 55?','2024-07-17','2024-07-18','N','password123'),(45,56,'pakms980319','Inquiry about product 56','Is product 56 waterproof?','2024-07-19','2024-07-20','N','password123'),(46,57,'pakms980319','Inquiry about product 57','Does product 57 come with a user manual?','2024-07-21','2024-07-22','N','password123'),(47,58,'pakms980319','Inquiry about product 58','Is there a discount on product 58 for first-time buyers?','2024-07-23','2024-07-24','N','password123'),(48,59,'pakms980319','Inquiry about product 59','Can product 59 be gift-wrapped?','2024-07-25','2024-07-26','N','password123'),(49,60,'pakms980319','Inquiry about product 60','What is the energy consumption of product 60?','2024-07-27','2024-07-28','N','password123');
+INSERT INTO `product_inquiry_board` VALUES (1,32,'user1','문의 제목 1','문의 내용 1','2024-05-01','2024-05-02','N','password1'),(2,33,'user2','문의 제목 2','문의 내용 2','2024-05-03','2024-05-04','Y','password2'),(3,34,'user3','문의 제목 3','문의 내용 3','2024-05-05','2024-05-06','N','password3'),(4,35,'user4','문의 제목 4','문의 내용 4','2024-05-07','2024-05-08','Y','password4'),(5,36,'user5','문의 제목 5','문의 내용 5','2024-05-09','2024-05-10','N','password5'),(6,37,'user6','문의 제목 6','문의 내용 6','2024-05-11','2024-05-12','Y','password6'),(7,38,'user7','문의 제목 7','문의 내용 7','2024-05-13','2024-05-14','N','password7'),(8,39,'user8','문의 제목 8','문의 내용 8','2024-05-15','2024-05-16','Y','password8'),(9,40,'user9','문의 제목 9','문의 내용 9','2024-05-17','2024-05-18','Y','password9'),(10,41,'user10','문의 제목 10','문의 내용 10','2024-05-19','2024-05-20','Y','password10'),(11,42,'user11','문의 제목 11','문의 내용 11','2024-05-21','2024-05-22','N','password11'),(12,43,'user12','문의 제목 12','문의 내용 12','2024-05-23','2024-05-24','Y','password12'),(13,44,'user13','문의 제목 13','문의 내용 13','2024-05-25','2024-05-26','N','password13'),(14,45,'user14','문의 제목 14','문의 내용 14','2024-05-27','2024-05-28','Y','password14'),(15,46,'user15','문의 제목 15','문의 내용 15','2024-05-29','2024-05-30','N','password15'),(16,47,'user16','문의 제목 16','문의 내용 16','2024-05-31','2024-06-01','Y','password16'),(17,48,'user17','문의 제목 17','문의 내용 17','2024-06-02','2024-06-03','N','password17'),(18,49,'user18','문의 제목 18','문의 내용 18','2024-06-04','2024-06-05','Y','password18'),(19,50,'user19','문의 제목 19','문의 내용 19','2024-06-06','2024-06-07','N','password19'),(20,51,'user20','문의 제목 20','문의 내용 20','2024-06-08','2024-06-09','Y','password20'),(21,32,NULL,'Inquiry about product 32','Can you provide more details about product 32?','2024-06-01','2024-06-02','N','password123'),(22,33,NULL,'Inquiry about product 33','Is product 33 available in blue color?','2024-06-03','2024-06-04','N','password123'),(23,34,NULL,'Inquiry about product 34','What is the warranty period for product 34?','2024-06-05','2024-06-06','Y','password123'),(24,35,NULL,'Inquiry about product 35','Are there any discounts available for product 35?','2024-06-07','2024-06-08','N','password123'),(25,36,NULL,'Inquiry about product 36','Can product 36 be shipped internationally?','2024-06-09','2024-06-10','Y','password123'),(26,37,NULL,'Inquiry about product 37','What is the return policy for product 37?','2024-06-11','2024-06-12','N','password123'),(27,38,NULL,'Inquiry about product 38','Is product 38 compatible with model X?','2024-06-13','2024-06-14','N','password123'),(28,39,NULL,'Inquiry about product 39','Can I get a bulk discount on product 39?','2024-06-15','2024-06-16','N','password123'),(29,40,NULL,'Inquiry about product 40','Does product 40 come with free shipping?','2024-06-17','2024-06-18','N','password123'),(30,41,NULL,'Inquiry about product 41','Is product 41 available in stores?','2024-06-19','2024-06-20','Y','password123'),(31,42,NULL,'Inquiry about product 42','Can product 42 be customized?','2024-06-21','2024-06-22','N','password123'),(32,43,NULL,'Inquiry about product 43','What is the expected delivery time for product 43?','2024-06-23','2024-06-24','N','password123'),(33,44,NULL,'Inquiry about product 44','Is product 44 available in large size?','2024-06-25','2024-06-26','N','password123'),(34,45,NULL,'Inquiry about product 45','Are there any additional accessories for product 45?','2024-06-27','2024-06-28','N','password123'),(35,46,NULL,'Inquiry about product 46','What materials are used in product 46?','2024-06-29','2024-06-30','N','password123'),(36,47,NULL,'Inquiry about product 47','Is product 47 eco-friendly?','2024-07-01','2024-07-02','Y','password123'),(37,48,NULL,'Inquiry about product 48','Can I get a sample of product 48?','2024-07-03','2024-07-04','N','password123'),(38,49,NULL,'Inquiry about product 49','What are the dimensions of product 49?','2024-07-05','2024-07-06','N','password123'),(39,50,NULL,'Inquiry about product 50','Is product 50 suitable for outdoor use?','2024-07-07','2024-07-08','N','password123'),(40,51,NULL,'Inquiry about product 51','Does product 51 come in other colors?','2024-07-09','2024-07-10','N','password123'),(41,52,NULL,'Inquiry about product 52','What is the battery life of product 52?','2024-07-11','2024-07-12','Y','password123'),(42,53,NULL,'Inquiry about product 53','Is product 53 available for preorder?','2024-07-13','2024-07-14','N','password123'),(43,54,NULL,'Inquiry about product 54','Can product 54 be used with product Y?','2024-07-15','2024-07-16','N','password123'),(44,55,NULL,'Inquiry about product 55','What is the weight of product 55?','2024-07-17','2024-07-18','N','password123'),(45,56,NULL,'Inquiry about product 56','Is product 56 waterproof?','2024-07-19','2024-07-20','N','password123'),(46,57,NULL,'Inquiry about product 57','Does product 57 come with a user manual?','2024-07-21','2024-07-22','N','password123'),(47,58,NULL,'Inquiry about product 58','Is there a discount on product 58 for first-time buyers?','2024-07-23','2024-07-24','N','password123'),(48,59,NULL,'Inquiry about product 59','Can product 59 be gift-wrapped?','2024-07-25','2024-07-26','N','password123'),(49,60,NULL,'Inquiry about product 60','What is the energy consumption of product 60?','2024-07-27','2024-07-28','N','password123');
 /*!40000 ALTER TABLE `product_inquiry_board` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -401,14 +398,14 @@ DROP TABLE IF EXISTS `product_inquiry_board_comment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_inquiry_board_comment` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `P_Board_Id` bigint NOT NULL,
+  `P_Board_Id` bigint DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `content` text,
   `regDate` date DEFAULT NULL,
   `updateDate` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_ProductInquiryBoardComment_ProductInquiryBoard_idx` (`P_Board_Id`),
-  CONSTRAINT `FK_ProductInquiryBoardComment_ProductInquiryBoard` FOREIGN KEY (`P_Board_Id`) REFERENCES `product_inquiry_board` (`id`)
+  CONSTRAINT `FK_ProductInquiryBoardComment_ProductInquiryBoard` FOREIGN KEY (`P_Board_Id`) REFERENCES `product_inquiry_board` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -431,9 +428,9 @@ DROP TABLE IF EXISTS `product_review_board`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_review_board` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `Pid` bigint NOT NULL,
+  `Pid` bigint DEFAULT NULL,
   `Oid` bigint DEFAULT NULL,
-  `Uid` varchar(50) NOT NULL,
+  `Uid` varchar(50) DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `regDate` date DEFAULT NULL,
   `updateDate` date DEFAULT NULL,
@@ -446,8 +443,8 @@ CREATE TABLE `product_review_board` (
   KEY `FK_ProductReviewBoard_User_idx` (`Uid`),
   KEY `FK_ProductReviewBoard_Oid_idx` (`Oid`),
   CONSTRAINT `FK_ProductReviewBoard_Oid` FOREIGN KEY (`Oid`) REFERENCES `order` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `FK_ProductReviewBoard_Product` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`),
-  CONSTRAINT `FK_ProductReviewBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`)
+  CONSTRAINT `FK_ProductReviewBoard_Product` FOREIGN KEY (`Pid`) REFERENCES `product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `FK_ProductReviewBoard_User` FOREIGN KEY (`Uid`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -487,7 +484,6 @@ CREATE TABLE `shipping_address` (
 
 LOCK TABLES `shipping_address` WRITE;
 /*!40000 ALTER TABLE `shipping_address` DISABLE KEYS */;
-INSERT INTO `shipping_address` VALUES (1,'admin','박민석','010-5454-5464','04766','서울 성동구 서울숲길 17','테스트');
 /*!40000 ALTER TABLE `shipping_address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -544,7 +540,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('admin','박민석','$2a$10$cUr/kxN21FkE5xj.fpLaMuOFtlVHTWoxAZiEH4GnAL8wKEU4Z9vNm','43109','대구 군위군 군위읍 개봉길 23-72','길거리 바닥','010-5282-4082','pakms980319@gmail.com','ROLE_ADMIN',NULL,NULL),('hbsh2330','황보성현','$2a$10$221jc4pEnlb91HVm8IFCY.pfY1UP4RIlWDvskc0BF2L1X9loV3Br6','42938','대구 달성군 가창면 가창동로 3','','010-4216-2330','hbsh2330@naver.com','ROLE_USER',NULL,NULL),('pakms980319','박민석','$2a$10$cUr/kxN21FkE5xj.fpLaMuOFtlVHTWoxAZiEH4GnAL8wKEU4Z9vNm','43109','대구 군위군 군위읍 개봉길 23-72','길거리 바닥','010-5282-4082','pakms980319@gmail.com','ROLE_ADMIN',NULL,NULL),('user1','Alice','password1','12345','123 Main St','Apt 1','010-1234-5678','alice@example.com','user','local','provider1'),('user10','Judy','password10','01234','707 Spruce St','Apt 10','010-0123-4567','judy@example.com','admin','google','provider10'),('user11','Karl','password11','11223','808 Willow St','Apt 11','010-1123-5678','karl@example.com','user','facebook','provider11'),('user12','Laura','password12','22334','909 Redwood St','Apt 12','010-2234-6789','laura@example.com','user','facebook','provider12'),('user13','Mallory','password13','33445','1010 Palm St','Apt 13','010-3345-7890','mallory@example.com','user','local','provider13'),('user14','Nathan','password14','44556','1111 Fir St','Apt 14','010-4456-8901','nathan@example.com','user','local','provider14'),('user15','Olivia','password15','55667','1212 Poplar St','Apt 15','010-5567-9012','olivia@example.com','admin','google','provider15'),('user16','Peggy','password16','66778','1313 Beech St','Apt 16','010-6678-0123','peggy@example.com','user','google','provider16'),('user17','Quentin','password17','77889','1414 Cedar St','Apt 17','010-7789-1234','quentin@example.com','user','facebook','provider17'),('user18','Rupert','password18','88990','1515 Holly St','Apt 18','010-8890-2345','rupert@example.com','user','facebook','provider18'),('user19','Sybil','password19','99001','1616 Alder St','Apt 19','010-9901-3456','sybil@example.com','user','local','provider19'),('user2','Bob','password2','23456','456 Oak St','Apt 2','010-2345-6789','bob@example.com','admin','local','provider2'),('user20','Trent','password20','10112','1717 Juniper St','Apt 20','010-1011-4567','trent@example.com','admin','local','provider20'),('user3','Charlie','password3','34567','789 Pine St','Apt 3','010-3456-7890','charlie@example.com','user','google','provider3'),('user4','David','password4','45678','101 Maple St','Apt 4','010-4567-8901','david@example.com','user','google','provider4'),('user5','Eve','password5','56789','202 Birch St','Apt 5','010-5678-9012','eve@example.com','admin','facebook','provider5'),('user6','Frank','password6','67890','303 Cedar St','Apt 6','010-6789-0123','frank@example.com','user','facebook','provider6'),('user7','Grace','password7','78901','404 Walnut St','Apt 7','010-7890-1234','grace@example.com','user','local','provider7'),('user8','Heidi','password8','89012','505 Ash St','Apt 8','010-8901-2345','heidi@example.com','user','local','provider8'),('user9','Ivan','password9','90123','606 Elm St','Apt 9','010-9012-3456','ivan@example.com','user','google','provider9');
+INSERT INTO `user` VALUES ('hbsh2330','황보성현','$2a$10$EzVZu3A/vBcV8LKwXCs.aeUVvf41qhJUSEew2/ZOVEdpDLtnmleFu','43109','대구 군위군 군위읍 개봉길 23-72','나동','010-4216-2330','hbsh2330@naver.com','ROLE_USER',NULL,NULL),('kakao_3491192927',NULL,'$2a$10$zrQCnqGH2OZNcO0jNdJGR.7sJtZPdfJTqtdT6dfPYB0HiH.fnDmdS',NULL,NULL,NULL,NULL,NULL,'ROLE_USER','kakao','3491192927'),('pakms980319','박민석','$2a$10$SBxUDT9a56YFHWGvWR8.QOE2n1abIL1h7RmW.eA0Mmyk8vGb3sCde','43109','대구 군위군 군위읍 개봉길 23-72','상세 주소 테스트3','010-5282-4082','pakms980319@gmail.com','ROLE_USER',NULL,NULL),('user1','Alice','password1','12345','123 Main St','Apt 1','010-1234-5678','alice@example.com','user','local','provider1'),('user10','Judy','password10','01234','707 Spruce St','Apt 10','010-0123-4567','judy@example.com','admin','google','provider10'),('user11','Karl','password11','11223','808 Willow St','Apt 11','010-1123-5678','karl@example.com','user','facebook','provider11'),('user12','Laura','password12','22334','909 Redwood St','Apt 12','010-2234-6789','laura@example.com','user','facebook','provider12'),('user13','Mallory','password13','33445','1010 Palm St','Apt 13','010-3345-7890','mallory@example.com','user','local','provider13'),('user14','Nathan','password14','44556','1111 Fir St','Apt 14','010-4456-8901','nathan@example.com','user','local','provider14'),('user15','Olivia','password15','55667','1212 Poplar St','Apt 15','010-5567-9012','olivia@example.com','admin','google','provider15'),('user16','Peggy','password16','66778','1313 Beech St','Apt 16','010-6678-0123','peggy@example.com','user','google','provider16'),('user17','Quentin','password17','77889','1414 Cedar St','Apt 17','010-7789-1234','quentin@example.com','user','facebook','provider17'),('user18','Rupert','password18','88990','1515 Holly St','Apt 18','010-8890-2345','rupert@example.com','user','facebook','provider18'),('user19','Sybil','password19','99001','1616 Alder St','Apt 19','010-9901-3456','sybil@example.com','user','local','provider19'),('user2','Bob','password2','23456','456 Oak St','Apt 2','010-2345-6789','bob@example.com','admin','local','provider2'),('user20','Trent','password20','10112','1717 Juniper St','Apt 20','010-1011-4567','trent@example.com','admin','local','provider20'),('user3','Charlie','password3','34567','789 Pine St','Apt 3','010-3456-7890','charlie@example.com','user','google','provider3'),('user4','David','password4','45678','101 Maple St','Apt 4','010-4567-8901','david@example.com','user','google','provider4'),('user5','Eve','password5','56789','202 Birch St','Apt 5','010-5678-9012','eve@example.com','admin','facebook','provider5'),('user6','Frank','password6','67890','303 Cedar St','Apt 6','010-6789-0123','frank@example.com','user','facebook','provider6'),('user7','Grace','password7','78901','404 Walnut St','Apt 7','010-7890-1234','grace@example.com','user','local','provider7'),('user8','Heidi','password8','89012','505 Ash St','Apt 8','010-8901-2345','heidi@example.com','user','local','provider8'),('user9','Ivan','password9','90123','606 Elm St','Apt 9','010-9012-3456','ivan@example.com','user','google','provider9');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -573,13 +569,8 @@ CREATE TABLE `wish` (
 
 LOCK TABLES `wish` WRITE;
 /*!40000 ALTER TABLE `wish` DISABLE KEYS */;
-INSERT INTO `wish` VALUES (2,149,'admin'),(3,129,'admin');
 /*!40000 ALTER TABLE `wish` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'shopping'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -590,4 +581,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-25 10:30:26
+-- Dump completed on 2024-06-25 12:14:11

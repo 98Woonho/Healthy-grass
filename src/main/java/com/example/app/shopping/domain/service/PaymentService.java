@@ -1,9 +1,12 @@
 package com.example.app.shopping.domain.service;
 
+import com.example.app.shopping.controller.PaymentController;
+import com.example.app.shopping.domain.dto.OrderDto;
+import com.example.app.shopping.domain.dto.OrderItemDto;
 import com.example.app.shopping.domain.dto.PaymentDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.dto.common.PageDto;
-import com.example.app.shopping.domain.mapper.PaymentMapper;
+import com.example.app.shopping.domain.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +18,50 @@ import java.util.Map;
 public class PaymentService {
     @Autowired
     private PaymentMapper paymentMapper;
+    @Autowired
+    private OrderMapper orderMapper;
+    @Autowired
+    private OrderItemMapper orderItemMapper;
+    @Autowired
+    private CartMapper cartMapper;
+    @Autowired
+    private CartItemMapper cartItemMapper;
+    @Autowired
+    private ProductMapper productMapper;
 
-    public void payResultSave(PaymentDto paymentDto, String id) {
-        // 등록 날짜정보랑 수정 한 정보 set으로 넣기
-        paymentMapper.save(paymentDto, id);
+    public void payResultSave(PaymentController.RequestDto paymentDto, String uid) {
+        try {
+            OrderDto orderInfo = new OrderDto();
+            orderInfo.setUid(uid);
+            orderInfo.setTotal_amount(paymentDto.getPaid_amount());
+            orderMapper.save(orderInfo);
+            Long id = orderInfo.getId(); // AutoIncrement 값 가져오기
+            Integer cartId = cartMapper.findCartIdByUserId(uid);
+            for (PaymentController.ProductList product : paymentDto.getProductList()) {
+
+                OrderItemDto orderItemDto = new OrderItemDto();
+                orderItemDto.setOid(id);
+                orderItemDto.setPid((long) product.getId());
+                orderItemDto.setQuantity(product.getQuantity());
+                orderItemDto.setPrice(product.getPrice());
+                orderItemMapper.save(orderItemDto);
+
+                //재고 빼주는 로직
+                Long orderItemId = orderItemDto.getId();
+                cartItemMapper.deleteCartItemByCartIdAndProductId(cartId, product.getId());
+                System.out.println("orderItemId : " +orderItemId);
+                long quantity = orderItemMapper.findQuantityByorderId(orderItemId);
+                int ProductAmount = productMapper.findAmountByProductId(product.getId());
+                long amount = ProductAmount - quantity;
+
+                System.out.println(amount);
+                productMapper.updateProductAmount(product.getId(), amount);
+            }
+            paymentMapper.save(paymentDto, uid, id);
+
+        } catch (Exception e) {
+            throw new RuntimeException("결제 처리 중 오류 발생: " + e.getMessage(), e);
+        }
     }
 
     public List<PaymentDto> searchPayment(String id) {

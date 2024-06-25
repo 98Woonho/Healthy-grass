@@ -1,6 +1,8 @@
 let totalPriceText = document.getElementById('totalPrice');
 const totalProductAmount = parseInt(totalPriceText.textContent);
 let quantityInput = document.getElementById('quantity');
+let NoSalePrice = document.querySelector('#productPrice');
+let totalNoSalePrice = NoSalePrice.innerText
 
 //수량이 변하면 총 상품금액이 변하는 로직
 function getProductPrice() {
@@ -16,10 +18,18 @@ function getProductPrice() {
         })
 }
 
-quantityInput.addEventListener('change', function (e) {
-    e.preventDefault()
 
-})
+//로드 될때 자동 실행
+document.addEventListener('DOMContentLoaded', (event) => {
+    getProductPrice();
+});
+
+// quantityInput.addEventListener('change', function (e){
+//
+// quantityInput.addEventListener('change', function (e) {
+//     e.preventDefault()
+//
+// })
 
 quantityInput.addEventListener('input', function () {
     if (quantityInput.value < 1) {
@@ -47,8 +57,6 @@ amountUp.addEventListener('click', function (e) {
     console.log(quantityInput.value);
 
     getProductPrice();
-
-
 })
 
 amountDown.addEventListener('click', function (e) {
@@ -101,6 +109,9 @@ cartBtn.addEventListener("click", function (e) {
             } else if (res.data === "AMOUNT_FULL") {
                 alert("장바구니에 담은 상품이 상품 재고보다 많아 추가 구매한 상품은 취소되었습니다.")
                 location.href = "/order";
+            } else if (res.data === "FAILURE_LOGIN"){
+                alert("장바구니에 상품을 담기 전에 로그인을 진행해 주세요")
+                location.href = "/user/loginForm"
             }
         })
         .catch(err => {
@@ -112,3 +123,61 @@ cartBtn.addEventListener("click", function (e) {
         location.href = '/cart';
     });
 })
+//바로구매 클릭했을 때 동작하는 이벤트
+const buyNowBtn = document.querySelector('.buyNowBtn');
+
+buyNowBtn.addEventListener('click', function (e) {
+    const productId = document.querySelector('.product-id').value;
+    const quantity = quantityInput.value;
+
+    axios.post('/cart', {
+        productId: productId,
+        quantity: quantity
+    })
+        .then(res => {
+            handleResponse(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
+function handleResponse(response) {
+    if (response === "SUCCESS") {
+        const checkedValues = getNowPurchase();
+        console.log("checkedValues : " + JSON.stringify(checkedValues, null, 2));
+        axios.post('/order', checkedValues)
+            .then(res => {
+                // 주문 성공 시 추가 로직 작성
+                console.log(res.data);
+                if (res.data === "SUCCESS"){
+                    location.href = "/order";
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    } else if (response === "AMOUNT_FULL") {
+        alert("구매한 상품이 상품 재고보다 많아 추가 구매한 상품은 취소되었습니다.");
+        location.href = "/order";
+    } else if (response === "FAILURE_LOGIN") {
+        alert("물건을 구매하기 전에 로그인을 진행해 주세요");
+        location.href = "/user/loginForm";
+    }
+}
+
+function getNowPurchase() {
+    const cartPrice = document.querySelector('#discountedPrice').innerText;
+    const productId = document.querySelector('.product-id').value;
+    const totalAmount = totalPriceText.textContent;
+
+    return [{
+        price: parseInt(cartPrice),
+        quantity: parseInt(quantityInput.value), // 상품 할인
+        total_amount: totalAmount, // 상품 갯수
+        noSaleTotalPrice: parseInt(totalNoSalePrice) * quantityInput.value, // 주문 총 금액
+        Pid: productId
+    }];
+}
+
+

@@ -791,6 +791,12 @@
         WHERE id = #{productId}
     </select>
 
+    <update id="updateProductAmount" parameterType="map">
+        UPDATE product
+        SET amount = #{amount}
+        WHERE id = #{productId}
+    </update>
+
     <!-- 관리자 상품리스트 조회 쿼리 -->
     <select id="selectAllProducts" parameterType="map" resultType="map">
         SELECT

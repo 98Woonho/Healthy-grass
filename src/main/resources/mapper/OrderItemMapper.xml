@@ -21,6 +21,15 @@
         WHERE
         oi.Oid = #{id};
     </select>
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.app.shopping.domain.dto.OrderItemDto">
+        INSERT INTO order_item (Oid, Pid, quantity, price)
+        VALUES (#{Oid}, #{Pid}, #{quantity}, #{price})
+    </insert>
+    <select id="findQuantityByorderId" parameterType="long" resultType="long">
+        SELECT quantity
+        FROM order_item
+        WHERE id = #{orderItemId}
+    </select>
 
     <!-- order_item 테이블에서 pId, oId 를 사용하여 해당하는 데이터를 조회하는 쿼리 -->
     <select id="selectOrderItemByoIdAndpId" parameterType="map" resultType="map">

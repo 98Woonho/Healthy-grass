@@ -52,6 +52,11 @@ public class SecurityConfig {
                 authorize -> {
                     authorize.requestMatchers("/js/**","/css/**","/images/**","/templates").permitAll();
                     authorize.requestMatchers("/user/**").hasAnyRole("USER","ADMIN");
+                    authorize.requestMatchers("/myPage/**").hasAnyRole("USER","ADMIN");
+                    authorize.requestMatchers("/order/**").hasAnyRole("USER","ADMIN");
+                    authorize.requestMatchers("/myCustomerInquiryBoardList").hasAnyRole("USER","ADMIN");
+                    authorize.requestMatchers("/myProductInquiryBoardList").hasAnyRole("USER","ADMIN");
+                    authorize.requestMatchers("/myProductReviewBoardList").hasAnyRole("USER","ADMIN");
                     authorize.requestMatchers("/admin/**").hasRole("ADMIN");
                     authorize.anyRequest().permitAll(); //이 이외 나머지 페이지 접근에 대해 모두 허용
                 }

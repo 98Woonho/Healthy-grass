@@ -11,142 +11,147 @@
 </head>
 <body>
 <!--cartId받아오기 위한 hidden-->
-<input class="cartId" hidden="hidden" th:value="${carts[0].Cart_Id}">
-<div>
-    <div>
-        <table>
-            <thead>
-            <tr>
-                <th>
-                    <div>
-                        <input class="ALL_checked" type="checkbox">
-                    </div>
-                </th>
-                <th>
-                    <div class="tb-center">사진</div>
-                </th>
-                <th>
-                    <div class="tb-center">상품명</div>
-                </th>
-                <th>
-                    <div class="tb-center">수량</div>
-                </th>
-                <th>
-                    <div class="tb-center">재고</div>
-                </th>
-                <th>
-                    <div class="tb-center">상품 가격</div>
-                </th>
-                <th>
-                    <div class="tb-center">구매 가격</div>
-                </th>
-                <th>
-                    <div class="tb-center">배송</div>
-                </th>
-                <th>
-                    <div class="tb-center">선택</div>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="cart : ${carts}" class="tr">
-                <td>
-                    <div>
-                        <input type="checkbox" class="checkOne" onchange="totalPrice()">
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <div>
-<!--                           상품 사진-->
-                            <a th:href="@{/product(id=${cart.id})}"><img
-                                    th:src="${cart.mainImgPath}" th:alt="${cart.mainImgName}"></a>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div>
-<!--                        상품 이름-->
-                        <a th:href="@{/product(id=${cart.id})}"> <th:block th:text="${cart.name}"></th:block></a>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <div>
-<!--                            상품 수량 변경-->
-                            <span><a class="down" title="감소" style="cursor: pointer" th:attr="data-product-id=${cart.id}">-</a></span>
-                                <input type="text" name="amount" th:value="${cart.quantity}" class="amount_value" th:attr="data-product-id=${cart.id}">
-                            <span><a class="up" title="증가" style="cursor: pointer" th:attr="data-product-id=${cart.id}">+</a></span>
-                        </div>
-                    </div>
-                </td>
-                <td>
-<!--                    재고-->
-                    <div><span class="product_amount" th:text="${cart.amount}">200</span></div>
-                </td>
-                <td>
-                    <div>
-<!--                        상품 할인이 적용됬을 때 보여질 가격-->
-                        <span th:if="${cart.discountedPrice != null && cart.discountedPrice != 0}" th:text="${cart.discountedPrice}" class="cart_price">상품 할인된 가격</span>
-<!--                        상품 할인이 적용되지 않을 때 보여질 가격-->
-                        <span th:unless="${cart.discountedPrice != null && cart.discountedPrice != 0}" th:text="${cart.price}" class="cart_price">상품 가격</span>
-                        원
-<!--                        할인 적용되지 않은 상품 가격 정보-->
-                        <input class="noSaleCartPrice" hidden="hidden" th:value="${cart.price}">
-<!--                        할인 적용되지 않은 상품 가격 총합-->
-                        <input type="hidden" class="noSaleCartTotalPrice">
-                    </div>
-                </td>
-                <td>
-                    <!--                    할인 후 가격-->
-                    <div>
-                        <span class="product_total_price">상품 구매 가격</span>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <div>
-                            <span>
-                                <span>[기본배송]</span><span>무료</span>
-                            </span>
-<!--                            <div>-->
-<!--                                <dl>-->
-<!--                                    <dt>배송조건 : 기본배송(무료)</dt>-->
-<!--                                    <dd>-->
-<!--                                        주문금액에 상관없이 배송비가 <br><span>청구되지 않습니다.</span>-->
-<!--                                    </dd>-->
-<!--                                </dl>-->
-<!--                                <span></span>-->
-<!--                            </div>-->
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <span><a class="wish-btn" th:attr="data-product-id=${cart.id}" href="javascript:void(0)">찜하기</a></span>
-                        <span><a href="javascript:void(0)" th:attr="data-product-id=${cart.id}" class="delete_cart_btn">삭제</a></span>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="8">
-                    <div>
-                        총 구매금액
-                        = <strong class="total_amount">0</strong>
-                    </div>
-                </td>
-            </tr>
-            </tfoot>
-        </table>
-    </div>
+<div th:if="${!carts.isEmpty()}">
+    <input class="cartId" hidden="hidden" th:value="${carts[0].Cart_Id}">
     <div>
         <div>
-            <a href="/">계속쇼핑하기</a>
-            <a class="order_select_product">선택상품주문하기</a>
+            <table>
+                <thead>
+                <tr>
+                    <th>
+                        <div>
+                            <input class="ALL_checked" type="checkbox">
+                        </div>
+                    </th>
+                    <th>
+                        <div class="tb-center">사진</div>
+                    </th>
+                    <th>
+                        <div class="tb-center">상품명</div>
+                    </th>
+                    <th>
+                        <div class="tb-center">수량</div>
+                    </th>
+                    <th>
+                        <div class="tb-center">재고</div>
+                    </th>
+                    <th>
+                        <div class="tb-center">상품 가격</div>
+                    </th>
+                    <th>
+                        <div class="tb-center">구매 가격</div>
+                    </th>
+                    <th>
+                        <div class="tb-center">배송</div>
+                    </th>
+                    <th>
+                        <div class="tb-center">선택</div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cart : ${carts}" class="tr">
+                    <td>
+                        <div>
+                            <input type="checkbox" class="checkOne" onchange="totalPrice()">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <div>
+    <!--                           상품 사진-->
+                                <a th:href="@{/product(id=${cart.id})}"><img
+                                        th:src="${cart.mainImgPath}" th:alt="${cart.mainImgName}"></a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+    <!--                        상품 이름-->
+                            <a th:href="@{/product(id=${cart.id})}"> <th:block th:text="${cart.name}"></th:block></a>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <div>
+    <!--                            상품 수량 변경-->
+                                <span><a class="down" title="감소" style="cursor: pointer" th:attr="data-product-id=${cart.id}">-</a></span>
+                                    <input type="text" name="amount" th:value="${cart.quantity}" class="amount_value" th:attr="data-product-id=${cart.id}">
+                                <span><a class="up" title="증가" style="cursor: pointer" th:attr="data-product-id=${cart.id}">+</a></span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+    <!--                    재고-->
+                        <div><span class="product_amount" th:text="${cart.amount}">200</span></div>
+                    </td>
+                    <td>
+                        <div>
+    <!--                        상품 할인이 적용됬을 때 보여질 가격-->
+                            <span th:if="${cart.discountedPrice != null && cart.discountedPrice != 0}" th:text="${cart.discountedPrice}" class="cart_price">상품 할인된 가격</span>
+    <!--                        상품 할인이 적용되지 않을 때 보여질 가격-->
+                            <span th:unless="${cart.discountedPrice != null && cart.discountedPrice != 0}" th:text="${cart.price}" class="cart_price">상품 가격</span>
+                            원
+    <!--                        할인 적용되지 않은 상품 가격 정보-->
+                            <input class="noSaleCartPrice" hidden="hidden" th:value="${cart.price}">
+    <!--                        할인 적용되지 않은 상품 가격 총합-->
+                            <input type="hidden" class="noSaleCartTotalPrice">
+                        </div>
+                    </td>
+                    <td>
+                        <!--                    할인 후 가격-->
+                        <div>
+                            <span class="product_total_price">상품 구매 가격</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <div>
+                                <span>
+                                    <span>[기본배송]</span><span>무료</span>
+                                </span>
+    <!--                            <div>-->
+    <!--                                <dl>-->
+    <!--                                    <dt>배송조건 : 기본배송(무료)</dt>-->
+    <!--                                    <dd>-->
+    <!--                                        주문금액에 상관없이 배송비가 <br><span>청구되지 않습니다.</span>-->
+    <!--                                    </dd>-->
+    <!--                                </dl>-->
+    <!--                                <span></span>-->
+    <!--                            </div>-->
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <span><a class="wish-btn" th:attr="data-product-id=${cart.id}" href="javascript:void(0)">찜하기</a></span>
+                            <span><a href="javascript:void(0)" th:attr="data-product-id=${cart.id}" class="delete_cart_btn">삭제</a></span>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="8">
+                        <div>
+                            총 구매금액
+                            = <strong class="total_amount">0</strong>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div>
+            <div>
+                <a href="/">계속쇼핑하기</a>
+                <a class="order_select_product">선택상품주문하기</a>
+            </div>
         </div>
     </div>
+</div>
+<div th:if="${carts.isEmpty()}">
+    장바구니가 비었습니다.
 </div>
 </body>
 </html>

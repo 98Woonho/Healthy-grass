@@ -326,7 +326,7 @@ public class MyPageController {
             // 권한 체크 및 로그인 정보가 본인인지 검증합니다.
             Map<String, Object> paymentInfo = paymentService.getPaymentById(request.get("id"));
 
-            if (!isAdmin && !userName.equals(paymentInfo.get("Uid"))) {
+            if (!isAdmin && !userName.equals(paymentInfo.get("userid"))) {
                 // 관리자가 아니고 자신의 payment 에 대한 수정 요청이 아닐시
                 response.put("success", false);
                 response.put("msg", "본인이 작성한 게시글만 삭제할 수 있습니다.");

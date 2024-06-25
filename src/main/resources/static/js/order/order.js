@@ -14,14 +14,14 @@ const salePrices = document.querySelectorAll('.sale_price');
 
 let totalSalePrice = 0;
 
-salePrices.forEach(function(sale) {
+salePrices.forEach(function (sale) {
     let SalePrice = parseInt(sale.textContent);
-        totalSalePrice += SalePrice;
+    totalSalePrice += SalePrice;
 });
 
 const productSalePrices = document.querySelectorAll('.product_sale_price');
 
-productSalePrices.forEach(productSalePrice =>{
+productSalePrices.forEach(productSalePrice => {
     productSalePrice.textContent = totalSalePrice;
 })
 const receiver = document.querySelector('.receiver');
@@ -31,7 +31,7 @@ const detailAdr = document.querySelector('.detailAdr');
 const phone = document.querySelector('.phone');
 const zipcodeSearch = document.querySelector('.zipcode-search');
 const isSameOrderInformationChecked = document.querySelector('.is-same-orderInformation-chk');
-isSameOrderInformationChecked.addEventListener('change', function (e){
+isSameOrderInformationChecked.addEventListener('change', function (e) {
     e.preventDefault()
     // 만약 주문자 정보가 동일함이 체크되었으면
     if (e.target.checked) {
@@ -49,7 +49,7 @@ isSameOrderInformationChecked.addEventListener('change', function (e){
                 console.log(err);
             });
         //아니면 빈 문자열 넣음
-    }else {
+    } else {
         receiver.value = "";
         zipcode.value = "";
         streetAdr.value = "";
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const selectedValue = e.target.value;
             if (selectedValue === 'N') {
-                if (isSameOrderInformationChecked.checked){
+                if (isSameOrderInformationChecked.checked) {
                     isSameOrderInformationChecked.checked = false;
                     receiver.value = "";
                     zipcode.value = "";
@@ -98,8 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         detailAdr.focus();
                     }
                 }).open();
-            } else if (selectedValue === 'B'){
-                if (isSameOrderInformationChecked.checked){
+            } else if (selectedValue === 'B') {
+                if (isSameOrderInformationChecked.checked) {
                     isSameOrderInformationChecked.checked = false;
                     receiver.value = "";
                     zipcode.value = "";
@@ -109,22 +109,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 axios.get("/order/shipping")
                     .then(res => {
-                        const shipping = res.data
-                        receiver.value = shipping === '' ? '' : shipping.name;
-                        zipcode.value = shipping === '' ? '' : shipping.zipcode;
-                        streetAdr.value = shipping === '' ? '' : shipping.streetAdr;
-                        detailAdr.value = shipping === '' ? '' : shipping.detailAdr;
-                        phone.value = shipping === '' ? '' : shipping.phone;
+
+                        const shipping = res.data;
+                        if (shipping.name === undefined){
+                            alert('기본 배송지로 등록한 배송지가 없습니다. 마이페이지에서 배송지 주소를 입력해주세요')
+                        }else {
+                        receiver.value = shipping.name;
+                        zipcode.value = shipping.zipcode;
+                        streetAdr.value = shipping.streetAdr;
+                        detailAdr.value = shipping.detailAdr;
+                        phone.value = shipping.phone;
+                        }
+// // 운호씨 코드
+//                         receiver.value = shipping === '' ? '' : shipping.name;
+//                         zipcode.value = shipping === '' ? '' : shipping.zipcode;
+//                         streetAdr.value = shipping === '' ? '' : shipping.streetAdr;
+//                         detailAdr.value = shipping === '' ? '' : shipping.detailAdr;
+//                         phone.value = shipping === '' ? '' : shipping.phone;
                     })
                     .catch(err => {
                         console.log(err);
                     });
+            } else if (selectedValue === 'R') {
+                if (isSameOrderInformationChecked.checked) {
+                    isSameOrderInformationChecked.checked = false;
+                    receiver.value = "";
+                    zipcode.value = "";
+                    streetAdr.value = "";
+                    detailAdr.value = "";
+                    phone.value = "";
+                }
             }
         });
     });
 });
 
-zipcodeSearch.addEventListener('click', function (e){
+zipcodeSearch.addEventListener('click', function (e) {
     e.preventDefault();
     new daum.Postcode({
         oncomplete: function (data) {
@@ -146,63 +166,174 @@ zipcodeSearch.addEventListener('click', function (e){
     }).open();
 })
 
-//결제
-const payBtn = document.querySelector('.pay-btn');
-
-payBtn.addEventListener('click', function (e){
+// 요소의 위치 정보를 받는 함수
+function getElementOffset(element) {
+    const rect = element.getBoundingClientRect();
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return {
+        top: rect.top + scrollTop,
+        left: rect.left + scrollLeft
+    };
+}
+// 배송 메세지 입력
+const selectElement = document.getElementById('orderMessageSelect');
+const textareaElement = document.getElementById('orderMessageTextarea');
+selectElement.addEventListener('change', function (e){
     e.preventDefault();
-    //
-    // 모든 라디오 버튼을 선택
-    const radioButtons = document.querySelectorAll('input[name="radio_paymethod"]');
+    console.log(selectElement.value);
+    if (selectElement.value !== '배송 메시지를 선택해주세요.') {
+        textareaElement.disabled = true; // textarea를 비활성화
+        textareaElement.value = selectElement.value; // 선택된 옵션의 값을 textarea에 설정
+    } else {
+        textareaElement.disabled = false; // textarea를 활성화
+        textareaElement.value = ''; // 기본 값이나 선택된 값을 지움
+    }
+})
 
-    // 각 라디오 버튼에 change 이벤트 리스너 추가
-    radioButtons.forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            // 클릭된 라디오 버튼의 값 가져오기
-            const selectedValue = e.target.value;
-            if (selectedValue === 'B'){
-                var IMP = window.IMP;
-                IMP.init('imp40654467');// IMPort 고객사 식별코드
-                IMP.request_pay({
-                    pg: 'html5_inicis.INIpayTest',
-                    pay_method: 'card', //카드결제
-                    merchant_uid: 'merchant_' + new Date().getTime(),
-                    name: '당근 10kg',
-                    amount: 100,
-                    buyer_email: 'hbsh@naver.com',
-                    buyer_name: '구매자 이름',
-                    buyer_tel: '연락처',
-                    buyer_addr: '주소',
-                    buyer_postcode: '우편번호'
-                }, function (rsp) { // callback
-                    if (rsp.success) {
-                        var msg = '결제가 완료되었습니다.';
-                        msg += '고유ID : ' + rsp.imp_uid;
-                        msg += '상점 거래ID : ' + rsp.merchant_uid;
-                        msg += '결제 금액 : ' + rsp.paid_amount;
-                        msg += '카드 승인번호 : ' + rsp.apply_num;
+const productName = document.querySelector('.product-name');
+const saleTotalPrice = document.querySelector('.sale-total-price');
+const userEmail = document.querySelector('.user-email');
+const userName = document.querySelector('.user-name');
+const userPhone = document.querySelector('.user-phone');
+const payBtn = document.querySelector('.pay-btn');
+const radioButtons = document.querySelectorAll('input[name="radio_paymethod"]');
+const paymentAgree = document.querySelector('.payment-agree');
+let selectedValue;
 
-                        console.log(rsp);
+// 결제 방식에 따른 설정 객체
+const paymentMethods = {
+    'B': {
+        pg: 'html5_inicis.INIpayTest',
+        pay_method: 'card'
+    },
+    'V': {
+        pg: 'html5_inicis.INIpayTest',
+        pay_method: 'trans'
+    },
+    'C': {
+        pg: 'html5_inicis.INIpayTest',
+        pay_method: 'vbank'
+    }
+};
 
-                        axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
-                            .then(resp => {
-                                console.log(resp)
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            })
-
-                    } else {
-                        var msg = '결제에 실패하였습니다.';
-                        alert(msg + rsp.error_msg);
-
-                        console.log(rsp);
-                    }
-                })
-            }
-
-            // 필요한 추가 작업 수행
-            // 예: 특정 결제 방식에 따라 다른 입력 필드를 활성화/비활성화
-        });
+// 각 라디오 버튼에 change 이벤트 리스너 추가
+radioButtons.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        // 클릭된 라디오 버튼의 값 가져오기
+        selectedValue = e.target.value;
+        console.log(selectedValue);
     });
 });
+
+// 결제 버튼 클릭 시 처리 함수
+payBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    if (receiver.value === "" || receiver.value === null) {
+        alert('받으시는 분을 입력해주세요');
+        receiver.focus();
+        window.scrollTo({top: getElementOffset(receiver).top - 200})
+        return;
+    }
+    if (zipcode.value === "" || zipcode.value === null){
+        alert('배송지 우편번호를 입력해주세요');
+        zipcode.focus();
+        window.scrollTo({top: getElementOffset(zipcode).top - 200})
+        return;
+    }
+    if (streetAdr.value === "" || streetAdr.value === null){
+        alert('배송지 주소를 입력해주세요');
+        streetAdr.focus();
+        window.scrollTo({top: getElementOffset(streetAdr).top - 200})
+        return;
+    }
+    if (phone.value === "" || phone.value === null){
+        alert('휴대폰 번호를 입력해주세요');
+        phone.focus();
+        window.scrollTo({top: getElementOffset(phone).top - 200})
+        return;
+    }
+    if (streetAdr.value === "" || streetAdr.value === null){
+        alert('배송지 주소를 입력해주세요 입력해주세요');
+        streetAdr.focus();
+        window.scrollTo({top: getElementOffset(streetAdr).top - 200})
+        return;
+    }
+    if (paymentAgree.checked === false){
+        alert('결제정보 확인 / 구매진행 동의 체크를 해주세요');
+        window.scrollTo({top: getElementOffset(paymentAgree).top - 200})
+        return;
+    }
+
+    console.log(selectedValue);
+
+    // 결제 처리 함수 호출
+    processPayment(selectedValue);
+});
+
+// 결제 처리 함수
+function processPayment(selectedValue) {
+    const method = paymentMethods[selectedValue];
+
+    if (!method) {
+        alert('결제 방법을 선택해주세요');
+        return;
+    }
+
+    data = {
+        pg: method.pg,
+        pay_method: method.pay_method,
+        merchant_uid: 'merchant_' + new Date().getTime(),
+        name: productName.innerText,
+        // amount: saleTotalPrice.innerText,
+        amount : 100,
+        buyer_email: userEmail.value,
+        buyer_name: userName.value,
+        buyer_tel: userPhone.value,
+        buyer_addr: streetAdr.value + detailAdr.value,
+        buyer_postcode: zipcode.value,
+        custom_data: textareaElement.value
+    }
+
+    IMP.init('imp40654467'); // IMPort 고객사 식별코드
+    IMP.request_pay(data, function (rsp) { // callback
+        if (rsp.success) {
+            console.log(rsp);
+            alert('결제가 완료되었습니다.');
+            const productIdElements = document.querySelectorAll('.product-id');
+            const quantityElements = document.querySelectorAll('.order-quantity');
+            const priceElements = document.querySelectorAll('.price');
+
+            const list = []
+            productIdElements.forEach((element, index) => {
+                const id = element.value.trim();
+                const quantity = quantityElements[index].innerText.trim();
+                const price = priceElements[index].innerText.trim();
+                const data = {
+                    id: id,
+                    quantity: quantity,
+                    price: price
+                };
+                list.push(data);
+
+            });
+
+            console.log(list);
+
+            rsp.productList = list;
+
+            axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
+                .then(resp => {
+                    location.href = "/myPage/paymentList";
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        } else {
+            console.log(rsp);
+            alert('결제에 실패하였습니다.');
+        }
+    });
+}
+

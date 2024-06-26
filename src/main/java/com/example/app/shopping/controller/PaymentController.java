@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -30,6 +31,14 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
     private PortOneTokenResponse portOneTokenResponse;
+
+    @Value("${spring.portOne.imp}")
+    private String imp;
+
+    @GetMapping("/imp")
+    public @ResponseBody String getImp() {
+        return imp;
+    }
 
     /* 배송상태 변경 */
     @PutMapping("/delivery")

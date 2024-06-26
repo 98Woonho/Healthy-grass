@@ -298,7 +298,7 @@ public class ProductReviewBoardController {
             response = service.putProductReviewServ(boardDto, file, deleteImage);
         } catch (Exception e) {
             response.put("success", false);
-            response.put("msg", "리뷰 수정에 실패하였습니다.");
+            response.put("msg", e.getMessage());
         }
 
         return response;

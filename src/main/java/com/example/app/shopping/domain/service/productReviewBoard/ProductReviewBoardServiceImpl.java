@@ -157,6 +157,10 @@ public class ProductReviewBoardServiceImpl implements ProductReviewBoardService 
             throw new Exception("해당 ID의 리뷰를 찾을 수 없습니다.");
         }
 
+        if (!originalBoardDto.getUid().equals(boardDto.getUid())) {
+            throw new Exception("본인의 게시글만 수정할 수 있습니다.");
+        }
+
         // 업데이트할 데이터 복사
         originalBoardDto.setTitle(boardDto.getTitle());
         originalBoardDto.setContent(boardDto.getContent());

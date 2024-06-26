@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(function (error) {
             // 요청이 실패했을 때의 처리
             console.error('There was an error!', error);
-            alert('리뷰 수정에 실패했습니다. 다시 시도해 주세요.');
+            alert('리뷰 수정에 실패했습니다. 다시 시도해 주세요. ', error);
         });
     }
 });

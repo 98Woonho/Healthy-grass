@@ -26,9 +26,8 @@
 
     <update id="updateUser" parameterType="com.example.app.shopping.domain.dto.UserDto">
         UPDATE user
-        SET password = #{password}, zipcode = #{zipcode},
-        streetAdr = #{streetAdr}, detailAdr = #{detailAdr}, phone = #{phone}, email = #{email},
-        role = #{role}, provider = #{provider}, providerId = #{providerId}
+        SET password = #{password}, zipcode = #{zipcode}, name = #{name},
+        streetAdr = #{streetAdr}, detailAdr = #{detailAdr}, phone = #{phone}, email = #{email}
         WHERE id = #{id}
     </update>
     <update id="updateUserPassword" parameterType="String">

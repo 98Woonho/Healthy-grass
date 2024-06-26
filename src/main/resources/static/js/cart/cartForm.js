@@ -240,7 +240,7 @@ function getCheckedValues() {
         if (checkbox.checked) {
             const row = checkbox.closest('tr');
             const cartPrice = row.querySelector('.cart_price').textContent;
-            const amountValue = row.querySelector('.amount_value').value;
+            const amountValue = row.querySelector('.amount_value').value; // 상품 수량
             const productId = row.querySelector('.amount_value').getAttribute("data-product-id");
             const totalAmount = document.querySelector('.total_amount').textContent;
             const noSaleTotalPrice = document.querySelector('.noSaleCartTotalPrice').value;
@@ -271,8 +271,27 @@ orderSelectProduct.addEventListener('click', function (e){
         .catch(err => {
             console.log(err);
         });
-
 })
 
+const wishBtns = document.querySelectorAll('.wish-btn');
 
+wishBtns.forEach(wishBtn => {
+    const Pid = wishBtn.getAttribute('data-product-id');
+    wishBtn.addEventListener('click', function (e) {
+        e.preventDefault();
 
+        axios.post('/myPage/wish', {
+            Pid: Pid
+        })
+            .then(res => {
+                alert(res.data);
+            })
+            .catch(err => {
+                if (err.response.status === 409) {
+                    alert(err.response.data);
+                } else {
+                    alert('알 수 없는 이유로 제품을 찜리스트에 등록 하지 못했습니다. 잠시 후 다시 시도해 주세요.');
+                }
+            })
+    })
+})

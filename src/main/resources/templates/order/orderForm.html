@@ -116,20 +116,21 @@
                                 <a th:href="@{/product(id=${product.id})}">
                                     <img th:src="${product.mainImgPath}" th:alt="${product.mainImgName}" width="65">
                                 </a>
+                                <input class="product-id" type="hidden" th:value="${product.id}">
                             </div>
                         </div>
                     </td>
                     <td>
                         <div>
 <!--                            상품 이름-->
-                            <a th:href="@{/product(id=${product.id})}">
+                            <a class="product-name" th:href="@{/product(id=${product.id})}">
                                 <th:block th:text="${product.name}"></th:block>
                             </a>
                         </div>
                     </td>
                     <td>
                         <!--                        상품 수량-->
-                        <div th:text="${orderList[status.index].quantity}">1</div>
+                        <div class="order-quantity" th:text="${orderList[status.index].quantity}">1</div>
                     </td>
                     <td>
                         <div>
@@ -149,11 +150,10 @@
                             <!--  상품 가격 -->
                             <del th:text="${product.price * orderList[status.index].quantity}"></del>
                             <!-- 할인 적용 후 가격 -->
-                            <br>
-                            <th:block th:text="${product.discountedPrice * orderList[status.index].quantity}"></th:block>
+                            <div class="price" th:text="${product.discountedPrice * orderList[status.index].quantity}"></div>
                         </div>
 <!--                        상품 할인이 적용이 되지 않을 때 보여질 가격-->
-                        <div th:unless="${product.discountedPrice != null && product.discountedPrice != 0}">
+                        <div class="price" th:unless="${product.discountedPrice != null && product.discountedPrice != 0}">
                             <div th:text="${product.price * orderList[status.index].quantity}"></div>
                         </div>
                     </td>
@@ -162,7 +162,7 @@
                     <td colspan="6">
                         <div>
                             <!--                            장바구니에서 주문 한 모든 금액 -->
-                            주문 금액 <strong th:text="${orderList[0].noSaleTotalPrice}">전체구매금액
+                            주문 금액 <strong class="total-pay" th:text="${orderList[0].noSaleTotalPrice}">전체구매금액
                         </strong>
                             <span style="color: red">- <strong>상품 할인
                                 <!--                                상품 할인 가격-->
@@ -191,7 +191,7 @@
                         </th>
                         <td>
                             <!--                            주문자 이름 정보-->
-                            <input type="text" th:value="${userDto.name}" disabled></td>
+                            <input class="user-name" type="text" th:value="${userDto.name}" disabled></td>
                     </tr>
                     <tr>
                         <th scope="row">
@@ -200,11 +200,13 @@
                         </th>
                         <td>
                             <!--                            주문자 연락처 정보-->
-                            <input type="text" th:value="${userDto.phone}" disabled>
+                            <input class="user-phone" type="text" th:value="${userDto.phone}" disabled>
+                            <input class="user-email" type="hidden" th:value="${userDto.email}">
                     </tr>
                     </tbody>
                 </table>
             </div>
+
             <!-- .tbl-order -->
                 <h3>배송지 정보</h3>
 
@@ -218,7 +220,6 @@
                             </th>
                             <td>
                                 <label><input type="radio" name="addressType" value="B"> 기본 배송지</label>
-                                <label><input type="radio" name="addressType" value="R"> 최근 배송지</label>
 <!--                                신규 배송지 입력시 다음 주소 api 호출-->
                                 <label><input type="radio" name="addressType" value="N"> 신규 배송지</label>
                                 <label> <input class="is-same-orderInformation-chk" type="checkbox"> 주문자 정보와 동일함</label>
@@ -258,8 +259,6 @@
                             <td>
 <!--                                연락처 정보 -->
                                 <input class="phone" type="text" oninput="PhoneRegex(this)">
- <!--                                    기본배송지로 설정 누르면 배송지가 있으면 수정 없으면 등록-->
-                                <button type="submit">기본 배송지로 설정</button>
                             </td>
                         </tr>
                         <tr>
@@ -268,7 +267,7 @@
                                 <div>주문메시지<br></div>
                             </th>
                             <td>
-                                <select>
+                                <select id="orderMessageSelect">
                                     <option>배송 메시지를 선택해주세요.</option>
                                     <option>배송 전에 연락주세요.</option>
                                     <option>부재시 경비(관리)실에 맡겨주세요.</option>
@@ -276,9 +275,7 @@
                                     <option>고객 무인택배함에 보관해주세요.</option>
                                     <option>파손 위험이 있습니다. 주의해주세요.</option>
                                 </select>
-                                <textarea rows="5" style="width:80%;">
-
-                                </textarea>
+                                <textarea id="orderMessageTextarea" rows="5" style="width:80%;"></textarea>
                                 <div>
                                     *배송일 지정은 불가하며, 해당 사유로 환불이 불가한 점 꼭 확인하시기 바랍니다.
                                 </div>
@@ -302,7 +299,8 @@
                         <td>
                             <ul>
                                 <li>
-                                    <label><input type="radio" class="chk-rdo" name="radio_paymethod" value="B">
+                                    <label>
+                                        <input type="radio" class="chk-rdo" name="radio_paymethod" value="B">
                                         <span>일반결제</span>
                                     </label>
                                 </li>
@@ -314,37 +312,6 @@
                                 <li>
                                     <label><input type="radio" class="chk-rdo" name="radio_paymethod" value="C">
                                         <span>가상계좌</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label><input type="radio" class="chk-rdo" name="radio_paymethod" value="S">
-                                        <span>에스크로</span>
-                                    </label>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <div class="txt-l payTitle">간편결제</div>
-                        </th>
-                        <td>
-                            <ul class="pay-method">
-                                <li class="">
-                                    <label data-pay-tab="kakaoPay">
-                                        <em><span class="op-card-dc-price fc-red"></span></em> <em><span
-                                            class="op-kkp-dc-price fc-red"></span></em> <input type="radio"
-                                                                                               class="chk-rdo"
-                                                                                               name="radio_paymethod" value="KAKAOPAY"> <span>카카오페이(KAKAOPAY)</span>
-                                    </label>
-                                </li>
-                                <li class="">
-                                    <label data-pay-tab="npay">
-                                        <em><span class="op-card-dc-price fc-red"></span></em> <em><span
-                                            class="op-npy-dc-price fc-red"></span></em> <input type="radio"
-                                                                                               class="chk-rdo"
-                                                                                               name="radio_paymethod"
-                                                                                               value="NPAY"> <span>네이버페이(NAVER Pay)</span>
                                     </label>
                                 </li>
                             </ul>
@@ -412,9 +379,8 @@
                                 </div>
                             </td>
                             <td>
-                                <div>
+                                <div class="sale-total-price">
                                     <!--  할인후 최종 가격-->
-                                    <br>
                                     <th:block th:text="${totalAmount}"></th:block>
                                 </div>
                             </td>
@@ -424,7 +390,7 @@
                 </div>
                 <!--end_if-->
                 <label>
-                    <input type="checkbox"> 결제정보 확인 / 구매진행 동의
+                    <input class="payment-agree" type="checkbox"> 결제정보 확인 / 구매진행 동의
                 </label>
                 <div>
                     <a href="javascript:void(0)" >취소</a>

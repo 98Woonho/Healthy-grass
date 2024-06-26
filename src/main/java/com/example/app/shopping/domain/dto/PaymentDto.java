@@ -22,8 +22,12 @@ public class PaymentDto {
     private int paid_amount; //결제금액
     private int paid_at; //결제 날짜
     private String pg_type; // 결제 타입
-    private String pay_method; //
-    private String status;
+    private String pay_method; //결제 방법
+    private String custom_data; // 배송 메세지
+    private String status; //결제 상태
+    private String userid;
     private Date regDate;
     private Date updateDate;
+    private String delivery_status;
+    private String refund_request_status;
 }

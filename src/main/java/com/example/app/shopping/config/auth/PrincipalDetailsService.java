@@ -21,6 +21,15 @@ public class PrincipalDetailsService implements UserDetailsService {
         UserDto userDto = userMapper.getUserById(id);
         if (userDto == null){
             throw new UsernameNotFoundException(id);
-        }return new PrincipalDetails(userDto);
+        }
+
+        System.out.println("PrincipalDetailsService's userDto: " + userDto);
+
+        PrincipalDetails principalDetails = new PrincipalDetails();
+        principalDetails.setUserDto(userDto);
+
+        System.out.println("PrincipalDetailsService's principalDetails's userDto: " + principalDetails.getUserDto());
+
+        return principalDetails;
     }
 }

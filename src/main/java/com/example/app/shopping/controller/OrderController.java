@@ -74,6 +74,7 @@ public class OrderController {
         }else {
             System.out.println(productList);
             model.addAttribute("productList", tmp.get("productList"));
+            System.out.println("userDto" + tmp.get("userDto"));
             model.addAttribute("orderList", tmp.get("orderList"));
             model.addAttribute("userDto", tmp.get("userDto"));
             model.addAttribute("totalAmount", tmp.get("totalAmount"));

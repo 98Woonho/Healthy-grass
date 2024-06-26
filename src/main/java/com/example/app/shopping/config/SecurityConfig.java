@@ -1,16 +1,16 @@
 package com.example.app.shopping.config;
 
+
 import com.example.app.shopping.config.auth.PrincipalDetailsService;
 import com.example.app.shopping.config.auth.jwt.JwtAuthorizationFilter;
 import com.example.app.shopping.config.auth.jwt.JwtProperties;
 import com.example.app.shopping.config.auth.jwt.JwtTokenProvider;
-import com.example.app.shopping.config.auth.loginHandler.CustomAuthenticationFailureHandler;
 import com.example.app.shopping.config.auth.loginHandler.CustomLoginSuccessHandler;
 import com.example.app.shopping.config.auth.loginHandler.Oauth2JwtLoginSuccessHandler;
+import com.example.app.shopping.config.auth.logoutHandler.CustomLogoutHandler;
 import com.example.app.shopping.config.auth.logoutHandler.CustomLogoutSuccessHandler;
 import com.example.app.shopping.domain.mapper.UserMapper;
 import com.example.app.shopping.handler.CustomLoginFailureHandler;
-import com.example.app.shopping.handler.CustomLogoutHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,10 +51,12 @@ public class SecurityConfig {
         http.authorizeHttpRequests(
                 authorize -> {
                     authorize.requestMatchers("/js/**","/css/**","/images/**","/templates").permitAll();
-                    authorize.requestMatchers("/**").permitAll(); //모든 페이지에 허가 나중에 수정해야함.
-
-//                    authorize.requestMatchers("/user/**").hasAnyRole("ROLE_USER","ROLE_ADMIN");
-//                    authorize.requestMatchers("/admin/**").hasRole("ROLE_ADMIN");
+                    authorize.requestMatchers("/myPage/**").hasAnyRole("USER","ADMIN");
+                    authorize.requestMatchers("/order/**").hasAnyRole("USER","ADMIN");
+                    authorize.requestMatchers("/myCustomerInquiryBoardList").hasAnyRole("USER","ADMIN");
+                    authorize.requestMatchers("/myProductInquiryBoardList").hasAnyRole("USER","ADMIN");
+                    authorize.requestMatchers("/myProductReviewBoardList").hasAnyRole("USER","ADMIN");
+                    authorize.requestMatchers("/admin/**").hasRole("ADMIN");
                     authorize.anyRequest().permitAll(); //이 이외 나머지 페이지 접근에 대해 모두 허용
                 }
         );
@@ -73,7 +75,6 @@ public class SecurityConfig {
         http.logout(
                 logout ->{
                     logout.logoutUrl("/user/logout").permitAll(); // 로그아웃 url 지정
-                    logout.addLogoutHandler(customLogoutHandler()); // 로그아웃시 customLogoutHandler 실행
                     logout.logoutSuccessUrl("/"); // 로그아웃 성공시 이동할 url
                     logout.addLogoutHandler(customLogoutHandler());
                     logout.logoutSuccessHandler( customLogoutSuccessHandler() );

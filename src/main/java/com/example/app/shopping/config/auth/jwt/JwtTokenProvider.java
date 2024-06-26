@@ -87,7 +87,7 @@ public class JwtTokenProvider {
                 .claim("detailAdr",userDto.getDetailAdr())                      //정보저장
                 .claim("password",userDto.getPassword())                //정보저장
                 .claim("zipcode",userDto.getZipcode())                  //정보저장
-
+                .claim("email", userDto.getEmail())                     // 정보저장
                 .claim("auth", authorities)                             //정보저장
                 .claim("principal", authentication.getPrincipal())      //정보저장
                 .claim("credentials", authentication.getCredentials())  //정보저장
@@ -147,7 +147,7 @@ public class JwtTokenProvider {
         String detailAdr = (String)claims.get("detailAdr");
         String password = (String)claims.get("password");
         String zipcode = (String)claims.get("zipcode");
-
+        String email = (String)claims.get("email");
         String auth = (String)claims.get("auth");
         LinkedHashMap  principal =  (LinkedHashMap)claims.get("principal");
         String credentials =  (String)claims.get("credentials");
@@ -163,6 +163,7 @@ public class JwtTokenProvider {
         userDto.setPhone(phone);
         userDto.setName(name);
         userDto.setStreetAdr(streetAdr);
+        userDto.setEmail(email);
         userDto.setDetailAdr(detailAdr);
         userDto.setPassword(password);
         userDto.setZipcode(zipcode);

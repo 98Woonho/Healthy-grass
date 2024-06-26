@@ -22,18 +22,6 @@ public class CartService {
     @Autowired
     private ProductMapper productMapper;
 
-    public String cartAddNotUserLogin(Integer productId, Integer quantity) {
-        cartMapper.insertCart();
-        return null;
-//        Integer findById = cartMapper.findById();
-//        cartMapper.insertCartItem(productId, quantity);
-    }
-
-    public void addCartItem(Integer productId, Integer quantity) {
-
-    }
-
-    //    @Transactional
     public String cartAddLoignedUser(Integer productId, Integer quantity, String userId) {
         try {
             Integer cartId = cartMapper.findCartIdByUserId(userId);
@@ -44,7 +32,6 @@ public class CartService {
 
                 // 등록한 유저의 카트 ID 조회
                 cartId = cartMapper.findCartIdByUserId(userId);
-                System.out.println("1");
                 // 가져온 상품을 cart_item DB 에 등록한다 ( 카드 ID, 제품 ID, 선택한 수량 )
                 cartItemMapper.insertCartItem(cartId, productId, quantity);
 

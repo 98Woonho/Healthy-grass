@@ -1,8 +1,13 @@
 package com.example.app.shopping.controller;
 
+import com.example.app.shopping.config.auth.PrincipalDetails;
+import com.example.app.shopping.domain.dto.UserDto;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.service.product.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +32,6 @@ public class ProductController {
         if (criteria.getAmount() == null) {
             criteria.setAmount(10);
         }
-
-        System.out.println("criteria : " + criteria);
 
         try {
             Map<String, Object> serviceReturnVal = productService.getItems(criteria);
@@ -90,6 +93,7 @@ public class ProductController {
             response = productService.getHighDiscountProducts();
             response.put("success", true);
         } catch (Exception e) {
+            e.printStackTrace();
             response = new HashMap<>();
             response.put("success", false);
         }

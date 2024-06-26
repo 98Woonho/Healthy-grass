@@ -13,8 +13,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HomeController {
     @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
-    public String home(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        System.out.println("GET / ..." + principalDetails);
+    public String home(Authentication authentication) {
+
+        if (authentication != null) {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            System.out.println("home principalDetails' userDto: " + principalDetails.getUserDto());
+            System.out.println("home principalDetails: " + principalDetails);
+        }
+
+        System.out.println("GET / ...");
         return "index";
     }
 

@@ -4,16 +4,17 @@
 
             <div class="left">
                 <ul class="nav-menu">
+
                     <li>
                         <a href="/productList?majorCategory=쌀/잡곡">쌀/잡곡</a>
-                        <div class="dropdown">
+                        <div class="submenu">
                             <a href="/productList?majorCategory=쌀/잡곡&middleCategory=일반쌀">일반쌀</a>
                             <a href="/productList?majorCategory=쌀/잡곡&middleCategory=현미/찹쌀/잡곡">현미/찹쌀/잡곡</a>
                         </div>
                     </li>
                     <li>
                         <a href="/productList?majorCategory=과일/채소">과일/채소</a>
-                        <div class="dropdown">
+                        <div class="submenu">
                             <a href="/productList?majorCategory=과일/채소&middleCategory=과일류">과일류</a>
                             <a href="/productList?majorCategory=과일/채소&middleCategory=채소류">채소류</a>
                             <a href="/productList?majorCategory=과일/채소&middleCategory=버섯류">버섯류</a>
@@ -23,7 +24,7 @@
                     </li>
                     <li>
                         <a href="/productList?majorCategory=축산물">축산물</a>
-                        <div class="dropdown">
+                        <div class="submenu">
                             <a href="/productList?majorCategory=축산물&middleCategory=한우">한우</a>
                             <a href="/productList?majorCategory=축산물&middleCategory=돼지고기">돼지고기</a>
                             <a href="/productList?majorCategory=축산물&middleCategory=닭고기/오리">닭고기/오리</a>
@@ -33,7 +34,7 @@
                     </li>
                     <li>
                         <a href="/productList?majorCategory=건강식품">건강식품</a>
-                        <div class="dropdown">
+                        <div class="submenu">
                             <a href="/productList?majorCategory=건강식품&middleCategory=수삼/인삼/백하수오">수삼/인삼/백하수오</a>
                             <a href="/productList?majorCategory=건강식품&middleCategory=도라지">도라지</a>
                             <a href="/productList?majorCategory=건강식품&middleCategory=홍삼/절편">홍삼/절편</a>
@@ -43,7 +44,7 @@
                     </li>
                     <li>
                         <a href="/productList?majorCategory=가공식품">가공식품</a>
-                        <div class="dropdown">
+                        <div class="submenu">
                             <a href="/productList?majorCategory=가공식품&middleCategory=빵/떡/과자">빵/떡/과자</a>
                             <a href="/productList?majorCategory=가공식품&middleCategory=만두/탕/간편조리">만두/탕/간편조리</a>
                             <a href="/productList?majorCategory=가공식품&middleCategory=약과/한과/유과">약과/한과/유과</a>
@@ -72,7 +73,7 @@
                     <ul>
                         <li>
                             <a href="#">고객 게시판</a>
-                            <ul class="dropdown">
+                            <ul class="submenu">
                                 <li><a href="/productInquiryBoardList">상품문의</a></li>
                                 <li>  <a href="/customerInquiryBoardList">고객문의</a></li>
                                 <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/productReviewBoardList" >상품리뷰게시판</a></li>
@@ -84,7 +85,7 @@
                     <input  class="form-control me-2">
                 </div>
                 <div>
-                    <a href="javascript:void(0)">
+                    <a href="javascript:void(0)" class="cart" style="display:flex;align-items:bottom;position:relative;top:2px;">
                         <span class="material-symbols-outlined" >shopping_cart</span>
                     </a>
                 </div>

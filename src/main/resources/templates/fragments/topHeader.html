@@ -4,8 +4,8 @@
         <div class="left">
             <div class="notification">
                 <div class="swiper">
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev">  </div>
+                    <div class="swiper-button-next">  </div>
 
                     <!-- Additional required wrapper -->
                     <div class="swiper-wrapper">
@@ -16,6 +16,9 @@
                         <div class="swiper-slide"><span class="material-symbols-outlined me-1" style="font-size : 1.3rem;">description</span> <span>공지사항1</span>&nbsp;|&nbsp;&nbsp;안녕하세요--</div>
 
                     </div>
+
+
+
                 </div>
             </div>
         </div>
@@ -31,6 +34,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        //----------------------------------------------
+        // new Swiper(선택자, 옵션)
+        //----------------------------------------------
+        new Swiper(".notification .swiper", {
+          direction: "vertical",
+          autoplay: true,
+          loop: true,
+        });
+    </script>
 </th:block>
 
 

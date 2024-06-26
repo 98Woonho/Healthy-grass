@@ -54,7 +54,7 @@ ul{
 
 .wrapper>.header>.top-header>.left>.notification>.swiper{
     width : 100%;
-    height : 100%;
+    height : 35px;
 }
 
 .wrapper>.header>.top-header>.left>.notification>.swiper>.swiper-wrapper{
@@ -63,11 +63,13 @@ ul{
     bottom:0;
     margin : auto;
 
+
 }
 .wrapper>.header>.top-header>.left>.notification>.swiper>.swiper-wrapper>.swiper-slide{
     display:flex;
-    justify-content:left;
+    justify-content:center;
     align-items : center;
+
 }
 .wrapper>.header>.top-header>.left>.notification>.swiper .swiper-button-prev::after,
 .wrapper>.header>.top-header>.left>.notification>.swiper .swiper-button-next::after{
@@ -119,20 +121,73 @@ nav{
   justify-content : center;
   align-items : center;
   background-color : white !important;
-  margin-bottom : 45px;
+
+}
+nav .nav-menu{
+
+}
+
+
+nav .nav-menu>li{
+
+    text-align:center;
+    width :100px;
+    font-size : .8rem;
+    position:relative;
+    margin: 0 5px;
+}
+nav .nav-menu>li::after{
+    display:block;
+    content : "|";
+    position:absolute;
+    right: -5px;
+    top : 5px;
+
 }
 nav .nav-menu>li>a{
  color : black !important;
 }
+nav .nav-menu>li>a::after{
+
+}
 nav .nav-menu>li .dropdown{
     text-align:center;
 }
+nav .nav-menu>li>a{
+    height : 35px;
+    width :100px;
+
+    display:flex;
+    justify-content : center;
+    align-items : center;
+}
+nav .nav-menu>li .submenu{
+    position:absolute;
+    left:-15px;
+    top:35px;
+    padding : 5px;
+    background-color : #2E2E2E;
+    width :130px;
+    margin : 0 auto;
+    z-index : 5;
+    display:none;
+    color : white
+    font-size : .8rem;;
+
+}
+nav .nav-menu>li:hover .submenu{
+    display:block;
+}
+
+
+
 .nav-container{
   display:flex;
   justify-content : space-between;
-  align-items : center;
+  align-items : end;
   padding : 0px !important;
   height : 100%;
+  position:relative;
 }
 .nav-container>*{
     border : 1px solid white;
@@ -144,6 +199,7 @@ nav .nav-menu>li .dropdown{
     width : 20%;
     height : 100%;
     position:relative;
+
     display:flex;
     justify-content : center;
     align-items : center;
@@ -154,13 +210,30 @@ nav .nav-menu>li .dropdown{
     width :250px;
     height  : 100px;
     background-color:orange;
+
 }
 .nav-container>.right{
     width : 40%;
 
     display:flex;
     justify-content : right;
-    align-items : center;
+    align-items : bottom;
+}
+
+
+.nav-container>.right>*{
+    display:flex;
+    justify-content : center;
+    align-items : end;
+}
+.nav-container>.right>.search  input{
+     width : 200px;
+}
+nav-container>.right .cart{
+    display:flex;
+    justify-content:center;
+    align-items : end;
+
 }
 .nav-container>.right .material-symbols-outlined{
  font-variation-settings:
@@ -194,45 +267,73 @@ nav .nav-menu>li .dropdown{
 .board{
     display:flex;
     justify-content : center;
-    align-items : center;
+    align-items : end;
     height : 100%;
     width : 100%;
 }
 .board>ul{
     display:flex;
     justify-content : center;
-    align-items : center;
-
+    align-items : end;
+    margin : 0px;
     padding : 2px;
     height : 80px;
     width : 100%;
 
 }
 .board>ul>li{
+
     position:relative;
-    top:0;
-    bottom:0;
-    margin : auto;
-    border : 1px solid;
     padding : 5px;
-    width : 130px;
+    width : 150px;
+    height : 50px;
     height : 35px;
     text-align:center;
     border-radius : 5px;
+    border : 1px solid lightgray;
     box-shadow : 5px 5px 5px lightgray;
 }
 .board>ul>li>a{
     display:block;
+
 }
+.board>ul>li>.submenu{
+    position:absolute;
+    left:0px;
+    top:35px;
+    padding : 5px;
+
+    background-color : #2E2E2E;
+    width :150px;
+    margin : 0 auto;
+    z-index : 5;
+    display:none;
+    font-size : .8rem;
+}
+.board>ul>li>.submenu a{
+    color : white !important
+}
+.board>ul>li>.submenu li{
+    height : 35px;
+
+    display:flex;
+    justify-content : center;
+    align-items : center;
+}
+.board>ul>li:hover .submenu{
+    display:block;
+}
+
+
 .board>ul>li:hover .dropdown{
     display:block;
 }
 
-.main h3{
+.main h4{
+    margin : 15px 0;
     padding : 15px;
-    background-color : lightgray;
     text-align:center;
-    color : white;
+    color : black;
 }
 
 
@@ -252,3 +353,79 @@ nav .nav-menu>li .dropdown{
     border : 1px solid;
 }
 
+/*
+    section1-banner
+*/
+.wrapper>.main{}
+.wrapper>.main>section.banner{}
+.wrapper>.main>section.banner>.swiper{
+    width : 100%;
+    height : 350px;
+}
+
+.wrapper>.main>section.banner>.swiper .swiper-slide{
+    display:flex;
+    justify-content : center;
+    align-items : center;
+}
+.wrapper>.main>section.banner>.swiper .swiper-slide img{
+    object-fit : contain;
+    width : 100%;
+}
+
+/*
+    second-section
+*/
+.item-list{}
+.item-list .prd-info{
+    padding : 5px;
+    position:relative;
+}
+.item-list .prd-info>ul>li.prd-brand{
+    font-weight : 400;
+    font-size : 1rem;
+    display:flex;
+    justify-content:left;
+    align-items : center;
+    margin-bottom : 15px;
+}
+.item-list .prd-info>ul>li.prd-brand>a{}
+.item-list .prd-info>ul>li.prd-price{
+    font-size : .8rem;
+    display:flex;
+    justify-content:left;
+    align-items : center;
+}
+.item-list .prd-info>ul>li.prd-price>b{
+    text-decoration:line-through;
+}
+
+.item-list .prd-info>ul>li.prd-discount{
+    font-size : 1rem;
+    display:flex;
+    justify-content:left;
+    align-items : center;
+    font-weight : 400;
+    margin-bottom : 25px;
+}
+.item-list .prd-info>ul>li.prd-category{
+    font-size : .7rem;
+    display:flex;
+    justify-content:left;
+    align-items : center;
+    font-weight : 400;
+}
+.item-list .prd-info>ul>li.prd-review{
+    font-size : .7rem;
+    position:absolute;
+    bottom:5px;
+    right:10px;
+}
+.item-list .prd-info>ul>li.prd-rating{
+    font-size : .7rem;
+    position:absolute;
+    bottom:25px;
+    right:10px;
+}
+.item-list{}
+.item-list{}

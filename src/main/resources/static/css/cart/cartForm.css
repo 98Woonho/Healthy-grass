@@ -1,109 +1,145 @@
-/* 기본 테이블 스타일링 */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1em;
-    font-family: 'Arial', sans-serif;
-    min-width: 600px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
-
-thead tr {
-    background-color: #009879;
-    color: #ffffff;
-    text-align: left;
-    font-weight: bold;
-}
-
-th, td {
-    padding: 12px 15px;
-    text-align: center;
-}
-
-tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
-tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
-tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
-}
-
-/* 스타일링 체크박스 */
-input[type="checkbox"] {
-    transform: scale(1.5);
-}
-
-/* 스타일링 버튼 */
-.btns a {
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 0 5px;
-    background-color: #009879;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 0.9em;
-}
-
-.btns a:hover {
-    background-color: #007b5e;
-}
-
-/* 스타일링 링크 */
 a {
-    color: #009879;
-    text-decoration: none;
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 기본 텍스트 색상 상속 */
+    margin: 0; /* 기본 마진 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    border: none; /* 기본 테두리 제거 */
+    background: none; /* 기본 배경 제거 */
 }
 
-a:hover {
-    text-decoration: underline;
+.main-table {
+    width: 1200px;
+    margin: 0 auto; /* 가운데 정렬 */
+    margin-top: 60px;
+    background-color: #f9f9f9; /* 테이블 배경색 (연한 회색) */
+    border-top: 3px solid #000; /* 맨 위 테두리 */
+    border-bottom: 3px solid #000; /* 맨 아래 테두리 */
+    border-collapse:collapse; /* 테이블 선 제거 */
 }
 
-/* 옵션 변경 버튼 */
-.btn-opt-spin-num {
+table th, table td {
+    height: 70px; /* 나머지 셀 높이 */
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd; /* 셀 하단 경계선 (연한 회색) */
+}
+
+.table-tr {
+    border-bottom: 1px solid #ddd;
+    background-color: #f2f2f2;
+    color: #000;
+}
+
+.table-header> .table-tr > th {
+    height: 60px; /* 헤더 셀 높이 */
+    border: inherit;
+}
+
+.amount_value {
+    text-align: center;
+    width: 40px;
+    height: 30px;
+}
+
+.wish-btn {
+    margin: 5px;
+    width: 60px;
     display: inline-block;
-    padding: 5px 10px;
-    background-color: #ffcc00;
-    color: #ffffff;
+    padding: 8px 12px;
+    background-color: #4a4a4a;
+    color: white;
     text-decoration: none;
-    border-radius: 5px;
-    font-size: 0.9em;
-    margin-top: 10px;
+    border: none;
+    cursor: pointer;
 }
 
-.btn-opt-spin-num:hover {
-    background-color: #e6b800;
+.delete_cart_btn {
+    margin: 5px;
+    width: 60px;
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: white;
+    color: #4a4a4a;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid;
 }
 
-/* 스타일링 하단 정보 */
-tfoot td {
-    padding: 10px 15px;
+.wish-btn:hover{
+    background-color: #343a40;
+}
+
+.delete_cart_btn:hover {
+    color: #cc0000;
+}
+.last-tr {
+    background-color: #f4f2f1;
+}
+
+#total-price {
+
+ font-weight: bold;
+}
+
+.btn-tag {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* 공통 버튼 스타일 */
+.order_select_product {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 16px;
     font-weight: bold;
     text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #4CAF50; /* 버튼 배경색 (녹색) */
+    border: none;
+    cursor: pointer;
+    width: 140px;
+    height: 30px;
+    line-height: 30px;
 }
-
-tfoot div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* 이미지 스타일링 */
-img {
-    max-width: 100px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
-/* 추가적인 텍스트 정렬 */
-.tb-center {
+.again-shopping {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: bold;
     text-align: center;
+    text-decoration: none;
+    color: black;
+    background-color: white; /* 버튼 배경색 (녹색) */
+    border: 1px solid;
+    cursor: pointer;
+    width: 140px;
+    height: 30px;
+    line-height: 30px;
+}
+
+    /* 호버 상태 스타일 */
+.order_select_product:hover {
+    background-color: #45a049; /* 호버 시 배경색 (진한 녹색) */
+}
+
+.h2 {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.amount-changer {
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+}
+
+.amount-changer img {
+    padding: 5px;
+    width: 24px; /* 이미지 너비 조정 */
+    height: 24px; /* 이미지 높이 조정 */
 }

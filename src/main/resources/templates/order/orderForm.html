@@ -2,101 +2,32 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>주문 페이지</title>
-    <!--  cdns  -->
-    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
+    <!-- axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+            integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- fragments css -->
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+
     <link rel="stylesheet" th:href="@{/css/order/order.css}">
     <!-- daum 주소 찾기 cdn -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!--    import cdn-->
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script defer src="/js/order/order.js"></script>
-    <style>
-        * {
-            margin: 1rem;
-            padding: 0;
-
-            border-radius: 10px;
-        }
-
-        .text {
-            position: relative;
-            top: 45%;
-            text-align: center;
-        }
-
-        header {
-            height: 200px;
-            background-color: aquamarine;
-        }
-
-        main {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .box {
-            background-color: gainsboro;
-            border: 1px solid black;
-        }
-
-        .h-400 {
-            height: 400px;
-        }
-
-        .h-300 {
-            height: 300px;
-        }
-
-        .h-200 {
-            height: 200px;
-        }
-
-        .h-100 {
-            height: 100px;
-        }
-
-        .h-1000 {
-            height: 1000px;
-        }
-
-        .w-300 {
-            width: 300px;
-        }
-
-        .w-full {
-            width: 100%;
-        }
-
-        .product-list {
-            background-color: burlywood;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-        }
-
-        .box1 {
-            background-color: darkgrey;
-
-            display: flex;
-            flex-direction: row;
-        }
-
-        footer {
-            height: 100px;
-            background-color: beige;
-        }
-    </style>
 </head>
 <body>
-<header>
-    <p class="text">헤더(메뉴, 로그인, 회원가입 등)</p>
-</header>
-<main>
-    <fieldset>
-        <h3>주문상품</h3>
-        <br>
+<div class="header">
+    <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+    <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+</div>
+<main id="tbl-main">
+    <section class="first-section">
         <div class="tbl-order">
+            <h3>주문상품</h3>
             <table>
                 <thead>
                 <tr>
@@ -109,10 +40,10 @@
                 </thead>
                 <tbody>
                 <tr th:each="product, status: ${productList}">
-                    <td>
+                    <td class="td-item">
                         <div>
                             <div>
-<!--                                 상품 이미지 -->
+                                <!--                                 상품 이미지 -->
                                 <a th:href="@{/product(id=${product.id})}">
                                     <img th:src="${product.mainImgPath}" th:alt="${product.mainImgName}" width="65">
                                 </a>
@@ -120,45 +51,48 @@
                             </div>
                         </div>
                     </td>
-                    <td>
+                    <td class="td-item">
                         <div>
-<!--                            상품 이름-->
+                            <!--                            상품 이름-->
                             <a class="product-name" th:href="@{/product(id=${product.id})}">
                                 <th:block th:text="${product.name}"></th:block>
                             </a>
                         </div>
                     </td>
-                    <td>
+                    <td class="td-item">
                         <!--                        상품 수량-->
                         <div class="order-quantity" th:text="${orderList[status.index].quantity}">1</div>
                     </td>
-                    <td>
+                    <td class="td-item">
                         <div>
                             <!-- 상품 할인 가격 -->
-                            <div class="sale_price" th:if="${product.discountedPrice != null && product.discountedPrice != 0}">
+                            <div class="sale_price"
+                                 th:if="${product.discountedPrice != null && product.discountedPrice != 0}">
                                 <span th:text="${(product.price - product.discountedPrice) * orderList[status.index].quantity}"></span>
                             </div>
-<!--                            상품 할인 적용이 되지 않을 경우 보여질 화면-->
+                            <!--                            상품 할인 적용이 되지 않을 경우 보여질 화면-->
                             <div th:unless="${product.discountedPrice != null && product.discountedPrice != 0}">
                                 <div>-</div>
                             </div>
                         </div>
                     </td>
-                    <td>
+                    <td class="td-item">
                         <!-- 상품 할인이 적용 될 경우 보여질 가격 -->
                         <div th:if="${product.discountedPrice != null && product.discountedPrice != 0}">
                             <!--  상품 가격 -->
                             <del th:text="${product.price * orderList[status.index].quantity}"></del>
                             <!-- 할인 적용 후 가격 -->
-                            <div class="price" th:text="${product.discountedPrice * orderList[status.index].quantity}"></div>
+                            <div class="price"
+                                 th:text="${product.discountedPrice * orderList[status.index].quantity}"></div>
                         </div>
-<!--                        상품 할인이 적용이 되지 않을 때 보여질 가격-->
-                        <div class="price" th:unless="${product.discountedPrice != null && product.discountedPrice != 0}">
+                        <!--                        상품 할인이 적용이 되지 않을 때 보여질 가격-->
+                        <div class="price"
+                             th:unless="${product.discountedPrice != null && product.discountedPrice != 0}">
                             <div th:text="${product.price * orderList[status.index].quantity}"></div>
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr class="last-tr td-item">
                     <td colspan="6">
                         <div>
                             <!--                            장바구니에서 주문 한 모든 금액 -->
@@ -169,7 +103,7 @@
                                 <span class="product_sale_price"></span>원</strong>
                             </span>
                             <!--                            배송비 가격-->
-                            </span> + 배송비 <strong><span id="pvd-total-delivery-0" price="0">0</span>원</strong>
+                            + 배송비 <strong><span id="pvd-total-delivery-0" price="0">0</span>원</strong>
                             <!--                          주문금액 -  할인된 주문 금액 + 배송비 = 총 주문 금액-->
                             = <strong>주문 금액 <span th:text="${totalAmount}">0</span>원</strong>
                         </div>
@@ -178,8 +112,9 @@
                 </tbody>
             </table>
         </div>
-        <!-- 주문 테이블-->
-
+    </section>
+    <!-- 주문 테이블-->
+    <section class="second-section">
         <div class="tbl-order">
             <h3>주문자정보</h3>
             <div>
@@ -191,7 +126,7 @@
                         </th>
                         <td>
                             <!--                            주문자 이름 정보-->
-                            <input class="user-name" type="text" th:value="${userDto.name}" disabled></td>
+                            <input class="user-name input" type="text" th:value="${userDto.name}" disabled></td>
                     </tr>
                     <tr>
                         <th scope="row">
@@ -200,207 +135,211 @@
                         </th>
                         <td>
                             <!--                            주문자 연락처 정보-->
-                            <input class="user-phone" type="text" th:value="${userDto.phone}" disabled>
-                            <input class="user-email" type="hidden" th:value="${userDto.email}">
+                            <input class="user-phone input" type="text" th:value="${userDto.phone}" disabled>
+                            <input class="user-email input" type="hidden" th:value="${userDto.email}">
                     </tr>
                     </tbody>
                 </table>
             </div>
+        </div>
+    </section>
 
-            <!-- .tbl-order -->
-                <h3>배송지 정보</h3>
+    <!-- .tbl-order -->
+    <section class="third-section">
+        <h3>배송지 정보</h3>
 
-                <div class="tbl-order">
-                    <form>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <th>
-                                <div>배송지</div>
-                            </th>
-                            <td>
-                                <label><input type="radio" name="addressType" value="B"> 기본 배송지</label>
-<!--                                신규 배송지 입력시 다음 주소 api 호출-->
-                                <label><input type="radio" name="addressType" value="N"> 신규 배송지</label>
-                                <label> <input class="is-same-orderInformation-chk" type="checkbox"> 주문자 정보와 동일함</label>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <div>받으시는 분</div>
-                            </th>
-                            <td><input class="receiver" type="text"></td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <div>배송지 주소</div>
-                            </th>
-                            <td>
-<!--                                   배송지 우편번호-->
-                                <input class="zipcode" type="text" disabled>
-<!--                                    배송지 주소-->
-                                <input class="streetAdr" type="text" disabled>
-<!--                                    다음 api 사용-->
-                                <a class="zipcode-search" href="javascript:void(0)">우편번호 찾기</a>
-<!--                                    상세 배송지 주소-->
-                                <div>
-                                    <input class="detailAdr" type="text">
-                                </div>
-
-
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>
-                                <div>휴대폰</div>
-                            </th>
-                            <td>
-<!--                                연락처 정보 -->
-                                <input class="phone" type="text" oninput="PhoneRegex(this)">
-                            </td>
-                        </tr>
-                        <tr>
-
-                            <th>
-                                <div>주문메시지<br></div>
-                            </th>
-                            <td>
-                                <select id="orderMessageSelect">
-                                    <option>배송 메시지를 선택해주세요.</option>
-                                    <option>배송 전에 연락주세요.</option>
-                                    <option>부재시 경비(관리)실에 맡겨주세요.</option>
-                                    <option>부재시 문앞에 놓아주세요.</option>
-                                    <option>고객 무인택배함에 보관해주세요.</option>
-                                    <option>파손 위험이 있습니다. 주의해주세요.</option>
-                                </select>
-                                <textarea id="orderMessageTextarea" rows="5" style="width:80%;"></textarea>
-                                <div>
-                                    *배송일 지정은 불가하며, 해당 사유로 환불이 불가한 점 꼭 확인하시기 바랍니다.
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    </form>
-                </div><!-- .tbl-order -->
-            <div>
-                <h3>결제 정보 선택</h3>
-            </div>
-
-            <div>
+        <div class="tbl-order">
+            <form>
                 <table>
                     <tbody>
                     <tr>
                         <th>
-                            <div>일반결제</div>
+                            <div>배송지</div>
                         </th>
                         <td>
-                            <ul>
-                                <li>
-                                    <label>
-                                        <input type="radio" class="chk-rdo" name="radio_paymethod" value="B">
-                                        <span>일반결제</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label> <input type="radio" class="chk-rdo" name="radio_paymethod" value="V">
-                                        <span>실시간 계좌이체</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label><input type="radio" class="chk-rdo" name="radio_paymethod" value="C">
-                                        <span>가상계좌</span>
-                                    </label>
-                                </li>
-                            </ul>
+                            <label><input type="radio" name="addressType" value="B"> 기본 배송지</label>
+                            <!--                                신규 배송지 입력시 다음 주소 api 호출-->
+                            <label><input type="radio" name="addressType" value="N"> 신규 배송지</label>
+                            <label> <input class="is-same-orderInformation-chk" type="checkbox"> 주문자 정보와 동일함</label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div>받으시는 분</div>
+                        </th>
+                        <td><input class="receiver input" type="text"></td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div>배송지 주소</div>
+                        </th>
+                        <td>
+                            <!--                                   배송지 우편번호-->
+                            <input class="zipcode input" type="text" disabled>
+                            <!--                                    배송지 주소-->
+                            <input class="streetAdr input" type="text" disabled>
+                            <!--                                    다음 api 사용-->
+                            <a class="zipcode-search input" href="javascript:void(0)">우편번호 찾기</a>
+                            <!--                                    상세 배송지 주소-->
+                            <div>
+                                <input class="detailAdr input" type="text">
+                            </div>
+
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            <div>휴대폰</div>
+                        </th>
+                        <td>
+                            <!--                                연락처 정보 -->
+                            <input class="phone input" type="text" oninput="PhoneRegex(this)">
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <th>
+                            <div>주문메시지<br></div>
+                        </th>
+                        <td>
+                            <select id="orderMessageSelect" class="input">
+                                <option>배송 메시지를 선택해주세요.</option>
+                                <option>배송 전에 연락주세요.</option>
+                                <option>부재시 경비(관리)실에 맡겨주세요.</option>
+                                <option>부재시 문앞에 놓아주세요.</option>
+                                <option>고객 무인택배함에 보관해주세요.</option>
+                                <option>파손 위험이 있습니다. 주의해주세요.</option>
+                            </select>
+                            <textarea id="orderMessageTextarea" rows="5" style="width:80%;"></textarea>
+                            <div>
+                                *배송일 지정은 불가하며, 해당 사유로 환불이 불가한 점 꼭 확인하시기 바랍니다.
+                            </div>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-            </div><!-- .tbl-order -->
-            <h3>※ 주문시 주의사항</h3>
-            <div class="tbl-order">
-                <table>
+            </form>
+        </div><!-- .tbl-order -->
+    </section>
+    <section class="fourth-section">
+        <div>
+            <h3>결제 정보 선택</h3>
+        </div>
+
+        <div>
+            <table class="tbl-order">
+                <tbody>
+                <tr>
+                    <th>
+                        <div>일반결제</div>
+                    </th>
+                    <td>
+                        <ul>
+                            <li class="li-pay">
+                                <label>
+                                    <input type="radio" class="chk-rdo" name="radio_paymethod" value="B">
+                                    <span>일반결제</span>
+                                </label>
+                            </li>
+                            <li class="li-pay">
+                                <label> <input type="radio" class="chk-rdo" name="radio_paymethod" value="V">
+                                    <span>실시간 계좌이체</span>
+                                </label>
+                            </li>
+                            <li class="li-pay">
+                                <label><input type="radio" class="chk-rdo" name="radio_paymethod" value="C">
+                                    <span>가상계좌</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div><!-- .tbl-order -->
+    </section>
+    <section class="fifth-section">
+        <h3>※ 주문시 주의사항</h3>
+        <div class="tbl-order">
+            <table>
+                <tr>
+                    <th>
+                        <div>주문시 주의사항</div>
+                    </th>
+                    <td>
+                        <div class="txt">
+                            <p class="txt-p">‘건강 풀때기’는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 ‘건강풀때기’은 상품·거래정보 및 거래에 대하여 책임을 지지 않습니다. 단, 고객과
+                                판매자의 원활한 거래진행을 위한 최선의 노력을 다할 것을 약속드립니다.</p>
+                            <p class="txt-p">· 상품에 대한 불만족, 교환, 반품, 환불에 관한 문의는 건강풀때기 고객센터를 통해 도움을 받으실 수 있습니다.<br> · 상품의 배송이 시작된 경우
+                                고객의 단순 변심에 의한 환불, 취소는 진행이 불가능합니다.<br> · 신선식품의 특성상 배송과정과 환경의 영향으로 품질에 하자가 발생할 시 판매자
+                                또는 건강풀때기와의 협의를 통해 <br> &nbsp; &nbsp; 충분한 조치를 받으실 수 있습니다.<br> · 상품 발송 이후 배송지연,
+                                오배송 등과 같은 배송사고의 책임은 배송업체에 있음을 알려드립니다.</p>
+                            <p class="txt-p">간혹 고객님께서 기대하신 물건을 받으신 후 기대에 미치지 못해 속상한 마음이 드실 수도 있습니다. <br>그럴 땐 저희에게 알려주세요. 저희가 고객님의
+                                속상한 마음을 농가에 잘 전달하겠습니다.</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div><!-- .tbl-order --><!-- .tbl-order -->
+    </section>
+    <section class="sixth-section">
+        <div>
+            <div>
+                <h3>최종결제정보</h3>
+                <table class="tbl-order td-item">
+                    <thead>
                     <tr>
-                        <th>
-                            <div>주문시 주의사항</div>
-                        </th>
+                        <th>총 주문금액</th>
+                        <th>할인된 금액</th>
+                        <th>총 배송비</th>
+                        <th>최종금액</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
                         <td>
                             <div>
-                                <p>‘충남 농사랑’은 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 ‘농사랑’은 상품·거래정보 및 거래에 대하여 책임을 지지 않습니다. 단, 고객과
-                                    판매자의 원활한 거래진행을 위한 최선의 노력을 다할 것을 약속드립니다.</p>
-                                <p>· 상품에 대한 불만족, 교환, 반품, 환불에 관한 문의는 농사랑 고객센터를 통해 도움을 받으실 수 있습니다.<br> · 상품의 배송이 시작된 경우
-                                    고객의 단순 변심에 의한 환불, 취소는 진행이 불가능합니다.<br> · 신선식품의 특성상 배송과정과 환경의 영향으로 품질에 하자가 발생할 시 판매자
-                                    또는 농사랑과의 협의를 통해 <br> &nbsp; &nbsp; 충분한 조치를 받으실 수 있습니다.<br> · 상품 발송 이후 배송지연,
-                                    오배송 등과 같은 배송사고의 책임은 배송업체에 있음을 알려드립니다.</p>
-                                <p>간혹 고객님께서 기대하신 물건을 받으신 후 기대에 미치지 못해 속상한 마음이 드실 수도 있습니다. <br>그럴 땐 저희에게 알려주세요. 저희가 고객님의
-                                    속상한 마음을 농가에 잘 전달하겠습니다.</p>
+                                <div>
+                                    <!--                       총 주문 금액-->
+                                    <span th:text="${orderList[0].noSaleTotalPrice}"></span>원
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <!-- 상품 할인 가격 -->
+                                <div><span class="product_sale_price"></span>원</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <!--                        총 배송비 -->
+                                <span>무료</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="sale-total-price">
+                                <!--  할인후 최종 가격-->
+                                <th:block th:text="${totalAmount}"></th:block>
                             </div>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
-            </div><!-- .tbl-order --><!-- .tbl-order -->
-
-
-            <div>
-                <div>
-                    <h3>최종결제정보</h3>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>총 주문금액</th>
-                            <th>할인된 금액</th>
-                            <th>총 배송비</th>
-                            <th>최종금액</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>
-                                <div>
-                                    <div>
-                                        <!--                       총 주문 금액-->
-                                        <span th:text="${orderList[0].noSaleTotalPrice}"></span>원
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <!-- 상품 할인 가격 -->
-                                    <div><span class="product_sale_price"></span>원</div>
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <!--                        총 배송비 -->
-                                    <span>무료</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="sale-total-price">
-                                    <!--  할인후 최종 가격-->
-                                    <th:block th:text="${totalAmount}"></th:block>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!--end_if-->
-                <label>
-                    <input class="payment-agree" type="checkbox"> 결제정보 확인 / 구매진행 동의
-                </label>
-                <div>
-                    <a href="javascript:void(0)" >취소</a>
-                    <a class="pay-btn" href="javascript:void(0)">결제하기</a>
-                </div>
-
             </div>
-        <!-- .orderpay-side-wrap end -->
+            <!--end_if-->
+            <label class="payment-agree-label">
+                <input class="payment-agree" type="checkbox"> 결제정보 확인 / 구매진행 동의
+            </label>
+            <div>
+                <a class="cancel-btn" href="/cart">취소</a>
+                <a class="pay-btn" href="javascript:void(0)">결제하기</a>
+            </div>
         </div>
-    </fieldset>
+    </section>
 </main>
 <footer>
     <p class="text">푸터(사이트 정보 등)</p>

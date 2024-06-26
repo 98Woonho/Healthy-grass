@@ -1,20 +1,55 @@
-.tbl-order {
-    width: 100%;
-    margin: 20px 0;
-    border-collapse: collapse;
-    font-family: Arial, sans-serif;
+#tbl-main{
+    width: 1200px;
+    margin: 0 auto; /* 가운데 정렬 */
 }
 
-.tbl-order table {
-    width: 100%;
-    border-collapse: collapse;
+a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 기본 텍스트 색상 상속 */
+    margin: 0; /* 기본 마진 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    border: none; /* 기본 테두리 제거 */
+    background: none; /* 기본 배경 제거 */
 }
 
-.tbl-order th, .tbl-order td {
-    border: 1px solid #ddd;
+
+ul, li {
+    list-style: none; /* 목록 기호 없애기 */
+    padding: 0; /* 내부 여백 없애기 */
+    margin: 0; /* 외부 여백 없애기 */
+}
+
+table {
+    width: 100%;
+    margin-top: 30px;
+    background-color: #f9f9f9; /* 테이블 배경색 (연한 회색) */
+    border-top: 3px solid #000; /* 맨 위 테두리 */
+    border-collapse:collapse; /* 테이블 선 제거 */
+    margin-bottom: 60px;
+}
+
+.tbl-order th {
+    height: 70px; /* 나머지 셀 높이 */
     padding: 8px;
     text-align: center;
+    border-bottom: 1px solid #ddd; /* 셀 하단 경계선 (연한 회색) */
 }
+.tbl-order td {
+    height: 70px; /* 나머지 셀 높이 */
+    padding: 8px;
+    border-bottom: 1px solid #ddd; /* 셀 하단 경계선 (연한 회색) */
+}
+
+.td-item {
+    text-align: center;
+}
+
+.last-tr {
+    padding: 25px 35px;
+    font-size: 16px;
+    background-color: #f4f2f1;
+}
+
 
 .tbl-order th {
     background-color: #f2f2f2;
@@ -62,4 +97,101 @@
 
 .total .tb-right {
     padding: 10px;
+}
+
+.second-section th {
+    width: 200px;
+}
+
+.third-section th {
+    width: 200px;
+}
+
+.fourth-section th {
+    width: 200px;
+}
+
+.fifth-section th {
+    width: 200px;
+}
+
+.sixth-section th {
+    width: 200px;
+}
+
+.input {
+    width: 200px; /* 너비를 100%로 설정하여 부모 요소의 너비에 맞춤 */
+    padding: 10px; /* 내부 여백 */
+    margin: 10px 0; /* 위아래 여백 */
+    font-size: 16px; /* 폰트 크기 */
+    border: 1px solid #ccc; /* 테두리 */
+    box-sizing: border-box; /* 테두리와 패딩을 포함한 전체 크기를 설정 */
+}
+
+/* input 요소가 포커스되었을 때의 스타일 */
+.input:focus {
+    border-color: #000; /* 포커스된 상태에서 테두리 색 변경 */
+    outline: none; /* 기본 아웃라인 제거 */
+    background-color: #fff; /* 배경색 변경 */
+}
+
+#orderMessageTextarea {
+    font-size: 20px;
+}
+
+/* 공통 버튼 스타일 */
+.pay-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #4CAF50; /* 버튼 배경색 (녹색) */
+    border: none;
+    cursor: pointer;
+    width: 140px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.pay-btn:hover {
+    background-color: #45a049;
+}
+
+.cancel-btn {
+    width: 140px;
+    height: 30px;
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 10px;
+    background-color: white;
+    color: #4a4a4a;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid;
+    box-sizing: unset;
+    line-height: 30px;
+}
+
+.cancel-btn:hover {
+    color: #cc0000;
+}
+
+.payment-agree-label {
+    font-size: 20px;
+
+}
+
+.li-pay {
+    margin: 10px;
+    height: 30px;
+    font-size: 16px;
+}
+
+.txt-p {
+    line-height: 1.5;
+    padding: 5px 0;
 }

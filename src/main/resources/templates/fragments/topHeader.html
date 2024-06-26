@@ -1,5 +1,61 @@
 <th:block th:fragment="topHeader_fragment" xmlns:th="">
-    <div class="top-header">
-        <a href="/">Home</a>
+    <div class="top-header layout-150">
+
+        <div class="left">
+            <div class="notification">
+                <div class="swiper">
+                    <div class="swiper-button-prev">  </div>
+                    <div class="swiper-button-next">  </div>
+
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        <div class="swiper-slide"><span class="material-symbols-outlined me-1" style="font-size : 1.3rem;">description</span> <span>공지사항1</span>&nbsp;|&nbsp;&nbsp; 안녕하세요--</div>
+                        <div class="swiper-slide"><span class="material-symbols-outlined me-1" style="font-size : 1.3rem;">description</span> <span>공지사항1</span>&nbsp;|&nbsp;&nbsp;안녕하세요--</div>
+                        <div class="swiper-slide"><span class="material-symbols-outlined me-1" style="font-size : 1.3rem;">description</span> <span>공지사항1</span>&nbsp;|&nbsp;&nbsp;안녕하세요--</div>
+                        <div class="swiper-slide"><span class="material-symbols-outlined me-1" style="font-size : 1.3rem;">description</span> <span>공지사항1</span>&nbsp;|&nbsp;&nbsp;안녕하세요--</div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="right ">
+            <div class="info">
+                <ul>
+                    <li><a href="javascript:void(0)">로그인</a></li>
+                    <li><a href="javascript:void(0)">회원가입</a></li>
+                    <li><a href="javascript:void(0)">마이페이지</a></li>
+                    <li><a href="javascript:void(0)">주문조회</a></li>
+                    <li><a href="javascript:void(0)">고객센터</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
+
+    <script>
+        //----------------------------------------------
+        // new Swiper(선택자, 옵션)
+        //----------------------------------------------
+        new Swiper(".notification .swiper", {
+          direction: "vertical",
+          autoplay: true,
+          loop: true,
+        });
+    </script>
 </th:block>
+
+
+
+<!--<th:block sec:authorize="isAnonymous()">-->
+<!--    <form action="/user/loginForm" method="get">-->
+<!--        <button>로그인</button>-->
+<!--    </form>-->
+<!--</th:block>-->
+<!--<th:block sec:authorize="isAuthenticated()">-->
+<!--    <form action="/user/logout" method="get">-->
+<!--        <button>로그아웃</button>-->
+<!--    </form>-->
+<!--</th:block>-->

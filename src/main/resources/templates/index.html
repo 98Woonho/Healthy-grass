@@ -22,20 +22,13 @@
     <link rel="stylesheet" th:href="@{/css/index/hightDiscountProducts.css}">
     <link rel="stylesheet" th:href="@{/css/index/recentProducts.css}">
 
-<<<<<<< HEAD
-=======
-    <!-- fragments css -->
-    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
->>>>>>> 206d3cd83824eb76ec13a98fca6329b29db7b8f9
 </head>
 <body>
 <div class="wrapper">
-    <div class="header">
+    <div class="header  layout-5">
         <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
         <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
     </div>
-<<<<<<< HEAD
 
 
     <div class="main">
@@ -53,23 +46,13 @@
                     <div class="swiper-slide"><a href="javascript:void(0)"><img src="/img/main_banner_pc_5.jpg"/></a></div>
                 </div>
 
-=======
-    <div class="main">
-        <section class="first-section">
-            <h1>인덱스 화면입니다.</h1> <br>
-            <hr>
-            <div class="product-total-search">
-                <form action="/productList" method="GET">
-                    <h2>통합 검색</h2>
-                    <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
-                    <button type="submit">검색</button>
-                </form>
->>>>>>> 206d3cd83824eb76ec13a98fca6329b29db7b8f9
             </div>
         </section>
         <section class="second-section">
             <div class="mainDiscountPick wrapper">
-                <h2>할인 상품</h2>
+
+                <h4><span class="material-symbols-outlined">sell</span> &nbsp;할인 상품</h4>
+                <hr>
                 <div class="discountPrdLst" id="discount-product-list">
                     <div class="item-wrap">
                         <!-- 할인 상품 리스트 아이템들 -->
@@ -80,7 +63,8 @@
         <script defer th:src="@{/js/index/hightDiscountProductsProcess.js}"></script>
         <section class="third-section">
             <div class="mainByPick wrapper">
-                <h2>카테고리별 인기상품</h2>
+                <h4><span class="material-symbols-outlined">category</span> &nbsp;카테고리별 인기상품</h4>
+                <hr>
                 <div class="mainPrdTab">
                     <h5 class="on" id="tle_1"><a href="#tablist_1">전체</a></h5>
                     <h5 id="tle_2"><a href="#tablist_2">쌀/잡곡</a></h5>
@@ -125,7 +109,8 @@
 
         <section class="fourth-section">
             <div class="mainByPick wrapper">
-                <h2>최신 상품</h2>
+                <h4><span class="material-symbols-outlined">today</span> &nbsp;최신상품</h4>
+                <hr>
                 <div class="recentPrdLst" id="recent-product-list">
                     <div class="item-wrap">
                         <!-- 최신 상품 리스트 아이템들 -->
@@ -135,9 +120,48 @@
         </section>
         <script defer th:src="@{/js/index/recentProductsProcess.js}"></script>
     </div>
-    <div class="footer">
 
-    </div>
+
+
+    <th:block th:insert="~{fragments/footer :: footer_fragment}"></th:block>
+
+
+
 </div>
+
+<script>
+    //----------------------------------------------
+    // Section1.Banner
+    //----------------------------------------------
+        const banner =  new Swiper('.banner .swiper', {
+          effect : 'fade',
+          direction: 'horizontal', // 슬라이드 진행 방향, 기본값 horizontal(가로)
+          // autoplay: true 도 가능하지만 객체 데이터로 할당하면 추가적인 옵션 설정 가능
+          autoplay: {
+            // 자동재생 여부
+            delay: 5000, // 시작시간 설정
+          },
+          // 페이드 효과 사용
+          loop: true, // 반복재생 여부
+          slidesPerView: 1, // 한번에 보여줄 슬라이드 개수
+          spaceBetween: 0, // 슬라이드 사이 여백
+          centeredSlides: true, // 1번 슬라이드가 가운데 보이기
+
+          // 페이저 버튼 사용자 설정
+          pagination: {
+            // 페이지 번호 요소 선택자
+            el: '.promotion .swiper-pagination',
+
+            // 사용자의 페이지 번호 요소 제어 가능 요소 (사용자가 단순히 시각적으로만 보는것 뿐만아니라 눌러서 제어할 수 있는지에 대한 여부)
+            clickable: true,
+          },
+          // nav 화살표 출력 시 추가
+          navigation: {
+            prevEl: '.banner .swiper-button-prev',
+            nextEl: '.banner .swiper-button-next',
+          },
+
+        });
+</script>
 </body>
 </html>

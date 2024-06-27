@@ -4,21 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
     <link rel="stylesheet" th:href="@{/css/admin/addProduct.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
 
     <script defer th:src="@{/js/admin/addProduct.js}"></script>
 
     <title>제품 등록</title>
 </head>
 <body>
-<header>
+<div class="header layout-5">
     <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
-</header>
+</div>
 <main>
     <h1>제품 등록</h1>
     <div class="admin-container">

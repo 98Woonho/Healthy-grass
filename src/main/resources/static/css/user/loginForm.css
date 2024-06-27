@@ -1,0 +1,110 @@
+.main {
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border: 2px solid #ccc;
+}
+
+.first-section h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.second-section .loginForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.second-section .loginForm div {
+    margin-bottom: 15px;
+}
+
+.second-section .loginForm label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.second-section .loginForm input[type="text"],
+.second-section .loginForm input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.second-section .loginForm input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.second-section .loginForm .loginBtn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.second-section .loginForm .loginBtn:hover {
+    background-color: #0056b3;
+}
+
+.second-section .loginForm a {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.second-section .loginForm a:hover {
+    text-decoration: underline;
+}
+
+.second-section .exception-message {
+    color: red;
+    margin-bottom: 15px;
+}
+
+.third-section .login-container {
+    display: flex;
+    text-align: center;
+    margin-top: 20px;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.third-section .login-container a {
+    color: #4a4a4a;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.third-section .login-container a:hover {
+    text-decoration: underline;
+}
+.third-section h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+hr {
+    margin-top: 20px;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+.btn-sns {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+}

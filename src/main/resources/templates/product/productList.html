@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products</title>
+    <title>상품 리스트</title>
+
     <script defer th:src="@{/js/productList/searchFormOnchange.js}"></script>
+
     <link rel="stylesheet" th:href="@{/css/productList/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 </head>
 <body>
     <div class="wrapper">
-        <div class="header">
+        <div class="header layout-5">
             <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
             <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
         </div>

@@ -33,6 +33,10 @@ function check(element) {
         phoneDiv.classList.remove("hidden")
     }
 }
+const userOptBtn = document.querySelector('.user-opt-btn');
+userOptBtn.addEventListener('DOMContentLoaded', function (){
+    userOptBtn.classList.add('hidden');
+})
 
 
 findUserIdBtn.addEventListener('click', function (e) {
@@ -55,8 +59,15 @@ findUserIdBtn.addEventListener('click', function (e) {
                         alert("조회결과 유저 아이디가 없습니다.")
                     } else {
                         const formDiv = document.querySelector('.formDiv');
+                        userOptBtn.classList.remove('hidden');
+
                         formDiv.innerHTML = ''; // 폼 내용을 모두 제거
-                        formDiv.innerText = `조회된 유저 아이디 : ${resp.data}`
+
+                        const newDiv = document.createElement('div'); // 새로운 div 태그 생성
+                        newDiv.classList.add('find-user-id'); // 클래스 이름을 find-user-id로 지정
+                        newDiv.innerText = `조회된 유저 아이디 : ${resp.data}`; // innerText에 respData 내용 설정
+
+                        formDiv.appendChild(newDiv); // formDiv에 새로운 div 추가
                     }
                 })
                 .catch(err => {
@@ -81,8 +92,15 @@ findUserIdBtn.addEventListener('click', function (e) {
                         alert("조회결과 유저 아이디가 없습니다.")
                     } else {
                         const formDiv = document.querySelector('.formDiv');
+                        userOptBtn.classList.remove('hidden');
+
                         formDiv.innerHTML = ''; // 폼 내용을 모두 제거
-                        formDiv.innerText = `조회된 유저 아이디 : ${resp.data}`
+
+                        const newDiv = document.createElement('div'); // 새로운 div 태그 생성
+                        newDiv.classList.add('find-user-id'); // 클래스 이름을 find-user-id로 지정
+                        newDiv.innerText = `조회된 유저 아이디 : ${resp.data}`; // innerText에 respData 내용 설정
+
+                        formDiv.appendChild(newDiv); // formDiv에 새로운 div 추가
                     }
                 })
                 .catch(err => {

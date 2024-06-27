@@ -1,17 +1,19 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
     <title>에러 페이지</title>
 </head>
 <body>
 <div class="wrapper">
-    <div class="header">
+    <div class="header layout-5">
         <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
         <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
     </div>

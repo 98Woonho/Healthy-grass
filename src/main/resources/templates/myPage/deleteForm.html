@@ -1,23 +1,47 @@
-<!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
-    <!-- js -->
-    <script defer src="/js/myPage/deleteForm.js"></script>
+
+    <!-- myPage css -->
+    <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
+    <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
+
+    <!-- passwordCheckForm.css -->
+    <link rel="stylesheet" th:href="@{/css/myPage/deleteForm.css}">
+
+    <script defer th:src="@{/js/myPage/deleteForm.js}"></script>
+
+    <meta charset="UTF-8">
+    <title>회원 탈퇴</title>
 </head>
 <body>
-<h1>회원탈퇴</h1>
-    <div>
-        <p>회원을 탈퇴하시면 웹사이트내의 모든 정보들(구매내역, 문의사항 등)이 삭제됩니다.
-        <p>그럼에도 회원을 탈퇴하시겠다면 "<span style="color: red">회원탈퇴에 동의합니다.</span>"를 입력해 주세요.
-        <p>앞으로 더 나은 모습으로 고객님을 다시 만날 수 있도록 노력하겠습니다.
-        <p>그동안 이용해주신 것을 진심으로 감사드립니다.
-    </div>
-    <input type="text" class="deleteUser" name="deleteUser" required placeholder="회원탈퇴에 동의합니다.">
-    <button class="deleteBtn">회원탈퇴</button>
-    <input class="userId" type="hidden" th:value="${userDto.id}">
+<div class="header layout-5">
+    <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+    <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+</div>
+<div class="main">
+    <section class="first-seciton">
+        <h1>회원 탈퇴</h1>
+    </section>
+    <section class="second-section box1">
+        <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
+        <div class="box w-full h-800">
+            <div class="txt">
+                <p>회원을 탈퇴하시면 웹사이트내의 모든 정보들(구매내역, 문의사항 등)이 삭제됩니다.
+                <p>그럼에도 회원을 탈퇴하시겠다면 "<span style="color: red">회원탈퇴에 동의합니다.</span>"를 입력해 주세요.
+                <p>앞으로 더 나은 모습으로 고객님을 다시 만날 수 있도록 노력하겠습니다.
+                <p>그동안 이용해주신 것을 진심으로 감사드립니다.
+            </div>
+            <input type="text" class="deleteUser" name="deleteUser" required placeholder="회원탈퇴에 동의합니다.">
+            <button class="deleteBtn">회원탈퇴</button>
+            <input class="userId" type="hidden" th:value="${userDto.id}">
+        </div>
+    </section>
+</div>
+<div class="footer">
+    <p class="text">푸터(사이트 정보 등)</p>
+</div>
 </body>
 </html>

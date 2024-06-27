@@ -1,0 +1,49 @@
+.modifyForm {
+    margin-left: 100px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 16px;
+    color: #666;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+}
+
+input[type="password"]::placeholder {
+    color: #999;
+}
+
+button[name="searchAddressBtn"],
+.modifyBtn {
+    padding: 10px 20px;
+    background-color: green;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[name="searchAddressBtn"]:hover,
+.modifyBtn:hover {
+    background-color: darkgreen;
+}
+
+.spanError {
+    color: red;
+    font-size: 14px;
+}

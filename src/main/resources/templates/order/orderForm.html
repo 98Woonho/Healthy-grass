@@ -3,24 +3,15 @@
 <head>
     <meta charset="UTF-8">
 
-    <!-- axios -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
-            integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <!-- fragments css -->
-    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
     <link rel="stylesheet" th:href="@{/css/order/order.css}">
-    <!-- daum 주소 찾기 cdn -->
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <!--    import cdn-->
-    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-    <script defer src="/js/order/order.js"></script>
+
+    <script defer th:src="@{/js/order/order.js}"></script>
 </head>
 <body>
-<div class="header">
+<div class="header layout-5">
     <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
 </div>
@@ -45,7 +36,7 @@
                             <div>
                                 <!--                                 상품 이미지 -->
                                 <a th:href="@{/product(id=${product.id})}">
-                                    <img th:src="${product.mainImgPath}" th:alt="${product.mainImgName}" width="65">
+                                    <img class="product-img" style="width: 100px" height="100px" th:src="@{${product.mainImgPath + product.mainImgName}}" th:alt="${product.mainImgName}" width="65">
                                 </a>
                                 <input class="product-id" type="hidden" th:value="${product.id}">
                             </div>

@@ -1,0 +1,123 @@
+.main {
+    width: 100%;
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border: 2px solid #ccc;
+}
+
+.first-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.second-section {
+    padding: 20px;
+}
+
+.ipin-info {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.auth_btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.auth_btn:hover {
+    background-color: #0056b3;
+}
+
+.joinForm {
+    width: 100%;
+}
+
+.form-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.form-table th,
+.form-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+.form-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+input[name="id"],
+input[name="name"],
+input[name="password"],
+input[name="rePassword"],
+input[name="zipcode"],
+input[name="streetAdr"],
+input[name="detailAdr"],
+input[name="phone"],
+input[name="email"] {
+    width: calc(100% - 120px); /* 입력 필드와 버튼 사이의 여백을 고려한 너비 */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+input[type="text"]:disabled,
+input[type="password"]:disabled,
+input[type="email"]:disabled {
+    background-color: #e9ecef;
+}
+
+button[name="confirmUserIdDuplicationBtn"],
+button[name="searchAddressBtn"] {
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button[name="confirmUserIdDuplicationBtn"]:hover,
+button[name="searchAddressBtn"]:hover {
+    background-color: #5a6268;
+}
+
+.joinBtn {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.joinBtn:hover {
+    background-color: #218838;
+}
+
+.phone-ath {
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    margin-bottom: 30px;
+}

@@ -1,0 +1,33 @@
+.txt {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.txt p {
+    margin-bottom: 10px;
+}
+
+.deleteUser {
+    width: calc(100% - 120px); /* 버튼과 여백 고려한 너비 */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.deleteBtn {
+    width: 100px;
+    padding: 10px;
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.deleteBtn:hover {
+    background-color: #ff3333;
+}

@@ -3,14 +3,12 @@ const findUserPasswordBtn = document.querySelector('.findUserPasswordBtn');
 
 const EmailRegex = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", "i");
 const findByEmail = document.querySelector("#findByEmail");
-const findByPhone = document.querySelector("#findByPhone");
 const emailDiv = document.querySelector("#emailDiv");
 const findIdCheckBox = document.getElementsByName("findIdCheckBox");
 const idDiv = document.querySelector("#idDiv");
 const passwordCheck = document.querySelector("#passwordCheck");
 let phoneDiv = document.querySelector("#phoneDiv");
-let nameDiv = document.querySelector("#nameDiv");
-
+const ipinConfirm = document.querySelector('.ipin-confirm');
 function check(element) {
 
     findIdCheckBox.forEach((e) => {
@@ -23,12 +21,14 @@ function check(element) {
         idDiv.classList.remove("hidden");
         phoneDiv.classList.add("hidden");
         findUserPasswordBtn.classList.remove("hidden");
+        ipinConfirm.classList.add("hidden")
     } else {
         emailDiv.classList.add("hidden");
         idDiv.classList.add("hidden");
         phoneDiv.classList.remove("hidden");
         passwordCheck.classList.add("hidden");
         findUserPasswordBtn.classList.add("hidden");
+        ipinConfirm.classList.remove("hidden")
     }
 }
 
@@ -47,6 +47,7 @@ findUserPasswordBtn.addEventListener('click', function (e) {
                 id: findUserPasswordForm.id.value,
                 email: findUserPasswordForm.email.value
             };
+            loadingStart()
             axios.post("/user/findUserPasswordByEmailAsRandomValue", data, {headers: {"Content-Type": "application/json"}})
                 .then(resp => {
                     if (resp.data === "FAILURE_NOT_FOUND_USER_PASSWORD") {
@@ -60,6 +61,9 @@ findUserPasswordBtn.addEventListener('click', function (e) {
                 .catch(err => {
                     console.log(err);
                 })
+                .finally(function() {
+                    loadingEnd();
+                });
         }
     }
 })
@@ -77,6 +81,7 @@ passwordCheckBtn.addEventListener('click', function (e){
         const data = {
             passwordCheck : passwordCheckInput.value
         }
+        loadingStart();
         axios.post("/user/passwordAuthenticationCodeCheck", data, {headers: {"Content-Type": "application/json"}})
             .then(resp=>{
                 if (resp.data === "FAILURE_NOT_FOUND_CODE"){
@@ -94,6 +99,9 @@ passwordCheckBtn.addEventListener('click', function (e){
             .catch(err =>{
                 console.log(err)
             })
+            .finally(function() {
+                loadingEnd();
+            });
     }
 });
 
@@ -119,6 +127,7 @@ authBtn.addEventListener('click', function (e){
                             name: response.data.response.name,
                             phone: response.data.response.phone
                         };
+                        loadingStart()
                         axios.post("/user/findUserPasswordByAuthentication", data, {headers: {"Content-Type": "application/json"}})
                             .then(resp =>{
                                 if (resp.data === "SUCCESS"){
@@ -132,19 +141,54 @@ authBtn.addEventListener('click', function (e){
                             .catch(err =>{
                                 console.log(err)
                             })
+                            .finally(function() {
+                                loadingEnd();
+                            });
                     }
                     })
                 .catch(err => {
                     console.log(err)
                 })
+
     });
 })
 
+//로딩 중 구현
+function loadingStart() {
+    console.log("loadingStart!");
+    // 불투명한 오버레이 생성
+    const overlay = document.createElement('div');
+    overlay.classList.add('loading-overlay');
+    document.body.appendChild(overlay);
 
+    // 로딩 이미지 추가
+    const loadingImage = document.createElement('img');
+    loadingImage.classList.add('loading-image');
+    loadingImage.src = '/img/loading.svg'; // 이미지 경로 설정
+    overlay.appendChild(loadingImage);
 
+    // 클릭 이벤트 막기
+    overlay.addEventListener('click', function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+    });
 
+    // body 스크롤 방지
+    document.body.style.overflow = 'hidden';
+}
 
+//로딩 끝 구현
+function loadingEnd() {
+    console.log("loadingEnd!");
+    // 불투명한 오버레이 제거
+    const overlay = document.querySelector('.loading-overlay');
+    if (overlay) {
+        overlay.remove();
+    }
 
+    // body 스크롤 복구
+    document.body.style.overflow = '';
+}
 
 
 

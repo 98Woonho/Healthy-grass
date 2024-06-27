@@ -1,0 +1,96 @@
+/* 두 번째 섹션 스타일 */
+.main {
+    margin: 50px auto;
+    padding: 30px;
+    background-color: white;
+    border: 1px solid #ddd;
+    max-width: 800px;
+}
+
+/* 폼 스타일 */
+.formDiv {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form.findUserId {
+    display: flex;
+    flex-direction: column;
+}
+
+form.findUserId div {
+    margin-bottom: 15px;
+}
+
+form.findUserId label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+form.findUserId input[type="text"],
+form.findUserId input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 6px;
+}
+
+form.findUserId input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+form.findUserId button.findUserIdBtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+form.findUserId button.findUserIdBtn:hover {
+    background-color: #45a049;
+}
+
+.txt {
+    text-align: center;
+    padding: 30px 0;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #555;
+}
+
+/* 숨김 클래스 */
+.hidden {
+    display: none;
+}
+
+.find-user-id {
+    padding: 30px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.user-opt-btn {
+    text-align: center; /* 자식 요소들을 가로로 중앙 정렬 */
+    margin-top: 40px; /* 상단 여백 */
+}
+
+.user-opt-btn > a {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.user-opt-btn > a:hover {
+    background-color: #0056b3; /* 호버 시 배경 색상 */
+}

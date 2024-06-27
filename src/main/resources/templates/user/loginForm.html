@@ -8,45 +8,101 @@
     <script defer src="/js/user/loginForm.js"></script>
 </head>
 <body>
-<div class="login-container">
-    <h2>Login</h2>
-    <form action="/user/login" class="loginForm" method="post">
-        <div>
-            <label for="id">ID:</label>
-            <input type="text" id="id" name="id" required>
-            <!-- 시큐리티 설정시 기본 id가 username으로 설정이됨 Security config에서 변경가능 -->
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <!-- 시큐리티 설정시 기본 password가 password로 설정됨 Security config에서 변경가능 -->
-        </div>
-        <div>
-            <label for="checkedId">아이디 기억하기</label>
-            <input type="checkbox" name="checkedId" id="checkedId">
-        </div>
-        <div>
-            <label for="rememberMe">로그인 기능 유지</label>
-            <input type="checkbox" name="rememberMe" id="rememberMe">
-        </div>
 
-        <th:block th:if="${exception != null}">
-            <div class="exception-message" th:text="${exception}"></div>
-        </th:block>
-        <div>
-            <button class="loginBtn">로그인</button>
+</body>
+</html>
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+            integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- daum 주소 찾기 cdn -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <!-- 아임포트 cdn -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+
+<!--    &lt;!&ndash; js &ndash;&gt;-->
+<!--    <script defer th:src="@{/js/user/joinForm.js}"></script>-->
+
+    <!-- fragments css -->
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/css/user/loginForm.css}">
+    <title>회원가입 폼</title>
+</head>
+<body>
+<div class="header">
+    <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+    <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+</div>
+<div class="main">
+    <section class="first-section">
+        <h1>로그인</h1>
+    </section>
+    <section class="second-section">
+        <form action="/user/login" class="loginForm" method="post">
+            <div>
+                <label for="id">ID</label>
+                <input type="text" id="id" name="id" required>
+                <!-- 시큐리티 설정시 기본 id가 username으로 설정이됨 Security config에서 변경가능 -->
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <!-- 시큐리티 설정시 기본 password가 password로 설정됨 Security config에서 변경가능 -->
+            </div>
+            <div>
+                <label for="checkedId">아이디 기억하기</label>
+                <input type="checkbox" name="checkedId" id="checkedId">
+            </div>
+            <div>
+                <label for="rememberMe">로그인 기능 유지</label>
+                <input type="checkbox" name="rememberMe" id="rememberMe">
+            </div>
+
+            <th:block th:if="${exception != null}">
+                <div class="exception-message" th:text="${exception}"></div>
+            </th:block>
+            <div>
+                <button class="loginBtn">로그인</button>
+            </div>
+            <a href="/user/joinForm">회원가입</a>
+            <a href="/user/findUserIdForm">아이디 찾기</a>
+            <a href="/user/findUserPasswordForm">비밀번호 재발급</a>
+            <hr>
+        </form>
+    </section>
+    <section class="third-section">
+        <h2>간편 로그인</h2>
+        <div class="login-container">
+            <a class="btn-sns" href="/oauth2/authorization/kakao">
+                <img style="width: 60px" src="/img/ico_kakao.png" alt="카카오로그인">
+                <span>카카오 로그인</span>
+            </a>
+            <a class="btn-sns" href="/oauth2/authorization/naver">
+                <img style="width: 60px" src="/img/ico_naver.png" alt="네이버 로그인">
+                <span>네이버 로그인</span>
+            </a>
+            <a class="btn-sns" href="/oauth2/authorization/google">
+                <img style="width: 60px" src="/img/ico_google.png" alt="구글 로그인">
+                <span>구글 로그인</span>
+            </a>
         </div>
-        <a href="/user/joinForm">회원가입</a>
-        <a href="/user/findUserIdForm">아이디 찾기</a>
-        <a href="/user/findUserPasswordForm">비밀번호 재발급</a>
-        <hr>
-
-    </form>
-
-    <a href="/oauth2/authorization/kakao">카카오로그인</a><br>
-    <a href="/oauth2/authorization/naver">네이버로그인</a><br>
-    <a href="/oauth2/authorization/google">구글로그인</a><br>
-
+    </section>
+</div>
+<div class="footer">
+    <p class="text">푸터(사이트 정보 등)</p>
 </div>
 </body>
 </html>

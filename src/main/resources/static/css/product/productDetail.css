@@ -153,3 +153,9 @@
 .button-container .buyNowBtn:hover {
     background-color: #0288d1;
 }
+
+#productImage {
+    display: block;
+    width: 550px;
+    height: 550px;
+}

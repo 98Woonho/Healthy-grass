@@ -9,28 +9,18 @@
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
+    <!-- fragments css -->
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+
+    <!-- index.css   -->
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 
     <!-- index css -->
     <link rel="stylesheet" th:href="@{/css/index/common.css}">
     <link rel="stylesheet" th:href="@{/css/index/popularProducts.css}">
     <link rel="stylesheet" th:href="@{/css/index/hightDiscountProducts.css}">
     <link rel="stylesheet" th:href="@{/css/index/recentProducts.css}">
-
-    <!-- fragments css -->
-    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
-
-
-    <!-- SWIPER CDN    -->
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-
-    <!-- index.css   -->
-    <link rel="stylesheet" href="/css/index.css">
-
-    <!-- index.js    -->
-    <script script="/js/index.js" defer></script>
 
 </head>
 <body>
@@ -39,8 +29,10 @@
         <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
         <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
     </div>
-    <br>
+
+
     <div class="main">
+
         <section class="first-section banner">
             <!-- Slider main container -->
             <div class="swiper">

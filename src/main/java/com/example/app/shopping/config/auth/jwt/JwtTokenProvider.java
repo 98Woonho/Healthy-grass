@@ -5,7 +5,9 @@ import com.example.app.shopping.config.auth.PrincipalDetails;
 import com.example.app.shopping.domain.dto.UserDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,44 +28,62 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class JwtTokenProvider {
-
-
     //Key 저장
-    private final Key key;
+    private Key key;
 
     String url  = "jdbc:mysql://localhost:3306/shopping";
-    String username = "root";
-    String password  = "1234";
+    @Value("${spring.database.mysql.username}")
+    String username;
+    @Value("${spring.database.mysql.password}")
+    String password;
     Connection conn;
     PreparedStatement pstmt;
     ResultSet rs;
 
-        public JwtTokenProvider() throws Exception {
+    public JwtTokenProvider() throws Exception {
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//        conn = DriverManager.getConnection(url,username,password);
+//        pstmt = conn.prepareStatement("select * from signature");
+//        rs =pstmt.executeQuery();
+//
+//        if(rs.next())
+//        {
+//
+//            byte [] keyByte =  rs.getBytes("signature");                    //DB로 서명Key꺼내옴
+//            this.key = Keys.hmacShaKeyFor(keyByte);                                    //this.key에 저장
+////                .out.println("[JwtTokenProvider] Key : " + this.key );
+//        }
+//        else {
+//            byte[] keyBytes = KeyGenerator.getKeygen();     //난수키값 가져오기
+//            this.key = Keys.hmacShaKeyFor(keyBytes);        // 생성된 키를 사용하여 HMAC SHA(암호화알고리즘)알고리즘에 기반한 Key 객체 생성
+//            pstmt = conn.prepareStatement("insert into signature values(?,now())");
+//
+//            pstmt.setBytes(1, keyBytes);
+//            pstmt.executeUpdate();
+////                .out.println("[JwtTokenProvider] Constructor Key init: " + key);
+//        }
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(url,username,password);
-            pstmt = conn.prepareStatement("select * from signature");
-            rs =pstmt.executeQuery();
 
-            if(rs.next())
-            {
+    }
 
-                byte [] keyByte =  rs.getBytes("signature");                    //DB로 서명Key꺼내옴
-                this.key = Keys.hmacShaKeyFor(keyByte);                                    //this.key에 저장
-//                .out.println("[JwtTokenProvider] Key : " + this.key );
-            }
-            else {
-                byte[] keyBytes = KeyGenerator.getKeygen();     //난수키값 가져오기
-                this.key = Keys.hmacShaKeyFor(keyBytes);        // 생성된 키를 사용하여 HMAC SHA(암호화알고리즘)알고리즘에 기반한 Key 객체 생성
-                pstmt = conn.prepareStatement("insert into signature values(?,now())");
+    @PostConstruct
+    public void init() throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        conn = DriverManager.getConnection(url, username, password);
+        pstmt = conn.prepareStatement("select * from signature");
+        rs = pstmt.executeQuery();
 
-                pstmt.setBytes(1, keyBytes);
-                pstmt.executeUpdate();
-//                .out.println("[JwtTokenProvider] Constructor Key init: " + key);
-            }
-
-
+        if (rs.next()) {
+            byte[] keyByte = rs.getBytes("signature");
+            this.key = Keys.hmacShaKeyFor(keyByte);
+        } else {
+            byte[] keyBytes = KeyGenerator.getKeygen();
+            this.key = Keys.hmacShaKeyFor(keyBytes);
+            pstmt = conn.prepareStatement("insert into signature values(?,now())");
+            pstmt.setBytes(1, keyBytes);
+            pstmt.executeUpdate();
         }
+    }
 
     // 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
     public TokenInfo generateToken(Authentication authentication) {
@@ -124,7 +144,7 @@ public class JwtTokenProvider {
 
     // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
     public Authentication getAuthentication(String accessToken) {
-            // 토큰 복호화
+        // 토큰 복호화
         Claims claims = parseClaims(accessToken);
 
         if (claims.get("auth") == null) {

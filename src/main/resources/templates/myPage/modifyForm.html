@@ -30,7 +30,7 @@
     </section>
     <section class="second-section box1">
         <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
-            <div class="box w-full h-800">
+            <div class="box w-full">
             <form class="modifyForm" name="modifyForm" method="post">
                 <div class="form-group">
                     <label for="id">아이디</label>
@@ -85,8 +85,8 @@
         </div>
     </section>
 </div>
-<div class="footer">
-    <p class="text">푸터(사이트 정보 등)</p>
+<div id="footer">
+    <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
 </div>
 </body>
 </html>

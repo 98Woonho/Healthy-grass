@@ -165,7 +165,7 @@
 <div th:if="${carts.isEmpty()}">
     장바구니가 비었습니다.
 </div>
-<div class="footer">
-    <!-- Footer content -->
+<div id="footer">
+    <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
 </div>
 </html>

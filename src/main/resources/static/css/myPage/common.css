@@ -75,17 +75,6 @@ h2 {
     color: #343a40;
 }
 
-.footer {
-    height: 100px;
-    background-color: #343a40;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    bottom: 0;
-    width: 100%;
-}
-
 .text {
     font-size: 16px;
 }

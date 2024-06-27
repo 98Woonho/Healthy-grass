@@ -66,7 +66,7 @@ public class MyPageController {
     @GetMapping("")
     public String myPage(Authentication authentication){
         if (authentication != null) {
-            return "myPage/mypage";
+            return "/myPage/mypage";
         }
         return "redirect:/user/loginForm";
     }

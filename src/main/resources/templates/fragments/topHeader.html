@@ -1,5 +1,58 @@
 <th:block th:fragment="topHeader_fragment" xmlns:th="">
-    <div class="top-header">
-        <a href="/">Home</a>
+    <div class="top-banner">
+        <img src="/img/건강풀때기_배너.png">
     </div>
+    <div class="top-header layout-150">
+        <div class="left">
+            <div class="notification">
+                <div class="swiper">
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        <div class="swiper-slide"><span class="material-symbols-outlined me-1" style="font-size : 1.3rem;">description</span> <span>공지사항1</span>&nbsp;|&nbsp;&nbsp; 안녕하세요1--</div>
+                        <div class="swiper-slide"><span class="material-symbols-outlined me-1" style="font-size : 1.3rem;">description</span> <span>공지사항2</span>&nbsp;|&nbsp;&nbsp;안녕하세요2--</div>
+                        <div class="swiper-slide"><span class="material-symbols-outlined me-1" style="font-size : 1.3rem;">description</span> <span>공지사항3</span>&nbsp;|&nbsp;&nbsp;안녕하세요3--</div>
+                        <div class="swiper-slide"><span class="material-symbols-outlined me-1" style="font-size : 1.3rem;">description</span> <span>공지사항4</span>&nbsp;|&nbsp;&nbsp;안녕하세요4--</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right ">
+            <div class="info">
+                <ul>
+                    <li>
+                    <th:block sec:authorize="isAnonymous()">
+                        <a href="/user/loginForm">
+                            로그인
+                        </a>
+                    </th:block>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <a href="/user/logout">
+                            로그아웃
+                        </a>
+                    </th:block>
+                    </li>
+                    <li><a href="/user/joinForm">회원가입</a></li>
+                    <li><a href="/myPage">마이페이지</a></li>
+                    <li><a href="/myPage/paymentList">주문조회</a></li>
+                    <li><a href="/customerInquiryBoardList">고객센터</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        //----------------------------------------------
+        // new Swiper(선택자, 옵션)
+        //----------------------------------------------
+        new Swiper(".notification .swiper", {
+          direction: "vertical",
+          autoplay: true,
+          loop: true,
+        });
+    </script>
 </th:block>

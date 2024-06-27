@@ -8,9 +8,8 @@
     <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
     <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
 
-    <!-- fragments css -->
-    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 </head>
 <body>
 <div class="header">

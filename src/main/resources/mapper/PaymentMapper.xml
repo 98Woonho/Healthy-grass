@@ -122,10 +122,75 @@
     <!-- oId 를 사용한 payment 조회 -->
     <select id="selectPaymentByoId" resultType="map">
         SELECT
-        *
+        p.*
         FROM Payment p
         WHERE
         p.Oid = #{oId}
     </select>
 
+    <!-- delivery_status 에 대한 리스트의 count 반환 -->
+    <select id="selectPaymentsCountByDeliveryStatus" resultType="int">
+        SELECT
+        count(*)
+        FROM
+        payment p
+        <where>
+            <if test="criteria.commentChk != null and criteria.commentChk != ''">
+                AND delivery_status = "배송중"
+            </if>
+            <if test="criteria.commentChk == null or criteria.commentChk == ''">
+                AND delivery_status in ("배송준비", "배송중")
+            </if>
+        </where>
+    </select>
+
+    <!-- delivery_status 에 대한 리스트 반환 -->
+    <select id="selectPaymentsByDeliveryStatus" resultType="map" parameterType="map">
+        SELECT
+        p.*
+        FROM Payment p
+        <where>
+            <if test="criteria.commentChk != null and criteria.commentChk != ''">
+                AND delivery_status = "배송중"
+            </if>
+            <if test="criteria.commentChk == null or criteria.commentChk == ''">
+                AND delivery_status in ("배송준비", "배송중")
+            </if>
+        </where>
+        ORDER BY
+        p.regDate DESC, p.id DESC
+        LIMIT #{offset}, #{criteria.amount}
+    </select>
+
+    <!-- 배송 상태에 대한 update -->
+    <update id="updateDeliveryStatus">
+        UPDATE payment
+        <set>
+            <if test="status != null">
+                delivery_status = #{status},
+            </if>
+            updateDate = DATE(NOW())
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- refund_request_status 에 대한 리스트의 count 반환 -->
+    <select id="selectPaymentsCountByRefundStatus" resultType="int">
+        SELECT
+        count(*)
+        FROM
+        payment p
+        WHERE refund_request_status = "R"
+    </select>
+
+    <!-- refund_request_status 에 대한 리스트 반환 -->
+    <select id="selectPaymentsByRefundStatus" resultType="map" parameterType="map">
+        SELECT
+        p.*
+        FROM Payment p
+        WHERE refund_request_status = "R"
+        ORDER BY
+        p.regDate DESC, p.id DESC
+        LIMIT #{offset}, #{criteria.amount}
+    </select>
 </mapper>

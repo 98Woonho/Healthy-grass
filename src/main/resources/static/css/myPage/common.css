@@ -1,14 +1,3 @@
-.header {
-    background-color: #20c997;
-    padding: 20px;
-    color: white;
-}
-
-.header .top-header a {
-    color: white;
-    text-decoration: none;
-    font-size: 24px;
-}
 
 .dropdown {
     display: none;

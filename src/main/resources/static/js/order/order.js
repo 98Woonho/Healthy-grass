@@ -296,44 +296,51 @@ function processPayment(selectedValue) {
         custom_data: textareaElement.value
     }
 
-    IMP.init('imp40654467'); // IMPort 고객사 식별코드
-    IMP.request_pay(data, function (rsp) { // callback
-        if (rsp.success) {
-            console.log(rsp);
-            alert('결제가 완료되었습니다.');
-            const productIdElements = document.querySelectorAll('.product-id');
-            const quantityElements = document.querySelectorAll('.order-quantity');
-            const priceElements = document.querySelectorAll('.price');
+    axios.get('/payment/imp')
+        .then(response => {
+            const impKey = response.data;
+            IMP.init(impKey); // IMPort 고객사 식별코드
+            IMP.request_pay(data, function (rsp) { // callback
+                if (rsp.success) {
+                    console.log(rsp);
+                    alert('결제가 완료되었습니다.');
+                    const productIdElements = document.querySelectorAll('.product-id');
+                    const quantityElements = document.querySelectorAll('.order-quantity');
+                    const priceElements = document.querySelectorAll('.price');
 
-            const list = []
-            productIdElements.forEach((element, index) => {
-                const id = element.value.trim();
-                const quantity = quantityElements[index].innerText.trim();
-                const price = priceElements[index].innerText.trim();
-                const data = {
-                    id: id,
-                    quantity: quantity,
-                    price: price
-                };
-                list.push(data);
+                    const list = []
+                    productIdElements.forEach((element, index) => {
+                        const id = element.value.trim();
+                        const quantity = quantityElements[index].innerText.trim();
+                        const price = priceElements[index].innerText.trim();
+                        const data = {
+                            id: id,
+                            quantity: quantity,
+                            price: price
+                        };
+                        list.push(data);
 
+                    });
+
+                    console.log(list);
+
+                    rsp.productList = list;
+
+                    axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
+                        .then(resp => {
+                            location.href = "/myPage/paymentList";
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                } else {
+                    console.log(rsp);
+                    alert('결제에 실패하였습니다.');
+                }
             });
-
-            console.log(list);
-
-            rsp.productList = list;
-
-            axios.post("/payment/save", rsp, {headers: {"Content-Type": "application/json"}})
-                .then(resp => {
-                    location.href = "/myPage/paymentList";
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        } else {
-            console.log(rsp);
-            alert('결제에 실패하였습니다.');
-        }
-    });
+        })
+        .catch(error => {
+            console.error('There has been a problem with your axios operation:', error);
+        });
 }
 

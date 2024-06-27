@@ -35,6 +35,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -43,6 +44,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -192,10 +194,18 @@ public class MyPageController {
     @PostMapping("/user/modify") // 회원정보 수정
     public @ResponseBody ResponseEntity<String> userModify(@Valid @RequestBody UserDto userDto, BindingResult bindingResult) {
         System.out.println(userDto);
-        if (bindingResult.hasErrors()) {
+
+        // id 필드에 대한 에러를 수동으로 제거하기 위해 새 리스트 생성
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors().stream()
+                .filter(error -> !"id".equals(error.getField()))
+                .collect(Collectors.toList());
+
+        System.out.println(fieldErrors);
+
+        if (!fieldErrors.isEmpty()) {
             // 유효성 검사 실패 시 오류 메시지 알려줌
             Map<String, String> errors = new HashMap<>();
-            bindingResult.getFieldErrors().forEach(error ->
+            fieldErrors.forEach(error ->
                     errors.put(error.getField(), error.getDefaultMessage())
             );
             return new ResponseEntity<>("FAIL", HttpStatus.BAD_GATEWAY);

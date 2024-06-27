@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,11 @@ public class UserController {
     private PortOneTokenResponse portOneTokenResponse;
     private String security;
 
+    @Value("${spring.portOne.imp_key}")
+    String imp_key;
+    @Value("${spring.portOne.imp_secret}")
+    String imp_secret;
+
     @GetMapping("/loginForm")
     public String getLoginForm(@RequestParam(value = "exception", required = false) String exception,
                              Authentication authentication, Model model) {
@@ -45,10 +51,6 @@ public class UserController {
     //엑세스 토큰 받기
     @GetMapping("/token")
     public @ResponseBody void AccessToken(){
-
-        String imp_key = "6257186181622002";
-        String imp_secret = "LFmdkrDK2syh8Z4YCr7XoiVvDs5IRSAMHYAS43i4Jdy7FVSMKxGKCYMcYf5C7OWpsYXkdQUUufqHWz33";
-
         String url = "https://api.iamport.kr/users/getToken";
         //HEADER
         HttpHeaders headers = new HttpHeaders();

@@ -9,6 +9,7 @@ import com.example.app.shopping.domain.dto.common.PageDto;
 import com.example.app.shopping.domain.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -95,16 +96,82 @@ public class PaymentService {
         환불 요청: R (Requested)
         환불 상태 없음: N (None, default)
         환불 완료: C (Completed)
+        환불 취소: B (Block)
      */
     public boolean putPaymentServ(Map<String, Object> request) throws Exception {
         int putReturnVal = paymentMapper.updateRefundStatus(request);
 
-        return putReturnVal > 0 ? true : false;
+        return putReturnVal > 0;
     }
 
     public Map<String, Object> getPaymentById(Object id) throws Exception {
         Map<String, Object> userPayment = paymentMapper.selectPaymentById(id);
 
         return userPayment != null ? userPayment : new HashMap<>();
+    }
+
+    public Map<String, Object> getAdminPaymentsByDeliveryStatus(Criteria criteria) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+
+        // 검색 결과로 나오는 게시글 총 수 확인
+        int count = paymentMapper.selectPaymentsCountByDeliveryStatus(criteria);
+        PageDto pageDto = new PageDto(count, criteria);
+
+        // 시작 게시물 번호 구하기
+        int offset = (criteria.getPageno() - 1) * criteria.getAmount();
+
+        List<Map<String, Object>> paymentListReturnVal = paymentMapper.selectPaymentsByDeliveryStatus(criteria, offset);
+
+        if (!paymentListReturnVal.isEmpty()) {
+            result.put("success", true);
+            result.put("pageDto", pageDto);
+            result.put("list", paymentListReturnVal);
+        } else {
+            result.put("success", false);
+            result.put("msg", "조회 결과가 없습니다.");
+        }
+
+        return result;
+    }
+
+    @Transactional
+    public boolean putPaymentDeliveryStatusServ(Long id, String status) throws Exception {
+        int putReturnVal = paymentMapper.updateDeliveryStatus(id, status);
+
+        return putReturnVal > 0;
+    }
+
+    public Map<String, Object> getAdminPaymentsByRefundStatus(Criteria criteria) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+
+        // 검색 결과로 나오는 게시글 총 수 확인
+        int count = paymentMapper.selectPaymentsCountByRefundStatus();
+        PageDto pageDto = new PageDto(count, criteria);
+
+        // 시작 게시물 번호 구하기
+        int offset = (criteria.getPageno() - 1) * criteria.getAmount();
+
+        List<Map<String, Object>> paymentListReturnVal = paymentMapper.selectPaymentsByRefundStatus(criteria, offset);
+
+        if (!paymentListReturnVal.isEmpty()) {
+            result.put("success", true);
+            result.put("pageDto", pageDto);
+            result.put("list", paymentListReturnVal);
+        } else {
+            result.put("success", false);
+            result.put("msg", "조회 결과가 없습니다.");
+        }
+
+        return result;
+    }
+
+    public boolean putPaymentRefundStatusServ(Long id, String status) throws Exception {
+        Map<String, Object> parameter = new HashMap<>();
+        parameter.put("id", id);
+        parameter.put("status", status);
+
+        int putReturnVal = paymentMapper.updateRefundStatus(parameter);
+
+        return putReturnVal > 0;
     }
 }

@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const itemHtml = `
                 <div class="item-list">
                     <div class="thumb">
-                        <a href="/product?id=${product.id}"><img src="${product.mainImgPath}" class="MS_prod_img_m MS_prod_img_s"></a>
+                        <a href="/product?id=${product.id}"><img src="${product.mainImgPath + product.mainImgName}" class="MS_prod_img_m MS_prod_img_s"></a>
                     </div>
                     <div class="prd-info">
                         <ul>

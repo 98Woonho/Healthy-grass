@@ -32,7 +32,7 @@
                     <div th:with="product=${response}">
                         <input class="product-id" type="hidden" th:value="${product.id}" id="productId">
                         <h1 id="productName" th:text="${product.name}">상품명</h1>
-                        <img id="productImage" th:src="@{${product.mainImgPath}}" th:alt="${product.mainImgName}"
+                        <img id="productImage" th:src="@{${product.mainImgPath + product.mainImgName}}" th:alt="${product.mainImgName}"
                              class="product-image">
                         <p>원가격: <span id="productPrice" th:text="${product.price}">가격</span> 원</p>
                         <p>할인된 가격: <span id="discountedPrice" th:text="${product.discountedPrice}">할인된 가격</span> 원</p>
@@ -154,9 +154,8 @@
                 <div class="modal-body">
                     <div th:if="${response != null}">
                             <div th:with="product=${response}">
-
                                 <th:block th:if="${product.get('mainImgPath')}">
-                                    <img th:src="@{${product.mainImgPath + product.mainImgName}}" alt="업로드된 이미지" style="max-width: 100px;">
+                                    <img th:src="@{${product.mainImgPath + product.mainImgName}}" alt="업로드된 이미지" style="width: 100px; height: 100px">
                                 </th:block>
                                 상품을 장바구니에 담았습니다.
                             </div>

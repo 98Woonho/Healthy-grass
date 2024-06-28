@@ -68,7 +68,7 @@ public class MyPageController {
         if (authentication != null) {
             return "myPage/mypage";
         }
-        return "redirect:/user/loginForm";
+        return "redirect:user/loginForm";
     }
 
     @GetMapping("wishList")
@@ -89,7 +89,7 @@ public class MyPageController {
         // 2페이지 이상 && 찜한 상품이 없으면 이전 페이지로 return
         if (wishList.size() == 0 && criteria.getPageno() > 1) {
             criteria.setPageno(criteria.getPageno() - 1);
-            return "redirect:/myPage/wishList?pageno=" + criteria.getPageno();
+            return "redirect:myPage/wishList?pageno=" + criteria.getPageno();
         }
 
         model.addAttribute("wishList", wishList);
@@ -178,7 +178,7 @@ public class MyPageController {
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
-            return "/myPage/modifyForm";
+            return "myPage/modifyForm";
         } else if (authentication != null) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.

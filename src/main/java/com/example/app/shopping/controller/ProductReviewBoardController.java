@@ -131,7 +131,7 @@ public class ProductReviewBoardController {
             String error = "로그인 정보가 없습니다.";
             model.addAttribute("error", error);
 
-            return "/error/error";
+            return "error/error";
         }
 
         String uId = ((PrincipalDetails) authentication.getPrincipal()).getUsername();

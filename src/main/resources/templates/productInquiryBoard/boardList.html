@@ -25,7 +25,7 @@
 
                 <!-- 검색 폼 -->
                 <form action="/productInquiryBoardList" method="GET" id="searchForm">
-                    <div class="form-group" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <div class="form-group comment-check" sec:authorize="hasRole('ROLE_ADMIN')">
                         <label for="commentChk">답변하지 못한 게시글 조회</label>
                         <input type="checkbox" name="commentChk" id="commentChk" value="true" th:checked="${criteria.commentChk != null and criteria.commentChk != ''}" onchange="submitFormOnChange()">
                     </div>
@@ -33,12 +33,11 @@
                         <label for="keyword">게시글 검색: </label>
                         <input type="text" id="keyword" name="keyword" th:attr="value=${criteria.keyword ?: ''}">
                     </div>
-                    <button type="submit">검색</button>
+                    <button id="keyword-submit" type="submit">검색</button>
                 </form>
 
                 <!-- 상품문의 게시글 목록 -->
                 <div class="productInquiryBoard-list">
-                    <h2>상품문의 게시글 목록</h2>
                     <table class="table-container">
                         <thead>
                         <tr>

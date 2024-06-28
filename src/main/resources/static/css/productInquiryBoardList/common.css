@@ -4,14 +4,32 @@ body {
     margin: 0;
     padding: 0;
 }
-.container {
+.main .container {
     width: 80%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 !important;
 }
-h1, h2 {
-    text-align: center;
+
+.main .container h1 {
+    font-weight: 750;
+    color: #4CAF50;
+    margin-bottom: 65px;
 }
+
+#keyword {
+    font-size: 12px;
+    width: 200px;
+}
+
+#keyword-submit {
+    height: 40px;
+    width: 75px;
+}
+
+.main .productInquiryBoard-list {
+    margin-top: 50px;
+}
+
 form {
     display: flex;
     justify-content: flex-end;
@@ -22,6 +40,16 @@ form {
     align-items: center;
     margin-right: 10px;
 }
+
+.main .comment-check {
+    margin-right: 20px;
+}
+
+.main .form-group label {
+    margin-right: 10px;
+    font-size: 24px;
+}
+
 label {
     margin-right: 10px;
 }
@@ -32,13 +60,13 @@ input[type="text"], select {
 }
 button {
     padding: 10px;
-    background-color: #007bff;
+    background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
 }
 button:hover {
-    background-color: #0056b3;
+    background-color: #45a049;
 }
 table {
     width: 100%;

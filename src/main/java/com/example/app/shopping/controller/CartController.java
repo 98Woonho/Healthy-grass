@@ -54,7 +54,7 @@ public class CartController {
         }
     }
     //장바구니에서 수량을 변경하면 DB에 상품이 변경되는 로직
-    @PostMapping("/AddAmount")
+    @PostMapping("AddAmount")
     @ResponseBody
     public void addAmount(@RequestBody Map<String, Object> result) {
         int amountValue = Integer.parseInt((String) result.get("amountValue"));
@@ -63,7 +63,7 @@ public class CartController {
         cartService.updateCartItemQuantity(amountValue, productId, cartId);
     }
     //장바구니에서 삭제 누르면 장바구니 아이템 삭제
-    @DeleteMapping("/delete")
+    @DeleteMapping("delete")
     @ResponseBody
     public String deleteCartItem(@RequestBody Map<String, Object> result) {
         int cartId = Integer.parseInt((String) result.get("cartId"));

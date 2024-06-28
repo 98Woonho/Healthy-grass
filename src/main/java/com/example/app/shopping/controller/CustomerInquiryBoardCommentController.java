@@ -22,7 +22,7 @@ public class CustomerInquiryBoardCommentController {
     @Autowired
     private CustomerInquiryBoardCommentServiceImpl service;
 
-    @GetMapping("/customerInquiryBoardComment")
+    @GetMapping("customerInquiryBoardComment")
     public @ResponseBody Map<String, Object> CustomerInquiryBoardComment(@RequestParam(name = "id") Integer id) {
         System.out.println("CustomerInquiryBoardCommentController's CustomerInquiryBoardComment id: " + id);
 
@@ -39,7 +39,7 @@ public class CustomerInquiryBoardCommentController {
         return response;
     }
 
-    @PostMapping("/customerInquiry/comment")
+    @PostMapping("customerInquiry/comment")
     public @ResponseBody Map<String, Object> postComment(
             @ModelAttribute PostCommentDto postCommentDto, Authentication authentication) {
         System.out.println("CustomerInquiryBoardController's postComment dto: " + postCommentDto);
@@ -84,7 +84,7 @@ public class CustomerInquiryBoardCommentController {
         private MultipartFile image;
     }
 
-    @DeleteMapping("/customerInquiry/comment")
+    @DeleteMapping("customerInquiry/comment")
     public @ResponseBody Map<String, Object> deleteCustomerInquiry(@RequestParam("id") Long id, Authentication authentication) {
         System.out.println("CustomerInquiryBoardController's deleteCustomerInquiry id: " + id);
 

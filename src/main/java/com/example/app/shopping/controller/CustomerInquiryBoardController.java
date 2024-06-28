@@ -25,7 +25,7 @@ public class CustomerInquiryBoardController {
     @Autowired
     private CustomerInquiryBoardServiceImpl service;
 
-    @GetMapping("/customerInquiryBoardList")
+    @GetMapping("customerInquiryBoardList")
     public String customerInquiryBoardList (@ModelAttribute Criteria criteria, Model model) {
         if (criteria.getPageno() == null) {
             criteria.setPageno(1);
@@ -50,7 +50,7 @@ public class CustomerInquiryBoardController {
         return "CustomerInquiryBoard/boardList";
     }
 
-    @GetMapping("/customerInquiryBoard")
+    @GetMapping("customerInquiryBoard")
     public String customerInquiryBoard(
             @RequestParam(name = "id", defaultValue = "0", required = false) Integer id,
             Model model) {
@@ -68,10 +68,10 @@ public class CustomerInquiryBoardController {
 
         model.addAttribute("response", response);
 
-        return "/customerInquiryBoard/boardDetail";
+        return "customerInquiryBoard/boardDetail";
     }
 
-    @GetMapping("/myCustomerInquiryBoardList")
+    @GetMapping("myCustomerInquiryBoardList")
     public String myCustomerInquiryBoardList(@ModelAttribute Criteria criteria, Authentication authentication, Model model) {
         System.out.println("CustomerInquiryBoardController's myCustomerInquiryBoardList criteria: " + criteria);
 
@@ -83,7 +83,7 @@ public class CustomerInquiryBoardController {
             String error = "로그인 정보가 없습니다.";
             model.addAttribute("error", error);
 
-            return "/error/error";
+            return "error/error";
         }
 
         criteria.setAmount(6);
@@ -102,18 +102,18 @@ public class CustomerInquiryBoardController {
             model.addAttribute("success", false);
         }
 
-        return "/myPage/myCustomerInquiryPage";
+        return "myPage/myCustomerInquiryPage";
     }
 
     
     /*
         고객 문의 페이지로 이동시켜준다
     */
-    @GetMapping("/customerInquiry")
+    @GetMapping("customerInquiry")
     public String getCustomerInquiry(Model model, Authentication authentication) {
         System.out.println("CustomerInquiryBoardController's getCustomerInquiry");
 
-        return "/customerInquiryBoard/addCustomerInquiry";
+        return "customerInquiryBoard/addCustomerInquiry";
     }
 
 
@@ -129,7 +129,7 @@ public class CustomerInquiryBoardController {
         ("msg", "실패 메시지")
         가 Map 형태로 전달됩니다.
     */
-    @PostMapping("/customerInquiry")
+    @PostMapping("customerInquiry")
     public @ResponseBody Map<String, Object> postCustomerInquiry(@ModelAttribute postCustomerInquiryDto postDto, Authentication authentication)
     {
         System.out.println("CustomerInquiryBoardController's postCustomerInquiry dto: " + postDto);
@@ -175,7 +175,7 @@ public class CustomerInquiryBoardController {
         고객 문의 게시글 수정 페이지로 이동시킵니다.
         비회원 이거나 게시글 정보를 찾을 수 없을때는 그에대한 메시지를 Model 에 담습니다.
     */
-    @GetMapping("/customerInquiry/edit")
+    @GetMapping("customerInquiry/edit")
     public String customerInquiryEditPage(@RequestParam("id") Integer id, Model model, Authentication authentication) {
         System.out.println("CustomerInquiryBoardController's customerInquiryEditPage id: " + id);
 
@@ -212,13 +212,13 @@ public class CustomerInquiryBoardController {
             model.addAttribute("msg", "데이터베이스 연동에 실패하였습니다.");
         }
 
-        return "/customerInquiryBoard/edit";
+        return "customerInquiryBoard/edit";
     }
 
     /*
         게시글 수정 요청을 서비스를 수행합니다.
     */
-    @PutMapping("/customerInquiry")
+    @PutMapping("customerInquiry")
     public @ResponseBody Map<String, Object> putCustomerInquiry (
             @ModelAttribute PutCustomerInquiryDto putDto, Authentication authentication) {
         System.out.println("CustomerInquiryBoardController's putCustomerInquiry dto: " + putDto);

@@ -25,7 +25,7 @@ import java.util.Map;
 
 
 @Slf4j
-@RequestMapping("/order")
+@RequestMapping("order")
 @Controller
 public class OrderController {
 
@@ -94,7 +94,7 @@ public class OrderController {
     }
 
     // 주문자 정보와 동일함 클릭시 order화면에 주문자 정보 뿌려주기
-    @GetMapping("/user")
+    @GetMapping("user")
     @ResponseBody
     public UserDto findUser(Authentication authentication){
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
@@ -103,7 +103,7 @@ public class OrderController {
     }
 
     //기본배송지 정보 가져오기
-    @GetMapping("/shipping")
+    @GetMapping("shipping")
     @ResponseBody
     public ShippingAddressDto findShipping(Authentication authentication){
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();

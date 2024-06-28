@@ -102,7 +102,7 @@ public class AdminController {
     /*
         최근 등록된 상품을 조회하는 페이지로 이동
     */
-    @GetMapping("/productList")
+    @GetMapping("productList")
     public String getProductList(@ModelAttribute Criteria criteria, Model model) {
         Map<String, Object> response = new HashMap<>();
 
@@ -119,7 +119,7 @@ public class AdminController {
             model.addAttribute("success", false);
         }
 
-        return "/admin/productList";
+        return "admin/productList";
     }
 
     /*
@@ -140,7 +140,7 @@ public class AdminController {
 
         이때 상태값 변경에 대한 처리는 하나의 Put Controller 로 처리시킨다.
     */
-    @GetMapping("/payment/delivery")
+    @GetMapping("payment/delivery")
     public String getPaymentDeliveryListPage(@ModelAttribute Criteria criteria, Model model) {
         log.info("AdminController's getPaymentDeliveryListPage criteria: {}", criteria);
 
@@ -174,7 +174,7 @@ public class AdminController {
         
         이 중 해당 Controller 요청은 환불 요청: R 인 상태의 Payment 리스트를 가져온다
     */
-    @GetMapping("/payment/refund")
+    @GetMapping("payment/refund")
     public String getPaymentRefundListPage(@ModelAttribute Criteria criteria, Model model) {
         log.info("AdminController's getPaymentRefundListPage criteria: {}", criteria);
 

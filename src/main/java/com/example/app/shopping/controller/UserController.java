@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Controller
 @Slf4j
-@RequestMapping("/user")
+@RequestMapping("user")
 public class UserController {
 
     @Autowired
@@ -33,11 +33,11 @@ public class UserController {
     private String security;
 
     @Value("${spring.portOne.imp_key}")
-    String imp_key;
+    private String imp_key;
     @Value("${spring.portOne.imp_secret}")
-    String imp_secret;
+    private String imp_secret;
 
-    @GetMapping("/loginForm")
+    @GetMapping("loginForm")
     public String getLoginForm(@RequestParam(value = "exception", required = false) String exception,
                              Authentication authentication, Model model) {
         System.out.println("로그인!!!");
@@ -49,7 +49,7 @@ public class UserController {
     }
 
     //엑세스 토큰 받기
-    @GetMapping("/token")
+    @GetMapping("token")
     public @ResponseBody void AccessToken(){
         String url = "https://api.iamport.kr/users/getToken";
         //HEADER
@@ -83,7 +83,7 @@ public class UserController {
         public TokenResponse response;
     }
     // 인증된 사용자 정보 가져오기
-    @GetMapping(value = "/AuthInfo/{imp_uid}",produces = MediaType.APPLICATION_JSON_VALUE) //인증하면 imp_uid를 받아올 수 있음 받아온 값을 사용
+    @GetMapping(value = "AuthInfo/{imp_uid}",produces = MediaType.APPLICATION_JSON_VALUE) //인증하면 imp_uid를 받아올 수 있음 받아온 값을 사용
     public @ResponseBody PortOneAuthInfoResponse AuthInfo(@PathVariable("imp_uid")String imp_uid){
         AccessToken();// 엑세스 토큰 가져오기
         log.info("Get/portOne/AuthInfo" + imp_uid);
@@ -136,7 +136,7 @@ public class UserController {
     }
 
     //회원가입 폼으로 이동
-    @GetMapping("/joinForm")
+    @GetMapping("joinForm")
     public void JoinForm(){
 
     }
@@ -160,7 +160,7 @@ public class UserController {
     }
     //회원가입시 본인인증 후 중복된 회원인지 확인
 
-    @PostMapping("/duplicateUserCheck")
+    @PostMapping("duplicateUserCheck")
     @ResponseBody
     public String duplicateUserCheck(@RequestBody UserDto userDto){
         return userService.duplicateUserCheck(userDto.getName(), userDto.getPhone());
@@ -168,42 +168,42 @@ public class UserController {
 
 
     // 유저 등록시 유저 중복확인
-    @GetMapping(value = "/confirmUserId")
+    @GetMapping(value = "confirmUserId")
     @ResponseBody
     public String getConfirmUserId(@RequestParam(value = "id") String id) {
         return userService.confirmUserId(id);
     }
 
     // 유저 아이디 찾기 폼으로 이동
-    @GetMapping("/findUserIdForm")
+    @GetMapping("findUserIdForm")
     public void findUserIdForm(){
         
     }
     //유저 페스워드 찾기 폼으로 이동
-    @GetMapping("/findUserPasswordForm")
+    @GetMapping("findUserPasswordForm")
     public void findUserPasswordForm(){
 
     }
     // 유저 이메일로 아이디 찾기
-    @PostMapping("/findUserIdByEmail")
+    @PostMapping("findUserIdByEmail")
     @ResponseBody
     public String findUserIdByEmail(@RequestBody UserDto userDto){
         return userService.findUserIdByEmailAndUserName(userDto);
     }
     // 유저 휴대폰번호로 아이디 찾기
-    @PostMapping("/findUserIdByPhone")
+    @PostMapping("findUserIdByPhone")
     @ResponseBody
     public String findUserIdByPhone(@RequestBody UserDto userDto){
         return userService.findUserIdByPhoneAndUserName(userDto);
     }
     //유저 이메일로 랜덤값 전달해서 비밀번호 전송받기
-    @PostMapping("/findUserPasswordByEmailAsRandomValue")
+    @PostMapping("findUserPasswordByEmailAsRandomValue")
     @ResponseBody
     public String findUserPasswordByEmail(@RequestBody UserDto userDto){
         return userService.findUserPasswordByEmailAndUserIdAsRandomValue(userDto);
     }
     // 유저 이메일 랜덤값 전달받아서 인증된 유저에게 비밀번호 코드 전달
-    @PostMapping("/passwordAuthenticationCodeCheck")
+    @PostMapping("passwordAuthenticationCodeCheck")
     public ResponseEntity<String> checkPasswordAuthenticationCode(@RequestBody Map<String, String> request) {
         String passwordCheck = request.get("passwordCheck");
 

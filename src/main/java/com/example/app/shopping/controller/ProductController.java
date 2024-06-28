@@ -21,7 +21,7 @@ public class ProductController {
     @Autowired
     private ProductServiceImpl productService;
 
-    @GetMapping("/productList")
+    @GetMapping("productList")
     public String productList(@ModelAttribute Criteria criteria, Model model) {
         System.out.println("GET /productList invoke...");
 
@@ -45,10 +45,10 @@ public class ProductController {
             model.addAttribute("success", false);
         }
 
-        return "/product/productList";
+        return "product/productList";
     }
 
-    @GetMapping("/product")
+    @GetMapping("product")
     public String product(
             @RequestParam(name = "id", defaultValue = "0", required = false) Integer id,
             Model model)
@@ -67,10 +67,10 @@ public class ProductController {
 
         model.addAttribute("response", response);
 
-        return "/product/productDetail";
+        return "product/productDetail";
     }
 
-    @GetMapping("/popularProducts")
+    @GetMapping("popularProducts")
     public @ResponseBody Map<String, Object> popularProducts() {
         Map<String, Object> response = null;
 
@@ -85,7 +85,7 @@ public class ProductController {
         return response;
     }
 
-    @GetMapping("/highDiscountProducts")
+    @GetMapping("highDiscountProducts")
     public @ResponseBody Map<String, Object> highDiscountProducts() {
         Map<String, Object> response = null;
 
@@ -101,7 +101,7 @@ public class ProductController {
         return response;
     }
 
-    @GetMapping("/recentProducts")
+    @GetMapping("recentProducts")
     public @ResponseBody Map<String, Object> recentProducts() {
         Map<String, Object> response = null;
 
@@ -117,7 +117,7 @@ public class ProductController {
     }
 
     // 실시간으로 상품금액의 크기를 변경시키는 로직
-    @PostMapping("/productPrice")
+    @PostMapping("productPrice")
     public @ResponseBody Integer totalProductAmountChange(@RequestBody Map<String, Integer> request){
         System.out.println("totalProductAmount : " +request.get("totalProductAmount"));
         return request.get("totalProductAmount");

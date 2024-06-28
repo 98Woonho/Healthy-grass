@@ -9,10 +9,7 @@
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <script defer src="/js/productDetail/productDetail.js"></script>
-
-    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+    <script defer th:src="@{/js/productDetail/productDetail.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/product/productDetail.css}">
     <link rel="stylesheet" th:href="@{/css/product/productReviewBoard.css}">
@@ -21,7 +18,7 @@
 </head>
 <body>
 <div class="wrapper">
-    <div class="header">
+    <div class="header layout-5">
         <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
         <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
     </div>
@@ -155,9 +152,9 @@
                     <div th:if="${response != null}">
                             <div th:with="product=${response}">
                                 <th:block th:if="${product.get('mainImgPath')}">
-                                    <img th:src="@{${product.mainImgPath + product.mainImgName}}" alt="업로드된 이미지" style="width: 100px; height: 100px">
+                                    <img class="product-img" th:src="@{${product.mainImgPath + product.mainImgName}}" alt="업로드된 이미지" style="width: 100px; height: 100px">
                                 </th:block>
-                                상품을 장바구니에 담았습니다.
+                                <span class="product-amount"></span>
                             </div>
                     </div>
                 </div>
@@ -168,9 +165,9 @@
             </div>
         </div>
     </div>
-    <div class="footer">
-        <!-- Footer content -->
-    </div>
+</div>
+<div id="footer">
+    <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
 </div>
 </body>
 </html>

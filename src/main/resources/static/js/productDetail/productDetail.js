@@ -96,6 +96,12 @@ wishBtn.addEventListener('click', function (e) {
 const cartBtn = document.querySelector('.cartBtn');
 cartBtn.addEventListener("click", function (e) {
     e.preventDefault();
+    console.log("productAmount.innerText" + productAmount.innerText);
+    console.log("quantityInput.value" + quantityInput.value);
+    if (parseInt(productAmount.innerText) < parseInt(quantityInput.value)){
+        alert('상품 재고가 없어 상품을 구매하지 못했습니다.')
+        return;
+    }
     console.log(quantityInput.value);
     axios.post('/cart', {
         "productId": productId.value,
@@ -105,6 +111,9 @@ cartBtn.addEventListener("click", function (e) {
             console.log(res.data);
             if (res.data === "SUCCESS") {
                 const myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+
+                const modalQuantity = document.querySelector(".product-amount");
+                modalQuantity.innerText = `${quantityInput.value} 개의 상품을 장바구니에 담았습니다.`;
                 myModal.show();
             } else if (res.data === "AMOUNT_FULL") {
                 alert("장바구니에 담은 상품이 상품 재고보다 많아 추가 구매한 상품은 취소되었습니다.")
@@ -179,5 +188,6 @@ function getNowPurchase() {
         Pid: productId
     }];
 }
+
 
 

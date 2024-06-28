@@ -24,20 +24,26 @@
             <div class="info">
                 <ul>
                     <li>
+<!--                        인증이 완료 되었을 경우-->
                     <th:block sec:authorize="isAnonymous()">
                         <a href="/user/loginForm">
                             로그인
                         </a>
                     </th:block>
+<!--                        인증이 완료되지 않았을 경우-->
                     <th:block sec:authorize="isAuthenticated()">
                         <a href="/user/logout">
                             로그아웃
                         </a>
                     </th:block>
                     </li>
-                    <li><a href="/user/joinForm">회원가입</a></li>
-                    <li><a href="/myPage">마이페이지</a></li>
-                    <li><a href="/myPage/paymentList">주문조회</a></li>
+                    <th:block sec:authorize="isAnonymous()">
+                        <li><a href="/user/joinForm">회원가입</a></li>
+                    </th:block>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <li><a href="/myPage">마이페이지</a></li>
+                        <li><a href="/myPage/paymentList">주문조회</a></li>
+                    </th:block>
                     <li><a href="/customerInquiryBoardList">고객센터</a></li>
                 </ul>
             </div>

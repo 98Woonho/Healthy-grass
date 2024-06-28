@@ -47,7 +47,7 @@ public class CustomerInquiryBoardController {
             model.addAttribute("success", false);
         }
 
-        return "CustomerInquiryBoard/boardList";
+        return "/customerInquiryBoard/boardList";
     }
 
     @GetMapping("/customerInquiryBoard")

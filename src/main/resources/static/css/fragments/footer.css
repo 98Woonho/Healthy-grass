@@ -1,0 +1,135 @@
+#footer {
+    margin-top: 20px;
+    padding-bottom: 45px;
+    position: relative;
+    font-weight: 400;
+    font-size: 13px;
+    background-color: #ececec;
+}
+
+#footer .infoBx {
+    margin: 0 auto;
+    max-width: 1200px;
+    overflow: hidden;
+}
+
+#footer .infoBx .flt {
+    float: left;
+    width: 930px;
+    padding-top: 5px;
+}
+
+#footer .infoBx .csInfo {
+    float: right;
+    width: 240px;
+}
+
+#footer .csInfo h3 {
+    font-size: 14px;
+    font-weight: normal;
+    padding-bottom: 5px;
+    color: #666;
+}
+
+#footer .csInfo .tel {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 24px;
+}
+
+#footer .csInfo .tx {
+    line-height: 1.4;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+#footer .infoBx .copy, #footer .infoBx .flt div {
+    position: relative;
+    padding-left: 120px;
+}
+
+.mb30 {
+    margin-bottom: 30px;
+}
+
+#footer .infoBx .flt div h3 {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    font-size: 0;
+}
+
+#footer .infoBx .flt div h3 img {
+    display: block;
+    font-size: 0;
+}
+
+#footer .infoBx .tx {
+    line-height: 1.1;
+    margin-bottom: 7px;
+}
+
+#footer .infoBx .flt div .tx span:first-child {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+
+a {
+    color: #1c1c1c;
+    text-decoration: none;
+    background: none;
+}
+
+#footer .infoBx .flt div .tx span::after {
+    position: absolute;
+    display: block;
+    content: '';
+    left: 0;
+    top: 1px;
+    height: 12px;
+    background-color: #000;
+    width: 1px;
+}
+
+#footer .infoBx .flt div .tx span:first-child::after{
+    content: none;
+}
+
+#footer .infoBx .flt div .tx span {
+    display: inline-block;
+    padding-left: 10px;
+    margin-left: 8px;
+    position: relative;
+    vertical-align: middle;
+}
+
+#footer .infoBx .copy, #footer .infoBx .flt div {
+    position: relative;
+    padding-left: 120px;
+}
+
+#footer .infoBx .copy {
+    padding-top: 15px;
+    margin-bottom: 0;
+}
+
+.footer-hr {
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.footer-img {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    font-size: 0;
+    width: 200px;
+    height: 100px;
+}
+
+.logo-img {
+    width: 100%;
+    height: 100%;
+}

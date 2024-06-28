@@ -60,9 +60,15 @@
     font-weight: bold;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"] {
+input[name="id"],
+input[name="name"],
+input[name="password"],
+input[name="rePassword"],
+input[name="zipcode"],
+input[name="streetAdr"],
+input[name="detailAdr"],
+input[name="phone"],
+input[name="email"] {
     width: calc(100% - 120px); /* 입력 필드와 버튼 사이의 여백을 고려한 너비 */
     padding: 10px;
     font-size: 16px;
@@ -108,11 +114,6 @@ button[name="searchAddressBtn"]:hover {
 
 .joinBtn:hover {
     background-color: #218838;
-}
-
-span {
-    color: red;
-    font-size: 14px;
 }
 
 .phone-ath {

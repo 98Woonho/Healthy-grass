@@ -121,7 +121,7 @@ a {
 }
 
 hr:not([size]) {
-    height: 0 !important;
+    height: 0;
 }
 
 .footer-img {

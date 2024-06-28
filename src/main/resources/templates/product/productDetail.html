@@ -153,9 +153,8 @@
                     <tr>
                         <th>작성자</th>
                         <th>제목</th>
-                        <th>별점</th>
                         <th>작성일</th>
-                        <th>수정일</th>
+                        <th>별점</th>
                     </tr>
                     </thead>
                     <tbody id="review-list">
@@ -194,9 +193,10 @@
                     <!--                    <button onclick="loadReviews(currentPage - 1)">Prev</button>-->
                     <!--                    <button onclick="loadReviews(currentPage + 1)">Next</button>-->
                 </div>
-
-                <button onclick="createAndSubmitForm()">문의하기</button>
-            </div>
+                <div class="btn-tag">
+                    <button class="inquiry-btn" onclick="createAndSubmitForm()">문의하기</button>
+                </div>
+                 </div>
         </section>
         <script defer th:src="@{/js/productDetail/productInquiryProcess.js}"></script>
         <script defer th:src="@{/js/productDetail/toggleInquiryContentProcess.js}"></script>

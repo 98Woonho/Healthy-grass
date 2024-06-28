@@ -42,18 +42,22 @@ function displayReviews(reviews) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${review.Uid}</td>
-            <td onclick="toggleReviewContent('${reviewContentId}')">${review.title}</td>
-            <td>${review.rating}</td>
+            <td>${review.title}</td>
             <td>${review.regDate}</td>
-            <td>${review.updateDate}</td>
+            <td>${review.rating}</td>
         `;
+        //tr 클릭하면 보이게 토글 설정
+        row.onclick = () => toggleReviewContent(reviewContentId);
+
         reviewList.appendChild(row);
 
         const row1 = document.createElement('tr');
         row1.innerHTML = `
             <td colspan="5" class="review-content" id="${reviewContentId}" style="display: none;">
-                이미지: ${review.imgPath}/${review.imgName} <br/>
-                내용: ${review.content}
+                <div style="text-align: center">
+                    <img style="max-width: 500px; max-height: 500px" src="${review.imgPath}/${review.imgName}" alt="리뷰 이미지" <br/>
+                </div>
+                <div style="margin-right: 80px; margin-left: 80px; text-align: left">${review.content}</div>
             </td>
         `;
         reviewList.appendChild(row1);
@@ -70,7 +74,7 @@ function updatePagination(pageDto) {
         const prevLi = document.createElement('li');
         const prevLink = document.createElement('a');
         prevLink.href = '#';
-        prevLink.textContent = 'Prev';
+        prevLink.textContent = '이전';
         prevLink.onclick = (e) => {
             e.preventDefault();
             loadReviews(currentPage - 1);
@@ -99,7 +103,7 @@ function updatePagination(pageDto) {
         const nextLi = document.createElement('li');
         const nextLink = document.createElement('a');
         nextLink.href = '#';
-        nextLink.textContent = 'Next';
+        nextLink.textContent = '다음';
         nextLink.onclick = (e) => {
             e.preventDefault();
             loadReviews(currentPage + 1);

@@ -98,7 +98,9 @@ cartBtn.addEventListener("click", function (e) {
     e.preventDefault();
     console.log("productAmount.innerText" + productAmount.innerText);
     console.log("quantityInput.value" + quantityInput.value);
-    if (parseInt(productAmount.innerText) < parseInt(quantityInput.value)){
+    // productAmount.innerText == 상품 재고
+    // quantityInput.value == 구매하려고 하는 수량
+    if (parseInt(productAmount.innerText) === 0){
         alert('상품 재고가 없어 상품을 구매하지 못했습니다.')
         return;
     }
@@ -136,6 +138,10 @@ cartBtn.addEventListener("click", function (e) {
 const buyNowBtn = document.querySelector('.buyNowBtn');
 
 buyNowBtn.addEventListener('click', function (e) {
+    if (parseInt(productAmount.innerText) === 0){
+        alert('상품 재고가 없어 상품을 구매하지 못했습니다.')
+        return;
+    }
     const productId = document.querySelector('.product-id').value;
     const quantity = quantityInput.value;
 

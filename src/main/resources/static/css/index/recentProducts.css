@@ -11,10 +11,11 @@
 }
 
 .recentPrdLst .item-wrap,
-.mainPrdLst .item-wrap {
+.mainPrdLst .item-wrap,
+.discountPrdLst .item-wrap{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: left;
     gap: 10px;
 }
 
@@ -27,6 +28,7 @@
     text-align: center;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 22%;
 }
 
 .item-list img {

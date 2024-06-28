@@ -96,7 +96,9 @@ wishBtn.addEventListener('click', function (e) {
 const cartBtn = document.querySelector('.cartBtn');
 cartBtn.addEventListener("click", function (e) {
     e.preventDefault();
-    if (productAmount.innerText <= quantityInput.value){
+    console.log("productAmount.innerText" + productAmount.innerText);
+    console.log("quantityInput.value" + quantityInput.value);
+    if (parseInt(productAmount.innerText) < parseInt(quantityInput.value)){
         alert('상품 재고가 없어 상품을 구매하지 못했습니다.')
         return;
     }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,7 +59,7 @@
                         <!-- 결제 목록을 동적으로 채웁니다. -->
                         <tr th:each="payment : ${list}">
                             <td th:text="${payment.regDate}">-</td>
-                            <td th:text="${payment.userid}">-</td>
+                            <td th:text="${payment.get('userid')}">-</td>
                             <td th:text="${payment.buyer_name}">-</td>
                             <td>
                                 <a th:href="@{'/myPage/payment?id=' + ${payment.id}}" th:text="${payment.name}">-</a>

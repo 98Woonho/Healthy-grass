@@ -311,7 +311,6 @@ nav-container>.right .cart{
 .item-list>.thumb img{
     width : 100%;
     height : 100%;
-    object-fit: cover;
     display: block;
 }
 

@@ -137,8 +137,11 @@ public class UserController {
 
     //회원가입 폼으로 이동
     @GetMapping("joinForm")
-    public void JoinForm(){
-
+    public String JoinForm(Authentication authentication){
+        if (authentication != null){ // 로그인이 되어있다면
+            return "index";
+        }
+        return "user/joinForm"; //로그인이 안되어있다면
     }
 
     //회원가입

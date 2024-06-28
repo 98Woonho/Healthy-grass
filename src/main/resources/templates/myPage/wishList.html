@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>내고객문의페이지</title>
+    <title>찜 목록 조회</title>
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
@@ -13,10 +13,6 @@
 
     <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
     <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
-
-    <!-- fragments css -->
-    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
 </head>
 <body>
 
@@ -40,7 +36,7 @@
     </div>
 </div>
 
-<div class="header">
+<div class="header layout-5">
     <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
 </div>
@@ -52,7 +48,7 @@
 
         <div class="box w-full">
             <div class="container">
-                <h1>찜리스트</h1>
+                <h1>찜 목록</h1>
                 <input id="allSelect" type="checkbox">
                 <span>전체 선택</span>
                 <button type="button" onClick="handleSelectDelete()">선택 삭제</button>
@@ -105,8 +101,8 @@
         </div>
     </section>
 </div>
-<div class="footer">
-    <p class="text">푸터(사이트 정보 등)</p>
+<div id="footer">
+    <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
 </div>
 </body>
 </html>

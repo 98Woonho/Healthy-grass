@@ -6,30 +6,19 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- axios -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
-            integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--  cdns  -->
+    <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <!-- daum 주소 찾기 cdn -->
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-    <!-- 아임포트 cdn -->
-    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/css/user/joinForm.css}">
 
     <!-- js -->
     <script defer th:src="@{/js/user/joinForm.js}"></script>
 
-    <!-- fragments css -->
-    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
-
-    <!-- css -->
-    <link rel="stylesheet" th:href="@{/css/user/joinForm.css}">
     <title>회원가입 폼</title>
 </head>
 <body>
-<div class="header">
+<div class="header  layout-5">
     <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
 </div>
@@ -53,14 +42,14 @@
                     <td>
                         <input type="text" id="id" name="id" required placeholder="아이디는 소문자와 숫자로만 이루어진 6~16자여야 합니다.">
                         <button type="button" name="confirmUserIdDuplicationBtn">중복 확인</button>
-                        <span class="idError"></span>
+                        <div class="idError" style="color: red; font-size: 14px"></div>
                     </td>
                 </tr>
                 <tr>
                     <th><label for="name">이름</label></th>
                     <td>
                         <input type="text" id="name" name="name" required disabled>
-                        <span class="nameError"></span>
+                        <div class="nameError" style="color: red; font-size: 14px"></div>
                     </td>
                 </tr>
                 <tr>
@@ -68,14 +57,14 @@
                     <td>
                         <input type="password" id="password" name="password" required
                                placeholder="비밀번호는 영문, 숫자, 특수문자가 1개 이상 포함된 8~15자여야 합니다.">
-                        <span class="passwordError"></span>
+                        <div class="passwordError" style="color: red; font-size: 14px"></div>
                     </td>
                 </tr>
                 <tr>
                     <th><label for="rePassword">비밀번호 확인</label></th>
                     <td>
                         <input type="password" id="rePassword" name="rePassword" required>
-                        <span class="rePasswordError"></span>
+                        <div class="rePasswordError" style="color: red; font-size: 14px"></div>
                     </td>
                 </tr>
                 <tr>
@@ -83,14 +72,14 @@
                     <td>
                         <input type="text" id="zipcode" name="zipcode" required disabled>
                         <button type="button" name="searchAddressBtn">우편번호 찾기</button>
-                        <span class="zipcodeError"></span>
+                        <div class="zipcodeError" style="color: red; font-size: 14px"></div>
                     </td>
                 </tr>
                 <tr>
                     <th><label for="streetAdr">주소</label></th>
                     <td>
                         <input type="text" id="streetAdr" name="streetAdr" required disabled>
-                        <span class="streetAdrError"></span>
+                        <div class="streetAdrError" style="color: red; font-size: 14px"></div>
                     </td>
                 </tr>
                 <tr>
@@ -102,14 +91,14 @@
                     <td>
                         <input type="text" id="phone" name="phone" oninput="PhoneRegex(this)" maxlength="13" required
                                disabled>
-                        <span class="phoneError"></span>
+                        <div class="phoneError" style="color: red; font-size: 14px"></div>
                     </td>
                 </tr>
                 <tr>
                     <th><label for="email">이메일</label></th>
                     <td>
                         <input type="email" id="email" name="email" required>
-                        <span class="emailError"></span>
+                        <div class="emailError" style="color: red; font-size: 14px"></div>
                     </td>
                 </tr>
             </table>
@@ -120,8 +109,8 @@
         </form>
     </section>
 </div>
-<div class="footer">
-    <p class="text">푸터(사이트 정보 등)</p>
+<div id="footer">
+    <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
 </div>
 </body>
 </html>

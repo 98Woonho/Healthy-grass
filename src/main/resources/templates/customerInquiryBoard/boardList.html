@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>고객문의 게시판</title>
+
     <script defer th:src="@{/js/customerInquiryBoardList/searchFormOnchange.js}"></script>
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
     <link rel="stylesheet" th:href="@{/css/customerInquiryBoardList/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
+
 </head>
 <body>
 <div class="wrapper">
-    <div class="header">
+    <div class="header layout-5">
         <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
         <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
     </div>
@@ -33,7 +33,8 @@
                     </div>
                     <div class="form-group">
                         <label for="keyword">게시글 검색: </label>
-                        <input type="text" id="keyword" name="keyword" th:attr="value=${criteria.keyword ?: ''}">
+                        <input type="text" id="keyword"
+                               name="keyword" th:attr="value=${criteria.keyword ?: ''}">
                     </div>
                     <button type="submit">검색</button>
                 </form>
@@ -112,10 +113,9 @@
         </section>
         <script defer th:src="@{/js/customerInquiryBoardDetail/customerInquiryAddBtnProcess.js}"></script>
     </div>
-    <div class="footer">
-
-    </div>
-
+</div>
+<div id="footer">
+    <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
 </div>
 </body>
 </html>

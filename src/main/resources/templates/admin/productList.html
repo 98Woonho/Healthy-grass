@@ -12,13 +12,9 @@
     <link rel="stylesheet" th:href="@{/css/fragments/admin/mainDetail.css}">
 
     <link rel="stylesheet" th:href="@{/css/admin/productLIstBoard.css}">
-
-    <!-- fragments css -->
-    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/nav.css}">
 </head>
 <body>
-<div class="header">
+<div class="header layout-5">
     <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
 </div>
@@ -105,8 +101,8 @@
         </div>
     </section>
 </div>
-<div class="footer">
-    <p class="text">푸터(사이트 정보 등)</p>
+<div id="footer">
+    <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
 </div>
 </body>
 </html>

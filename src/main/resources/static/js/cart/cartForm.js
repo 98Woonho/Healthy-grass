@@ -90,9 +90,14 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function (e) {
             e.preventDefault();
             const input = this.closest('tr').querySelector('.amount_value');
+
             const stock = parseInt(this.closest('tr').querySelector('.product_amount').textContent); //현재 남은 재고
-            const productId = e.target.getAttribute('data-product-id');
+
+            const aTag = e.target.closest('a');
+            const productId = aTag.getAttribute('data-product-id');
+
             let currentValue = parseInt(input.value); //input에 있는 값
+
             if (currentValue < stock) {
                 input.value = currentValue + 1;
                 totalPrice();
@@ -118,9 +123,12 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const input = this.closest('tr').querySelector('.amount_value');
             let currentValue = parseInt(input.value);
-            const productId = e.target.getAttribute('data-product-id');
+            const aTag = e.target.closest('a');
+            const productId = aTag.getAttribute('data-product-id');
+
             if (currentValue > 1) {
                 input.value = currentValue - 1;
+
                 totalPrice();
                 axios.post('/cart/AddAmount', {
                     "amountValue": input.value,
@@ -142,12 +150,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     amountValue.forEach(input => {
         input.addEventListener('input', function (e) {
+
             //stock = 남은 재고
             const stock = parseInt(this.closest('tr').querySelector('.product_amount').textContent);
+
             //input = 수량작성 input
             const amount_value = this.closest('tr').querySelector('.amount_value');
+
             let currentValue = parseInt(amount_value.value);
-            const productId = e.target.getAttribute('data-product-id');
+
+            const aTag = e.target.closest('a');
+            const productId = aTag.getAttribute('data-product-id');
+
             e.preventDefault();
             totalPrice();
             axios.post('/cart/AddAmount', {

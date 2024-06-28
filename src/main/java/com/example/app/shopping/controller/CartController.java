@@ -62,6 +62,7 @@ public class CartController {
         int productId = Integer.parseInt((String) result.get("productId"));
         cartService.updateCartItemQuantity(amountValue, productId, cartId);
     }
+
     //장바구니에서 삭제 누르면 장바구니 아이템 삭제
     @DeleteMapping("delete")
     @ResponseBody

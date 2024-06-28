@@ -66,3 +66,7 @@ nav {
 .logout-btn:hover {
     background-color: #c82333;
 }
+
+.top-hr {
+    margin-bottom: 50px;
+}

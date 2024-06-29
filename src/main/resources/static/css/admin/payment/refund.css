@@ -17,20 +17,21 @@
     width: 100%;
 }
 
-.table {
+table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
-    text-align: center;
 }
 
-.table th, .table td {
+table th, table td {
+    padding: 12px;
     border: 1px solid #ddd;
-    padding: 8px;
+    text-align: center; /* 중앙 정렬 */
 }
 
-.table th {
+table th {
     background-color: #f2f2f2;
+    font-weight: bold;
 }
 
 .refund-request-btn {
@@ -51,28 +52,37 @@
     background-color: red;
 }
 
+
 .pagination ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-.pagination ul li {
-    display: inline;
+.pagination li {
     margin: 0 5px;
 }
 
-.pagination ul li a {
+.pagination a {
+    color: #007bff;
     text-decoration: none;
-    color: #333;
-    padding: 5px 10px;
+    padding: 8px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    text-align: center; /* 중앙 정렬 */
 }
 
-.pagination ul li a.active, .pagination ul li a:hover {
+.pagination a:hover {
     background-color: #007bff;
     color: #fff;
+}
+
+.pagination .active a {
+    background-color: #007bff;
+    color: #fff;
+    pointer-events: none;
 }
 
 .error-message {

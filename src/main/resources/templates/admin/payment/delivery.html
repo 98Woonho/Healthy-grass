@@ -23,7 +23,7 @@
 <main class="admin-main">
     <th:block th:insert="~{fragments/admin/mainMenu.html :: mainManu_fragment}"></th:block>
 
-    <div class="admin-menu-detail-container" th:if="${success}">
+    <div class="admin-menu-detail-container">
         <h1>배송 현황</h1>
         <div class="container">
             <!-- 검색 폼 -->
@@ -38,7 +38,7 @@
 
             <!-- 결제 목록 -->
             <div class="payment-list">
-                <table class="table">
+                <table>
                     <thead>
                     <tr>
                         <th>등록날짜</th>
@@ -105,10 +105,6 @@
             </div>
 
         </div>
-    </div>
-
-    <div th:if="${!success}" class="box w-full h-800">
-        <p>조회할 결제 건이 없습니다.</p>
     </div>
 </main>
 <footer id="footer">

@@ -116,3 +116,7 @@ a:link, a:visited {
     position: relative;
     bottom: 90%;
 }
+
+.pagination {
+    display: block;
+}

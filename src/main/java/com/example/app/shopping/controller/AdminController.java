@@ -136,8 +136,6 @@ public class AdminController {
     */
     @GetMapping("payment/delivery")
     public String getPaymentDeliveryListPage(@ModelAttribute Criteria criteria, Model model) {
-        log.info("AdminController's getPaymentDeliveryListPage criteria: {}", criteria);
-
         // Criteria 초기화
         if (criteria.getPageno() == null) criteria.setPageno(1);
         criteria.setAmount(6);
@@ -172,8 +170,6 @@ public class AdminController {
     */
     @GetMapping("payment/refund")
     public String getPaymentRefundListPage(@ModelAttribute Criteria criteria, Model model) {
-        log.info("AdminController's getPaymentRefundListPage criteria: {}", criteria);
-
         // Criteria 초기화
         if (criteria.getPageno() == null) criteria.setPageno(1);
         criteria.setAmount(6);

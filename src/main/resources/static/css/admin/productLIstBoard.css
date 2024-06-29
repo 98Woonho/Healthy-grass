@@ -1,18 +1,9 @@
-/* common.css 또는 mainDetail.css 파일에서 추가 및 수정 */
-body {
-    font-family: 'Arial', sans-serif;
-    font-size: 14px;
-    color: #333;
-    line-height: 1.6;
-}
+/* delivery.css 또는 mainDetail.css 파일에서 추가 및 수정 */
 
 .container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
     padding: 20px;
     background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
 }
 
 .form-group {
@@ -71,15 +62,6 @@ button[type="submit"]:hover {
 .product-list th {
     background-color: #f2f2f2;
     font-weight: bold;
-}
-
-.product-list td a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.product-list td a:hover {
-    text-decoration: underline;
 }
 
 .edit-btn, .delete-btn {

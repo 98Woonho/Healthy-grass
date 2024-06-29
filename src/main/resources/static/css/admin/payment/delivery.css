@@ -1,38 +1,4 @@
-/* common.css */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.header, .footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
-    width: 100%;
-}
-
-.header h1, .footer p {
-    margin: 0;
-}
-
-.main {
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 1200px;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+/* delivery.css */
 
 .container {
     width: 100%;
@@ -60,7 +26,7 @@ body {
     background-color: #f2f2f2;
 }
 
-.refund-request-btn {
+.delivery-status button {
     padding: 8px 12px;
     border: none;
     color: #fff;
@@ -70,12 +36,12 @@ body {
     display: inline-block;
 }
 
-#accept-btn {
+.delivery-status button[status="배송중"] {
     background-color: #007bff;
 }
 
-#cancel-btn {
-    background-color: red;
+.delivery-status button[status="배송완료"] {
+    background-color: #28a745;
 }
 
 .pagination ul {
@@ -106,4 +72,15 @@ body {
     color: red;
     text-align: center;
     margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end; /* 체크박스를 오른쪽으로 이동시킴 */
+    align-items: center;
+}
+
+.form-group label {
+    margin-right: 10px;
 }

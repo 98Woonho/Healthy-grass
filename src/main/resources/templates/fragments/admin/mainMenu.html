@@ -1,28 +1,27 @@
 <th:block th:fragment="mainManu_fragment">
-    <div class="main-menu box w-400 h-800">
-
-        <div class="user-info menu-section">
-            <ul class="no-dot user-ul">
-                <h2>상품 관리</h2>
-                <li><a href="/admin/addProduct" class="no-text-line">상품 등록</a></li>
-                <li><a href="/admin/productList" class="no-text-line">최근 등록된 상품</a></li>
+    <div class="admin-menu-container">
+        <div>
+            <h2>결제 관리</h2>
+            <ul>
+                <li th:class="${menu == 'deliveryList' ? 'selected' : ''}"><a href="/admin/payment/delivery">배송 현황</a></li>
+                <li th:class="${menu == 'refundList' ? 'selected' : ''}"><a href="/admin/payment/refund">환불 현황</a></li>
             </ul>
         </div>
 
-        <div class="product-info menu-section">
-            <ul class="no-dot product-ul">
-                <h2>결제 관리</h2>
-                <li><a href="/admin/payment/delivery" class="no-text-line">배송 현황</a></li>
-                <li><a href="/admin/payment/refund" class="no-text-line">환불 현황</a></li>
+        <div>
+            <h2>상품 관리</h2>
+            <ul>
+                <li th:class="${menu == 'addProduct' ? 'selected' : ''}"><a href="/admin/addProduct">상품 등록</a></li>
+                <li th:class="${menu == 'productList' ? 'selected' : ''}"><a href="/admin/productList">최근 등록된 상품</a></li>
             </ul>
         </div>
 
-        <div class="board-info menu-section">
-            <ul class="no-dot board-ul">
-                <h2>게시물 관리</h2>
-                <li><a href="/customerInquiryBoardList" class="no-text-line">고객문의</a></li>
-                <li><a href="/productInquiryBoardList" class="no-text-line">상품문의</a></li>
-                <li><a href="/productReviewBoardList" class="no-text-line">리뷰</a></li>
+        <div>
+            <h2>게시물 관리</h2>
+            <ul>
+                <li><a href="/customerInquiryBoardList">고객문의</a></li>
+                <li><a href="/productInquiryBoardList">상품문의</a></li>
+                <li><a href="/productReviewBoardList">리뷰</a></li>
             </ul>
         </div>
     </div>

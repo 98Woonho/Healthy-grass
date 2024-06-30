@@ -44,9 +44,11 @@
     <div class="my-page-menu-detail-container">
         <h1>찜 목록</h1>
         <div class="container">
-            <input id="allSelect" type="checkbox">
-            <span>전체 선택</span>
-            <button type="button" onClick="handleSelectDelete()">선택 삭제</button>
+            <div class="all-select-container">
+                <input id="allSelect" type="checkbox">
+                <span>전체 선택</span>
+                <button type="button" onClick="handleSelectDelete()">선택 삭제</button>
+            </div>
 
             <div>
                 <div class="no-product" th:if="${wishList.size() == 0}">
@@ -60,10 +62,15 @@
                         <!--                            <img th:src="@{${wish.mainImgPath} + ${wish.mainImgName}}" alt="">-->
                     </div>
                     <div>
-                        <a th:href="@{/product (id=${wish.Pid})}" class="product-name" th:text="${wish.name}"></a>
-                        <span th:text="${#numbers.formatInteger(wish.discountedPrice, 0, 'COMMA')}"></span>원
+                        <div>
+                            <a th:href="@{/product (id=${wish.Pid})}" class="product-name" th:text="${wish.name}"></a>
+                        </div>
+                        <div class="price">
+                            <span th:text="${#numbers.formatInteger(wish.discountedPrice, 0, 'COMMA')}"></span>원
+                        </div>
                     </div>
-                    <div>
+                    <div class="flex-1"></div>
+                    <div class="product-btn-container">
                         <div>
                             <button type="button" class="add-cart-btn">장바구니 담기</button>
                         </div>

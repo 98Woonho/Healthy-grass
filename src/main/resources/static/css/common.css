@@ -12,6 +12,10 @@ footer{
     background-color : black;
 }
 
+button {
+    border: none;
+}
+
 a:link, a:visited {
     text-decoration: none;
     color: inherit;
@@ -113,7 +117,6 @@ a:link, a:visited {
 .admin-product-form button {
     border: none;
     background-color: #4cae4c;
-    border-radius: 5px;
     color: #e8e8e8;
     padding: 0.5rem 1.5rem;
     margin: 0 auto;

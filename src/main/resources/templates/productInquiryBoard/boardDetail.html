@@ -9,7 +9,7 @@
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <link rel="stylesheet" th:href="@{/css/productInquiryBoardDetail/productInquiryBoardDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/board/boardDetail.css}">
 
     <title>상품문의 게시판 상세조회</title>
 </head>
@@ -23,20 +23,37 @@
         <section class="first-section">
             <div th:if="${response != null}">
                 <div th:if="${response.success}">
-                    <div th:with="productInquiryBoardDetail=${response}">
-                        <p>
-                            문의 상품명:
-                            <a th:href="@{${'/product?id=' + (productInquiryBoardDetail.Pid)}}">
-                                <span th:text="${productInquiryBoardDetail.productName}"></span>
-                            </a>
-                        </p>
-                        <p>게시글 번호: <span id="boardId" th:text="${productInquiryBoardDetail.id != null ? productInquiryBoardDetail.id : ''}"></span></p>
-                        <p>작성자: <span th:text="${productInquiryBoardDetail.Uid}"></span></p>
-                        <p>제목: <span th:text="${productInquiryBoardDetail.title}"></span></p>
-                        <p>글 내용: <span th:text="${productInquiryBoardDetail.content}"></span></p>
-                        <p>작성일: <span th:text="${productInquiryBoardDetail.regDate}"></span></p>
-                        <p>수정일: <span th:text="${productInquiryBoardDetail.updateDate}"></span></p>
-                        <p>댓글 수: <span th:text="${productInquiryBoardDetail.commentCount}"></span></p>
+                    <div class="board-info" th:with="productInquiryBoardDetail=${response}">
+
+                        <div class="board-head">
+                            <h5 class="title">
+                                <span id="boardId" th:text="${productInquiryBoardDetail.id != null ? productInquiryBoardDetail.id : ''}" style="display: none;"></span>
+                                <span class="title-head">[상품 문의]</span>
+                                <span class="title-subject" th:text="${productInquiryBoardDetail.title}">-</span>
+                            </h5>
+                            <div class="board-writer">
+                                <div class="fl">
+                                    <span class="user-name" th:text="${productInquiryBoardDetail.Uid}">-</span>
+                                    <span class="board-reg-date" th:text="${productInquiryBoardDetail.regDate}">-</span>
+                                </div>
+                                <div class="fr">
+                                    <a href="#board-comment-list" class="board-comment" th:text="'댓글 ' + ${productInquiryBoardDetail.commentCount}"></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="board-contents">
+                            <p class="inquiry-product">
+                                <a th:href="@{${'/product?id=' + (productInquiryBoardDetail.Pid)}}">
+                                    <span class="product-name" th:text="'상품: ' + ${productInquiryBoardDetail.productName}"></span>
+                                </a>
+                            </p>
+                            <p>
+                                <span th:text="${productInquiryBoardDetail.content}"></span>
+                            </p>
+                        </div>
+
+
                         <div class="button-container">
                             <form id="editForm" action="/updateProductInquiry" method="get">
                                 <input type="hidden" name="boardId" id="formBoardId" th:value="${productInquiryBoardDetail.id != null ? productInquiryBoardDetail.id : ''}">
@@ -55,8 +72,8 @@
             </div>
         </section>
         <script th:src="@{/js/productInquiryBoardDetail/btnProcess.js}"></script>
-        <section class="second-section">
-            <h4>댓글</h4>
+        <section class="second-section" id="board-comment-list">
+            <h4>답변 목록</h4>
             <!-- 댓글이 들어가는 곳 -->
             <div id="comments-section">
 
@@ -65,14 +82,15 @@
         <script th:src="@{/js/productInquiryBoardDetail/productInquiryBoardDetailCommentProcess.js}"></script>
         <section class="third-section" id="comments-input-section" sec:authorize="hasRole('ROLE_ADMIN')">
             <form id="commentForm">
-                <h2>댓글</h2>
+                <h4>답변 달기</h4>
                 <label for="commentTitle">제목:</label>
                 <input type="text" id="commentTitle" name="title" required>
 
                 <label for="commentContent">내용:</label>
                 <textarea id="commentContent" name="content" rows="4" cols="50" required></textarea>
-
-                <button type="submit">작성</button>
+                <div class="comment-form-submit">
+                    <button type="submit">작성</button>
+                </div>
             </form>
         </section>
         <script th:src="@{/js/productInquiryBoardDetail/postCommentProcess.js}"></script>

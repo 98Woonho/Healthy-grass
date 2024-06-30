@@ -47,24 +47,3 @@ document.getElementById('submit').addEventListener('click', function(event) {
             alert('문의 수정 중 오류가 발생하였습니다.');
         });
 });
-
-document.getElementById('cancel').addEventListener('click', function(event) {
-    event.preventDefault();
-
-    var id = document.getElementById('id').value;
-    console.log("취소버튼 클릭됨")
-
-    var form = document.createElement('form');
-    form.method = 'get';
-    form.action = '/productInquiryBoard';
-
-    var hiddenField = document.createElement('input');
-    hiddenField.type = 'hidden';
-    hiddenField.name = 'id';
-    hiddenField.value = id;
-
-    form.appendChild(hiddenField);
-
-    document.body.appendChild(form);
-    form.submit();
-});

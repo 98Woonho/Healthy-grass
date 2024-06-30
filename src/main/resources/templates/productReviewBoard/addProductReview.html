@@ -10,7 +10,7 @@
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
     <!-- css -->
-    <link rel="stylesheet" th:href="@{/css/productReview/addProductReview.css}">
+    <link rel="stylesheet" th:href="@{/css/board/addBoard.css}">
 
     <title>상품 리뷰 작성</title>
 </head>
@@ -26,11 +26,15 @@
     <section class="first-section">
         <div th:if="${success}">
             <form enctype="multipart/form-data" onsubmit="return false">
-                <span>상품: <a th:href="@{'/product?id=' + ${product.id}}" th:text="${product.name}"></a></span>
+                <p>
+                    <span>
+                        <a th:href="@{'/product?id=' + ${product.id}}" th:text="${product.name != null ? '리뷰 상품: ' + product.name : ''}"></a>
+                    </span>
+                </p>
 
-                <span>제목: <input type="text" name="title" id="title" class="common-input"></span>
+                <span><input type="text" name="title" id="title" class="common-input" placeholder="제목을 입력하세요"></span>
 
-                <span>내용: <textarea id="content" name="content" rows="10" class="common-input"></textarea></span>
+                <span><textarea id="content" name="content" rows="10" class="common-input" placeholder="본문을 입력하세요"></textarea></span>
 
                 <span>평점:
                     <select id="rating" name="rating" class="common-input">
@@ -42,7 +46,7 @@
                     </select>
                 </span>
 
-                <span>이미지: <input type="file" name="image" id="image" class="common-input" accept="image/*"></span>
+                <span>이미지: <input type="file" name="image" id="image" class="common-input" accept="image/*"></span> <br/>
 
                 <div class="button-container">
                     <button  id="review-submit" th:data-oid="${oId}" th:data-pid="${pId}">작성</button>

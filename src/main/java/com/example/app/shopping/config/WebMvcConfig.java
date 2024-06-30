@@ -21,6 +21,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // 환경에 따라 다른 경로 설정
         if (System.getProperty("os.name").toLowerCase().contains("win")) {
             // Windows 경로 설정
+            //
             registry.addResourceHandler("/uploads/**").addResourceLocations("file:C:/Users/Administrator/uploads/");
         } else {
             // Linux 경로 설정

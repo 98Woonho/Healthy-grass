@@ -9,7 +9,7 @@
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <link rel="stylesheet" th:href="@{/css/customerInquiryBoardDetail/customerInquiryBoardDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/board/boardDetail.css}">
 
     <title>고객문의 게시판 상세조회</title>
 
@@ -24,24 +24,37 @@
         <section class="first-section">
             <div th:if="${response != null}">
                 <div th:if="${response.success}">
-                    <div th:with="customerInquiryBoardDetail=${response}">
-                        <p>게시글 번호: <span id="boardId" th:text="${customerInquiryBoardDetail.id}"></span></p>
-                        <p>작성자: <span th:text="${customerInquiryBoardDetail.Uid}"></span></p>
-                        <p>제목: <span th:text="${customerInquiryBoardDetail.title}"></span></p>
-                        <!-- 업로드된 이미지가 있을 때만 이미지를 보여줌 -->
-                        <div th:if="${customerInquiryBoardDetail.get('imgPath') != null}">
-                            <p>업로드 사진: <img th:src="@{${customerInquiryBoardDetail.imgPath + '/' + customerInquiryBoardDetail.imgName}}" alt="업로드된 이미지"></p>
+                    <div class="board-info" th:with="customerInquiryBoardDetail=${response}">
+                        <div class="board-head">
+                            <h5 class="title">
+                                <span id="boardId" th:text="${customerInquiryBoardDetail.id != null ? customerInquiryBoardDetail.id : ''}" style="display: none;"></span>
+                                <span class="title-head">[고객 문의]</span>
+                                <span class="title-subject" th:text="${customerInquiryBoardDetail.title}">-</span>
+                            </h5>
+                            <div class="board-writer">
+                                <div class="fl">
+                                    <span class="user-name" th:text="${customerInquiryBoardDetail.Uid}">-</span>
+                                    <span class="board-reg-date" th:text="${customerInquiryBoardDetail.regDate}">-</span>
+                                </div>
+                                <div class="fr">
+                                    <a href="#board-comment-list" class="board-comment" th:text="'댓글 ' + ${customerInquiryBoardDetail.commentCount}"></a>
+                                </div>
+                            </div>
                         </div>
-                        <p>글 내용: <span th:text="${customerInquiryBoardDetail.content}"></span></p>
-                        <p>작성일: <span th:text="${customerInquiryBoardDetail.regDate}"></span></p>
-                        <p>수정일: <span th:text="${customerInquiryBoardDetail.updateDate}"></span></p>
-                        <p>댓글 수: <span th:text="${customerInquiryBoardDetail.commentCount}"></span></p>
-                    </div>
 
-                    <!-- 수정 및 삭제 버튼 추가 -->
-                    <div class="button-container">
-                        <button id="editBtn">수정</button>
-                        <button id="deleteBtn">삭제</button>
+                        <div class="board-contents">
+                            <!-- 업로드된 이미지가 있을 때만 이미지를 보여줌 -->
+                            <p th:if="${customerInquiryBoardDetail.get('imgPath') != null}"><img th:src="@{${customerInquiryBoardDetail.imgPath + '/' + customerInquiryBoardDetail.imgName}}" alt="업로드된 이미지"></p>
+                            <p>
+                                <span th:text="${customerInquiryBoardDetail.content}"></span>
+                            </p>
+                        </div>
+
+                        <!-- 수정 및 삭제 버튼 추가 -->
+                        <div class="button-container">
+                            <button id="editBtn">수정</button>
+                            <button id="deleteBtn">삭제</button>
+                        </div>
                     </div>
                 </div>
                 <div th:if="${!response.success}">
@@ -53,8 +66,12 @@
             </div>
         </section>
         <script defer th:src="@{/js/customerInquiryBoardDetail/btnProcess.js}"></script>
-        <section class="second-section" id="comments-section">
+        <section class="second-section" id="board-comment-list">
+            <h4>답변 목록</h4>
             <!-- 댓글이 들어가는 곳 -->
+            <div id="comments-section">
+
+            </div>
         </section>
         <script defer th:src="@{/js/customerInquiryBoardDetail/customerInquiryBoardDetailCommentProcess.js}"></script>
         <section class="third-section" id="comments-input-section" sec:authorize="hasRole('ROLE_ADMIN')">
@@ -69,7 +86,9 @@
                 <label for="commentImage">첨부 이미지:</label>
                 <input type="file" name="image" id="commentImage" accept="image/*">
 
-                <button type="submit">작성</button>
+                <div class="comment-form-submit">
+                    <button type="submit">작성</button>
+                </div>
             </form>
         </section>
         <script th:src="@{/js/customerInquiryBoardDetail/postCommentProcess.js}"></script>

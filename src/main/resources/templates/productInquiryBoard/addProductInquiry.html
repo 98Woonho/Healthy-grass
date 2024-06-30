@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>상품문의등록</title>
 
-    <link rel="stylesheet" th:href="@{/css/productInquiry/addProductInquiry.css}">
+    <link rel="stylesheet" th:href="@{/css/board/addBoard.css}">
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
@@ -25,17 +25,28 @@
         <section class="first-section">
             <form>
                 <input type="hidden" th:value="${pId != null ? pId : ''}" id="pId" name="Pid">
-                <p>문의 상품명: <a th:href="${pId != null ? 'product?id=' + pId : 'product'}"><span th:text="${productName != null ? productName : ''}"></span></a></p>
-                <span>제목: <input type="text" name="title" id="title"></span> <br />
-                <span>
-                    글잠금:
+                <p>
+                    <span>
+                        <a th:href="${pId != null ? 'product?id=' + pId : 'product'}" th:text="${productName != null ? '문의 상품: ' + productName : ''}"></a>
+                    </span>
+                </p>
+                <p>
+                    <label for="isLocked">글잠금:</label>
                     <input type="checkbox" id="isLocked" name="isLocked" value="N">
                     <input type="password" id="password" name="password" placeholder="패스워드" disabled>
-                </span> <br/>
+                </p>
+                <p>
+                    <span>
+                        <input type="text" name="title" id="title" placeholder="제목을 입력하세요">
+                    </span>
+                </p>
+                <p>
+                    <textarea id="content" name="content" rows="10" cols="50" placeholder="본문을 입력하세요"></textarea>
+                </p>
 
-                <textarea id="content" name="content" rows="10" cols="50"></textarea> <br/>
-
-                <button id="submit">작성</button>
+                <div class="button-container">
+                    <button id="submit">작성</button>
+                </div>
             </form>
         </section>
         <script defer th:src="@{/js/productInquiry/pwChkProcess.js}"></script>

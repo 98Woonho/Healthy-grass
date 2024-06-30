@@ -1,7 +1,8 @@
 package com.example.app.shopping.properties;
 
 public class FileUploadPathProperties {
-    public static final String WINDOWS_UPLOAD_DIR = "C:/Users/Administrator/uploads/";
+    public static final String WINDOWS_UPLOAD_DIR = "C:/uploads/";
+//    "C:/Users/Administrator/uploads/" 로 수정 필요
     public static final String LINUX_UPLOAD_DIR = "/home/ec2-user/uploads/";
 
     public static String getUploadDir() {

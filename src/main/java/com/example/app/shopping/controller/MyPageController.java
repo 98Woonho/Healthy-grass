@@ -89,7 +89,7 @@ public class MyPageController {
         // 2페이지 이상 && 찜한 상품이 없으면 이전 페이지로 return
         if (wishList.size() == 0 && criteria.getPageno() > 1) {
             criteria.setPageno(criteria.getPageno() - 1);
-            return "redirect:myPage/wishList?pageno=" + criteria.getPageno();
+            return "redirect:wishList?pageno=" + criteria.getPageno();
         }
 
         model.addAttribute("wishList", wishList);

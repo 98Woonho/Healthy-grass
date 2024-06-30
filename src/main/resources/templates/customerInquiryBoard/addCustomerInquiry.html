@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>고객 문의등록</title>
 
-    <link rel="stylesheet" th:href="@{/css/customerInquiry/addCustomerInquiry.css}">
+    <link rel="stylesheet" th:href="@{/css/board/addBoard.css}">
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
@@ -23,9 +23,9 @@
     <h2>고객 문의 작성</h2>
     <section class="first-section">
         <form enctype="multipart/form-data">
-            <span>제목: <input type="text" name="title" id="title"></span> <br />
+            <span><input type="text" name="title" id="title" placeholder="제목을 입력하세요"></span> <br />
 
-            <span> 내용: <textarea id="content" name="content" rows="10" cols="50"></textarea> </span> <br/>
+            <span><textarea id="content" name="content" rows="10" cols="50" placeholder="본문을 입력하세요"></textarea> </span> <br/>
 
             <span>이미지: <input type="file" name="image" id="image" accept="image/*"></span> <br/>
 

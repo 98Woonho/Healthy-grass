@@ -6,7 +6,7 @@
     <title>상품문의 게시판</title>
     <script defer th:src="@{/js/productInquiryBoardList/searchFormOnchange.js}"></script>
 
-    <link rel="stylesheet" th:href="@{/css/productInquiryBoardList/common.css}">
+    <link rel="stylesheet" th:href="@{/css/board/boardList.css}">
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
@@ -33,11 +33,11 @@
                         <label for="keyword">게시글 검색: </label>
                         <input type="text" id="keyword" name="keyword" th:attr="value=${criteria.keyword ?: ''}">
                     </div>
-                    <button id="keyword-submit" type="submit">검색</button>
+                    <button type="submit">검색</button>
                 </form>
 
                 <!-- 상품문의 게시글 목록 -->
-                <div class="productInquiryBoard-list">
+                <div class="productInquiryBoard-list boardList">
                     <table class="table-container">
                         <thead>
                         <tr>
@@ -55,7 +55,7 @@
                         <tr th:each="board : ${list}">
                                 <td th:text="${board.get('id') != null ? board.id : ''}">-</td>
                                 <td th:text="${board.get('isLocked') != null ? board.isLocked : ''}">-</td>
-                                <td>
+                                <td class="title">
                                     <a th:href="@{${'/productInquiryBoard?id=' + (board.id)}}">
                                         <span class="product-name" th:text="${board.get('productName') != null ? board.productName : ''}">-</span>
                                         <span class="post-title" th:text="${board.get('title') != null ? board.title : ''}">-</span>

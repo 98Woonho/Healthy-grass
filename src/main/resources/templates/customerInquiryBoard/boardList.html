@@ -10,7 +10,7 @@
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <link rel="stylesheet" th:href="@{/css/customerInquiryBoardList/common.css}">
+    <link rel="stylesheet" th:href="@{/css/board/boardList.css}">
 
 </head>
 <body>
@@ -27,7 +27,7 @@
 
                 <!-- 검색 폼 -->
                 <form action="/customerInquiryBoardList" method="GET" id="searchForm">
-                    <div class="form-group" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <div class="form-group comment-check" sec:authorize="hasRole('ROLE_ADMIN')">
                         <label for="commentChk">답변하지 못한 게시글 조회</label>
                         <input type="checkbox" name="commentChk" id="commentChk" value="true" th:checked="${criteria.commentChk != null and criteria.commentChk != ''}" onchange="submitFormOnChange()">
                     </div>
@@ -40,8 +40,7 @@
                 </form>
 
                 <!-- 유저문의 게시글 목록 -->
-                <div class="customerInquiryBoard-list">
-                    <h2>고객문의 게시글 목록</h2>
+                <div class="customerInquiryBoard-list boardList">
                     <table class="table-container">
                         <thead>
                         <tr>
@@ -57,7 +56,7 @@
                         <!-- 게시글 목록을 동적으로 채웁니다. -->
                         <tr th:each="board : ${list}">
                                 <td th:text="${board.get('id') != null ? board.id : ''}">-</td>
-                                <td>
+                                <td class="title">
                                     <a th:href="@{${'/customerInquiryBoard?id=' + (board.id)}}">
                                         <span class="post-title" th:text="${board.get('title') != null ? board.title : ''}">-</span>
                                     </a>

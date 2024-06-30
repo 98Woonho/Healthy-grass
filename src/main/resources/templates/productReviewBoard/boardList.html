@@ -8,7 +8,7 @@
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <link rel="stylesheet" th:href="@{/css/productReviewBoardList/common.css}">
+    <link rel="stylesheet" th:href="@{/css/board/boardList.css}">
 
 </head>
 <body>
@@ -41,8 +41,7 @@
                 </form>
 
                 <!-- 상품리뷰 게시글 목록 -->
-                <div class="productReviewBoard-list">
-                    <h2>상품리뷰 게시글 목록</h2>
+                <div class="productReviewBoard-list boardList">
                     <table class="table-container">
                         <thead>
                         <tr>
@@ -59,7 +58,7 @@
                         <tr th:each="board : ${list}">
                             <td th:text="${board.get('id') != null ? board.id : ''}">-</td>
                             <td th:text="${board.get('Uid') != null ? board.Uid : ''}">-</td>
-                            <td>
+                            <td class="title">
                                 <a th:href="@{${'/productReviewBoard?id=' + (board.id)}}">
                                     <span class="product-name" th:text="${board.get('productName') != null ? board.productName : ''}">-</span>
                                     <span class="post-title" th:text="${board.get('title') != null ? board.title : ''}">-</span>

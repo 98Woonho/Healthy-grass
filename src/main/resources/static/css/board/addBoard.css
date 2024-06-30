@@ -1,0 +1,129 @@
+.main {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.main h2 {
+    font-weight: 600;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.first-section {
+    margin-bottom: 20px;
+}
+
+.first-section p, .first-section span, .first-section textarea, .first-section button, .first-section input[type="file"], .first-section input[type="text"], .first-section select {
+    font-size: 16px;
+}
+
+.first-section a {
+    text-decoration: none;
+}
+
+.first-section span {
+    margin-bottom: 10px;
+}
+
+.first-section input[type="text"], .first-section textarea, .first-section input[type="password"], .first-section select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.first-section input[type="file"] {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.first-section input[type="checkbox"] {
+
+}
+
+#password {
+    margin-top: 12px;
+}
+
+.first-section .button-container {
+    text-align: center;
+}
+
+.first-section button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.first-section button:hover {
+    background-color: #0056b3;
+}
+
+/* form 요소 스타일링 */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form span {
+    display: flex;
+    flex-direction: column;
+}
+
+form input[type="text"],
+form textarea,
+form input[type="file"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+form .button-container {
+    display: flex;
+    justify-content: right;
+}
+
+form button {
+    width: 4.5rem;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* 에러 메시지 스타일링 */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.error-message p {
+    margin: 0;
+}

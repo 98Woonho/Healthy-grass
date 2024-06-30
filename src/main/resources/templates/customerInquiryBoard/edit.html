@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>고객 문의 수정</title>
 
-    <link rel="stylesheet" th:href="@{/css/customerInquiry/editCustomerInquiry.css}">
+    <link rel="stylesheet" th:href="@{/css/board/editBoard.css}">
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
@@ -26,14 +26,27 @@
         <div th:if="${success}">
             <form id="editForm" enctype="multipart/form-data">
                 <input type="hidden" name="id" id="id" th:value="${board.id}"/>
-                <span>제목: <input type="text" name="title" id="title" th:value="${board.title}"></span> <br />
 
-                <span> 내용: <textarea id="content" name="content" rows="10" cols="50" th:text="${board.content}"></textarea> </span> <br/>
-                <div th:if="${board.get('imgPath') != null}">
-                    <span th:if="${board.imgPath != null and board.imgName != null}">현재 이미지: <img th:src="${board.imgPath + '/' + board.imgName}" alt="현재 이미지" style="max-width: 200px;"></span> <br/>
+                <p>
+                    <input type="text" name="title" id="title" th:value="${board.title}" placeholder="제목을 입력하세요">
+                </p>
+
+                <p>
+                    <textarea id="content" name="content" rows="10" cols="50" th:text="${board.content}" placeholder="내용을 입력하세요"></textarea>
+                </p>
+
+                <div class="board-img" th:if="${board.get('imgPath') != null}">
+                    <p>등록된 이미지: </p>
+                    <p>
+                        <img th:src="${board.imgPath + '/' + board.imgName}" alt="현재 이미지" style="max-width: 200px;">
+                    </p>
                     <input type="checkbox" id="deleteImage" name="deleteImage" value="true"> 기존 이미지 삭제 <br/>
                 </div>
-                <span>등록할 이미지: <input type="file" name="image" id="image" accept="image/*"></span> <br/>
+
+                <p>
+                    <span>등록할 이미지: </span>
+                    <input type="file" name="image" id="image" accept="image/*">
+                </p>
 
                 <div class="button-container">
                     <button id="submit">수정</button>

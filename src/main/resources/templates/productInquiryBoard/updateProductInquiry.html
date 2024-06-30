@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>상품문의등록</title>
 
-    <link rel="stylesheet" th:href="@{/css/productInquiry/updateProductInquiry.css}">
+    <link rel="stylesheet" th:href="@{/css/board/editBoard.css}">
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
@@ -27,12 +27,23 @@
             <div th:if="${success}">
                 <form>
                     <input type="hidden" th:value="${board.id}" id="id" name="id">
-                    <p>문의 상품명: <a th:href="@{'/product?id=' + ${board.Pid}}"><span th:text="${board.productName}"></span></a></p>
-                    <span>제목: <input type="text" name="title" id="title" th:value="${board.title}"></span> <br />
-                    <textarea id="content" name="content" rows="10" cols="50" th:text="${board.content}"></textarea> <br/>
+
+                    <p>
+                        <span>
+                            <a th:href="@{'/product?id=' + ${board.Pid}}" th:text="'문의 상품: ' + ${board.productName}"></a>
+                        </span>
+                    </p>
+
+                    <p>
+                        <input type="text" name="title" id="title" th:value="${board.title}" placeholder="제목을 입력하세요">
+                    </p>
+
+                    <p>
+                        <textarea id="content" name="content" rows="10" cols="50" th:text="${board.content}" placeholder="내용을 입력하세요"></textarea>
+                    </p>
+
                     <div class="button-container">
                         <button id="submit">수정</button>
-                        <button id="cancel">취소</button>
                     </div>
                 </form>
             </div>

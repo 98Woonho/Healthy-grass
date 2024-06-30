@@ -57,7 +57,7 @@ function displayReviews(reviews) {
                 <div style="text-align: center">
                     <img style="max-width: 500px; max-height: 500px" src="${review.imgPath}/${review.imgName}" alt="리뷰 이미지" <br/>
                 </div>
-                <div style="margin-right: 80px; margin-left: 80px; text-align: left">${review.content}</div>
+                <div style="margin-right: 130px; margin-left: 130px; text-align: left">${review.content}</div>
             </td>
         `;
         reviewList.appendChild(row1);

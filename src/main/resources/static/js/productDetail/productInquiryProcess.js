@@ -41,12 +41,14 @@ function displayProductInquiries(productInquiries) {
 
         const row = document.createElement('tr');
 
+        // 이미지 경로 결정
+        const lockImageSrc = productInquiry.isLocked === 'Y' ? '/img/Lock_close.svg' : '/img/Lock_open.svg';
+
         row.innerHTML = `
             <td>${productInquiry.Uid}</td>
-            <td>${productInquiry.isLocked}</td>
+            <td><img src="${lockImageSrc}" alt="${productInquiry.isLocked === 'Y' ? '글잠김' : '잠김없음'}"></td>
             <td>${productInquiry.title}</td>
             <td>${productInquiry.regDate}</td>
-            <td>${productInquiry.updateDate}</td>
         `;
         //tr 클릭하면 문의글 보이게 토글 설정
         row.onclick = () => toggleInquiryContentProcess(productInquiryContentId);

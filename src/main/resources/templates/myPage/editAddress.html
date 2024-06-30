@@ -7,8 +7,6 @@
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
-    <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
     <link rel="stylesheet" th:href="@{/css/myPage/editAddress.css}">
 
     <script defer th:src="@{/js/myPage/editAddress.js}"></script>
@@ -17,54 +15,63 @@
 
 </head>
 <body>
-<div class="header layout-5">
+
+<header id="header">
     <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
-</div>
-<div class="main">
-    <section>
-        <h1>배송지 등록/수정</h1>
-    </section>
-    <section class="box1">
-        <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
+</header>
 
-        <div class="box w-full h-800">
+<main class="my-page-main">
+    <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
+
+    <div class="my-page-menu-detail-container">
+        <h1>배송지 등록/수정</h1>
+        <div class="container">
             <form id="editAddressForm">
                 <div>
                     <label for="name">이름</label>
-                    <input type="text" id="name" name="name" th:value="${shippingAddress != null ? shippingAddress.name : ''}">
+                    <input class="common-input" type="text" id="name" name="name"
+                           th:value="${shippingAddress != null ? shippingAddress.name : ''}" placeholder="이름">
                 </div>
                 <div>
                     <label for="zipcode">우편번호</label>
-                    <input type="text" id="zipcode" name="zipcode" th:value="${shippingAddress != null ? shippingAddress.zipcode : ''}">
-                    <button type="button" id="searchAddressBtn">
+                    <span class="horizontal">
+                        <input class="common-input" type="text" id="zipcode" name="zipcode"
+                               th:value="${shippingAddress != null ? shippingAddress.zipcode : ''}" placeholder="우편번호">
+                        <button type="button" id="searchAddressBtn">
                         우편번호 찾기
-                    </button>
+                        </button>
+                    </span>
                 </div>
 
                 <div>
                     <label for="streetAdr">주소</label>
-                    <input type="text" id="streetAdr" name="streetAdr" th:value="${shippingAddress != null ? shippingAddress.streetAdr : ''}">
+                    <input class="common-input" type="text" id="streetAdr" name="streetAdr"
+                           th:value="${shippingAddress != null ? shippingAddress.streetAdr : ''}" placeholder="주소">
                     <span class="streetAdrError"></span>
                 </div>
 
                 <div>
                     <label for="detailAdr">상세 주소</label>
-                    <input type="text" id="detailAdr" name="detailAdr" th:value="${shippingAddress != null ? shippingAddress.detailAdr : ''}">
-                </div>
-                
-                <div>
-                    <label for="phone">휴대폰 번호</label>
-                    <input type="text" id="phone" name="phone" oninput="PhoneRegex(this)" placeholder="000-000-0000 또는 000-0000-0000" th:value="${shippingAddress != null ? shippingAddress.phone : ''}">
+                    <input class="common-input" type="text" id="detailAdr" name="detailAdr"
+                           th:value="${shippingAddress != null ? shippingAddress.detailAdr : ''}" placeholder="상세 주소">
                 </div>
 
+                <div>
+                    <label for="phone">휴대폰 번호</label>
+                    <input class="common-input" type="text" id="phone" name="phone" oninput="PhoneRegex(this)"
+                           placeholder="000-000-0000 또는 000-0000-0000"
+                           th:value="${shippingAddress != null ? shippingAddress.phone : ''}">
+                </div>
                 <button>저장</button>
             </form>
         </div>
-    </section>
-</div>
-<div id="footer">
+    </div>
+</main>
+
+<footer id="footer">
     <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
-</div>
+</footer>
+
 </body>
 </html>

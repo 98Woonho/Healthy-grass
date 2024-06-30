@@ -8,113 +8,109 @@
     <link rel="stylesheet" th:href="@{/css/myPage/myCustomerInquiryPage.css}">
     <script defer th:src="@{/js/myPage/searchFormOnchange.js}"></script>
 
-    <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
-    <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
-
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 </head>
 <body>
-<div class="header layout-5">
+
+<header id="header">
     <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
-</div>
-<div class="main">
-    <section class="first-seciton">
-        <h1>내 문의 페이지</h1>
-    </section>
-    <section class="second-section box1">
-        <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
+</header>
 
-        <div class="box w-full h-800">
-            <div class="container">
+<main class="my-page-main">
+    <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
 
-                <h1>고객문의게시판</h1>
-
-                <!-- 검색 폼 -->
-                <form action="/myCustomerInquiryBoardList" method="GET" id="searchForm">
-                    <div class="form-group">
-                        <label for="commentChk">미답변 게시글 조회</label>
-                        <input type="checkbox" name="commentChk" id="commentChk" value="true" th:checked="${criteria.commentChk != null and criteria.commentChk != ''}" onchange="submitFormOnChange()">
-                    </div>
-                    <div class="form-group">
-                        <label for="keyword">게시글 검색: </label>
-                        <input type="text" id="keyword" name="keyword" th:attr="value=${criteria.keyword ?: ''}">
-                    </div>
-                    <button type="submit">검색</button>
-                </form>
-
-                <!-- 유저문의 게시글 목록 -->
-                <div class="customerInquiryBoard-list">
-                    <h2>고객문의 게시글 목록</h2>
-                    <table class="table-container">
-                        <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>등록일</th>
-                            <th>수정일</th>
-                            <th>댓글 수</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- 게시글 목록을 동적으로 채웁니다. -->
-                        <tr th:each="board : ${list}">
-                            <td th:text="${board.get('id') != null ? board.id : ''}">-</td>
-                            <td>
-                                <a th:href="@{${'/customerInquiryBoard?id=' + (board.id)}}">
-                                    <span class="post-title" th:text="${board.get('title') != null ? board.title : ''}">-</span>
-                                </a>
-                            </td>
-                            <td th:text="${board.get('Uid') != null ? board.Uid : ''}">-</td>
-                            <td th:text="${board.get('regDate') != null ? board.regDate : ''}">-</td>
-                            <td th:text="${board.get('updateDate') != null ? board.updateDate : ''}">-</td>
-                            <td th:text="${board.get('commentCount') != null ? board.commentCount : ''}">-</td>
-                        </tr>
-                        </tbody>
-                    </table>
+    <div class="my-page-menu-detail-container">
+        <h1>나의 고객 문의</h1>
+        <div class="container">
+            <!-- 검색 폼 -->
+            <form action="/myCustomerInquiryBoardList" method="GET" id="searchForm">
+                <div class="form-group">
+                    <label for="commentChk">미답변 게시글 조회</label>
+                    <input type="checkbox" name="commentChk" id="commentChk" value="true"
+                           th:checked="${criteria.commentChk != null and criteria.commentChk != ''}"
+                           onchange="submitFormOnChange()">
                 </div>
+                <div class="form-group">
+                    <label for="keyword">게시글 검색: </label>
+                    <input type="text" id="keyword" name="keyword" th:attr="value=${criteria.keyword ?: ''}">
+                </div>
+                <button type="submit">검색</button>
+            </form>
 
-                <!-- 페이징 -->
-                <div class="pagination">
-                    <ul>
-                        <!-- 이전 페이지로 이동하는 링크 -->
-                        <li th:if="${pageDto.prev}">
-                            <a th:href="@{${'/myCustomerInquiryBoardList?pageno=' + (criteria.pageno - 1) +
+            <!-- 유저문의 게시글 목록 -->
+            <div class="customerInquiryBoard-list">
+                <table class="table-container">
+                    <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>등록일</th>
+                        <th>수정일</th>
+                        <th>댓글 수</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- 게시글 목록을 동적으로 채웁니다. -->
+                    <tr th:each="board : ${list}">
+                        <td th:text="${board.get('id') != null ? board.id : ''}">-</td>
+                        <td>
+                            <a th:href="@{${'/customerInquiryBoard?id=' + (board.id)}}">
+                                <span class="post-title"
+                                      th:text="${board.get('title') != null ? board.title : ''}">-</span>
+                            </a>
+                        </td>
+                        <td th:text="${board.get('Uid') != null ? board.Uid : ''}">-</td>
+                        <td th:text="${board.get('regDate') != null ? board.regDate : ''}">-</td>
+                        <td th:text="${board.get('updateDate') != null ? board.updateDate : ''}">-</td>
+                        <td th:text="${board.get('commentCount') != null ? board.commentCount : ''}">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 페이징 -->
+            <div class="pagination">
+                <ul>
+                    <!-- 이전 페이지로 이동하는 링크 -->
+                    <li th:if="${pageDto.prev}">
+                        <a th:href="@{${'/myCustomerInquiryBoardList?pageno=' + (criteria.pageno - 1) +
                     (criteria.amount != null ? '&amount=' + criteria.amount : '') +
                     (criteria.keyword != null ? '&keyword=' + criteria.keyword : '') +
                     (criteria.commentChk != null ? '&commentChk=' + criteria.commentChk : '')}}">Prev</a>
-                        </li>
+                    </li>
 
-                        <!-- 페이지 번호를 표시하는 링크 -->
-                        <li th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}" th:classappend="${pageNumber == criteria.pageno} ? 'active'">
-                            <a th:href="@{${'/myCustomerInquiryBoardList?pageno=' + pageNumber +
+                    <!-- 페이지 번호를 표시하는 링크 -->
+                    <li th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}"
+                        th:classappend="${pageNumber == criteria.pageno} ? 'active'">
+                        <a th:href="@{${'/myCustomerInquiryBoardList?pageno=' + pageNumber +
                     (criteria.amount != null ? '&amount=' + criteria.amount : '') +
                     (criteria.keyword != null ? '&keyword=' + criteria.keyword : '') +
                     (criteria.commentChk != null ? '&commentChk=' + criteria.commentChk : '')}}">[[${pageNumber}]]</a>
-                        </li>
+                    </li>
 
-                        <!-- 다음 페이지로 이동하는 링크 -->
-                        <li th:if="${pageDto.next}">
-                            <a th:href="@{${'/myCustomerInquiryBoardList?pageno=' + (criteria.pageno + 1) +
+                    <!-- 다음 페이지로 이동하는 링크 -->
+                    <li th:if="${pageDto.next}">
+                        <a th:href="@{${'/myCustomerInquiryBoardList?pageno=' + (criteria.pageno + 1) +
                     (criteria.amount != null ? '&amount=' + criteria.amount : '') +
                     (criteria.keyword != null ? '&keyword=' + criteria.keyword : '') +
                     (criteria.commentChk != null ? '&commentChk=' + criteria.commentChk : '')}}">Next</a>
-                        </li>
-                    </ul>
-                </div>
+                    </li>
+                </ul>
+            </div>
 
-                <!-- 에러 메시지 -->
-                <div th:if="${!success}" class="error-message">
-                    <p>고객문의 게시글 조회에 실패하였습니다.</p>
-                </div>
+            <!-- 에러 메시지 -->
+            <div th:if="${!success}" class="error-message">
+                <p>고객문의 게시글 조회에 실패하였습니다.</p>
             </div>
         </div>
-    </section>
-</div>
-<div id="footer">
+    </div>
+</main>
+
+<footer id="footer">
     <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
-</div>
+</footer>
 </body>
 </html>

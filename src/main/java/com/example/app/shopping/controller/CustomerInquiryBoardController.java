@@ -72,7 +72,7 @@ public class CustomerInquiryBoardController {
 
     @GetMapping("myCustomerInquiryBoardList")
     public String myCustomerInquiryBoardList(@ModelAttribute Criteria criteria, Authentication authentication, Model model) {
-        System.out.println("CustomerInquiryBoardController's myCustomerInquiryBoardList criteria: " + criteria);
+        model.addAttribute("menu", "myCustomerInquiryBoardList");
 
         if (criteria.getPageno() == null) {
             criteria.setPageno(1);

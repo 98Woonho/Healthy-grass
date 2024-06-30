@@ -33,7 +33,8 @@ a:link, a:visited {
     align-items: center;
 }
 
-.admin-main {
+.admin-main,
+.my-page-main {
     max-width: 1200px;
     margin: 20px auto;
     display: flex;
@@ -41,7 +42,8 @@ a:link, a:visited {
     gap: 2rem;
 }
 
-.admin-menu-container {
+.admin-menu-container,
+.my-page-menu-container {
     background-color: #f8f9fa;
     width: 20%;
     height: 100%;
@@ -49,43 +51,52 @@ a:link, a:visited {
     padding: 2rem;
 }
 
-.admin-menu-container h2 {
+.admin-menu-container h2,
+.my-page-menu-container h2 {
     font-weight: 600;
 }
 
-.admin-menu-container ul {
+.admin-menu-container ul,
+.my-page-menu-container ul {
     margin-bottom: 2rem;
 }
 
-.admin-menu-container li {
+.admin-menu-container li,
+.my-page-menu-container li {
     margin-bottom: 0.35rem;
 }
 
-.admin-menu-container li:hover {
+.admin-menu-container li:hover,
+.my-page-menu-container li:hover {
     color: #0d6efd;
 }
 
-.admin-menu-container li.selected {
+.admin-menu-container li.selected,
+.my-page-menu-container li.selected {
     color: #0d6efd;
 }
 
-.admin-menu-container li a {
+.admin-menu-container li a
+.my-page-menu-container li a {
     display: inline-block;
     width: 100%;
 }
 
-.admin-menu-detail-container {
+.admin-menu-detail-container,
+.my-page-menu-detail-container {
     flex: 1;
     border: 1px solid #e4e4e4;
     padding: 2rem;
 }
 
-.admin-menu-detail-container h1 {
+.admin-menu-detail-container h1,
+.my-page-menu-detail-container h1 {
     font-weight: 600;
     margin-bottom: 3rem;
 }
 
-.admin-menu-detail-container .container {
+.admin-menu-detail-container .container,
+.my-page-menu-detail-container .container {
     box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
     border-radius: 5px;
     padding: 1rem;

@@ -128,6 +128,7 @@ public class PaymentService {
             result.put("list", paymentListReturnVal);
         } else {
             result.put("success", false);
+            result.put("pageDto", pageDto);
             result.put("msg", "조회 결과가 없습니다.");
         }
 
@@ -159,6 +160,7 @@ public class PaymentService {
             result.put("list", paymentListReturnVal);
         } else {
             result.put("success", false);
+            result.put("pageDto", pageDto);
             result.put("msg", "조회 결과가 없습니다.");
         }
 

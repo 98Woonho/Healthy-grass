@@ -1,37 +1,36 @@
 <th:block th:fragment="mainManu_fragment">
-    <div class="main-menu box w-400">
-
-        <div class="menu-section">
-            <ul class="no-dot user-ul">
-                <h2>회원정보</h2>
-                <li><a href="/myPage/user/searchForm" class="no-text-line">회원 정보 조회</a></li>
-                <li><a href="/myPage/user/modifyForm" class="no-text-line">회원 정보 수정</a></li>
-                <li><a href="/myPage/user/deleteForm" class="no-text-line">회원 정보 삭제</a></li>
+    <div class="my-page-menu-container">
+        <div>
+            <h2>회원정보</h2>
+            <ul>
+                <li th:class="${menu == 'searchForm' ? 'selected' : ''}"><a href="/myPage/user/searchForm" class="no-text-line">회원 정보 조회</a></li>
+                <li th:class="${menu == 'modifyForm' ? 'selected' : ''}"><a href="/myPage/user/modifyForm" class="no-text-line">회원 정보 수정</a></li>
+                <li th:class="${menu == 'deleteForm' ? 'selected' : ''}"><a href="/myPage/user/deleteForm" class="no-text-line">회원 정보 삭제</a></li>
             </ul>
         </div>
 
-        <div class="menu-section">
-            <ul class="no-dot product-ul">
-                <h2>상품 서비스</h2>
+        <div>
+            <h2>상품 서비스</h2>
+            <ul>
                 <li><a href="/cart" class="no-text-line">장바구니 조회</a></li>
-                <li><a href="/myPage/wishList?pageno=1" class="no-text-line">찜리스트 조회</a></li>
-                <li><a href="/myPage/paymentList" class="no-text-line">주문정보 조회</a></li>
+                <li th:class="${menu == 'wishList' ? 'selected' : ''}"><a href="/myPage/wishList?pageno=1" class="no-text-line">찜리스트 조회</a></li>
+                <li th:class="${menu == 'paymentList' ? 'selected' : ''}"><a href="/myPage/paymentList" class="no-text-line">주문정보 조회</a></li>
             </ul>
         </div>
 
-        <div class="menu-section">
-            <ul class="no-dot board-ul">
-                <h2>게시물 관리</h2>
-                <li><a href="/myCustomerInquiryBoardList" class="no-text-line">고객문의 조회</a></li>
-                <li><a href="/myProductInquiryBoardList" class="no-text-line">상품문의 조회</a></li>
-                <li><a href="/myProductReviewBoardList" class="no-text-line">리뷰 조회</a></li>
+        <div>
+            <h2>게시물 관리</h2>
+            <ul>
+                <li th:class="${menu == 'myCustomerInquiryBoardList' ? 'selected' : ''}"><a href="/myCustomerInquiryBoardList" class="no-text-line">고객문의 조회</a></li>
+                <li th:class="${menu == 'myProductInquiryBoardList' ? 'selected' : ''}"><a href="/myProductInquiryBoardList" class="no-text-line">상품문의 조회</a></li>
+                <li th:class="${menu == 'myProductReviewBoardList' ? 'selected' : ''}"><a href="/myProductReviewBoardList" class="no-text-line">리뷰 조회</a></li>
             </ul>
         </div>
 
-        <div class="menu-section">
-            <ul class="no-dot board-ul">
-                <h2>배송지 관리</h2>
-                <li><a href="/myPage/editAddress" class="no-text-line">배송지 등록/수정</a></li>
+        <div>
+            <h2>배송지 관리</h2>
+            <ul>
+                <li th:class="${menu == 'editAddress' ? 'selected' : ''}"><a href="/myPage/editAddress" class="no-text-line">배송지 등록/수정</a></li>
             </ul>
         </div>
     </div>

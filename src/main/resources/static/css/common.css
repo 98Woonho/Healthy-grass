@@ -11,3 +11,126 @@ footer{
     height : 300px;
     background-color : black;
 }
+
+button {
+    border: none;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.common-input {
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.admin-main,
+.my-page-main {
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.admin-menu-container,
+.my-page-menu-container {
+    background-color: #f8f9fa;
+    width: 20%;
+    height: 100%;
+    border: 1px solid #e4e4e4;
+    padding: 2rem;
+}
+
+.admin-menu-container h2,
+.my-page-menu-container h2 {
+    font-weight: 600;
+}
+
+.admin-menu-container ul,
+.my-page-menu-container ul {
+    margin-bottom: 2rem;
+}
+
+.admin-menu-container li,
+.my-page-menu-container li {
+    margin-bottom: 0.35rem;
+}
+
+.admin-menu-container li:hover,
+.my-page-menu-container li:hover {
+    color: #0d6efd;
+}
+
+.admin-menu-container li.selected,
+.my-page-menu-container li.selected {
+    color: #0d6efd;
+}
+
+.admin-menu-container li a
+.my-page-menu-container li a {
+    display: inline-block;
+    width: 100%;
+}
+
+.admin-menu-detail-container,
+.my-page-menu-detail-container {
+    flex: 1;
+    border: 1px solid #e4e4e4;
+    padding: 2rem;
+}
+
+.admin-menu-detail-container h1,
+.my-page-menu-detail-container h1 {
+    font-weight: 600;
+    margin-bottom: 3rem;
+}
+
+.admin-menu-detail-container .container,
+.my-page-menu-detail-container .container {
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
+    border-radius: 5px;
+    padding: 1rem;
+    width: 100%;
+}
+
+.admin-product-form {
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.admin-product-form button {
+    border: none;
+    background-color: #4cae4c;
+    color: #e8e8e8;
+    padding: 0.5rem 1.5rem;
+    margin: 0 auto;
+}
+
+.admin-product-form button:hover {
+    background-color: #439a46;
+}
+
+.product-content-container label {
+    position: relative;
+    bottom: 90%;
+}
+
+.pagination {
+    display: block;
+}

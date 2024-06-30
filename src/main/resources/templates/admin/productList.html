@@ -8,101 +8,104 @@
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <link rel="stylesheet" th:href="@{/css/fragments/admin/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/admin/mainDetail.css}">
-
     <link rel="stylesheet" th:href="@{/css/admin/productLIstBoard.css}">
 </head>
 <body>
-<div class="header layout-5">
+
+<header id="header">
     <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
-</div>
-<div class="main">
-    <section class="first-seciton">
-        <h1>관리자 페이지</h1>
-    </section>
-    <section class="second-section box1">
-        <th:block th:insert="~{fragments/admin/mainMenu.html :: mainManu_fragment}"></th:block>
+</header>
 
-        <div class="box w-full h-800">
-            <div class="container">
-                <!-- 검색 폼 -->
-                <form action="/admin/productList" method="GET" id="searchForm">
-                    <div class="form-group">
-                        <label for="keyword">검색: </label>
-                        <input type="text" id="keyword" name="keyword" th:attr="value=${criteria.keyword ?: ''}">
-                        <button type="submit">검색</button>
-                    </div>
-                </form>
+<main class="admin-main">
+    <th:block th:insert="~{fragments/admin/mainMenu.html :: mainManu_fragment}"></th:block>
 
-                <!-- 상품 목록 -->
-                <div class="product-list">
-                    <h2>상품 목록</h2>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>상품명</th>
-                            <th>가격</th>
-                            <th>할인률</th>
-                            <th>할인된 가격</th>
-                            <th>대분류</th>
-                            <th>소분류</th>
-                            <th>수정</th>
-                            <th>삭제</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- 상품 목록을 동적으로 채웁니다. -->
-                        <tr th:each="product : ${list}">
-                            <td>
-                                <a th:href="@{${'/product?id=' + (product.id)}}">
-                                    <span th:text="${product.get('name') != null ? product.name : ''}">-</span>
-                                </a>
-                            </td>
-                            <td th:text="${product.get('price') != null ? product.price : ''}">-</td>
-                            <td th:text="${product.get('discount') != null ? product.discount + '%' : ''}">-</td>
-                            <td th:text="${product.get('discountedPrice') != null ? product.discountedPrice : ''}">-</td>
-                            <td th:text="${product.get('majorCategory') != null ? product.majorCategory : ''}">-</td>
-                            <td th:text="${product.get('middleCategory') != null ? product.middleCategory : ''}">-</td>
-                            <td><button class="edit-btn" th:data-id="${product.id}">수정</button></td>
-                            <td><button class="delete-btn" th:data-id="${product.id}">삭제</button></td>
-                        </tr>
-                        </tbody>
-                    </table>
+    <div class="admin-menu-detail-container">
+        <h1>최근 등록된 상품</h1>
+        <div class="container">
+            <!-- 검색 폼 -->
+            <form action="/admin/productList" method="GET" id="searchForm">
+                <div class="form-group">
+                    <label for="keyword">검색: </label>
+                    <input type="text" id="keyword" name="keyword" th:attr="value=${criteria.keyword ?: ''}">
+                    <button type="submit">검색</button>
                 </div>
-                <script defer th:src="@{/js/admin/productBoardBtnProcess.js}"></script>
+            </form>
 
-                <!-- 페이징 -->
-                <div class="pagination">
-                    <ul>
-                        <!-- 이전 페이지로 이동하는 링크 -->
-                        <li th:if="${pageDto.prev}">
-                            <a th:href="@{${'/admin/productList?pageno=' + (criteria.pageno - 1) + (criteria.keyword != null ? '&keyword=' + criteria.keyword : '')}}">Prev</a>
-                        </li>
+            <!-- 상품 목록 -->
+            <div class="product-list">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>상품명</th>
+                        <th>가격</th>
+                        <th>할인률</th>
+                        <th>할인된 가격</th>
+                        <th>대분류</th>
+                        <th>소분류</th>
+                        <th>수정</th>
+                        <th>삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- 상품 목록을 동적으로 채웁니다. -->
+                    <tr th:each="product : ${list}">
+                        <td>
+                            <a th:href="@{${'/product?id=' + (product.id)}}">
+                                <span th:text="${product.get('name') != null ? product.name : ''}">-</span>
+                            </a>
+                        </td>
+                        <td th:text="${product.get('price') != null ? product.price : ''}">-</td>
+                        <td th:text="${product.get('discount') != null ? product.discount + '%' : ''}">-</td>
+                        <td th:text="${product.get('discountedPrice') != null ? product.discountedPrice : ''}">-</td>
+                        <td th:text="${product.get('majorCategory') != null ? product.majorCategory : ''}">-</td>
+                        <td th:text="${product.get('middleCategory') != null ? product.middleCategory : ''}">-</td>
+                        <td>
+                            <button class="edit-btn" th:data-id="${product.id}">수정</button>
+                        </td>
+                        <td>
+                            <button class="delete-btn" th:data-id="${product.id}">삭제</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <script defer th:src="@{/js/admin/productBoardBtnProcess.js}"></script>
 
-                        <!-- 페이지 번호를 표시하는 링크 -->
-                        <li th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}" th:classappend="${pageNumber == criteria.pageno} ? 'active'">
-                            <a th:href="@{${'/admin/productList?pageno=' + pageNumber + (criteria.keyword != null ? '&keyword=' + criteria.keyword : '')}}">[[${pageNumber}]]</a>
-                        </li>
+            <!-- 페이징 -->
+            <div class="pagination">
+                <ul>
+                    <!-- 이전 페이지로 이동하는 링크 -->
+                    <li th:if="${pageDto.prev}">
+                        <a th:href="@{${'/admin/productList?pageno=' + (criteria.pageno - 1) + (criteria.keyword != null ? '&keyword=' + criteria.keyword : '')}}">Prev</a>
+                    </li>
 
-                        <!-- 다음 페이지로 이동하는 링크 -->
-                        <li th:if="${pageDto.next}">
-                            <a th:href="@{${'/admin/productList?pageno=' + (criteria.pageno + 1) + (criteria.keyword != null ? '&keyword=' + criteria.keyword : '')}}">Next</a>
-                        </li>
-                    </ul>
-                </div>
+                    <!-- 페이지 번호를 표시하는 링크 -->
+                    <li th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}"
+                        th:classappend="${pageNumber == criteria.pageno} ? 'active'">
+                        <a th:href="@{${'/admin/productList?pageno=' + pageNumber + (criteria.keyword != null ? '&keyword=' + criteria.keyword : '')}}">[[${pageNumber}]]</a>
+                    </li>
 
-                <!-- 에러 메시지 -->
-                <div th:if="${!success}" class="error-message">
-                    <p>상품 리스트 조회에 실패하였습니다.</p>
-                </div>
+                    <!-- 다음 페이지로 이동하는 링크 -->
+                    <li th:if="${pageDto.next}">
+                        <a th:href="@{${'/admin/productList?pageno=' + (criteria.pageno + 1) + (criteria.keyword != null ? '&keyword=' + criteria.keyword : '')}}">Next</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 에러 메시지 -->
+            <div th:if="${!success}" class="error-message">
+                <p>상품 리스트 조회에 실패하였습니다.</p>
             </div>
         </div>
+    </div>
+
     </section>
-</div>
+</main>
+
 <div id="footer">
     <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
 </div>
+
 </body>
 </html>

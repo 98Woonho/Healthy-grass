@@ -32,12 +32,6 @@ public class AdminController {
     @Autowired
     private PaymentService paymentService;
 
-    // 관리자 페이지 GET
-    @GetMapping("")
-    public String getAdminPage() {
-        return "admin/admin";
-    }
-
     // 제품 등록 Get
     @GetMapping("addProduct")
     public void getAddProduct(Model model) {
@@ -49,6 +43,7 @@ public class AdminController {
 
         model.addAttribute("majorCategoryList", majorCategoryList);
         model.addAttribute("middleCategoryList", middleCategoryList);
+        model.addAttribute("menu", "addProduct");
     }
 
     // 제품 등록 Post
@@ -116,6 +111,8 @@ public class AdminController {
             model.addAttribute("success", false);
         }
 
+        model.addAttribute("menu", "productList");
+
         return "admin/productList";
     }
 
@@ -139,8 +136,6 @@ public class AdminController {
     */
     @GetMapping("payment/delivery")
     public String getPaymentDeliveryListPage(@ModelAttribute Criteria criteria, Model model) {
-        log.info("AdminController's getPaymentDeliveryListPage criteria: {}", criteria);
-
         // Criteria 초기화
         if (criteria.getPageno() == null) criteria.setPageno(1);
         criteria.setAmount(6);
@@ -155,6 +150,8 @@ public class AdminController {
             model.addAttribute("success", false);
             model.addAttribute("msg", e.getMessage());
         }
+
+        model.addAttribute("menu", "deliveryList");
 
         return "admin/payment/delivery";
     }
@@ -173,8 +170,6 @@ public class AdminController {
     */
     @GetMapping("payment/refund")
     public String getPaymentRefundListPage(@ModelAttribute Criteria criteria, Model model) {
-        log.info("AdminController's getPaymentRefundListPage criteria: {}", criteria);
-
         // Criteria 초기화
         if (criteria.getPageno() == null) criteria.setPageno(1);
         criteria.setAmount(6);
@@ -190,6 +185,8 @@ public class AdminController {
             model.addAttribute("success", false);
             model.addAttribute("msg", e.getMessage());
         }
+
+        model.addAttribute("menu", "refundList");
 
         return "admin/payment/refund";
     }

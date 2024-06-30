@@ -12,18 +12,16 @@
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 </head>
 <body>
-<div class="header layout-5">
+
+<header id="header">
     <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
-</div>
-<div class="main">
-    <section class="first-seciton">
-        <h1>마이페이지</h1>
-    </section>
-    <section class="second-section box1">
-        <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
+</header>
 
-        <div class="box w-full h-800">
+<main class="my-page-main">
+    <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
+
+        <div class="my-page-menu-detail-container">
             <div class="shopping-title">
                 <span sec:authentication="name"></span>
                 <span>님 환영합니다.</span>
@@ -43,10 +41,11 @@
                 </div>
             </div>
         </div>
-    </section>
-</div>
-<div id="footer">
+</main>
+
+<footer id="footer">
     <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
-</div>
+</footer>
+
 </body>
 </html>

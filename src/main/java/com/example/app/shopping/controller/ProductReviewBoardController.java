@@ -118,8 +118,7 @@ public class ProductReviewBoardController {
             Model model,
             Authentication authentication
     ) {
-        System.out.println("ProductReviewBoardController's myProductReviewBoardList " +
-                "criteria: " + criteria + " model: " + model);
+        model.addAttribute("menu", "myProductReviewBoardList");
 
         if (criteria.getPageno() == null) {
             criteria.setPageno(1);

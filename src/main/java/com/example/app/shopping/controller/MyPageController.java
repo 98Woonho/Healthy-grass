@@ -89,11 +89,12 @@ public class MyPageController {
         // 2페이지 이상 && 찜한 상품이 없으면 이전 페이지로 return
         if (wishList.size() == 0 && criteria.getPageno() > 1) {
             criteria.setPageno(criteria.getPageno() - 1);
-            return "redirect:myPage/wishList?pageno=" + criteria.getPageno();
+            return "redirect:wishList?pageno=" + criteria.getPageno();
         }
 
         model.addAttribute("wishList", wishList);
         model.addAttribute("pageDto", pageDto);
+        model.addAttribute("menu", "wishList");
 
         return "myPage/wishList";
     }
@@ -132,6 +133,7 @@ public class MyPageController {
         ShippingAddressDto shippingAddressDto = myPageService.isExistShippingAddress(userDto.getId());
 
         model.addAttribute("shippingAddress", shippingAddressDto);
+        model.addAttribute("menu", "editAddress");
     }
 
     @PostMapping("editAddress")
@@ -164,6 +166,7 @@ public class MyPageController {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal(); // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
+            model.addAttribute("menu", "searchForm");
 
             return "myPage/searchForm";
         } else {
@@ -173,6 +176,8 @@ public class MyPageController {
 
     @GetMapping("user/modifyForm") // 회원정보 수정 페이지로 가기
     public String userModifyForm(Authentication authentication, Model model) {
+        model.addAttribute("menu", "modifyForm");
+
         if (authentication != null && passwordCheck) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
@@ -242,6 +247,8 @@ public class MyPageController {
 
     @GetMapping("user/deleteForm") // 회원정보 삭제 페이지로 가기
     public String userDeleteForm(Authentication authentication, Model model) {
+        model.addAttribute("menu", "deleteForm");
+
         if (authentication != null && passwordCheck) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
@@ -305,7 +312,7 @@ public class MyPageController {
     */
     @GetMapping("paymentList")
     public String getMyPaymentBoard(@ModelAttribute Criteria criteria, Authentication authentication, Model model) {
-        log.info("MyPageController's getMyPaymentBoard criteria: " + criteria);
+        model.addAttribute("menu", "paymentList");
 
         if (criteria.getPageno() == null) {
             criteria.setPageno(1);

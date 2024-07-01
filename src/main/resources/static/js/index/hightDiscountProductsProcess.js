@@ -22,7 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
         productListElement.innerHTML = ''; // 기존 아이템 삭제
 
         products.forEach(product => {
-            const itemHtml = `
+            if (product.discount > 0) {
+                const itemHtml = `
                 <div class="item-list">
                     <div class="thumb">
                         <a href="/product?id=${product.id}"><img src="${product.mainImgPath + product.mainImgName}" class="MS_prod_img_m MS_prod_img_s"></a>
@@ -39,7 +40,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 </div>
             `;
-            productListElement.insertAdjacentHTML('beforeend', itemHtml);
+                productListElement.insertAdjacentHTML('beforeend', itemHtml);
+            }
+
         });
     }
 });

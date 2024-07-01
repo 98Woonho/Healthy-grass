@@ -80,16 +80,12 @@ wishBtn.addEventListener('click', function (e) {
     axios.post('/myPage/wish', {
         Pid: productId.value
     })
-        .then(res => {
-            alert(res.data);
-        })
-        .catch(err => {
-            if (err.response.status === 409) {
-                alert(err.response.data);
-            } else {
-                alert('알 수 없는 이유로 제품을 찜리스트에 등록 하지 못했습니다. 잠시 후 다시 시도해 주세요.');
-            }
-        })
+    .then(res => {
+        alert(res.data.msg);
+    })
+    .catch(err => {
+        alert('로그인 시에만 사용할 수 있는 기능입니다.');
+    })
 })
 
 
@@ -98,7 +94,9 @@ cartBtn.addEventListener("click", function (e) {
     e.preventDefault();
     console.log("productAmount.innerText" + productAmount.innerText);
     console.log("quantityInput.value" + quantityInput.value);
-    if (parseInt(productAmount.innerText) < parseInt(quantityInput.value)){
+    // productAmount.innerText == 상품 재고
+    // quantityInput.value == 구매하려고 하는 수량
+    if (parseInt(productAmount.innerText) === 0){
         alert('상품 재고가 없어 상품을 구매하지 못했습니다.')
         return;
     }
@@ -136,6 +134,10 @@ cartBtn.addEventListener("click", function (e) {
 const buyNowBtn = document.querySelector('.buyNowBtn');
 
 buyNowBtn.addEventListener('click', function (e) {
+    if (parseInt(productAmount.innerText) === 0){
+        alert('상품 재고가 없어 상품을 구매하지 못했습니다.')
+        return;
+    }
     const productId = document.querySelector('.product-id').value;
     const quantity = quantityInput.value;
 

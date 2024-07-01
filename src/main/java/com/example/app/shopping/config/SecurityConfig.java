@@ -51,6 +51,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(
                 authorize -> {
                     authorize.requestMatchers("/js/**","/css/**","/images/**","/templates").permitAll();
+                    authorize.requestMatchers("/myPage/wish").permitAll();
                     authorize.requestMatchers("/myPage/**").hasAnyRole("USER","ADMIN");
                     authorize.requestMatchers("/order/**").hasAnyRole("USER","ADMIN");
                     authorize.requestMatchers("/myCustomerInquiryBoardList").hasAnyRole("USER","ADMIN");

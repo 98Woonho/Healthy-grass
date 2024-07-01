@@ -16,6 +16,13 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     vertical-align: middle;
 }
 
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+     line-height: normal;
+}
+
 .product-img {
     border-radius: 5px;
 }
@@ -128,7 +135,7 @@ table {
 
 .input {
     width: 200px; /* 너비를 100%로 설정하여 부모 요소의 너비에 맞춤 */
-    padding: 10px; /* 내부 여백 */
+    padding: 15px; /* 내부 여백 */
     margin: 10px 0; /* 위아래 여백 */
     font-size: 16px; /* 폰트 크기 */
     border: 1px solid #ccc; /* 테두리 */

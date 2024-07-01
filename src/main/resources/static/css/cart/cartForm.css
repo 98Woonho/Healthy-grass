@@ -58,7 +58,7 @@ table th, table td {
     width: 80px;
     display: inline-block;
     padding: 8px 12px;
-    background-color: #4a4a4a;
+    background-color: #999999;
     color: white;
     text-decoration: none;
     border: none;
@@ -78,7 +78,7 @@ table th, table td {
 }
 
 .wish-btn:hover{
-    background-color: #343a40;
+    background-color: #6C6B6B;
     color: white;
 }
 
@@ -118,6 +118,13 @@ table th, table td {
     height: 60px;
     line-height: 30px;
 }
+
+/* 호버 상태 스타일 */
+.order_select_product:hover {
+    background-color: #45a049; /* 호버 시 배경색 (진한 녹색) */
+    color: white;
+}
+
 .again-shopping {
     display: inline-block;
     padding: 15px 30px;
@@ -133,12 +140,6 @@ table th, table td {
     width: 200px;
     height: 60px;
     line-height: 30px;
-}
-
-    /* 호버 상태 스타일 */
-.order_select_product:hover {
-    background-color: #45a049; /* 호버 시 배경색 (진한 녹색) */
-    color: white;
 }
 
 .h2 {

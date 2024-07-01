@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,16 +42,29 @@ public class MyPageService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public String addWish(WishDto wishDto) {
+    public Map<String, Object> addWish(WishDto wishDto) {
+        Map<String, Object> result = new HashMap<>();
+
         WishDto wishlistDto = wishMapper.findWish(wishDto);
 
         if (wishlistDto != null) {
-            return "FAILURE_DUPLICATE_WISH";
+            result.put("success", false);
+            result.put("msg", "이미 찜리스트에 등록된 상품입니다.");
+
+            return result;
         }
 
-        wishMapper.insertWish(wishDto);
+        int returnVal = wishMapper.insertWish(wishDto);
 
-        return "SUCCESS";
+        if (returnVal < 1) {
+            result.put("success", false);
+            result.put("msg", "찜리스트에 등록을 실패하였습니다. 현상이 계속된다면 관리자에게 문의바랍니다.");
+        } else {
+            result.put("success", true);
+            result.put("msg", "찜리스트 등록에 성공하였습니다. 마이페이지에서 확인가능합니다.");
+        }
+
+        return result;
     }
 
     @Transactional(rollbackFor = Exception.class)

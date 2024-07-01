@@ -101,17 +101,23 @@ public class MyPageController {
 
     // 찜리스트에 제품 저장
     @PostMapping("wish")
-    public ResponseEntity<String> postWish(@RequestBody WishDto wishDto, Authentication authentication) {
+    public @ResponseBody Map<String, Object> postWish(@RequestBody WishDto wishDto, Authentication authentication) {
+        log.info("MyPageController's postWish wishDto: {}", wishDto);
+        Map<String, Object> response = new HashMap<>();
+
+        if (authentication == null) {
+            response.put("success", false);
+            response.put("msg", "로그인한 회원만 사용할 수 있는 서비스입니다.");
+
+            return response;
+        }
+
         String Uid = ((PrincipalDetails) authentication.getPrincipal()).getUsername();
         wishDto.setUid(Uid);
 
-        String result = myPageService.addWish(wishDto);
+        response = myPageService.addWish(wishDto);
 
-        if (result.equals("FAILURE_DUPLICATE_WISH")) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 찜리스트에 등록된 제품입니다.");
-        }
-
-        return ResponseEntity.ok("찜리스트에 제품이 등록 되었습니다.");
+        return response;
     }
 
     @DeleteMapping("wish/{pIds}")

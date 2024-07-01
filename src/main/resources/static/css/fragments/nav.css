@@ -69,4 +69,6 @@ nav {
 
 .top-hr {
     margin-bottom: 50px;
+    border: 1px !important;
+    height: 1px !important;
 }

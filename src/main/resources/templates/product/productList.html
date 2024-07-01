@@ -7,125 +7,149 @@
 
     <script defer th:src="@{/js/productList/searchFormOnchange.js}"></script>
 
-    <link rel="stylesheet" th:href="@{/css/productList/common.css}">
+    <!--    <link rel="stylesheet" th:href="@{/css/productList/common.css}">-->
+    <link rel="stylesheet" th:href="@{/css/productList/productList.css}">
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="header layout-5">
-            <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
-            <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
-        </div>
-        <div class="main">
-            <section class="first-section">
-                <div class="container">
-                    <h1 th:if="${criteria.middleCategory == null or criteria.middleCategory == ''}">
-                        <span th:if="${criteria.majorCategory != null and criteria.majorCategory != ''}" th:text="${criteria.majorCategory}"></span>
-                        <span th:if="${criteria.majorCategory == null or criteria.majorCategory == ''}">통합 검색</span>
-                    </h1>
-                    <h1 th:if="${criteria.middleCategory != null and criteria.middleCategory != ''}" th:text="${criteria.middleCategory}"></h1>
+<div class="wrapper">
+    <div class="header layout-5">
+        <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
+        <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
+    </div>
+    <div class="main">
+        <section class="first-section">
+            <div class="container">
+                <h1 class="search-name" th:if="${criteria.middleCategory == null or criteria.middleCategory == ''}">
+                        <span th:if="${criteria.majorCategory != null and criteria.majorCategory != ''}"
+                              th:text="${criteria.majorCategory}"></span>
+                    <span th:if="${criteria.majorCategory == null or criteria.majorCategory == ''}">통합 검색</span>
+                </h1>
+                <div id="search">
+                    <h1 th:if="${criteria.middleCategory != null and criteria.middleCategory != ''}"
+                        th:text="${criteria.middleCategory}"></h1>
 
                     <!-- 검색 폼 -->
                     <form action="/productList" method="GET" id="searchForm">
                         <div class="form-group">
-                            <label for="sorting">정렬 방식:</label>
+                            <label for="sorting"></label>
                             <select id="sorting" name="sorting" onchange="submitFormOnChange()">
                                 <option value="기본정렬" th:selected="${criteria.sorting == '기본정렬'}">기본정렬</option>
                                 <option value="가격 오름차순" th:selected="${criteria.sorting == '가격 오름차순'}">가격 오름차순</option>
                                 <option value="가격 내림차순" th:selected="${criteria.sorting == '가격 내림차순'}">가격 내림차순</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="keyword">검색: </label>
+                            <label for="keyword"></label>
                             <input type="text" id="keyword" name="keyword" th:attr="value=${criteria.keyword ?: ''}">
-                        </div>
                         <div class="form-hidden" style="display: none;">
-                            <input type="hidden" name="majorCategory" th:value="${criteria.majorCategory != null ? criteria.majorCategory : ''}">
-                            <input type="hidden" name="middleCategory" th:value="${criteria.middleCategory != null ? criteria.middleCategory : ''}">
+                            <input type="hidden" name="majorCategory"
+                                   th:value="${criteria.majorCategory != null ? criteria.majorCategory : ''}">
+                            <input type="hidden" name="middleCategory"
+                                   th:value="${criteria.middleCategory != null ? criteria.middleCategory : ''}">
                         </div>
                         <button type="submit">검색</button>
+                        </div>
                     </form>
+                </div>
+                <!-- 상품 목록 -->
+                <div class="product-list">
+                    <div class="mainPrdLst first" id="tablist_1" style="display: block;">
+                        <div class="item-wrap">
+                            <div class="item-list" th:each="product : ${list}">
+                                <div class="thumb">
+                                    <a th:href="@{/product(id=${product.id})}"><img
+                                            th:src="${product.mainImgPath + product.mainImgName}"
+                                            class="MS_prod_img_m MS_prod_img_s"></a>
+                                </div>
+                                <div class="prd-info">
+                                    <ul>
+                                        <li class="prd-brand"><a th:href="@{/product?id=${product.id}}"
+                                                                 th:text="${product.name}"></a></li>
+                                        <!-- 조건: product.discount > 0 -->
+                                        <li class="prd-price" th:if="${product.discount > 0}">
+                                            <b th:text="${product.get('price') != null ? product.price : ''}"></b>
+                                            <b>원</b>
+                                        </li>
+                                        <li class="prd-discount" th:if="${product.discount > 0}">
+                                            <b th:text="${product.get('discountedPrice') != null ? product.discountedPrice : ''}"></b><b>원</b>(
+                                            <th:block
+                                                    th:text="${product.get('discount') != null ? product.discount : ''}"></th:block>
+                                            % 할인)
+                                        </li>
 
-                    <!-- 상품 목록 -->
-                    <div class="product-list">
-                        <h2>상품 목록</h2>
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>상품명</th>
-                                <th>가격</th>
-                                <th>할인률</th>
-                                <th>할인된 가격</th>
-                                <th>대분류</th>
-                                <th>소분류</th>
-                                <th>리뷰 수</th>
-                                <th>평점</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- 상품 목록을 동적으로 채웁니다. -->
-                            <tr th:each="product : ${list}">
-                                <td>
-                                    <a th:href="@{${'/product?id=' + (product.id)}}">
-                                        <span th:text="${product.get('name') != null ? product.name : ''}">-</span>
-                                    </a>
-                                </td>
-                                <td th:text="${product.get('price') != null ? product.price : ''}">-</td>
-                                <td th:text="${product.get('discount') != null ? product.discount + '%' : ''}">-</td>
-                                <td th:text="${product.get('discountedPrice') != null ? product.discountedPrice : ''}">-</td>
-                                <td th:text="${product.get('majorCategory') != null ? product.majorCategory : ''}">-</td>
-                                <td th:text="${product.get('middleCategory') != null ? product.middleCategory : ''}">-</td>
-                                <td th:text="${product.get('reviewCount') != null ? product.reviewCount : ''}">-</td>
-                                <td th:text="${product.get('averageRating') != null ? #numbers.formatDecimal(product.get('averageRating'), 1, 1) : '0'}">-</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                        <!-- 조건: product.discount <= 0 -->
+                                        <li class="no-prd-price" th:unless="${product.discount > 0}">
+                                            <b th:text="${product.get('price') != null ? product.price : ''}"></b>
+                                            <b>원</b>
+                                        </li>
+                                        <li class="prd-category">
+                                            카테고리:
+                                            <th:block
+                                                    th:text="${product.get('middleCategory') != null ? product.middleCategory : ''}"></th:block>
+                                        </li>
+                                        <li class="prd-review">
+                                            리뷰 수:
+                                            <th:block
+                                                    th:text="${product.get('reviewCount') != null ? product.reviewCount : ''}"></th:block>
+                                        </li>
+
+                                        <li class="prd-rating">
+                                            평점:
+                                            <th:block
+                                                    th:text="${product.get('averageRating') != null ? #numbers.formatDecimal(product.get('averageRating'), 1, 1) : '0'}"></th:block>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- 쌀/잡곡 상품 리스트 아이템들 -->
+                        </div>
                     </div>
+                </div>
 
-                    <!-- 페이징 -->
-                    <div class="pagination">
-                        <ul>
-                            <!-- 이전 페이지로 이동하는 링크 -->
-                            <li th:if="${pageDto.prev}">
-                                <a th:href="@{${'/productList?pageno=' + (criteria.pageno - 1) +
+                <!-- 페이징 -->
+                <div class="pagination">
+                    <ul>
+                        <!-- 이전 페이지로 이동하는 링크 -->
+                        <li th:if="${pageDto.prev}">
+                            <a th:href="@{${'/productList?pageno=' + (criteria.pageno - 1) +
                     (criteria.keyword != null ? '&keyword=' + criteria.keyword : '') +
                     (criteria.majorCategory != null ? '&majorCategory=' + criteria.majorCategory : '') +
                     (criteria.middleCategory != null ? '&middleCategory=' + criteria.middleCategory : '') +
-                    (criteria.sorting != null ? '&sorting=' + criteria.sorting : '')}}">Prev</a>
-                            </li>
+                    (criteria.sorting != null ? '&sorting=' + criteria.sorting : '')}}">이전</a>
+                        </li>
 
-                            <!-- 페이지 번호를 표시하는 링크 -->
-                            <li th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}" th:classappend="${pageNumber == criteria.pageno} ? 'active'">
-                                <a th:href="@{${'/productList?pageno=' + pageNumber +
+                        <!-- 페이지 번호를 표시하는 링크 -->
+                        <li th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}"
+                            th:classappend="${pageNumber == criteria.pageno} ? 'active'">
+                            <a th:href="@{${'/productList?pageno=' + pageNumber +
                     (criteria.keyword != null ? '&keyword=' + criteria.keyword : '') +
                     (criteria.majorCategory != null ? '&majorCategory=' + criteria.majorCategory : '') +
                     (criteria.middleCategory != null ? '&middleCategory=' + criteria.middleCategory : '') +
                     (criteria.sorting != null ? '&sorting=' + criteria.sorting : '')}}">[[${pageNumber}]]</a>
-                            </li>
+                        </li>
 
-                            <!-- 다음 페이지로 이동하는 링크 -->
-                            <li th:if="${pageDto.next}">
-                                <a th:href="@{${'/productList?pageno=' + (criteria.pageno + 1) +
+                        <!-- 다음 페이지로 이동하는 링크 -->
+                        <li th:if="${pageDto.next}">
+                            <a th:href="@{${'/productList?pageno=' + (criteria.pageno + 1) +
                     (criteria.keyword != null ? '&keyword=' + criteria.keyword : '') +
                     (criteria.majorCategory != null ? '&majorCategory=' + criteria.majorCategory : '') +
                     (criteria.middleCategory != null ? '&middleCategory=' + criteria.middleCategory : '') +
-                    (criteria.sorting != null ? '&sorting=' + criteria.sorting : '')}}">Next</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- 에러 메시지 -->
-                    <div th:if="${!success}" class="error-message">
-                        <p>상품 리스트 조회에 실패하였습니다.</p>
-                    </div>
+                    (criteria.sorting != null ? '&sorting=' + criteria.sorting : '')}}">다음</a>
+                        </li>
+                    </ul>
                 </div>
-            </section>
-        </div>
+
+                <!-- 에러 메시지 -->
+                <div th:if="${!success}" class="error-message">
+                    <p>상품 리스트 조회에 실패하였습니다.</p>
+                </div>
+            </div>
+        </section>
     </div>
-    <div id="footer">
-        <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
-    </div>
+</div>
+<div id="footer">
+    <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
+</div>
 </body>
 </html>

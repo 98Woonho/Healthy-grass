@@ -20,11 +20,16 @@
 .review-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    border-top: black solid 2px;
+}
+
+.review-table tr {
+
 }
 
 .review-table th, .review-table td {
-    padding: 12px;
+    padding: 16px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
@@ -41,7 +46,6 @@
 }
 
 .review-table td {
-    color: #666;
     text-align: center;
 }
 

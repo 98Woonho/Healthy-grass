@@ -22,6 +22,13 @@ document.addEventListener("DOMContentLoaded", function () {
         productListElement.innerHTML = ''; // 기존 아이템 삭제
 
         products.forEach(product => {
+            let discountHtml = '';
+            if (product.discount > 0) {
+                discountHtml = `<li class="prd-price"><b>${product.price}원</b></li>
+                                <li class="prd-discount"><b>${product.discountedPrice}원</b> (${product.discount}% 할인)</li>`;
+            } else {
+                discountHtml = `<li class="no-prd-price"><b>${product.price}원</b></li>`
+            }
             const itemHtml = `
                 <div class="item-list">
                     <div class="thumb">
@@ -30,8 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="prd-info">
                         <ul>
                             <li class="prd-brand"><a href="/product?id=${product.id}">${product.name}</a></li>
-                            <li class="prd-price"><b>${product.price}원</b></li>
-                            <li class="prd-discount"><b>${product.discountedPrice}원</b> (${product.discount}% 할인)</li>
+                            ${discountHtml}
                             <li class="prd-category">카테고리: ${product.middleCategory}</li>
                             <li class="prd-review">리뷰 수: ${product.reviewCount}</li>
                             <li class="prd-rating">평점: ${product.averageRating}</li>

@@ -1,0 +1,212 @@
+/*search*/
+.form-group {
+    text-align: right;
+    margin-bottom: 75px;
+}
+
+#keyword {
+    line-height: normal!important;
+}
+
+.search-name,
+.search-name span {
+    text-align: left;
+    margin-bottom: 3.6rem;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.form-group select, .form-group input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+#search h1 {
+    text-align: left;
+    margin-bottom: 3.6rem;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+button[type="submit"] {
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    width: 75px;
+    margin-right: 3.2rem;
+    margin-left: unset;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/*item-list*/
+
+.item-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 10px;
+}
+
+.item-list {
+    flex: 1 0 21%;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 22%;
+}
+
+.item-list>.thumb {
+    width: 100%;
+    height: 300px;
+    border: 1px solid #808080;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.item-list>.thumb img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.item-list .prd-info {
+    padding: 5px;
+    position: relative;
+}
+
+.item-list ul {
+    padding: 10px;
+    list-style: none;
+    margin: 0;
+}
+
+.prd-discount {
+    color: red;
+    font-weight: bold;
+}
+
+.item-list .prd-info>ul>li.prd-price {
+    font-size: .8rem;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.item-list .prd-info>ul>li.prd-discount {
+    font-size: 1rem;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    font-weight: 400;
+    margin-bottom: 25px;
+}
+
+.item-list .prd-info>ul>li.prd-brand {
+    font-weight: 400;
+    font-size: 1rem;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.item-list .prd-info>ul>li.prd-category {
+    font-size: .7rem;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    font-weight: 400;
+}
+
+.item-list .prd-info>ul>li.prd-review {
+    font-size: .7rem;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+
+.item-list .prd-info>ul>li.prd-rating {
+    font-size: .7rem;
+    position: absolute;
+    bottom: 25px;
+    right: 10px;
+}
+
+.item-list .prd-info>ul>li.prd-price>b {
+    text-decoration: line-through;
+}
+
+.prd-review, .prd-rating {
+    font-size: 0.9em;
+    color: #777;
+}
+
+b, strong {
+    font-weight: bolder;
+}
+/**/
+/*pageNation*/
+/**/
+.pagination {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 75px !important;
+}
+
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.pagination li {
+    margin: 0;
+}
+
+.pagination .active a {
+    color: #fff;
+    background-color: #4CAF50;
+    font-weight: normal;
+    border: 1px solid #4CAF50;
+    box-sizing: unset;
+    padding: 8px 16px;
+}
+
+.pagination a {
+    display: inline-block;
+    background-color: #f9f7f8;
+    color: #666;
+    border-radius: 0;
+    font-size: 14px;
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+}
+.pagination .active a:hover {
+    color: #fff;
+}
+
+.pagination a:hover {
+    color: #666;
+    border: 1px solid black;
+}
+
+.pagination .active a:hover {
+    color: #fff;
+    border: 1px solid #4CAF50;
+}

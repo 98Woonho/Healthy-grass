@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Mapper
 public interface WishMapper {
-    void insertWish(WishDto wishDto);
+    int insertWish(WishDto wishDto);
 
     WishDto findWish(WishDto wishDto);
 

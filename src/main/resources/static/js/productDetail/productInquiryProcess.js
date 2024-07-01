@@ -41,13 +41,17 @@ function displayProductInquiries(productInquiries) {
 
         const row = document.createElement('tr');
 
+        // 이미지 경로 결정
+        const lockImageSrc = productInquiry.isLocked === 'Y' ? '/img/Lock_close.svg' : '/img/Lock_open.svg';
+
         row.innerHTML = `
             <td>${productInquiry.Uid}</td>
-            <td>${productInquiry.isLocked}</td>
-            <td onclick="toggleInquiryContentProcess('${productInquiryContentId}')">${productInquiry.title}</td>
+            <td><img src="${lockImageSrc}" alt="${productInquiry.isLocked === 'Y' ? '글잠김' : '잠김없음'}"></td>
+            <td>${productInquiry.title}</td>
             <td>${productInquiry.regDate}</td>
-            <td>${productInquiry.updateDate}</td>
         `;
+        //tr 클릭하면 문의글 보이게 토글 설정
+        row.onclick = () => toggleInquiryContentProcess(productInquiryContentId);
         productInquiryList.appendChild(row);
 
         const div1 = document.createElement('div');
@@ -69,7 +73,7 @@ function displayProductInquiries(productInquiries) {
         } else {
             row1.innerHTML = `
                 <td colspan="5" class="productInquiry-content ${productInquiryContentId}" id="${productInquiryContentId}" style="display: none;">
-                    내용: ${productInquiry.content}
+                    ${productInquiry.content}
                 </td>
             `;
             const boardId = `${productInquiry.id}`;
@@ -130,7 +134,7 @@ function submitPassword(index) {
 
             content.innerHTML = `
                <td colspan="5" class="productInquiry-content ${productInquiryContentId}" id="${productInquiryContentId}" style="display: '';">
-                    내용: ${response.data.result.content}
+                    ${response.data.result.content}
                </td>
             `;
 
@@ -148,8 +152,8 @@ function submitPassword(index) {
                             <td>관리자</td>
                             <td>-</td>
                             <td>
-                                <span>제목: ${comment.title}</span>
-                                <p>내용: ${comment.content}</p>
+                                <span>${comment.title}</span>
+                                <p>${comment.content}</p>
                             </td>
                             <td>${comment.regDate}</td>
                             <td>${comment.updateDate}</td>
@@ -180,7 +184,7 @@ function updatePagination2(pageDto) {
         const prevLi = document.createElement('li');
         const prevLink = document.createElement('a');
         prevLink.href = '#';
-        prevLink.textContent = 'Prev';
+        prevLink.textContent = '이전';
         prevLink.onclick = (e) => {
             e.preventDefault();
             loadProductInquiry(currentPage2 - 1);
@@ -209,7 +213,7 @@ function updatePagination2(pageDto) {
         const nextLi = document.createElement('li');
         const nextLink = document.createElement('a');
         nextLink.href = '#';
-        nextLink.textContent = 'Next';
+        nextLink.textContent = '다음';
         nextLink.onclick = (e) => {
             e.preventDefault();
             loadProductInquiry(currentPage2 + 1);

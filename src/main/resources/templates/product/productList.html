@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="prd-info">
                                     <ul>
-                                        <li class="prd-brand"><a th:href="@{/product?id=${product.id}}"
+                                        <li class="prd-brand"><a th:href="@{/product(id=${product.id})}"
                                                                  th:text="${product.name}"></a></li>
                                         <!-- 조건: product.discount > 0 -->
                                         <li class="prd-price" th:if="${product.discount > 0}">

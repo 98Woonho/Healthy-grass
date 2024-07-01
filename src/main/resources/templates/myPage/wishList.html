@@ -15,7 +15,7 @@
 
 <input type="hidden" id="pageno" th:value="${pageDto.criteria.pageno}">
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" th:if="${wishList.size() != 0}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -23,7 +23,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                img 1 개를 구매하였습니다.
+                <span>장바구니 등록에 성공하였습니다!</span>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">쇼핑 계속하기</button>
@@ -57,9 +57,8 @@
                 <div th:data-pid="${wish.Pid}" class="product-info" th:each="wish : ${wishList}">
                     <input class="select" type="checkbox">
                     <div>
-                        <img src="https://i.namu.wiki/i/VBcDkoPXajYoNcRUcVHQdfvB-Npe16B_s3ULp71MXsw2qcyVgvbZjQtQOFXKcZBn36hB1O07LSPkLYEKRtP5FA.webp"
-                             alt="">
-                        <!--                            <img th:src="@{${wish.mainImgPath} + ${wish.mainImgName}}" alt="">-->
+                        <img th:src="@{${wish.mainImgPath} + ${wish.mainImgName}}"
+                             alt="상품 이미지">
                     </div>
                     <div>
                         <div>
@@ -81,7 +80,7 @@
                 </div>
             </div>
 
-            <div class="page-btn-container">
+            <div class="pagination">
                 <ul>
                     <!-- 이전 페이지로 이동하는 링크 -->
                     <li th:if="${pageDto.prev}">

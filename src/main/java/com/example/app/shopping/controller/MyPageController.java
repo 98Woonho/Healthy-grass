@@ -77,7 +77,7 @@ public class MyPageController {
         String Uid = ((PrincipalDetails) authentication.getPrincipal()).getUsername();
 
         // 표시할 게시물 양
-        criteria.setAmount(10);
+        criteria.setAmount(5);
 
         int count = myPageService.getWishCount(Uid);
         PageDto pageDto = new PageDto(count, criteria);

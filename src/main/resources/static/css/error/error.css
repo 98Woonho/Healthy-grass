@@ -1,0 +1,19 @@
+.wrapper .main .first-section .container {
+    padding: 40px;
+    background: lightgray;
+    border-radius: 1rem;
+    min-height: 300px;
+}
+
+.wrapper .main .first-section .container h1 {
+    text-align: left;
+    margin-bottom: 3.6rem;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.wrapper .main .first-section .container p {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+

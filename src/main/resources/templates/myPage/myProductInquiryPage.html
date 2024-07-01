@@ -8,12 +8,11 @@
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <link rel="stylesheet" th:href="@{/css/myPage/myCustomerInquiryPage.css}">
+
     <script defer th:src="@{/js/myPage/searchFormOnchange.js}"></script>
 
+    <link rel="stylesheet" th:href="@{/css/myPage/myBoardList.css}">
     <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
-    <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
-
 </head>
 <body>
 
@@ -25,9 +24,9 @@
 <main class="my-page-main">
         <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
 
-        <div class="my-page-menu-detail-container">
+        <div class="my-page-menu-detail-container first-container">
             <div class="container">
-                <h1>나의 상품 문의</h1>
+                <h1>작성 상품 문의</h1>
 
                 <!-- 검색 폼 -->
                 <form action="/myProductInquiryBoardList" method="GET" id="searchForm">
@@ -61,7 +60,7 @@
                         <tr th:each="board : ${list}">
                             <td th:text="${board.get('id') != null ? board.id : ''}">-</td>
                             <td th:text="${board.get('isLocked') != null ? board.isLocked : ''}">-</td>
-                            <td>
+                            <td class="title">
                                 <a th:href="@{${'/productInquiryBoard?id=' + (board.id)}}">
                                     <span class="product-name" th:text="${board.get('productName') != null ? board.productName : ''}">-</span>
                                     <span class="post-title" th:text="${board.get('title') != null ? board.title : ''}">-</span>

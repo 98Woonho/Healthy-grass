@@ -96,37 +96,34 @@ table, th, td, .table-container th, .table-container td {
 
 .pagination {
     text-align: center;
-    justify-content: center;
-    margin-top: 55px;
+    margin-top: 4rem;
 }
-
 .pagination ul {
     list-style-type: none;
     padding: 0;
 }
-
 .pagination ul li {
     display: inline;
-    margin: 0 6px;
+    margin: 0 5px;
 }
-
 .pagination ul li a {
-    text-decoration: none;
-    color: #007bff;
-    font-size: 1.4rem;
+    display: inline-block;
+    background-color: #f9f7f8;
+    color: #666;
+    border-radius: 0;
+    font-size: 14px;
+    padding: 8px 16px;
+    border: 1px solid #ddd;
 }
-
 .pagination ul li a:hover {
     text-decoration: none;
+    color: #666;
+    border: 1px solid black;
 }
-
-.pagination ul li a:hover {
-    text-decoration: underline;
-}
-
 .pagination ul li.active a {
-    font-weight: bold;
-    color: #000;
+    color: #fff;
+    border: 1px solid #4CAF50;
+    background-color: #4CAF50;
 }
 
 .error-message {

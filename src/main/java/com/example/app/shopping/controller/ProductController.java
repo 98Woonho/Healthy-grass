@@ -28,10 +28,7 @@ public class ProductController {
         if (criteria.getPageno() == null) {
             criteria.setPageno(1);
         }
-
-        if (criteria.getAmount() == null) {
-            criteria.setAmount(10);
-        }
+        criteria.setAmount(8);
 
         try {
             Map<String, Object> serviceReturnVal = productService.getItems(criteria);

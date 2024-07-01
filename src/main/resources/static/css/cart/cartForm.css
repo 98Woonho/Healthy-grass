@@ -58,7 +58,7 @@ table th, table td {
     width: 80px;
     display: inline-block;
     padding: 8px 12px;
-    background-color: #4a4a4a;
+    background-color: #999999;
     color: white;
     text-decoration: none;
     border: none;
@@ -78,7 +78,7 @@ table th, table td {
 }
 
 .wish-btn:hover{
-    background-color: #343a40;
+    background-color: #6C6B6B;
     color: white;
 }
 

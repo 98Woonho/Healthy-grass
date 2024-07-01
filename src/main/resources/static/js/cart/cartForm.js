@@ -297,15 +297,11 @@ wishBtns.forEach(wishBtn => {
         axios.post('/myPage/wish', {
             Pid: Pid
         })
-            .then(res => {
-                alert(res.data);
-            })
-            .catch(err => {
-                if (err.response.status === 409) {
-                    alert(err.response.data);
-                } else {
-                    alert('알 수 없는 이유로 제품을 찜리스트에 등록 하지 못했습니다. 잠시 후 다시 시도해 주세요.');
-                }
-            })
+        .then(res => {
+            alert(res.data.msg);
+        })
+        .catch(err => {
+            alert('로그인 시에만 사용할 수 있는 기능입니다.');
+        })
     })
 })

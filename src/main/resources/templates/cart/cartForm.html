@@ -16,9 +16,10 @@
     <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
 </div>
-<!--cartId받아오기 위한 hidden-->
-<div th:if="${!carts.isEmpty()}">
-    <input class="cartId" hidden="hidden" th:value="${carts[0].Cart_Id}">
+
+<div>
+    <!-- cartId 받아오기 위한 hidden -->
+    <input th:if="${!carts.isEmpty()}" class="cartId" hidden="hidden" th:value="${carts[0].Cart_Id}">
     <div>
         <div class="main">
             <section class="first-section">
@@ -162,9 +163,9 @@
         </div>
     </div>
 </div>
-<div th:if="${carts.isEmpty()}">
-    장바구니가 비었습니다.
-</div>
+<!--<div th:if="${carts.isEmpty()}">-->
+<!--    장바구니가 비었습니다.-->
+<!--</div>-->
 <div id="footer">
     <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
 </div>

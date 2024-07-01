@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내 고객 문의페이지</title>
 
-    <link rel="stylesheet" th:href="@{/css/myPage/myCustomerInquiryPage.css}">
+
     <script defer th:src="@{/js/myPage/searchFormOnchange.js}"></script>
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
+
+    <link rel="stylesheet" th:href="@{/css/myPage/myBoardList.css}">
+    <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
 </head>
 <body>
 
@@ -21,9 +24,9 @@
 <main class="my-page-main">
     <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
 
-    <div class="my-page-menu-detail-container">
-        <h1>나의 고객 문의</h1>
+    <div class="my-page-menu-detail-container first-container">
         <div class="container">
+            <h1>작성 문의</h1>
             <!-- 검색 폼 -->
             <form action="/myCustomerInquiryBoardList" method="GET" id="searchForm">
                 <div class="form-group">
@@ -56,7 +59,7 @@
                     <!-- 게시글 목록을 동적으로 채웁니다. -->
                     <tr th:each="board : ${list}">
                         <td th:text="${board.get('id') != null ? board.id : ''}">-</td>
-                        <td>
+                        <td class="title">
                             <a th:href="@{${'/customerInquiryBoard?id=' + (board.id)}}">
                                 <span class="post-title"
                                       th:text="${board.get('title') != null ? board.title : ''}">-</span>

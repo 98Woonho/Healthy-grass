@@ -21,12 +21,11 @@
     <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
 
 
-    <div class="my-page-menu-detail-container">
+    <div class="my-page-menu-detail-container first-container">
         <h1>주문정보</h1>
         <div class="container">
             <!-- 결제 목록 -->
             <div class="payment-list">
-                <h2>결제 목록</h2>
                 <table>
                     <thead>
                     <tr>
@@ -41,7 +40,7 @@
                     <!-- 결제 목록을 동적으로 채웁니다. -->
                     <tr th:each="payment : ${list}">
                         <td th:text="${payment.regDate}">-</td>
-                        <td>
+                        <td class="title">
                             <a th:href="@{'/myPage/payment?id=' + ${payment.id}}" th:text="${payment.name}">-</a>
                         </td>
                         <td th:text="${payment.paid_amount}">-</td>

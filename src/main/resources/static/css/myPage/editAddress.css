@@ -2,13 +2,23 @@
     pointer-events: none;
 }
 
+.my-page-menu-detail-container {
+    max-width: 800px;
+}
+
 #editAddressForm {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
 
-    width: 500px;
-    margin: 0 auto;
+.button-container {
+    display: flex;
+    justify-content: right;
+}
+
+.button-container button {
+    width: 5.5rem !important;
 }
 
 #editAddressForm label {
@@ -19,11 +29,9 @@
     width: 100%;
 }
 
-#editAddressForm > button {
+#editAddressForm button {
     width: 200px;
     padding: 0.5rem 1rem;
-    margin: 0 auto;
-    border: none;
     background-color: #4cae4c;
     color: #e8e8e8;
 }

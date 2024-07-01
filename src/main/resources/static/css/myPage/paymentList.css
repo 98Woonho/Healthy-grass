@@ -7,6 +7,17 @@
     margin: 0 auto;
 }
 
+.first-container h1 {
+    text-align: left;
+    margin-bottom: 3.6rem;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.payment-list .title {
+    text-align: left !important;
+}
+
 .shopping-title {
     padding: 20px 20px 0;
     margin-bottom: 10px;
@@ -59,40 +70,35 @@
 }
 
 .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    text-align: center;
+    margin-top: 4rem;
 }
-
 .pagination ul {
     list-style-type: none;
     padding: 0;
-    display: flex;
-    gap: 5px;
 }
-
-.pagination li {
+.pagination ul li {
+    display: inline;
     margin: 0 5px;
 }
-
-.pagination a {
-    color: #007bff;
-    text-decoration: none;
-    padding: 8px 12px;
+.pagination ul li a {
+    display: inline-block;
+    background-color: #f9f7f8;
+    color: #666;
+    border-radius: 0;
+    font-size: 14px;
+    padding: 8px 16px;
     border: 1px solid #ddd;
-    border-radius: 4px;
-    text-align: center;
 }
-
-.pagination a:hover {
-    background-color: #007bff;
-    color: #fff;
+.pagination ul li a:hover {
+    text-decoration: none;
+    color: #666;
+    border: 1px solid black;
 }
-
-.pagination .active a {
-    background-color: #007bff;
+.pagination ul li.active a {
     color: #fff;
-    pointer-events: none;
+    border: 1px solid #4CAF50;
+    background-color: #4CAF50;
 }
 
 .error-message {

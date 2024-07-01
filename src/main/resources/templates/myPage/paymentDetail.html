@@ -6,7 +6,6 @@
     <title>마이페이지 - 결제 정보 조회</title>
 
     <link rel="stylesheet" th:href="@{/css/myPage/common.css}">
-    <link rel="stylesheet" th:href="@{/css/myPage/mainDetail.css}">
     <link rel="stylesheet" th:href="@{/css/myPage/paymentDetail.css}">
 
     <!--  cdns  -->
@@ -24,15 +23,15 @@
     <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
 
     <div class="my-page-menu-detail-container">
-        <h1>결제 정보 조회</h1>
         <div class="container" style="width: 95%;">
+            <h1>결제 정보 조회</h1>
 
             <div th:if="${success}" class="payment-detail">
 
                 <div class="payment-info">
-                    <h2>결제 정보</h2>
+                    <h2 class="payment-title">결제 정보</h2>
                     <p>결제 ID: <span th:text="${payment.id}"></span></p>
-                    <p>결제 이름: <span th:text="${payment.name}"></span></p>
+                    <p>결제명: <span th:text="${payment.name}"></span></p>
                     <p>결제 금액: <span th:text="${payment.paid_amount}"></span></p>
                     <p>배송 상태: <span th:text="${payment.delivery_status}"></span></p>
                     <p>환불 요청 상태:
@@ -58,14 +57,14 @@
                     </div>
                     <div th:unless="${#lists.isEmpty(orderItemList)}" class="order-items">
                         <div th:each="item : ${orderItemList}" class="order-item">
-                            <img th:src="@{${item.mainImgPath} + '/' + ${item.mainImgName}}" alt="상품 이미지"
-                                 class="product-image">
-                            <p>상품명:
+                            <img th:src="@{${item.mainImgPath} + ${item.mainImgName}}" alt="상품 이미지"
+                                 class="product-image" style="width: 100px;">
+                            <p>
                                 <a th:href="@{'/product?id=' + ${item.Pid}}" th:text="${item.name}"></a>
                             </p>
-                            <p>카테고리: <span th:text="${item.majorCategory} + ' / ' + ${item.middleCategory}"></span></p>
-                            <p>수량: <span th:text="${item.quantity}"></span></p>
-                            <p>가격: <span th:text="${item.price}"></span></p>
+                            <p><span th:text="${item.majorCategory} + ' / ' + ${item.middleCategory}"></span></p>
+                            <p><span th:text="${item.quantity} + ' 개'"></span></p>
+                            <p><span th:text="${item.price} + ' 원'"></span></p>
                             <th:block th:if="${item.review_status == 'N'}">
                                 <button class="review-btn" th:data-oid="${item.Oid}" th:data-pid="${item.Pid}">리뷰 작성
                                 </button>

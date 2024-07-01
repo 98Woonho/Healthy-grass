@@ -66,7 +66,7 @@ function displayProductInquiries(productInquiries) {
                     <form id="password-form-${index}" data-index="${index}">
                         <input type="hidden" id="id-${index}" value="${productInquiry.id != null ? productInquiry.id : ''}">
                         <span>패스워드: <input type="password" name="password" id="password-${index}" class="input-password" autocomplete="new-password"></span>
-                        <button type="submit">입력</button>
+                        <button type="submit" style="border: 1px solid black; margin-left: 1rem">입력</button>
                     </form>
                 </td>
             `;

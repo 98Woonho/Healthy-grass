@@ -4,6 +4,17 @@
     margin-top: 20px;
 }
 
+.container h1 {
+    text-align: left;
+    margin-bottom: 3.6rem;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.payment-info .payment-title {
+    font-weight: bold;
+}
+
 .payment-info, .order-item-list-info {
     margin-bottom: 20px;
     padding: 20px;

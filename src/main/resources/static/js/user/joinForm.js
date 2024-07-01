@@ -1,49 +1,61 @@
 const joinForm = document.joinForm;
 const authBtn = document.querySelector('.auth_btn');
 
-IMP.init("imp40654467"); // IMPort 고객사 식별코드
+/*IMP.init("imp40654467"); // IMPort 고객사 식별코드*/
 
 let success = false;
 
 authBtn.addEventListener('click', function (e){
     e.preventDefault();
 
-    IMP.certification({ //본인인증이 완료되면 resp에 success를 담아준다.
-        pg: "inicis_unified",
-        merchant_uid: "test_lwk1pvez",
-    }, function (resp){
-        const imp_uid = resp.imp_uid;
-        axios.get("/user/AuthInfo/"+imp_uid)
-            .then(response =>{
+    axios.get('/payment/imp')
+        .then(response => {
+            const impKey = response.data;
+            IMP.init(impKey); // IMPort 고객사 식별코드
 
-                success = resp.success;
 
-                if (success === true){
-                    const data = {
-                        name: response.data.response.name,
-                        phone: response.data.response.phone
-                    };
+            IMP.certification({ //본인인증이 완료되면 resp에 success를 담아준다.
+                    pg: "inicis_unified",
+                    merchant_uid: "test_lwk1pvez",
+                }, function (resp){
+                    const imp_uid = resp.imp_uid;
+                    axios.get("/user/AuthInfo/"+imp_uid)
+                        .then(response =>{
 
-                    axios.post("/user/duplicateUserCheck", data, {headers: {"Content-Type": "application/json"}})
-                        .then(resp => {
-                            if (resp.data === "FAILURE_DUPLICATE_USER") {
-                                alert("이미 가입된 회원입니다.")
-                                location.href = "/user/loginForm";
-                                return false;
+                            success = resp.success;
+
+                            if (success === true){
+                                const data = {
+                                    name: response.data.response.name,
+                                    phone: response.data.response.phone
+                                };
+
+                                axios.post("/user/duplicateUserCheck", data, {headers: {"Content-Type": "application/json"}})
+                                    .then(resp => {
+                                        if (resp.data === "FAILURE_DUPLICATE_USER") {
+                                            alert("이미 가입된 회원입니다.")
+                                            location.href = "/user/loginForm";
+                                            return false;
+                                        }
+                                    })
+                                    .catch(err => {
+                                        console.log(err);
+                                    })
                             }
-                        })
-                        .catch(err => {
-                            console.log(err);
-                        })
-                }
-                const nameInput = joinForm.name;
-                const phoneInput = joinForm.phone;
+                            const nameInput = joinForm.name;
+                            const phoneInput = joinForm.phone;
 
-                nameInput.value = response.data.response.name;
-                phoneInput.value = response.data.response.phone;
-            })
-            .catch(error =>{console.log(error)})
-    });
+                            nameInput.value = response.data.response.name;
+                            phoneInput.value = response.data.response.phone;
+                        })
+                        .catch(error =>{console.log(error)})
+                });
+        })
+        .catch(error => {
+            alert("인증 서버에 문제가 발생했습니다.")
+        });
+
+
 })
 
 

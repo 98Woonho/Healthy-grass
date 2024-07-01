@@ -33,7 +33,7 @@ public class ProductInquiryBoardController {
     
     Integer unlockId;  // 게시글 번호 비밀번호 체크 상태변수
 
-    @GetMapping("/productInquiryBoardList")
+    @GetMapping("productInquiryBoardList")
     public String productInquiryBoardList(@ModelAttribute Criteria criteria, Model model) {
         System.out.println("productInquiryBoardController's productInquiryBoardList criteria: " + criteria + " model: " + model);
 
@@ -54,10 +54,10 @@ public class ProductInquiryBoardController {
             model.addAttribute("success", false);
         }
 
-        return "/productInquiryBoard/boardList";
+        return "productInquiryBoard/boardList";
     }
 
-    @GetMapping("/productInquiryBoard")
+    @GetMapping("productInquiryBoard")
     public String productInquiryBoard(
             @RequestParam(name = "id", defaultValue = "0", required = false) Integer id,
             Model model, Authentication authentication) {
@@ -84,7 +84,7 @@ public class ProductInquiryBoardController {
                 // 관리자가 아니고 잠금 상태이고 비밀번호 체크가 안 된 상태라면
                 model.addAttribute("id", id);
 
-                return "/productInquiryBoard/passwordChk";
+                return "productInquiryBoard/passwordChk";
             }
 
             unlockId = null;  // 비밀번호 체크 상태 초기화
@@ -99,10 +99,10 @@ public class ProductInquiryBoardController {
         model.addAttribute("response", response);
         response = null;
 
-        return "/productInquiryBoard/boardDetail";
+        return "productInquiryBoard/boardDetail";
     }
 
-    @PostMapping("/productInquiryBoard/passwordCheck")
+    @PostMapping("productInquiryBoard/passwordCheck")
     public @ResponseBody Map<String, Object> passwordCheck(@RequestBody Map<String, Object> request) {
         Integer id = Integer.parseInt((String)request.get("id"));
         String password = (String) request.get("password");
@@ -134,9 +134,9 @@ public class ProductInquiryBoardController {
         return response;
     }
 
-    @GetMapping("/myProductInquiryBoardList")
+    @GetMapping("myProductInquiryBoardList")
     public String MyProductInquiryBoardList(@ModelAttribute Criteria criteria, Authentication authentication, Model model) {
-        System.out.println("productInquiryBoardController's productInquiryBoardList criteria: " + criteria);
+        model.addAttribute("menu", "myProductInquiryBoardList");
 
         if (criteria.getPageno() == null) {
             criteria.setPageno(1);
@@ -150,7 +150,7 @@ public class ProductInquiryBoardController {
             String error = "로그인 정보가 없습니다.";
             model.addAttribute("error", error);
 
-            return "/error/error";
+            return "error/error";
         }
 
         criteria.setAmount(6);
@@ -169,11 +169,11 @@ public class ProductInquiryBoardController {
             model.addAttribute("success", false);
         }
 
-        return "/myPage/myProductInquiryPage";
+        return "myPage/myProductInquiryPage";
     }
 
     // 상품 조회에서 상품 리뷰 뿌려주는 rest API, 기존 게시판과 구분을 위해 url 끝에 API 를 작성하였습니다.
-    @PostMapping("/productInquiryBoardListAPI")
+    @PostMapping("productInquiryBoardListAPI")
     public @ResponseBody Map<String, Object> productInquiryBoardListAPI(@RequestBody ProductReviewBoardAPI request) {
         System.out.println("ProductInquiryBoardController's productInquiryBoardListAPI");
         System.out.println("request: " + request);
@@ -270,7 +270,7 @@ public class ProductInquiryBoardController {
     }
 
     // 수정 페이지로 이동
-    @GetMapping("/updateProductInquiry")
+    @GetMapping("updateProductInquiry")
     public String updateProductInquiryPage (@RequestParam("boardId") Integer boardId, Model model, Authentication authentication) {
         System.out.println("ProductInquiryBoardController's updateProductInquiry boardId: " + boardId);
 

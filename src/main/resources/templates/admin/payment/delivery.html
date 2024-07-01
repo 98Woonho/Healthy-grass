@@ -3,121 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 페이지 - 결제 관리(배송)</title>
+    <title>배송 현황</title>
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <link rel="stylesheet" th:href="@{/css/fragments/admin/common.css}">
-    <link rel="stylesheet" th:href="@{/css/fragments/admin/mainDetail.css}">
-
-    <link rel="stylesheet" th:href="@{/css/admin/payment/delivery/common.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/payment/delivery.css}">
 
     <script defer th:src="@{/js/admin/payment/delivery/searchFormOnchange.js}"></script>
 </head>
+
 <body>
-<div class="header layout-5">
+
+<header id="header">
     <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
-</div>
-<div class="main">
-    <section class="first-section">
-        <h1>관리자 페이지</h1>
-    </section>
-    <section class="second-section box1">
-        <th:block th:insert="~{fragments/admin/mainMenu.html :: mainManu_fragment}"></th:block>
+</header>
 
-        <div th:if="${success}" class="box w-full h-800">
-            <div class="shopping-title">
-                <h4>결제 관리(배송)</h4>
-            </div>
-            <div class="container">
+<main class="admin-main">
+    <th:block th:insert="~{fragments/admin/mainMenu.html :: mainManu_fragment}"></th:block>
 
-                <!-- 검색 폼 -->
-                <form action="/admin/payment/delivery" method="GET" id="searchForm">
-                    <div class="form-group">
-                        <label for="commentChk">배송중인 구매 목록</label>
-                        <input type="checkbox" name="commentChk" id="commentChk" value="true" th:checked="${criteria.commentChk != null and criteria.commentChk != ''}" onchange="submitFormOnChange()">
-                    </div>
-                </form>
-
-                <!-- 결제 목록 -->
-                <div class="payment-list">
-                    <h2>결제 목록</h2>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>등록날짜</th>
-                            <th>사용자</th>
-                            <th>구매자</th>
-                            <th>결제 이름</th>
-                            <th>결제 금액</th>
-                            <th>배송 상태</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- 결제 목록을 동적으로 채웁니다. -->
-                        <tr th:each="payment : ${list}">
-                            <td th:text="${payment.regDate}">-</td>
-                            <td th:text="${payment.get('userid')}">-</td>
-                            <td th:text="${payment.buyer_name}">-</td>
-                            <td>
-                                <a th:href="@{'/myPage/payment?id=' + ${payment.id}}" th:text="${payment.name}">-</a>
-                            </td>
-                            <td th:text="${payment.paid_amount}">-</td>
-
-                            <td class="delivery-status">
-                                <th:block th:if="${payment.delivery_status == '배송준비'}">
-                                    <button class="delivery-request-btn" th:data-id="${payment.id}" status="배송중">배송</button>
-                                </th:block>
-                                <th:block th:if="${payment.delivery_status == '배송중'}">
-                                    <button class="delivery-request-btn" th:data-id="${payment.id}" status="배송완료">배송완료</button>
-                                </th:block>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+    <div class="admin-menu-detail-container">
+        <h1>배송 현황</h1>
+        <div class="container">
+            <!-- 검색 폼 -->
+            <form action="/admin/payment/delivery" method="GET" id="searchForm">
+                <div class="form-group">
+                    <label for="commentChk">배송중인 구매 목록</label>
+                    <input type="checkbox" name="commentChk" id="commentChk" value="true"
+                           th:checked="${criteria.commentChk != null and criteria.commentChk != ''}"
+                           onchange="submitFormOnChange()">
                 </div>
-                <script defer th:src="@{/js/admin/payment/delivery/deliveryBtn.js}"></script> <!-- 수정필요 -->
+            </form>
 
-                <!-- 페이징 -->
-                <div class="pagination">
-                    <ul>
-                        <!-- 이전 페이지로 이동하는 링크 -->
-                        <li th:if="${pageDto.prev}">
-                            <a th:href="@{${'/admin/payment/delivery?pageno=' + (criteria.pageno - 1) +
+            <!-- 결제 목록 -->
+            <div class="payment-list">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>등록날짜</th>
+                        <th>사용자</th>
+                        <th>구매자</th>
+                        <th>결제 이름</th>
+                        <th>결제 금액</th>
+                        <th>배송 상태</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- 결제 목록을 동적으로 채웁니다. -->
+                    <tr th:each="payment : ${list}">
+                        <td th:text="${payment.regDate}">-</td>
+                        <td th:text="${payment.get('userid')}">-</td>
+                        <td th:text="${payment.buyer_name}">-</td>
+                        <td>
+                            <a th:href="@{'/myPage/payment?id=' + ${payment.id}}" th:text="${payment.name}">-</a>
+                        </td>
+                        <td th:text="${payment.paid_amount}">-</td>
+
+                        <td class="delivery-status">
+                            <th:block th:if="${payment.delivery_status == '배송준비'}">
+                                <button class="delivery-request-btn" th:data-id="${payment.id}" status="배송중">배송</button>
+                            </th:block>
+                            <th:block th:if="${payment.delivery_status == '배송중'}">
+                                <button class="delivery-request-btn" th:data-id="${payment.id}" status="배송완료">배송완료
+                                </button>
+                            </th:block>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <script defer th:src="@{/js/admin/payment/delivery/deliveryBtn.js}"></script> <!-- 수정필요 -->
+
+            <!-- 페이징 -->
+            <div class="pagination">
+                <ul>
+                    <!-- 이전 페이지로 이동하는 링크 -->
+                    <li th:if="${pageDto.prev}">
+                        <a th:href="@{${'/admin/payment/delivery?pageno=' + (criteria.pageno - 1) +
                                 (criteria.commentChk != null ? '&commentChk=' + criteria.commentChk : '')}}">Prev</a>
-                        </li>
+                    </li>
 
-                        <!-- 페이지 번호를 표시하는 링크 -->
-                        <li th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}" th:classappend="${pageNumber == criteria.pageno} ? 'active'">
-                            <a th:href="@{${'/admin/payment/delivery?pageno=' + pageNumber +
+                    <!-- 페이지 번호를 표시하는 링크 -->
+                    <li th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}"
+                        th:classappend="${pageNumber == criteria.pageno} ? 'active'">
+                        <a th:href="@{${'/admin/payment/delivery?pageno=' + pageNumber +
                                 (criteria.commentChk != null ? '&commentChk=' + criteria.commentChk : '')}}">[[${pageNumber}]]</a>
-                        </li>
+                    </li>
 
-                        <!-- 다음 페이지로 이동하는 링크 -->
-                        <li th:if="${pageDto.next}">
-                            <a th:href="@{${'/admin/payment/delivery?pageno=' + (criteria.pageno + 1) +
+                    <!-- 다음 페이지로 이동하는 링크 -->
+                    <li th:if="${pageDto.next}">
+                        <a th:href="@{${'/admin/payment/delivery?pageno=' + (criteria.pageno + 1) +
                                 (criteria.commentChk != null ? '&commentChk=' + criteria.commentChk : '')}}">Next</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- 에러 메시지 -->
-                <div th:if="${!success}" class="error-message">
-                    <p>결제 목록 조회에 실패하였습니다.</p>
-                </div>
-
+                    </li>
+                </ul>
             </div>
         </div>
-
-        <div th:if="${!success}" class="box w-full h-800">
-            <p>조회할 결제 건이 없습니다.</p>
-        </div>
-    </section>
-</div>
-<div class="footer">
-    <p class="text">푸터(사이트 정보 등)</p>
-</div>
+    </div>
+</main>
+<footer id="footer">
+    <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
+</footer>
 </body>
 </html>

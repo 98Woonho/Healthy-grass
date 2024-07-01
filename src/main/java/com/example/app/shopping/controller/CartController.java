@@ -1,7 +1,6 @@
 package com.example.app.shopping.controller;
 
 import com.example.app.shopping.config.auth.PrincipalDetails;
-import com.example.app.shopping.domain.dto.UserDto;
 import com.example.app.shopping.domain.service.cart.CartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
-import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +51,7 @@ public class CartController {
         }
     }
     //장바구니에서 수량을 변경하면 DB에 상품이 변경되는 로직
-    @PostMapping("/AddAmount")
+    @PostMapping("AddAmount")
     @ResponseBody
     public void addAmount(@RequestBody Map<String, Object> result) {
         int amountValue = Integer.parseInt((String) result.get("amountValue"));
@@ -64,7 +61,7 @@ public class CartController {
     }
 
     //장바구니에서 삭제 누르면 장바구니 아이템 삭제
-    @DeleteMapping("/delete")
+    @DeleteMapping("delete")
     @ResponseBody
     public String deleteCartItem(@RequestBody Map<String, Object> result) {
         int cartId = Integer.parseInt((String) result.get("cartId"));

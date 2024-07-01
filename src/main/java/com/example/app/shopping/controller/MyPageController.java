@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
-@RequestMapping("/myPage")
+@RequestMapping("myPage")
 public class MyPageController {
     @Autowired
     private UserService userService;
@@ -66,9 +66,9 @@ public class MyPageController {
     @GetMapping("")
     public String myPage(Authentication authentication){
         if (authentication != null) {
-            return "/myPage/mypage";
+            return "myPage/mypage";
         }
-        return "redirect:/user/loginForm";
+        return "redirect:user/loginForm";
     }
 
     @GetMapping("wishList")
@@ -89,11 +89,12 @@ public class MyPageController {
         // 2페이지 이상 && 찜한 상품이 없으면 이전 페이지로 return
         if (wishList.size() == 0 && criteria.getPageno() > 1) {
             criteria.setPageno(criteria.getPageno() - 1);
-            return "redirect:/myPage/wishList?pageno=" + criteria.getPageno();
+            return "redirect:wishList?pageno=" + criteria.getPageno();
         }
 
         model.addAttribute("wishList", wishList);
         model.addAttribute("pageDto", pageDto);
+        model.addAttribute("menu", "wishList");
 
         return "myPage/wishList";
     }
@@ -113,7 +114,7 @@ public class MyPageController {
         return ResponseEntity.ok("찜리스트에 제품이 등록 되었습니다.");
     }
 
-    @DeleteMapping("/wish/{pIds}")
+    @DeleteMapping("wish/{pIds}")
     public ResponseEntity<String> deleteWish(@PathVariable(value="pIds") List<Long> pIdList, Authentication authentication) {
         String uId = ((PrincipalDetails) authentication.getPrincipal()).getUsername();
 
@@ -132,6 +133,7 @@ public class MyPageController {
         ShippingAddressDto shippingAddressDto = myPageService.isExistShippingAddress(userDto.getId());
 
         model.addAttribute("shippingAddress", shippingAddressDto);
+        model.addAttribute("menu", "editAddress");
     }
 
     @PostMapping("editAddress")
@@ -158,40 +160,43 @@ public class MyPageController {
         return ResponseEntity.ok("배송지가 저장 되었습니다.");
     }
 
-    @GetMapping("/user/searchForm") //회원정보 조회
+    @GetMapping("user/searchForm") //회원정보 조회
     public String userSearchForm(Authentication authentication, Model model) {
         if (authentication != null) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal(); // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
+            model.addAttribute("menu", "searchForm");
 
-            return "/myPage/searchForm";
+            return "myPage/searchForm";
         } else {
-            return "redirect:/user/loginForm";
+            return "redirect:user/loginForm";
         }
     }
 
-    @GetMapping("/user/modifyForm") // 회원정보 수정 페이지로 가기
+    @GetMapping("user/modifyForm") // 회원정보 수정 페이지로 가기
     public String userModifyForm(Authentication authentication, Model model) {
+        model.addAttribute("menu", "modifyForm");
+
         if (authentication != null && passwordCheck) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
-            return "/myPage/modifyForm";
+            return "myPage/modifyForm";
         } else if (authentication != null) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
             model.addAttribute("tmp", "modify");
-            return "/myPage/passwordCheckForm";
+            return "myPage/passwordCheckForm";
         }
 
-        return "redirect:/user/loginForm";
+        return "redirect:user/loginForm";
     }
 
-    @PostMapping("/user/modify") // 회원정보 수정
+    @PostMapping("user/modify") // 회원정보 수정
     public @ResponseBody ResponseEntity<String> userModify(@Valid @RequestBody UserDto userDto, BindingResult bindingResult) {
         System.out.println(userDto);
 
@@ -240,26 +245,28 @@ public class MyPageController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/user/deleteForm") // 회원정보 삭제 페이지로 가기
+    @GetMapping("user/deleteForm") // 회원정보 삭제 페이지로 가기
     public String userDeleteForm(Authentication authentication, Model model) {
+        model.addAttribute("menu", "deleteForm");
+
         if (authentication != null && passwordCheck) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
-            return "/myPage/deleteForm";}
+            return "myPage/deleteForm";}
         else if (authentication != null) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
             model.addAttribute("tmp", "delete");
-            return "/myPage/passwordCheckForm";
+            return "myPage/passwordCheckForm";
         }
-        return "redirect:/user/loginForm";
+        return "redirect:user/loginForm";
     }
 
-    @DeleteMapping("/user/delete")
+    @DeleteMapping("user/delete")
     public @ResponseBody String userDelete(@RequestParam("id") String id, HttpServletRequest request, HttpServletResponse response) {
         String result = userService.deleteUser(id);
 
@@ -274,19 +281,19 @@ public class MyPageController {
     }
 
     //유저 패스워드 재확인 폼으로 이동
-    @GetMapping("/user/passwordCheckForm")
+    @GetMapping("user/passwordCheckForm")
     public String passwordCheckForm(Authentication authentication, Model model) {
         if (authentication != null) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             // authentication안에 userDto를 꺼내려면 PrincipalDetails안에 들어있는 userDto의 정보를 꺼내와야한다.
             UserDto userDto = principalDetails.getUserDto();
             model.addAttribute("userDto", userDto);
-            return "/myPage/passwordCheckForm";
+            return "myPage/passwordCheckForm";
         }
-        return "redirect:/user/loginForm";
+        return "redirect:user/loginForm";
     }
     boolean passwordCheck = false;
-    @PostMapping("/user/passwordCheck") // 회원정보 수정 페이지나, 삭제페이지 갈때 비밀번호 재확인 받는 코드
+    @PostMapping("user/passwordCheck") // 회원정보 수정 페이지나, 삭제페이지 갈때 비밀번호 재확인 받는 코드
     @ResponseBody
     public String checkPasswordIntoMyPage(@RequestBody UserDto userDto, Authentication authentication) {
         if (authentication != null) {
@@ -297,15 +304,15 @@ public class MyPageController {
             }
             return key;
         }
-        return "redirect:/user/loginForm";
+        return "redirect:user/loginForm";
     }
 
     /*
         마이 페이지 결제 목록 게시판 페이지로 이동합니다.
     */
-    @GetMapping("/paymentList")
+    @GetMapping("paymentList")
     public String getMyPaymentBoard(@ModelAttribute Criteria criteria, Authentication authentication, Model model) {
-        log.info("MyPageController's getMyPaymentBoard criteria: " + criteria);
+        model.addAttribute("menu", "paymentList");
 
         if (criteria.getPageno() == null) {
             criteria.setPageno(1);
@@ -325,7 +332,7 @@ public class MyPageController {
             model.addAttribute("success", false);
         }
 
-        return "/myPage/paymentList";
+        return "myPage/paymentList";
     }
 
     /*
@@ -336,7 +343,7 @@ public class MyPageController {
         관리자라면 검증과정 없이 수정 작업을 수행
         사용자라면 해당 payment 가 본인의 것인지 검증하는 작업이 포함됩니다.
     */
-    @PutMapping("/payment")
+    @PutMapping("payment")
     public @ResponseBody Map<String, Object> putPayment(@RequestBody Map<String, Object> request, Authentication authentication) {
         log.info("MyPageController's putPayment request: " + request);
 
@@ -389,7 +396,7 @@ public class MyPageController {
         payment 상세보기 페이지 이동
         payment id 를 사용하여 구매한 order_item 목록도 가져온다
     */
-    @GetMapping("/payment")
+    @GetMapping("payment")
     public String getPayment(@RequestParam(name = "id", defaultValue = "0", required = false) Long id, Model model, Authentication authentication) {
         log.info("MyPageController's getPayment id: " + id);
         Map<String, Object> response = new HashMap<>();
@@ -399,7 +406,7 @@ public class MyPageController {
             model.addAttribute("success", false);
             model.addAttribute("msg", "비회원은 이용할 수 없는 서비스입니다.");
 
-            return "/myPage/paymentDetail";
+            return "myPage/paymentDetail";
         }
 
         boolean isAdmin = false;
@@ -439,7 +446,7 @@ public class MyPageController {
             model.addAttribute("msg", "조회중 오류가 발생했습니다.");
         }
 
-        return "/myPage/paymentDetail";
+        return "myPage/paymentDetail";
     }
 
 }

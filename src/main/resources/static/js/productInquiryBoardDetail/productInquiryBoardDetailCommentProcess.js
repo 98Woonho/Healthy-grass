@@ -35,7 +35,6 @@ function displayComments(comments) {
                 <p>${comment.content}</p>
             </div>
             <div class="comment-footer">
-                <span class="comment-update-date">수정일: ${comment.updateDate}</span>
                 <button class="delete-comment-btn" data-id="${comment.id}">삭제</button>
             </div>
         `;

@@ -9,7 +9,8 @@
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
-    <link rel="stylesheet" th:href="@{/css/productReviewBoardDetail/productReviewBoardDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/board/boardDetail.css}">
+
     <title>상품리뷰 게시판 상세조회</title>
 </head>
 <body>
@@ -22,30 +23,42 @@
         <section class="first-section">
             <div th:if="${response != null}">
                 <div th:if="${response.success}">
-                    <div th:with="productReviewBoardDetail=${response}">
-                        <p>
-                            리뷰 상품명:
-                            <a th:href="@{${'/product?id=' + (productReviewBoardDetail.Pid)}}">
-                                <span th:text="${productReviewBoardDetail.productName}"></span>
-                            </a>
-                        </p>
-                        <p>게시글 번호: <span id="boardId" th:text="${productReviewBoardDetail.id}"></span></p>
-                        <p>작성자: <span th:text="${productReviewBoardDetail.get('Uid')}"></span></p>
-                        <p>제목: <span th:text="${productReviewBoardDetail.title}"></span></p>
+                    <div class="board-info" th:with="productReviewBoardDetail=${response}">
 
-                        <!-- 업로드된 이미지가 있을 때만 이미지를 보여줌 -->
-                        <div th:if="${productReviewBoardDetail.get('imgPath') != null}">
-                            <p>업로드 사진: <img th:src="@{${productReviewBoardDetail.get('imgPath')} + '/' + ${productReviewBoardDetail.get('imgName')}}" alt="업로드된 이미지" style="max-width: 500px"></p>
+                        <div class="board-head">
+                            <h5 class="title">
+                                <span id="boardId" th:text="${productReviewBoardDetail.id != null ? productReviewBoardDetail.id : ''}" style="display: none;"></span>
+                                <span class="title-head">[상품 리뷰]</span>
+                                <span class="title-subject" th:text="${productReviewBoardDetail.title}">-</span>
+                            </h5>
+                            <div class="board-writer">
+                                <div class="fl">
+                                    <span class="user-name" th:text="${productReviewBoardDetail.Uid}">-</span>
+                                    <span class="board-reg-date" th:text="${productReviewBoardDetail.regDate}">-</span>
+                                </div>
+                                <div class="fr">
+                                    <a href="javascript:void(0)" class="board-comment" th:text="'평점: ' + ${productReviewBoardDetail.rating}"></a>
+                                </div>
+                            </div>
                         </div>
 
-                        <p>글내용: <span th:text="${productReviewBoardDetail.content}"></span></p>
-                        <p>평점: <span th:text="${productReviewBoardDetail.rating}"></span></p>
-                        <p>작성일: <span th:text="${productReviewBoardDetail.regDate}"></span></p>
-                        <p>수정일: <span th:text="${productReviewBoardDetail.updateDate}"></span></p>
+
+                        <div class="board-contents">
+                            <p class="inquiry-product">
+                                <a th:href="@{${'/product?id=' + (productReviewBoardDetail.Pid)}}">
+                                    <span class="product-name" th:text="'상품: ' + ${productReviewBoardDetail.productName}"></span>
+                                </a>
+                            </p>
+                            <!-- 업로드된 이미지가 있을 때만 이미지를 보여줌 -->
+                            <p th:if="${productReviewBoardDetail.get('imgPath') != null}"><img th:src="@{${productReviewBoardDetail.imgPath + '/' + productReviewBoardDetail.imgName}}" alt="업로드된 이미지"></p>
+                            <p>
+                                <span th:text="${productReviewBoardDetail.content}"></span>
+                            </p>
+                        </div>
 
                         <div class="button-container">
-                            <button id="edit-btn" th:data-id="${productReviewBoardDetail.id}">수정</button>
-                            <button id="delete-btn" th:data-id="${productReviewBoardDetail.id}">삭제</button>
+                            <button id="editBtn" th:data-id="${productReviewBoardDetail.id}">수정</button>
+                            <button id="deleteBtn" th:data-id="${productReviewBoardDetail.id}">삭제</button>
                         </div>
                     </div>
                     <script defer th:src="@{/js/productReviewDetail/btnProcess.js}"></script>

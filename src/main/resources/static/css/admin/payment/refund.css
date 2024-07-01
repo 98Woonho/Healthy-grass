@@ -1,0 +1,92 @@
+/* delivery.css */
+.main {
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.payment-list {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center; /* 중앙 정렬 */
+}
+
+table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.refund-request-btn {
+    padding: 8px 12px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    width: 100px; /* 버튼의 크기를 일정하게 맞춤 */
+    height: 40px; /* 버튼의 높이를 일정하게 맞춤 */
+    display: inline-block;
+}
+
+#accept-btn {
+    background-color: #007bff;
+}
+
+#cancel-btn {
+    background-color: red;
+}
+
+
+.pagination ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination a {
+    color: #007bff;
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center; /* 중앙 정렬 */
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination .active a {
+    background-color: #007bff;
+    color: #fff;
+    pointer-events: none;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+}

@@ -97,7 +97,7 @@ public class JwtTokenProvider {
         UserDto userDto = principalDetails.getUserDto();
         //System.out.println("JWT GENERATE TOKEN DTO : " + userDto);
         // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + 60*30*1000);    // 60*30 초후 만료
+        Date accessTokenExpiresIn = new Date(now + 60*60*1000);    // 60*60 초후 만료
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("id",userDto.getId())             //정보저장
@@ -219,7 +219,7 @@ public class JwtTokenProvider {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            log.info("Invalid JWT Token", e);
+            log.info("Invalid JWT Token");
         }
         catch (ExpiredJwtException e) {
             log.info("Expired JWT Token", e);

@@ -1,3 +1,46 @@
 #zipcode, #streetAdr {
     pointer-events: none;
 }
+
+#editAddressForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    width: 500px;
+    margin: 0 auto;
+}
+
+#editAddressForm label {
+    display: block;
+}
+
+#editAddressForm input {
+    width: 100%;
+}
+
+#editAddressForm > button {
+    width: 200px;
+    padding: 0.5rem 1rem;
+    margin: 0 auto;
+    border: none;
+    background-color: #4cae4c;
+    color: #e8e8e8;
+}
+
+#editAddressForm > button:hover {
+    background-color: #439a46;
+}
+
+#searchAddressBtn {
+    width: 200px;
+    padding: 0.5rem 1rem;
+    margin-left: 1rem;
+    border: none;
+    background-color: #4cae4c;
+    color: #e8e8e8;
+}
+
+#searchAddressBtn:hover {
+    background-color: #439a46;
+}

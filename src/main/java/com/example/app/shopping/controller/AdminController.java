@@ -2,14 +2,12 @@ package com.example.app.shopping.controller;
 
 import com.example.app.shopping.domain.dto.MiddleCategoryDto;
 import com.example.app.shopping.domain.dto.ProductDto;
-import com.example.app.shopping.domain.mapper.MiddleCategoryMapper;
 import com.example.app.shopping.domain.dto.common.Criteria;
 import com.example.app.shopping.domain.service.PaymentService;
 import com.example.app.shopping.domain.service.admin.AdminService;
 import com.example.app.shopping.domain.service.product.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,12 +32,6 @@ public class AdminController {
     @Autowired
     private PaymentService paymentService;
 
-    // 관리자 페이지 GET
-    @GetMapping("")
-    public String getAdminPage() {
-        return "admin/admin";
-    }
-
     // 제품 등록 Get
     @GetMapping("addProduct")
     public void getAddProduct(Model model) {
@@ -52,6 +43,7 @@ public class AdminController {
 
         model.addAttribute("majorCategoryList", majorCategoryList);
         model.addAttribute("middleCategoryList", middleCategoryList);
+        model.addAttribute("menu", "addProduct");
     }
 
     // 제품 등록 Post
@@ -102,7 +94,7 @@ public class AdminController {
     /*
         최근 등록된 상품을 조회하는 페이지로 이동
     */
-    @GetMapping("/productList")
+    @GetMapping("productList")
     public String getProductList(@ModelAttribute Criteria criteria, Model model) {
         Map<String, Object> response = new HashMap<>();
 
@@ -119,7 +111,9 @@ public class AdminController {
             model.addAttribute("success", false);
         }
 
-        return "/admin/productList";
+        model.addAttribute("menu", "productList");
+
+        return "admin/productList";
     }
 
     /*
@@ -140,10 +134,8 @@ public class AdminController {
 
         이때 상태값 변경에 대한 처리는 하나의 Put Controller 로 처리시킨다.
     */
-    @GetMapping("/payment/delivery")
+    @GetMapping("payment/delivery")
     public String getPaymentDeliveryListPage(@ModelAttribute Criteria criteria, Model model) {
-        log.info("AdminController's getPaymentDeliveryListPage criteria: {}", criteria);
-
         // Criteria 초기화
         if (criteria.getPageno() == null) criteria.setPageno(1);
         criteria.setAmount(6);
@@ -158,6 +150,8 @@ public class AdminController {
             model.addAttribute("success", false);
             model.addAttribute("msg", e.getMessage());
         }
+
+        model.addAttribute("menu", "deliveryList");
 
         return "admin/payment/delivery";
     }
@@ -174,10 +168,8 @@ public class AdminController {
         
         이 중 해당 Controller 요청은 환불 요청: R 인 상태의 Payment 리스트를 가져온다
     */
-    @GetMapping("/payment/refund")
+    @GetMapping("payment/refund")
     public String getPaymentRefundListPage(@ModelAttribute Criteria criteria, Model model) {
-        log.info("AdminController's getPaymentRefundListPage criteria: {}", criteria);
-
         // Criteria 초기화
         if (criteria.getPageno() == null) criteria.setPageno(1);
         criteria.setAmount(6);
@@ -193,6 +185,8 @@ public class AdminController {
             model.addAttribute("success", false);
             model.addAttribute("msg", e.getMessage());
         }
+
+        model.addAttribute("menu", "refundList");
 
         return "admin/payment/refund";
     }

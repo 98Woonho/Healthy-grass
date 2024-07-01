@@ -21,7 +21,7 @@ public class ProductInquiryBoardCommentController {
     @Autowired
     private ProductInquiryBoardCommentServiceImpl service;
 
-    @GetMapping("/ProductInquiryBoardComment")
+    @GetMapping("ProductInquiryBoardComment")
     public @ResponseBody Map<String, Object> ProductInquiryBoardComment(@RequestParam(name = "id") Integer id) {
         System.out.println("ProductInquiryBoardCommentController's ProductInquiryBoardComment id: " + id);
 
@@ -52,7 +52,7 @@ public class ProductInquiryBoardCommentController {
         ("success", false)
         를 반환한다.
      */
-    @PostMapping("/productInquiryBoardComment")
+    @PostMapping("productInquiryBoardComment")
     public @ResponseBody Map<String, Object> postProductInquiryBoardComment(
             @RequestBody CommentDto commentDto
     )
@@ -90,7 +90,7 @@ public class ProductInquiryBoardCommentController {
         Long boardId;
     }
 
-    @DeleteMapping("/productInquiryBoardComment")
+    @DeleteMapping("productInquiryBoardComment")
     public @ResponseBody Map<String, Object> deleteProductInquiryBoardComment(@RequestParam("id") Long id, Authentication authentication) {
         System.out.println("ProductInquiryBoardCommentController's deleteProductInquiryBoardComment id: " + id);
 

@@ -14,33 +14,29 @@
 
 </head>
 <body>
-<div class="header layout-5">
+
+<header id="header">
     <th:block th:insert="~{fragments/topHeader.html :: topHeader_fragment}"></th:block>
     <th:block th:insert="~{fragments/nav.html :: nav_fragment}"></th:block>
-</div>
-<div class="main">
-    <section class="first-section">
-        <h1>마이 페이지</h1>
-    </section>
-    <section class="second-section box1">
-        <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
+</header>
 
-        <div class="box w-full h-800">
-            <div class="shopping-title">
-                <h4>결제 정보 조회</h4>
-            </div>
-            <div class="container" style="width: 95%;">
+<main class="my-page-main">
+    <th:block th:insert="~{fragments/myPage/mainMenu.html :: mainManu_fragment}"></th:block>
 
-                <div th:if="${success}" class="payment-detail">
+    <div class="my-page-menu-detail-container">
+        <h1>결제 정보 조회</h1>
+        <div class="container" style="width: 95%;">
 
-                    <div class="payment-info">
-                        <h2>결제 정보</h2>
-                        <p>결제 ID: <span th:text="${payment.id}"></span></p>
-                        <p>결제 이름: <span th:text="${payment.name}"></span></p>
-                        <p>결제 금액: <span th:text="${payment.paid_amount}"></span></p>
-                        <p>배송 상태: <span th:text="${payment.delivery_status}"></span></p>
-                        <p>환불 요청 상태:
-                            <span>
+            <div th:if="${success}" class="payment-detail">
+
+                <div class="payment-info">
+                    <h2>결제 정보</h2>
+                    <p>결제 ID: <span th:text="${payment.id}"></span></p>
+                    <p>결제 이름: <span th:text="${payment.name}"></span></p>
+                    <p>결제 금액: <span th:text="${payment.paid_amount}"></span></p>
+                    <p>배송 상태: <span th:text="${payment.delivery_status}"></span></p>
+                    <p>환불 요청 상태:
+                        <span>
                                 <th:block th:if="${payment.refund_request_status == 'N'}">
                                     X
                                 </th:block>
@@ -51,47 +47,50 @@
                                     환불 완료
                                 </th:block>
                             </span>
-                        </p>
-                        <p>결제 날짜: <span th:text="${payment.regDate}"></span></p>
-                    </div>
-
-                    <div class="order-item-list-info">
-                        <h2>주문 항목</h2>
-                        <div th:if="${#lists.isEmpty(orderItemList)}">
-                            <p>주문 항목이 없습니다.</p>
-                        </div>
-                        <div th:unless="${#lists.isEmpty(orderItemList)}" class="order-items">
-                            <div th:each="item : ${orderItemList}" class="order-item">
-                                <img th:src="@{${item.mainImgPath} + '/' + ${item.mainImgName}}" alt="상품 이미지" class="product-image">
-                                <p>상품명:
-                                    <a th:href="@{'/product?id=' + ${item.Pid}}" th:text="${item.name}"></a>
-                                </p>
-                                <p>카테고리: <span th:text="${item.majorCategory} + ' / ' + ${item.middleCategory}"></span></p>
-                                <p>수량: <span th:text="${item.quantity}"></span></p>
-                                <p>가격: <span th:text="${item.price}"></span></p>
-                                <th:block th:if="${item.review_status == 'N'}">
-                                    <button class="review-btn" th:data-oid="${item.Oid}" th:data-pid="${item.Pid}">리뷰 작성</button>
-                                </th:block>
-                                <th:block th:if="${item.review_status == 'Y'}">
-                                    <span>작성 완료</span>
-                                </th:block>
-
-                            </div>
-                        </div>
-                    </div>
+                    </p>
+                    <p>결제 날짜: <span th:text="${payment.regDate}"></span></p>
                 </div>
-                <script defer th:src="@{/js/myPage/addProductReviewBtnProcess.js}"></script>
 
-                <!-- 에러 메시지 -->
-                <div th:if="${!success}" class="error-message">
-                    <p>결제 정보 조회에 실패하였습니다.</p>
+                <div class="order-item-list-info">
+                    <h2>주문 항목</h2>
+                    <div th:if="${#lists.isEmpty(orderItemList)}">
+                        <p>주문 항목이 없습니다.</p>
+                    </div>
+                    <div th:unless="${#lists.isEmpty(orderItemList)}" class="order-items">
+                        <div th:each="item : ${orderItemList}" class="order-item">
+                            <img th:src="@{${item.mainImgPath} + '/' + ${item.mainImgName}}" alt="상품 이미지"
+                                 class="product-image">
+                            <p>상품명:
+                                <a th:href="@{'/product?id=' + ${item.Pid}}" th:text="${item.name}"></a>
+                            </p>
+                            <p>카테고리: <span th:text="${item.majorCategory} + ' / ' + ${item.middleCategory}"></span></p>
+                            <p>수량: <span th:text="${item.quantity}"></span></p>
+                            <p>가격: <span th:text="${item.price}"></span></p>
+                            <th:block th:if="${item.review_status == 'N'}">
+                                <button class="review-btn" th:data-oid="${item.Oid}" th:data-pid="${item.Pid}">리뷰 작성
+                                </button>
+                            </th:block>
+                            <th:block th:if="${item.review_status == 'Y'}">
+                                <span>작성 완료</span>
+                            </th:block>
+
+                        </div>
+                    </div>
                 </div>
             </div>
+            <script defer th:src="@{/js/myPage/addProductReviewBtnProcess.js}"></script>
+
+            <!-- 에러 메시지 -->
+            <div th:if="${!success}" class="error-message">
+                <p>결제 정보 조회에 실패하였습니다.</p>
+            </div>
         </div>
-    </section>
-</div>
-<div id="footer">
+    </div>
+</main>
+
+<footer id="footer">
     <th:block th:insert="~{fragments/footer.html :: footer_fragment}"></th:block>
-</div>
+</footer>
+
 </body>
 </html>

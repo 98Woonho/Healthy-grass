@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const editButton = document.getElementById('edit-btn');
-    const deleteButton = document.getElementById('delete-btn');
+    const editButton = document.getElementById('editBtn');
+    const deleteButton = document.getElementById('deleteBtn');
 
     editButton.addEventListener('click', function () {
         const reviewId = this.getAttribute('data-id');

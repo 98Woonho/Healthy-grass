@@ -6,7 +6,7 @@
     <title>상품문의 게시판</title>
     <script defer th:src="@{/js/productInquiryBoardList/searchFormOnchange.js}"></script>
 
-    <link rel="stylesheet" th:href="@{/css/productInquiryBoardList/common.css}">
+    <link rel="stylesheet" th:href="@{/css/board/boardList.css}">
 
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
@@ -25,7 +25,7 @@
 
                 <!-- 검색 폼 -->
                 <form action="/productInquiryBoardList" method="GET" id="searchForm">
-                    <div class="form-group" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <div class="form-group comment-check" sec:authorize="hasRole('ROLE_ADMIN')">
                         <label for="commentChk">답변하지 못한 게시글 조회</label>
                         <input type="checkbox" name="commentChk" id="commentChk" value="true" th:checked="${criteria.commentChk != null and criteria.commentChk != ''}" onchange="submitFormOnChange()">
                     </div>
@@ -37,8 +37,7 @@
                 </form>
 
                 <!-- 상품문의 게시글 목록 -->
-                <div class="productInquiryBoard-list">
-                    <h2>상품문의 게시글 목록</h2>
+                <div class="productInquiryBoard-list boardList">
                     <table class="table-container">
                         <thead>
                         <tr>
@@ -56,7 +55,7 @@
                         <tr th:each="board : ${list}">
                                 <td th:text="${board.get('id') != null ? board.id : ''}">-</td>
                                 <td th:text="${board.get('isLocked') != null ? board.isLocked : ''}">-</td>
-                                <td>
+                                <td class="title">
                                     <a th:href="@{${'/productInquiryBoard?id=' + (board.id)}}">
                                         <span class="product-name" th:text="${board.get('productName') != null ? board.productName : ''}">-</span>
                                         <span class="post-title" th:text="${board.get('title') != null ? board.title : ''}">-</span>

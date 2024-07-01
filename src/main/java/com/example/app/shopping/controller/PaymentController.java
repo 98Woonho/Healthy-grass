@@ -26,7 +26,7 @@ import java.util.*;
 
 @Controller
 @Slf4j
-@RequestMapping("/payment")
+@RequestMapping("payment")
 public class PaymentController {
     @Autowired
     private PaymentService paymentService;
@@ -34,14 +34,18 @@ public class PaymentController {
 
     @Value("${spring.portOne.imp}")
     private String imp;
+    @Value("${spring.portOne.imp_key}")
+    private String imp_key;
+    @Value("${spring.portOne.imp_secret}")
+    private String imp_secret;
 
-    @GetMapping("/imp")
+    @GetMapping("imp")
     public @ResponseBody String getImp() {
         return imp;
     }
 
     /* 배송상태 변경 */
-    @PutMapping("/delivery")
+    @PutMapping("delivery")
     public @ResponseBody Map<String, Object> putPaymentDeliveryStatusById(@RequestBody PutPaymentDeliveryStatusRequestDto request, Authentication authentication) {
         log.info("PaymentController's putPaymentDeliveryStatusById request: {}", request);
 
@@ -94,9 +98,9 @@ public class PaymentController {
         @JsonProperty("status")
         private String status;
     }
-    
+
     /* 환불 상태 변경 */
-    @PutMapping("/refund")
+    @PutMapping("refund")
     @Transactional
     public @ResponseBody Map<String, Object> putPaymentRefundStatusById(@RequestBody PutPaymentRefundStatusRequestDto request, Authentication authentication) {
         log.info("PaymentController's putPaymentRefundStatusById request: ");
@@ -162,11 +166,11 @@ public class PaymentController {
 
     @GetMapping("")
     public String payment(Authentication authentication) {
-        return "/payment/paymentForm";
+        return "payment/paymentForm";
     }
 
 
-    @GetMapping("/paymentForm")
+    @GetMapping("paymentForm")
     public String payment_search(Authentication authentication, Model model) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         String id = principal.getUserDto().getId();
@@ -176,7 +180,7 @@ public class PaymentController {
     }
 
     //결제 결과값을 db에 저장
-    @PostMapping("/save")
+    @PostMapping("save")
     @ResponseBody
     public void payment_save(@RequestBody RequestDto request, Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
@@ -223,12 +227,8 @@ public class PaymentController {
 
 
     //엑세스 토큰 받기
-    @GetMapping("/token")
+    @GetMapping("token")
     public @ResponseBody void AccessToken(){
-
-        String imp_key = "6257186181622002";
-        String imp_secret = "LFmdkrDK2syh8Z4YCr7XoiVvDs5IRSAMHYAS43i4Jdy7FVSMKxGKCYMcYf5C7OWpsYXkdQUUufqHWz33";
-
         String url = "https://api.iamport.kr/users/getToken";
         //HEADER
         HttpHeaders headers = new HttpHeaders();
@@ -263,7 +263,7 @@ public class PaymentController {
     //access토큰 객체
 
     // 결제 취소 요청 // axios로 받기 + 서비스단 구현!!!!!
-    @PostMapping("/cancel")
+    @PostMapping("cancel")
     public @ResponseBody void cancel(@RequestParam("imp_uid") String imp_uid, @RequestParam("merchant_uid") String merchant_uid) throws Exception {
         AccessToken();
         log.info("Post /payment/cancel..");

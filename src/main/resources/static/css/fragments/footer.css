@@ -34,7 +34,7 @@
 #footer .csInfo .tel {
     margin-bottom: 10px;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 24px;
 }
 
@@ -46,11 +46,6 @@
 
 #footer .infoBx .copy, #footer .infoBx .flt div {
     position: relative;
-    padding-left: 120px;
-}
-
-.mb30 {
-    margin-bottom: 30px;
 }
 
 #footer .infoBx .flt div h3 {
@@ -75,7 +70,6 @@
     margin-left: 0;
 }
 
-
 a {
     color: #1c1c1c;
     text-decoration: none;
@@ -93,7 +87,7 @@ a {
     width: 1px;
 }
 
-#footer .infoBx .flt div .tx span:first-child::after{
+#footer .infoBx .flt div .tx span:first-child::after {
     content: none;
 }
 
@@ -103,11 +97,6 @@ a {
     margin-left: 8px;
     position: relative;
     vertical-align: middle;
-}
-
-#footer .infoBx .copy, #footer .infoBx .flt div {
-    position: relative;
-    padding-left: 120px;
 }
 
 #footer .infoBx .copy {
@@ -138,3 +127,10 @@ hr:not([size]) {
     height: 100%;
 }
 
+#footer .infoBx .csInfo {
+    padding-top: 5px;
+}
+
+#footer .infoBx .csInfo .inquiry {
+    padding-top: 8px;
+}

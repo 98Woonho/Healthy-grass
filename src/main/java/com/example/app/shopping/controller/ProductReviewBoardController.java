@@ -30,7 +30,7 @@ public class ProductReviewBoardController {
     private ProductService productService;
 
     // 상품 조회에서 상품 리뷰 뿌려주는 rest API, 기존 게시판과 구분을 위해 url 끝에 API 를 작성하였습니다.
-    @PostMapping("/productReviewBoardListAPI")
+    @PostMapping("productReviewBoardListAPI")
     public @ResponseBody Map<String, Object> productReviewBoardListAPI(@RequestBody ProductReviewBoardAPI request) {
         Criteria criteria = request.getCriteria();
 
@@ -60,7 +60,7 @@ public class ProductReviewBoardController {
     }
 
     // 악의적인 리뷰 혹은 광고 등을 검열하기 위한 개발자 뷰를 위한 메서드입니다. (일반 유저는 볼 이유가 없어 접근 제한 필요할 듯 합니다)
-    @GetMapping("/productReviewBoardList")
+    @GetMapping("productReviewBoardList")
     public String productReviewBoardList(
             @ModelAttribute Criteria criteria,
             Model model
@@ -85,10 +85,10 @@ public class ProductReviewBoardController {
             model.addAttribute("success", false);
         }
 
-        return "/productReviewBoard/boardList";
+        return "productReviewBoard/boardList";
     }
 
-    @GetMapping("/productReviewBoard")
+    @GetMapping("productReviewBoard")
     public String productReviewBoard (
             @RequestParam(name = "id", defaultValue = "0", required = false) Integer id,
             Model model) {
@@ -107,19 +107,18 @@ public class ProductReviewBoardController {
         model.addAttribute("response", response);
         response = null;
 
-        return "/productReviewBoard/boardDetail";
+        return "productReviewBoard/boardDetail";
     }
 
     // 내 작성 리뷰 뿌리기
 
-    @GetMapping("/myProductReviewBoardList")
+    @GetMapping("myProductReviewBoardList")
     public String myProductReviewBoardList(
             @ModelAttribute Criteria criteria,
             Model model,
             Authentication authentication
     ) {
-        System.out.println("ProductReviewBoardController's myProductReviewBoardList " +
-                "criteria: " + criteria + " model: " + model);
+        model.addAttribute("menu", "myProductReviewBoardList");
 
         if (criteria.getPageno() == null) {
             criteria.setPageno(1);
@@ -131,7 +130,7 @@ public class ProductReviewBoardController {
             String error = "로그인 정보가 없습니다.";
             model.addAttribute("error", error);
 
-            return "/error/error";
+            return "error/error";
         }
 
         String uId = ((PrincipalDetails) authentication.getPrincipal()).getUsername();
@@ -145,7 +144,7 @@ public class ProductReviewBoardController {
             model.addAttribute("success", false);
         }
 
-        return "/myPage/myReviewPage";
+        return "myPage/myReviewPage";
     }
 
     @Data
@@ -160,7 +159,7 @@ public class ProductReviewBoardController {
         리뷰 작성 페이지로 이동합니다.
         Order 의 id, Product 의 id 를 파라미터로 전달받습니다.
     */
-    @GetMapping("/productReview/new")
+    @GetMapping("productReview/new")
     public String productReviewAddPage(@ModelAttribute productReviewAddPageRequestDto dto, Model model) {
         log.info("ProductReviewBoardController's productReviewAddPage request: " + dto);
 
@@ -189,7 +188,7 @@ public class ProductReviewBoardController {
         User 의 id 를 확인하여 Order 의 Uid 와 일치하는지 확인하고,
         Order 의 pId 와 Product 의 id 가 일치하는지 확인합니다.
     */
-    @PostMapping(value = "/productReview")
+    @PostMapping(value = "productReview")
     public @ResponseBody Map<String, Object> postProductReview(@ModelAttribute PostProductReviewRequestDto request, Authentication authentication) {
         log.info("ProductReviewBoardController's postProductReview request: " + request);
 
@@ -253,7 +252,7 @@ public class ProductReviewBoardController {
         상품 리뷰 수정페이지로 이동
         기존 상품 리뷰에 대한 데이터 전달
     */
-    @GetMapping("/productReview/edit")
+    @GetMapping("productReview/edit")
     private String productReviewEditPage(@RequestParam("boardId") Long boardId, Model model) {
         log.info("ProductReviewBoardController's productReviewEditPage boardId: " + boardId);
 
@@ -271,7 +270,7 @@ public class ProductReviewBoardController {
     /*
         상품 리뷰 수정 put
     */
-    @PutMapping("/productReview")
+    @PutMapping("productReview")
     public @ResponseBody Map<String, Object> putProductReview(
             @ModelAttribute PutProductReviewDto putDto, Authentication authentication) {
         log.info("ProductReviewBoardController's putProductReview dto: " + putDto);

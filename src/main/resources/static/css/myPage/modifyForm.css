@@ -1,5 +1,9 @@
 .modifyForm {
-    margin-left: 100px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 auto;
 }
 
 .form-group {
@@ -16,7 +20,7 @@ label {
 input[type="text"],
 input[type="password"],
 input[type="email"] {
-    width: 80%;
+    width: 100%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -26,10 +30,15 @@ input[type="password"]::placeholder {
     color: #999;
 }
 
+button[name="searchAddressBtn"] {
+    width: 200px;
+    margin-left: 0.5rem;
+}
+
 button[name="searchAddressBtn"],
 .modifyBtn {
     padding: 10px 20px;
-    background-color: green;
+    background-color: #4cae4c;
     color: #fff;
     border: none;
     border-radius: 3px;
@@ -39,7 +48,7 @@ button[name="searchAddressBtn"],
 
 button[name="searchAddressBtn"]:hover,
 .modifyBtn:hover {
-    background-color: darkgreen;
+    background-color: #439a46;
 }
 
 .spanError {

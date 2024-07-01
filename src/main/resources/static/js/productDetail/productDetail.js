@@ -178,9 +178,17 @@ function handleResponse(response) {
 }
 
 function getNowPurchase() {
-    const cartPrice = document.querySelector('#discountedPrice').innerText;
+    let cartPrice;
     const productId = document.querySelector('.product-id').value;
     const totalAmount = totalPriceText.textContent;
+
+    const discountedPriceElement = document.querySelector('#discountedPrice');
+    if (discountedPriceElement) {
+        cartPrice = discountedPriceElement.innerText;
+    } else {
+        const productPriceElement = document.querySelector('#productPrice');
+        cartPrice = productPriceElement.innerText;
+    }
 
     return [{
         price: parseInt(cartPrice),

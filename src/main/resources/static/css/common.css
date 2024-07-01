@@ -39,9 +39,9 @@ a:link, a:visited {
 
 .admin-main,
 .my-page-main {
-    padding: 0 200px !important;
+    /*padding: 0 200px !important;*/
     max-width: none !important;
-    margin: 0 auto !important;
+    margin: 0 15% !important;
     display: flex;
     flex-direction: row;
     gap: 2rem;

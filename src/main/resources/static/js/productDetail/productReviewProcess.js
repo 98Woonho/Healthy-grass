@@ -52,11 +52,19 @@ function displayReviews(reviews) {
         reviewList.appendChild(row);
 
         const row1 = document.createElement('tr');
+        let imgHtml = '';
+
+        if (review.imgPath) {
+            imgHtml = `
+                <div style="text-align: center">
+                    <img style="max-width: 500px; max-height: 500px; margin-bottom: 1rem;" src="${review.imgPath}/${review.imgName}" alt="리뷰 이미지" />
+                </div>
+            `;
+        }
+
         row1.innerHTML = `
             <td colspan="5" class="review-content" id="${reviewContentId}" style="display: none;">
-                <div style="text-align: center">
-                    <img style="max-width: 500px; max-height: 500px; margin-bottom: 1rem;" src="${review.imgPath}/${review.imgName}" alt="리뷰 이미지" <br/>
-                </div>
+                ${imgHtml}
                 <div style="margin-right: 130px; margin-left: 130px; text-align: left">${review.content}</div>
             </td>
         `;

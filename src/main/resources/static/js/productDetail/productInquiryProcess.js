@@ -93,7 +93,6 @@ function displayProductInquiries(productInquiries) {
                                 <p>내용: ${comment.content}</p>
                             </td>
                             <td>${comment.regDate}</td>
-                            <td>${comment.updateDate}</td>
                         </tr>
                     `);
                 });
@@ -156,7 +155,6 @@ function submitPassword(index) {
                                 <p>${comment.content}</p>
                             </td>
                             <td>${comment.regDate}</td>
-                            <td>${comment.updateDate}</td>
                         </tr>
                     `);
                 });

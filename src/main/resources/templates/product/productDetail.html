@@ -141,7 +141,7 @@
         <section class="second-section">
             <div class="product-detail" th:with="product=${response}">
                 <img id="product-sub-img" th:src="@{${product.subImgPath + product.subImgName}}"
-                     th:alt="${product.subImgName}">
+                     th:alt="${product.subImgName}" style="width: 100%">
             </div>
         </section>
         <section class="third-section">

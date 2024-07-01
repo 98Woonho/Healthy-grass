@@ -9,6 +9,8 @@
     <!--  cdns  -->
     <th:block th:insert="~{fragments/link.html :: link_fragment}"></th:block>
 
+    <link rel="stylesheet" th:href="@{/css/error/error.css}">
+
     <title>에러 페이지</title>
 </head>
 <body>
@@ -19,7 +21,14 @@
     </div>
     <div class="main">
         <section class="first-section">
-            에러 페이지
+            <div class="container">
+                <h1>에러 페이지</h1>
+
+                <p>
+                    <span>정상적인 요청이 아닙니다.</span> <br/>
+                    <span>지속적으로 문제가 발생할 시 관리자에게 문의바랍니다.</span>
+                </p>
+            </div>
         </section>
     </div>
 </div>

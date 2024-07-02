@@ -232,809 +232,487 @@ WEB PROJECT PLANING
 ---
 ```
 C:.
-│  .gitignore
-│  build.gradle
-│  gradlew
-│  gradlew.bat
-│  README.md
-│  settings.gradle
-│
-├─.gradle
-│  ├─8.7
-│  │  │  gc.properties
-│  │  │
-│  │  ├─checksums
-│  │  │      checksums.lock
-│  │  │
-│  │  ├─dependencies-accessors
-│  │  │      gc.properties
-│  │  │
-│  │  ├─executionHistory
-│  │  │      executionHistory.lock
-│  │  │
-│  │  ├─expanded
-│  │  ├─fileChanges
-│  │  │      last-build.bin
-│  │  │
-│  │  ├─fileHashes
-│  │  │      fileHashes.lock
-│  │  │
-│  │  └─vcsMetadata
-│  ├─buildOutputCleanup
-│  │      buildOutputCleanup.lock
-│  │      cache.properties
-│  │
-│  └─vcs-1
-│          gc.properties
-│
-├─.idea
-│  │  .gitignore
-│  │  .name
-│  │  compiler.xml
-│  │  dataSources.local.xml
-│  │  dataSources.xml
-│  │  gradle.xml
-│  │  jarRepositories.xml
-│  │  misc.xml
-│  │  vcs.xml
-│  │  workspace.xml
-│  │
-│  └─dataSources
-│      │  e4fc7de4-c637-429f-99ca-5b216a7187d0.xml
-│      │
-│      └─e4fc7de4-c637-429f-99ca-5b216a7187d0
-│          └─storage_v2
-│              └─_src_
-│                  └─schema
-│                          information_schema.FNRwLQ.meta
-│                          mysql.osA4Bg.meta
-│                          performance_schema.kIw0nw.meta
-│                          shopping.aPF36w.meta
-│                          sys.zb4BAA.meta
-│
-├─build
-│  └─classes
-│      └─java
-│          └─main
-│              └─com
-│                  └─example
-│                      └─app
-│                          │  AppApplication.class
-│                          │
-│                          └─shopping
-│                              ├─config
-│                              │  │  DataSourceConfig.class
-│                              │  │  MybatisConfig.class
-│                              │  │  SecurityConfig.class
-│                              │  │  WebConfig.class
-│                              │  │  WebMvcConfig.class
-│                              │  │
-│                              │  └─auth
-│                              │          PrincipalDetails$1.class
-│                              │          PrincipalDetails.class
-│                              │          PrincipalDetailsService.class
-│                              │
-│                              ├─controller
-│                              │      AdminController.class
-│                              │      CartController.class
-│                              │      CustomerInquiryBoardCommentController.class
-│                              │      CustomerInquiryBoardController.class
-│                              │      HomeController.class
-│                              │      MyPageController.class
-│                              │      OrderController$AddOrder.class
-│                              │      OrderController.class
-│                              │      PaymentController$PortOneTokenResponse.class
-│                              │      PaymentController$TokenResponse.class
-│                              │      PaymentController.class
-│                              │      ProductController.class
-│                              │      ProductInquiryBoardCommentController.class
-│                              │      ProductInquiryBoardController$ProductReviewBoardAPI.class
-│                              │      ProductInquiryBoardController.class
-│                              │      ProductReviewBoardController$ProductReviewBoardAPI.class
-│                              │      ProductReviewBoardController.class
-│                              │      UserController$AuthInfoResponse.class
-│                              │      UserController$PortOneAuthInfoResponse.class
-│                              │      UserController$PortOneTokenResponse.class
-│                              │      UserController$TokenResponse.class
-│                              │      UserController.class
-│                              │
-│                              ├─domain
-│                              │  ├─dto
-│                              │  │  │  CartDto.class
-│                              │  │  │  CartItemsDto.class
-│                              │  │  │  CustomerInquiryBoardDto.class
-│                              │  │  │  CustomerInquiryCommentDto.class
-│                              │  │  │  OrderDto.class
-│                              │  │  │  OrderItemDto.class
-│                              │  │  │  PaymentDto.class
-│                              │  │  │  PersistentLoginsDto.class
-│                              │  │  │  ProductDetailBoardDto.class
-│                              │  │  │  ProductDto.class
-│                              │  │  │  ProductInquiryBoardCommentDto.class
-│                              │  │  │  ProductInquiryBoardDto.class
-│                              │  │  │  ProductMajorCategoryDto.class
-│                              │  │  │  ShippingAddressDto.class
-│                              │  │  │  UserDto$UserDtoBuilder.class
-│                              │  │  │  UserDto.class
-│                              │  │  │  WishlistDto.class
-│                              │  │  │
-│                              │  │  └─common
-│                              │  │          Criteria.class
-│                              │  │          PageDto.class
-│                              │  │
-│                              │  ├─mapper
-│                              │  │      CartItemMapper.class
-│                              │  │      CartMapper.class
-│                              │  │      CustomerInquiryBoardCommentMapper.class
-│                              │  │      CustomerInquiryBoardMapper.class
-│                              │  │      OrderItemMapper.class
-│                              │  │      OrderMapper.class
-│                              │  │      PaymentMapper.class
-│                              │  │      ProductInquiryBoardCommentMapper.class
-│                              │  │      ProductInquiryBoardMapper.class
-│                              │  │      ProductMapper.class
-│                              │  │      ProductReviewBoardMapper.class
-│                              │  │      UserMapper.class
-│                              │  │
-│                              │  └─service
-│                              │      │  PaymentService.class
-│                              │      │
-│                              │      ├─admin
-│                              │      │      AdminService.class
-│                              │      │
-│                              │      ├─cart
-│                              │      │      CartService.class
-│                              │      │
-│                              │      ├─customerInquiryBoard
-│                              │      │      CustomerInquiryBoardService.class
-│                              │      │      CustomerInquiryBoardServiceImpl.class
-│                              │      │
-│                              │      ├─customerInquiryBoardComment
-│                              │      │      CustomerInquiryBoardCommentService.class
-│                              │      │      CustomerInquiryBoardCommentServiceImpl.class
-│                              │      │
-│                              │      ├─order
-│                              │      │      OrderService.class
-│                              │      │
-│                              │      ├─product
-│                              │      │      ProductService.class
-│                              │      │      ProductServiceImpl.class
-│                              │      │
-│                              │      ├─productInquiryBoard
-│                              │      │      productInquiryBoardService.class
-│                              │      │      productInquiryBoardServiceImpl.class
-│                              │      │
-│                              │      ├─productInquiryBoardComment
-│                              │      │      ProductInquiryBoardCommentService.class
-│                              │      │      ProductInquiryBoardCommentServiceImpl.class
-│                              │      │
-│                              │      ├─productReviewBoard
-│                              │      │      ProductReviewBoardService.class
-│                              │      │      ProductReviewBoardServiceImpl.class
-│                              │      │
-│                              │      └─user
-│                              │              UserService.class
-│                              │
-│                              ├─handler
-│                              │      CustomLoginFailureHandler.class
-│                              │      CustomLogoutHandler.class
-│                              │
-│                              └─valid
-│                                      CustomPasswordMatchesValidator.class
-│                                      PasswordMatches.class
-│
-├─design
-│  ├─ERD
-│  │      ERD.drawio
-│  │      ERD.png
-│  │
-│  ├─ShoppingMall_html
-│  │      addProduct.html
-│  │      basket.html
-│  │      categoryProductList.html
-│  │      index.html
-│  │      mypage.html
-│  │      order.html
-│  │      passwordCheckForm.html
-│  │      productDetail.html
-│  │      productInquiry.html
-│  │      userInquiry.html
-│  │      wishlist.html
-│  │
-│  ├─SQL
-│  │      Shopping.sql
-│  │
-│  └─UI
-│      │  게시글조회.png
-│      │  게시판.png
-│      │  관리자.png
-│      │  관리자_게시판관리.png
-│      │  관리자_등록상품조회.png
-│      │  관리자_매출 현황.png
-│      │  관리자_문의.png
-│      │  관리자_상품등록.png
-│      │  관리자_주문내역.png
-│      │  로그인.png
-│      │  마이페이지.png
-│      │  메인.png
-│      │  비밀번호재확인-회원정보수정.png
-│      │  비밀번호재확인-회원탈퇴.png
-│      │  상품리뷰페이지.png
-│      │  상품문의페이지.png
-│      │  상품상세페이지.png
-│      │  상품주문조회.png
-│      │  장바구니.png
-│      │  좋아요.png
-│      │  주문, 결제 페이지.png
-│      │  최근주문조회.png
-│      │  카테고리상품조회.png
-│      │  회원가입.png
-│      │  회원가입양식.png
-│      │  회원가입완료페이지.png
-│      │  회원정보수정.png
-│      │
-│      └─template
-│              footer.png
-│              header.png
-│              관리자용 header.png
-│
-├─gradle
-│  └─wrapper
-│          gradle-wrapper.jar
-│          gradle-wrapper.properties
-│
-├─out
-│  └─production
-│      └─resources
-│          │  application.properties
-│          │
-│          ├─mapper
-│          │      CartItemMapper.xml
-│          │      CartMapper.xml
-│          │      CustomerInquiryBoardCommentMapper.xml
-│          │      CustomerInquiryBoardMapper.xml
-│          │      OrderItemMapper.xml
-│          │      OrderMapper.xml
-│          │      PaymentMapper.xml
-│          │      ProductInquiryBoardCommentMapper.xml
-│          │      ProductInquiryBoardMapper.xml
-│          │      ProductMapper.xml
-│          │      ProductReviewBoardMapper.xml
-│          │      UserMapper.xml
-│          │
-│          ├─static
-│          │  ├─css
-│          │  │  ├─admin
-│          │  │  │      addProduct.css
-│          │  │  │      modifyProduct.css
-│          │  │  │
-│          │  │  ├─cart
-│          │  │  │      cartForm.css
-│          │  │  │
-│          │  │  ├─customerInquiryBoardDetail
-│          │  │  │      customerInquiryBoardDetail.css
-│          │  │  │
-│          │  │  ├─customerInquiryBoardList
-│          │  │  │      common.css
-│          │  │  │
-│          │  │  ├─fragments
-│          │  │  │      common.css
-│          │  │  │      nav.css
-│          │  │  │
-│          │  │  ├─index
-│          │  │  │      common.css
-│          │  │  │      hightDiscountProducts.css
-│          │  │  │      popularProducts.css
-│          │  │  │      recentProducts.css
-│          │  │  │
-│          │  │  ├─myPage
-│          │  │  │      common.css
-│          │  │  │      mainDetail.css
-│          │  │  │      myCustomerInquiryPage.css
-│          │  │  │      myReviewPage.css
-│          │  │  │
-│          │  │  ├─order
-│          │  │  │      order.css
-│          │  │  │
-│          │  │  ├─product
-│          │  │  │      productDetail.css
-│          │  │  │      productInquiryBoard.css
-│          │  │  │      productReviewBoard.css
-│          │  │  │
-│          │  │  ├─productInquiry
-│          │  │  │      addProductInquiry.css
-│          │  │  │      updateProductInquiry.css
-│          │  │  │
-│          │  │  ├─productInquiryBoardDetail
-│          │  │  │      productInquiryBoardDetail.css
-│          │  │  │      productInquiryBoardDetailPasswordCheck.css
-│          │  │  │
-│          │  │  ├─productInquiryBoardList
-│          │  │  │      common.css
-│          │  │  │
-│          │  │  ├─productList
-│          │  │  │      common.css
-│          │  │  │
-│          │  │  ├─productReviewBoardDetail
-│          │  │  │      productReviewBoardDetail.css
-│          │  │  │
-│          │  │  └─productReviewBoardList
-│          │  │          common.css
-│          │  │
-│          │  ├─img
-│          │  │      minus.svg
-│          │  │      plus.svg
-│          │  │
-│          │  └─js
-│          │      ├─admin
-│          │      │      addProduct.js
-│          │      │      modifyProduct.js
-│          │      │
-│          │      ├─cart
-│          │      │      cartForm.js
-│          │      │
-│          │      ├─customerInquiryBoardDetail
-│          │      │      customerInquiryBoardDetailCommentProcess.js
-│          │      │
-│          │      ├─customerInquiryBoardList
-│          │      │      searchFormOnchange.js
-│          │      │
-│          │      ├─index
-│          │      │      hightDiscountProductsProcess.js
-│          │      │      popularProductsProcess.js
-│          │      │      recentProductsProcess.js
-│          │      │
-│          │      ├─myPage
-│          │      │      deleteForm.js
-│          │      │      modifyForm.js
-│          │      │      passwordCheckForm.js
-│          │      │      productInquiryBoardDetailPasswordCheckProcess.js
-│          │      │      searchFormOnchange.js
-│          │      │
-│          │      ├─order
-│          │      │      order.js
-│          │      │
-│          │      ├─payment
-│          │      │      paymentForm.js
-│          │      │
-│          │      ├─productDetail
-│          │      │      productDetail.js
-│          │      │      productInquiryAddBtn.js
-│          │      │      productInquiryProcess.js
-│          │      │      productReviewProcess.js
-│          │      │      toggleInquiryContentProcess.js
-│          │      │      toggleReviewContentProcess.js
-│          │      │
-│          │      ├─productInquiry
-│          │      │      formValidation.js
-│          │      │      pwChkProcess.js
-│          │      │      updateFormValidation.js
-│          │      │
-│          │      ├─productInquiryBoardDetail
-│          │      │      btnProcess.js
-│          │      │      productInquiryBoardDetailCommentProcess.js
-│          │      │      productInquiryBoardDetailPasswordCheckProcess.js
-│          │      │
-│          │      ├─productInquiryBoardList
-│          │      │      searchFormOnchange.js
-│          │      │
-│          │      ├─productList
-│          │      │      searchFormOnchange.js
-│          │      │
-│          │      └─user
-│          │              findUserIdForm.js
-│          │              findUserPasswordForm.js
-│          │              joinForm.js
-│          │              loginForm.js
-│          │
-│          └─templates
-│              │  index.html
-│              │
-│              ├─admin
-│              │      addProduct.html
-│              │      modifyProduct.html
-│              │
-│              ├─cart
-│              │      cartForm.html
-│              │
-│              ├─customerInquiryBoard
-│              │      boardDetail.html
-│              │      boardList.html
-│              │
-│              ├─error
-│              │      error.html
-│              │
-│              ├─fragments
-│              │  │  link.html
-│              │  │  nav.html
-│              │  │  topHeader.html
-│              │  │
-│              │  └─myPage
-│              │          mainMenu.html
-│              │
-│              ├─myPage
-│              │      deleteForm.html
-│              │      modifyForm.html
-│              │      myCustomerInquiryPage.html
-│              │      mypage.html
-│              │      myProductInquiryPage.html
-│              │      myReviewPage.html
-│              │      passwordCheckForm.html
-│              │      searchForm.html
-│              │
-│              ├─order
-│              │      orderForm.html
-│              │
-│              ├─payment
-│              │      paymentForm.html
-│              │      paymentList.html
-│              │
-│              ├─product
-│              │      productDetail.html
-│              │      productList.html
-│              │
-│              ├─productInquiryBoard
-│              │      addProductInquiry.html
-│              │      boardDetail.html
-│              │      boardList.html
-│              │      passwordChk.html
-│              │      updateProductInquiry.html
-│              │
-│              ├─productReviewBoard
-│              │      boardDetail.html
-│              │      boardList.html
-│              │
-│              └─user
-│                      findUserIdForm.html
-│                      findUserPasswordForm.html
-│                      joinForm.html
-│                      loginForm.html
-│
-└─src
-    ├─main
-    │  ├─generated
-    │  ├─java
-    │  │  └─com
-    │  │      └─example
-    │  │          └─app
-    │  │              │  AppApplication.java
-    │  │              │
-    │  │              └─shopping
-    │  │                  ├─config
-    │  │                  │  │  DataSourceConfig.java
-    │  │                  │  │  MybatisConfig.java
-    │  │                  │  │  SecurityConfig.java
-    │  │                  │  │  WebConfig.java
-    │  │                  │  │  WebMvcConfig.java
-    │  │                  │  │
-    │  │                  │  └─auth
-    │  │                  │          PrincipalDetails.java
-    │  │                  │          PrincipalDetailsService.java
-    │  │                  │
-    │  │                  ├─controller
-    │  │                  │      AdminController.java
-    │  │                  │      CartController.java
-    │  │                  │      CustomerInquiryBoardCommentController.java
-    │  │                  │      CustomerInquiryBoardController.java
-    │  │                  │      HomeController.java
-    │  │                  │      MyPageController.java
-    │  │                  │      OrderController.java
-    │  │                  │      PaymentController.java
-    │  │                  │      ProductController.java
-    │  │                  │      ProductInquiryBoardCommentController.java
-    │  │                  │      ProductInquiryBoardController.java
-    │  │                  │      ProductReviewBoardController.java
-    │  │                  │      UserController.java
-    │  │                  │
-    │  │                  ├─domain
-    │  │                  │  ├─dto
-    │  │                  │  │  │  CartDto.java
-    │  │                  │  │  │  CartItemsDto.java
-    │  │                  │  │  │  CustomerInquiryBoardDto.java
-    │  │                  │  │  │  CustomerInquiryCommentDto.java
-    │  │                  │  │  │  OrderDto.java
-    │  │                  │  │  │  OrderItemDto.java
-    │  │                  │  │  │  PaymentDto.java
-    │  │                  │  │  │  PersistentLoginsDto.java
-    │  │                  │  │  │  ProductDetailBoardDto.java
-    │  │                  │  │  │  ProductDto.java
-    │  │                  │  │  │  ProductInquiryBoardCommentDto.java
-    │  │                  │  │  │  ProductInquiryBoardDto.java
-    │  │                  │  │  │  ProductMajorCategoryDto.java
-    │  │                  │  │  │  ShippingAddressDto.java
-    │  │                  │  │  │  UserDto.java
-    │  │                  │  │  │  WishlistDto.java
-    │  │                  │  │  │
-    │  │                  │  │  └─common
-    │  │                  │  │          Criteria.java
-    │  │                  │  │          PageDto.java
-    │  │                  │  │
-    │  │                  │  ├─mapper
-    │  │                  │  │      CartItemMapper.java
-    │  │                  │  │      CartMapper.java
-    │  │                  │  │      CustomerInquiryBoardCommentMapper.java
-    │  │                  │  │      CustomerInquiryBoardMapper.java
-    │  │                  │  │      OrderItemMapper.java
-    │  │                  │  │      OrderMapper.java
-    │  │                  │  │      PaymentMapper.java
-    │  │                  │  │      ProductInquiryBoardCommentMapper.java
-    │  │                  │  │      ProductInquiryBoardMapper.java
-    │  │                  │  │      ProductMapper.java
-    │  │                  │  │      ProductReviewBoardMapper.java
-    │  │                  │  │      ShippingAddressMapper.java
-    │  │                  │  │      UserMapper.java
-    │  │                  │  │
-    │  │                  │  └─service
-    │  │                  │      │  PaymentService.java
-    │  │                  │      │
-    │  │                  │      ├─admin
-    │  │                  │      │      AdminService.java
-    │  │                  │      │
-    │  │                  │      ├─cart
-    │  │                  │      │      CartService.java
-    │  │                  │      │
-    │  │                  │      ├─customerInquiryBoard
-    │  │                  │      │      CustomerInquiryBoardService.java
-    │  │                  │      │      CustomerInquiryBoardServiceImpl.java
-    │  │                  │      │
-    │  │                  │      ├─customerInquiryBoardComment
-    │  │                  │      │      CustomerInquiryBoardCommentService.java
-    │  │                  │      │      CustomerInquiryBoardCommentServiceImpl.java
-    │  │                  │      │
-    │  │                  │      ├─myPage
-    │  │                  │      │      MyPageService.java
-    │  │                  │      │
-    │  │                  │      ├─order
-    │  │                  │      │      OrderService.java
-    │  │                  │      │
-    │  │                  │      ├─product
-    │  │                  │      │      ProductService.java
-    │  │                  │      │      ProductServiceImpl.java
-    │  │                  │      │
-    │  │                  │      ├─productInquiryBoard
-    │  │                  │      │      productInquiryBoardService.java
-    │  │                  │      │      productInquiryBoardServiceImpl.java
-    │  │                  │      │
-    │  │                  │      ├─productInquiryBoardComment
-    │  │                  │      │      ProductInquiryBoardCommentService.java
-    │  │                  │      │      ProductInquiryBoardCommentServiceImpl.java
-    │  │                  │      │
-    │  │                  │      ├─productReviewBoard
-    │  │                  │      │      ProductReviewBoardService.java
-    │  │                  │      │      ProductReviewBoardServiceImpl.java
-    │  │                  │      │
-    │  │                  │      └─user
-    │  │                  │              UserService.java
-    │  │                  │
-    │  │                  ├─handler
-    │  │                  │      CustomLoginFailureHandler.java
-    │  │                  │      CustomLogoutHandler.java
-    │  │                  │
-    │  │                  └─valid
-    │  │                          CustomPasswordMatchesValidator.java
-    │  │                          PasswordMatches.java
-    │  │
-    │  └─resources
-    │      │  application.properties
-    │      │
-    │      ├─mapper
-    │      │      CartItemMapper.xml
-    │      │      CartMapper.xml
-    │      │      CustomerInquiryBoardCommentMapper.xml
-    │      │      CustomerInquiryBoardMapper.xml
-    │      │      OrderItemMapper.xml
-    │      │      OrderMapper.xml
-    │      │      PaymentMapper.xml
-    │      │      ProductInquiryBoardCommentMapper.xml
-    │      │      ProductInquiryBoardMapper.xml
-    │      │      ProductMapper.xml
-    │      │      ProductReviewBoardMapper.xml
-    │      │      ShippingAddressMapper.xml
-    │      │      UserMapper.xml
-    │      │
-    │      ├─static
-    │      │  ├─css
-    │      │  │  ├─admin
-    │      │  │  │      addProduct.css
-    │      │  │  │      modifyProduct.css
-    │      │  │  │
-    │      │  │  ├─cart
-    │      │  │  │      cartForm.css
-    │      │  │  │
-    │      │  │  ├─customerInquiryBoardDetail
-    │      │  │  │      customerInquiryBoardDetail.css
-    │      │  │  │
-    │      │  │  ├─customerInquiryBoardList
-    │      │  │  │      common.css
-    │      │  │  │
-    │      │  │  ├─fragments
-    │      │  │  │      common.css
-    │      │  │  │      nav.css
-    │      │  │  │
-    │      │  │  ├─index
-    │      │  │  │      common.css
-    │      │  │  │      hightDiscountProducts.css
-    │      │  │  │      popularProducts.css
-    │      │  │  │      recentProducts.css
-    │      │  │  │
-    │      │  │  ├─myPage
-    │      │  │  │      common.css
-    │      │  │  │      editAddress.css
-    │      │  │  │      mainDetail.css
-    │      │  │  │      myCustomerInquiryPage.css
-    │      │  │  │      myReviewPage.css
-    │      │  │  │
-    │      │  │  ├─order
-    │      │  │  │      order.css
-    │      │  │  │
-    │      │  │  ├─product
-    │      │  │  │      productDetail.css
-    │      │  │  │      productInquiryBoard.css
-    │      │  │  │      productReviewBoard.css
-    │      │  │  │
-    │      │  │  ├─productInquiry
-    │      │  │  │      addProductInquiry.css
-    │      │  │  │      updateProductInquiry.css
-    │      │  │  │
-    │      │  │  ├─productInquiryBoardDetail
-    │      │  │  │      productInquiryBoardDetail.css
-    │      │  │  │      productInquiryBoardDetailPasswordCheck.css
-    │      │  │  │
-    │      │  │  ├─productInquiryBoardList
-    │      │  │  │      common.css
-    │      │  │  │
-    │      │  │  ├─productList
-    │      │  │  │      common.css
-    │      │  │  │
-    │      │  │  ├─productReviewBoardDetail
-    │      │  │  │      productReviewBoardDetail.css
-    │      │  │  │
-    │      │  │  └─productReviewBoardList
-    │      │  │          common.css
-    │      │  │
-    │      │  ├─img
-    │      │  │      minus.svg
-    │      │  │      plus.svg
-    │      │  │
-    │      │  └─js
-    │      │      ├─admin
-    │      │      │      addProduct.js
-    │      │      │      modifyProduct.js
-    │      │      │
-    │      │      ├─cart
-    │      │      │      cartForm.js
-    │      │      │
-    │      │      ├─customerInquiryBoardDetail
-    │      │      │      customerInquiryBoardDetailCommentProcess.js
-    │      │      │
-    │      │      ├─customerInquiryBoardList
-    │      │      │      searchFormOnchange.js
-    │      │      │
-    │      │      ├─index
-    │      │      │      hightDiscountProductsProcess.js
-    │      │      │      popularProductsProcess.js
-    │      │      │      recentProductsProcess.js
-    │      │      │
-    │      │      ├─myPage
-    │      │      │      deleteForm.js
-    │      │      │      editAddress.js
-    │      │      │      modifyForm.js
-    │      │      │      passwordCheckForm.js
-    │      │      │      productInquiryBoardDetailPasswordCheckProcess.js
-    │      │      │      searchFormOnchange.js
-    │      │      │
-    │      │      ├─order
-    │      │      │      order.js
-    │      │      │
-    │      │      ├─payment
-    │      │      │      paymentForm.js
-    │      │      │
-    │      │      ├─productDetail
-    │      │      │      productDetail.js
-    │      │      │      productInquiryAddBtn.js
-    │      │      │      productInquiryProcess.js
-    │      │      │      productReviewProcess.js
-    │      │      │      toggleInquiryContentProcess.js
-    │      │      │      toggleReviewContentProcess.js
-    │      │      │
-    │      │      ├─productInquiry
-    │      │      │      formValidation.js
-    │      │      │      pwChkProcess.js
-    │      │      │      updateFormValidation.js
-    │      │      │
-    │      │      ├─productInquiryBoardDetail
-    │      │      │      btnProcess.js
-    │      │      │      productInquiryBoardDetailCommentProcess.js
-    │      │      │      productInquiryBoardDetailPasswordCheckProcess.js
-    │      │      │
-    │      │      ├─productInquiryBoardList
-    │      │      │      searchFormOnchange.js
-    │      │      │
-    │      │      ├─productList
-    │      │      │      searchFormOnchange.js
-    │      │      │
-    │      │      └─user
-    │      │              findUserIdForm.js
-    │      │              findUserPasswordForm.js
-    │      │              joinForm.js
-    │      │              loginForm.js
-    │      │
-    │      └─templates
-    │          │  index.html
-    │          │
-    │          ├─admin
-    │          │      addProduct.html
-    │          │      modifyProduct.html
-    │          │
-    │          ├─cart
-    │          │      cartForm.html
-    │          │
-    │          ├─customerInquiryBoard
-    │          │      boardDetail.html
-    │          │      boardList.html
-    │          │
-    │          ├─error
-    │          │      error.html
-    │          │
-    │          ├─fragments
-    │          │  │  link.html
-    │          │  │  nav.html
-    │          │  │  topHeader.html
-    │          │  │
-    │          │  └─myPage
-    │          │          mainMenu.html
-    │          │
-    │          ├─myPage
-    │          │      deleteForm.html
-    │          │      editAddress.html
-    │          │      modifyForm.html
-    │          │      myCustomerInquiryPage.html
-    │          │      mypage.html
-    │          │      myProductInquiryPage.html
-    │          │      myReviewPage.html
-    │          │      passwordCheckForm.html
-    │          │      searchForm.html
-    │          │
-    │          ├─order
-    │          │      orderForm.html
-    │          │
-    │          ├─payment
-    │          │      paymentForm.html
-    │          │      paymentList.html
-    │          │
-    │          ├─product
-    │          │      productDetail.html
-    │          │      productList.html
-    │          │
-    │          ├─productInquiryBoard
-    │          │      addProductInquiry.html
-    │          │      boardDetail.html
-    │          │      boardList.html
-    │          │      passwordChk.html
-    │          │      updateProductInquiry.html
-    │          │
-    │          ├─productReviewBoard
-    │          │      boardDetail.html
-    │          │      boardList.html
-    │          │
-    │          └─user
-    │                  findUserIdForm.html
-    │                  findUserPasswordForm.html
-    │                  joinForm.html
-    │                  loginForm.html
-    │
-    └─test
-        └─java
-            └─com
-                └─example
-                    └─app
-                        │  AppApplicationTests.java
-                        │
-                        └─shopping
-                            ├─config
-                            │      DataSourceConfigTest.java
-                            │
-                            └─domain
-                                └─mapper
-                                        ProductInquiryBoardMapperTest.java
-                                        ProductReviewBoardMapperTest.java
+└─main
+    ├─generated
+    ├─java
+    │  └─com
+    │      └─example
+    │          └─app
+    │              │  AppApplication.java
+    │              │  
+    │              └─shopping
+    │                  ├─config
+    │                  │  │  DataSourceConfig.java
+    │                  │  │  MybatisConfig.java
+    │                  │  │  SecurityConfig.java
+    │                  │  │  WebConfig.java
+    │                  │  │  WebMvcConfig.java
+    │                  │  │  
+    │                  │  └─auth
+    │                  │      │  PrincipalDetails.java
+    │                  │      │  PrincipalDetailsOAuth2Service.java
+    │                  │      │  PrincipalDetailsService.java
+    │                  │      │  
+    │                  │      ├─jwt
+    │                  │      │      JwtAuthorizationFilter.java
+    │                  │      │      JwtProperties.java
+    │                  │      │      JwtTokenProvider.java
+    │                  │      │      KeyGenerator.java
+    │                  │      │      TokenInfo.java
+    │                  │      │      
+    │                  │      ├─loginHandler
+    │                  │      │      CustomAuthenticationFailureHandler.java
+    │                  │      │      CustomLoginSuccessHandler.java
+    │                  │      │      Oauth2JwtLoginSuccessHandler.java
+    │                  │      │      
+    │                  │      ├─logoutHandler
+    │                  │      │      CustomLogoutHandler.java
+    │                  │      │      CustomLogoutSuccessHandler.java
+    │                  │      │      
+    │                  │      └─provider
+    │                  │              GoogleUserInfo.java
+    │                  │              KakaoUserInfo.java
+    │                  │              NaverUserInfo.java
+    │                  │              OAuth2UserInfo.java
+    │                  │              
+    │                  ├─controller
+    │                  │      AdminController.java
+    │                  │      CartController.java
+    │                  │      CustomerInquiryBoardCommentController.java
+    │                  │      CustomerInquiryBoardController.java
+    │                  │      CustomErrorController.java
+    │                  │      HomeController.java
+    │                  │      MyPageController.java
+    │                  │      OrderController.java
+    │                  │      PaymentController.java
+    │                  │      ProductController.java
+    │                  │      ProductInquiryBoardCommentController.java
+    │                  │      ProductInquiryBoardController.java
+    │                  │      ProductReviewBoardController.java
+    │                  │      UserController.java
+    │                  │      
+    │                  ├─domain
+    │                  │  ├─dto
+    │                  │  │  │  CartDto.java
+    │                  │  │  │  CartItemsDto.java
+    │                  │  │  │  CustomerInquiryBoardDto.java
+    │                  │  │  │  CustomerInquiryCommentDto.java
+    │                  │  │  │  MiddleCategoryDto.java
+    │                  │  │  │  OrderDto.java
+    │                  │  │  │  OrderItemDto.java
+    │                  │  │  │  PaymentDto.java
+    │                  │  │  │  PersistentLoginsDto.java
+    │                  │  │  │  ProductDetailBoardDto.java
+    │                  │  │  │  ProductDto.java
+    │                  │  │  │  ProductInquiryBoardCommentDto.java
+    │                  │  │  │  ProductInquiryBoardDto.java
+    │                  │  │  │  ProductMajorCategoryDto.java
+    │                  │  │  │  ProductReviewBoardDto.java
+    │                  │  │  │  ShippingAddressDto.java
+    │                  │  │  │  UserDto.java
+    │                  │  │  │  WishDto.java
+    │                  │  │  │  
+    │                  │  │  └─common
+    │                  │  │          Criteria.java
+    │                  │  │          PageDto.java
+    │                  │  │          
+    │                  │  ├─mapper
+    │                  │  │      CartItemMapper.java
+    │                  │  │      CartMapper.java
+    │                  │  │      CustomerInquiryBoardCommentMapper.java
+    │                  │  │      CustomerInquiryBoardMapper.java
+    │                  │  │      MajorCategoryMapper.java
+    │                  │  │      MiddleCategoryMapper.java
+    │                  │  │      OrderItemMapper.java
+    │                  │  │      OrderMapper.java
+    │                  │  │      PaymentMapper.java
+    │                  │  │      ProductInquiryBoardCommentMapper.java
+    │                  │  │      ProductInquiryBoardMapper.java
+    │                  │  │      ProductMapper.java
+    │                  │  │      ProductReviewBoardMapper.java
+    │                  │  │      ShippingAddressMapper.java
+    │                  │  │      SignatureMapper.java
+    │                  │  │      UserMapper.java
+    │                  │  │      WishMapper.java
+    │                  │  │      
+    │                  │  └─service
+    │                  │      │  PaymentService.java
+    │                  │      │  
+    │                  │      ├─admin
+    │                  │      │      AdminService.java
+    │                  │      │      
+    │                  │      ├─cart
+    │                  │      │      CartService.java
+    │                  │      │      
+    │                  │      ├─customerInquiryBoard
+    │                  │      │      CustomerInquiryBoardService.java
+    │                  │      │      CustomerInquiryBoardServiceImpl.java
+    │                  │      │      
+    │                  │      ├─customerInquiryBoardComment
+    │                  │      │      CustomerInquiryBoardCommentService.java
+    │                  │      │      CustomerInquiryBoardCommentServiceImpl.java
+    │                  │      │      
+    │                  │      ├─myPage
+    │                  │      │      MyPageService.java
+    │                  │      │      
+    │                  │      ├─order
+    │                  │      │      OrderService.java
+    │                  │      │      
+    │                  │      ├─orderItem
+    │                  │      │      OrderItemService.java
+    │                  │      │      OrderItemServiceImpl.java
+    │                  │      │      
+    │                  │      ├─product
+    │                  │      │      ProductService.java
+    │                  │      │      ProductServiceImpl.java
+    │                  │      │      
+    │                  │      ├─productInquiryBoard
+    │                  │      │      productInquiryBoardService.java
+    │                  │      │      productInquiryBoardServiceImpl.java
+    │                  │      │      
+    │                  │      ├─productInquiryBoardComment
+    │                  │      │      ProductInquiryBoardCommentService.java
+    │                  │      │      ProductInquiryBoardCommentServiceImpl.java
+    │                  │      │      
+    │                  │      ├─productReviewBoard
+    │                  │      │      ProductReviewBoardService.java
+    │                  │      │      ProductReviewBoardServiceImpl.java
+    │                  │      │      
+    │                  │      └─user
+    │                  │              UserService.java
+    │                  │              
+    │                  ├─handler
+    │                  │      CustomLoginFailureHandler.java
+    │                  │      CustomLogoutHandler.java
+    │                  │      
+    │                  ├─properties
+    │                  │      FileUploadPathProperties.java
+    │                  │      
+    │                  └─valid
+    │                          CustomPasswordMatchesValidator.java
+    │                          PasswordMatches.java
+    │                          
+    └─resources
+        │  application.properties
+        │  
+        ├─mapper
+        │      CartItemMapper.xml
+        │      CartMapper.xml
+        │      CustomerInquiryBoardCommentMapper.xml
+        │      CustomerInquiryBoardMapper.xml
+        │      MajorCategoryMapper.xml
+        │      MiddleCategoryMapper.xml
+        │      OrderItemMapper.xml
+        │      OrderMapper.xml
+        │      PaymentMapper.xml
+        │      ProductInquiryBoardCommentMapper.xml
+        │      ProductInquiryBoardMapper.xml
+        │      ProductMapper.xml
+        │      ProductReviewBoardMapper.xml
+        │      ShippingAddressMapper.xml
+        │      UserMapper.xml
+        │      WishMapper.xml
+        │      
+        ├─static
+        │  ├─css
+        │  │  │  common.css
+        │  │  │  index.css
+        │  │  │  
+        │  │  ├─admin
+        │  │  │  │  addProduct.css
+        │  │  │  │  modifyProduct.css
+        │  │  │  │  productLIstBoard.css
+        │  │  │  │  
+        │  │  │  └─payment
+        │  │  │          delivery.css
+        │  │  │          refund.css
+        │  │  │          
+        │  │  ├─board
+        │  │  │      addBoard.css
+        │  │  │      boardDetail.css
+        │  │  │      boardList.css
+        │  │  │      editBoard.css
+        │  │  │      
+        │  │  ├─cart
+        │  │  │      cartForm.css
+        │  │  │      
+        │  │  ├─customerInquiry
+        │  │  │      addCustomerInquiry.css
+        │  │  │      editCustomerInquiry.css
+        │  │  │      
+        │  │  ├─customerInquiryBoardDetail
+        │  │  │      customerInquiryBoardDetail.css
+        │  │  │      
+        │  │  ├─customerInquiryBoardList
+        │  │  │      common.css
+        │  │  │      
+        │  │  ├─error
+        │  │  │      error.css
+        │  │  │      
+        │  │  ├─fragments
+        │  │  │  │  common.css
+        │  │  │  │  footer.css
+        │  │  │  │  nav.css
+        │  │  │  │  
+        │  │  │  └─admin
+        │  │  │          common.css
+        │  │  │          mainDetail.css
+        │  │  │          
+        │  │  ├─index
+        │  │  │      common.css
+        │  │  │      hightDiscountProducts.css
+        │  │  │      popularProducts.css
+        │  │  │      recentProducts.css
+        │  │  │      
+        │  │  ├─myPage
+        │  │  │      common.css
+        │  │  │      deleteForm.css
+        │  │  │      editAddress.css
+        │  │  │      mainDetail.css
+        │  │  │      modifyForm.css
+        │  │  │      myBoardList.css
+        │  │  │      myCustomerInquiryPage.css
+        │  │  │      myReviewPage.css
+        │  │  │      passwordCheckForm.css
+        │  │  │      paymentDetail.css
+        │  │  │      paymentList.css
+        │  │  │      searchForm.css
+        │  │  │      wishList.css
+        │  │  │      
+        │  │  ├─order
+        │  │  │      order.css
+        │  │  │      
+        │  │  ├─product
+        │  │  │      productDetail.css
+        │  │  │      productInquiryBoard.css
+        │  │  │      productReviewBoard.css
+        │  │  │      
+        │  │  ├─productInquiry
+        │  │  │      addProductInquiry.css
+        │  │  │      updateProductInquiry.css
+        │  │  │      
+        │  │  ├─productInquiryBoardDetail
+        │  │  │      productInquiryBoardDetail.css
+        │  │  │      productInquiryBoardDetailPasswordCheck.css
+        │  │  │      
+        │  │  ├─productInquiryBoardList
+        │  │  │      common.css
+        │  │  │      
+        │  │  ├─productList
+        │  │  │      common.css
+        │  │  │      productList.css
+        │  │  │      
+        │  │  ├─productReview
+        │  │  │      addProductReview.css
+        │  │  │      editProductReview.css
+        │  │  │      
+        │  │  ├─productReviewBoardDetail
+        │  │  │      productReviewBoardDetail.css
+        │  │  │      
+        │  │  ├─productReviewBoardList
+        │  │  │      common.css
+        │  │  │      
+        │  │  └─user
+        │  │          findUserIdForm.css
+        │  │          findUserPasswordForm.css
+        │  │          joinForm.css
+        │  │          loginForm.css
+        │  │          
+        │  ├─img
+        │  │      ico_google.png
+        │  │      ico_kakao.png
+        │  │      ico_naver.png
+        │  │      loading.svg
+        │  │      Lock_close.svg
+        │  │      Lock_open.svg
+        │  │      main_banner_pc_1.jpg
+        │  │      main_banner_pc_3.jpg
+        │  │      main_banner_pc_4.jpg
+        │  │      main_banner_pc_5.jpg
+        │  │      minus.svg
+        │  │      plus.svg
+        │  │      건강풀때기_배너.png
+        │  │      건강풀때기바탕제거.png
+        │  │      꿀맛사과_banner.png
+        │  │      우리쌀_banner.png
+        │  │      이달의상품관_banner.jpg
+        │  │      정기배송_banner.png
+        │  │      채소기획전_banner.png
+        │  │      한우세트_banner.png
+        │  │      
+        │  └─js
+        │      │  index.js
+        │      │  
+        │      ├─admin
+        │      │  │  addProduct.js
+        │      │  │  modifyProduct.js
+        │      │  │  productBoardBtnProcess.js
+        │      │  │  
+        │      │  └─payment
+        │      │      ├─delivery
+        │      │      │      deliveryBtn.js
+        │      │      │      searchFormOnchange.js
+        │      │      │      
+        │      │      └─refund
+        │      │              refundBtn.js
+        │      │              
+        │      ├─cart
+        │      │      cartForm.js
+        │      │      
+        │      ├─customerInquiry
+        │      │      editSubmitBtnProcess.js
+        │      │      formValidation.js
+        │      │      submitBtnProcess.js
+        │      │      
+        │      ├─customerInquiryBoardDetail
+        │      │      btnProcess.js
+        │      │      customerInquiryAddBtnProcess.js
+        │      │      customerInquiryBoardDetailCommentProcess.js
+        │      │      postCommentProcess.js
+        │      │      
+        │      ├─customerInquiryBoardList
+        │      │      searchFormOnchange.js
+        │      │      
+        │      ├─index
+        │      │      hightDiscountProductsProcess.js
+        │      │      popularProductsProcess.js
+        │      │      recentProductsProcess.js
+        │      │      
+        │      ├─myPage
+        │      │      addProductReviewBtnProcess.js
+        │      │      deleteForm.js
+        │      │      editAddress.js
+        │      │      modifyForm.js
+        │      │      passwordCheckForm.js
+        │      │      productInquiryBoardDetailPasswordCheckProcess.js
+        │      │      refundBtnProcess.js
+        │      │      searchFormOnchange.js
+        │      │      wishList.js
+        │      │      
+        │      ├─order
+        │      │      order.js
+        │      │      
+        │      ├─payment
+        │      │      paymentForm.js
+        │      │      
+        │      ├─productDetail
+        │      │      productDetail.js
+        │      │      productInquiryAddBtn.js
+        │      │      productInquiryProcess.js
+        │      │      productReviewProcess.js
+        │      │      toggleInquiryContentProcess.js
+        │      │      toggleReviewContentProcess.js
+        │      │      
+        │      ├─productInquiry
+        │      │      formValidation.js
+        │      │      pwChkProcess.js
+        │      │      updateFormValidation.js
+        │      │      
+        │      ├─productInquiryBoardDetail
+        │      │      btnProcess.js
+        │      │      postCommentProcess.js
+        │      │      productInquiryBoardDetailCommentProcess.js
+        │      │      productInquiryBoardDetailPasswordCheckProcess.js
+        │      │      
+        │      ├─productInquiryBoardList
+        │      │      searchFormOnchange.js
+        │      │      
+        │      ├─productList
+        │      │      searchFormOnchange.js
+        │      │      
+        │      ├─productReview
+        │      │      editBtnProcess.js
+        │      │      editSubmitBtnProcess.js
+        │      │      formValidation.js
+        │      │      formValidationEdit.js
+        │      │      submitBtnProcess.js
+        │      │      
+        │      ├─productReviewDetail
+        │      │      btnProcess.js
+        │      │      
+        │      └─user
+        │              findUserIdForm.js
+        │              findUserPasswordForm.js
+        │              joinForm.js
+        │              loginForm.js
+        │              
+        └─templates
+            │  index.html
+            │  
+            ├─admin
+            │  │  addProduct.html
+            │  │  modifyProduct.html
+            │  │  productList.html
+            │  │  
+            │  └─payment
+            │          delivery.html
+            │          refund.html
+            │          
+            ├─cart
+            │      cartForm.html
+            │      
+            ├─customerInquiryBoard
+            │      addCustomerInquiry.html
+            │      boardDetail.html
+            │      boardList.html
+            │      edit.html
+            │      
+            ├─error
+            │      error.html
+            │      
+            ├─fragments
+            │  │  footer.html
+            │  │  link.html
+            │  │  nav.html
+            │  │  topHeader.html
+            │  │  
+            │  ├─admin
+            │  │      mainMenu.html
+            │  │      
+            │  └─myPage
+            │          mainMenu.html
+            │          
+            ├─myPage
+            │      deleteForm.html
+            │      editAddress.html
+            │      modifyForm.html
+            │      myCustomerInquiryPage.html
+            │      mypage.html
+            │      myProductInquiryPage.html
+            │      myReviewPage.html
+            │      passwordCheckForm.html
+            │      paymentDetail.html
+            │      paymentList.html
+            │      searchForm.html
+            │      wishList.html
+            │      
+            ├─order
+            │      orderForm.html
+            │      
+            ├─payment
+            │      paymentForm.html
+            │      paymentList.html
+            │      
+            ├─product
+            │      productDetail.html
+            │      productList.html
+            │      
+            ├─productInquiryBoard
+            │      addProductInquiry.html
+            │      boardDetail.html
+            │      boardList.html
+            │      passwordChk.html
+            │      updateProductInquiry.html
+            │      
+            ├─productReviewBoard
+            │      addProductReview.html
+            │      boardDetail.html
+            │      boardList.html
+            │      editProductReview.html
+            │      
+            └─user
+                    findUserIdForm.html
+                    findUserPasswordForm.html
+                    joinForm.html
+                    loginForm.html
+

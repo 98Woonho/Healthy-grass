@@ -808,7 +808,7 @@
                 AND (p.name LIKE CONCAT('%', #{criteria.keyword}, '%'))
             </if>
         </where>
-        ORDER BY p.updateDate DESC, p.regDate DESC
+        ORDER BY p.id DESC, p.updateDate DESC, p.regDate DESC
         LIMIT #{offset}, #{criteria.amount}
     </select>
 </mapper>

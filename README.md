@@ -22,10 +22,10 @@ WEB PROJECT PLANING
 ## ▶️ 개발 일정
 |PLAN|일정|DESCRIPTION|
 |---------------|----------------|------------------------|
-|주제 선정 <br/> 요구사항 분석 <br/> 기술스택 결정 <br/> 개발환경 구축|2024-05-20 ~ 2024-05-22(02Days)|완료| 
-|기본 구조 설계 <br/> 백엔드 개발|2024-05-23 ~ 2024-06-21(30Days)|완료| 
-|프론트엔드 및 백엔드 개발|2024-06-22 ~ 2024-06-30(9Days)|완료| 
-|테스트 및 유지보수|2024-07-01 ~ 2024-07-03(3Days)|완료| 
+|주제 선정 <br/> 요구사항 분석 <br/> 기술스택 결정 <br/> 개발환경 구축|2024-05-22 ~ 2024-05-26(05Days)|완료| 
+|기본 구조 설계 <br/> 백엔드 개발|2024-05-27 ~ 2024-06-17(22Days)|완료| 
+|프론트엔드 및 백엔드 개발|2024-06-18 ~ 2024-06-26(9Days)|완료| 
+|테스트 및 유지보수|2024-06-27 ~ 2024-07-01(5Days)|완료| 
 <br/>
 
 ## ▶️ 역할
@@ -91,7 +91,6 @@ WEB PROJECT PLANING
 ![intelli-j](https://img.shields.io/badge/intellijidea-000000?style=for-the-badge&logo=intellijidea&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-EC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white)
 ![jenkins](https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white)
-![docker](https://img.shields.io/badge/DOCKER-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 <br/>
 
 ## ▶️ 주요 기능

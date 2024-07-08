@@ -2,8 +2,7 @@ WEB PROJECT PLANING
 =
 
 ## ▶️ 배포 사이트
-#### <a href="freshshoppj.shop">건강풀떼기</a>
-
+#### [건강풀떼기](https://freshfarmpj.shop)
 ## ▶️ 개발 동기
 <strong>
     <p>농축산물 쇼핑몰 웹 서비스를 제작하게 된 이유는 뉴스 등 매체를 통해 생산의 복잡한 유통 과정을 확인하였고 이를 개선하기 위해 기획 되었습니다.</p>

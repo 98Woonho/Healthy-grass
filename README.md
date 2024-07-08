@@ -2,7 +2,7 @@ WEB PROJECT PLANING
 =
 
 ## ▶️ 배포 사이트
-#### freshshoppj.shop
+#### <a href="freshshoppj.shop">건강풀떼기</a>
 
 ## ▶️ 개발 동기
 <strong>
